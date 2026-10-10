@@ -1,0 +1,39 @@
+{
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "找家教"
+      }
+    },
+    {
+      "path": "pages/tutors/detail",
+      "style": {
+        "navigationBarTitleText": "家教详情"
+      }
+    },
+    {
+      "path": "pages/orders/create",
+      "style": {
+        "navigationBarTitleText": "预约家教"
+      }
+    },
+    {
+      "path": "pages/orders/index",
+      "style": {
+        "navigationBarTitleText": "我的预约"
+      }
+    },
+    {
+      "path": "pages/profile/index",
+      "style": {
+        "navigationBarTitleText": "我的"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#f6f8fc"
+  }
+}
