@@ -5,6 +5,7 @@
   "description": "家教撮合平台 - 微信小程序和H5",
   "scripts": {
     "dev:h5": "uni",
+    "typecheck": "vue-tsc --noEmit",
     "build:h5": "uni build",
     "dev:mp-weixin": "uni -p mp-weixin",
     "build:mp-weixin": "uni build -p mp-weixin"
@@ -22,7 +23,8 @@
     "@dcloudio/uni-cli-shared": "3.0.0-5020420260813003",
     "@dcloudio/vite-plugin-uni": "3.0.0-5020420260813003",
     "typescript": "^5.4.5",
-    "vite": "5.2.8"
+    "vite": "5.2.8",
+    "vue-tsc": "^2.2.12"
   },
   "engines": {
     "node": ">=20"
