@@ -29,8 +29,11 @@
 - `src/mocks/tutors.ts`：虚构老师数据与查询函数。
 - `src/types/tutor.ts`：家教、预约类型定义。
 - `src/utils/bookings.ts`：本地演示预约持久化。
+- `src/types/auth.ts`、`src/services/auth.ts`、`src/utils/session.ts`：角色/会话契约、认证适配、页面共用状态。当前仅 Mock；服务端接入见 `docs/AUTH_INTEGRATION.md`。
 - `src/components/TutorCard.vue`：列表通用卡片。
-- `src/pages`：各业务页面，不直接实现未来的后端鉴权。
+- `src/pages`：业务页面通过共享会话状态控制演示入口；服务端仍须独立校验权限。
+
+`src/pages.json` 新增登录、身份选择路由与首页/我的预约/我的 tabBar，原因是三端导航和未登录引导需要固定路由。`src/types/tutor.ts` 和既有预约存储格式未改；演示家长使用一个固定本机身份，原有预约记录仍可见。退出后记录仍保留在设备上。
 
 ## 5. 未来 API 草案（尚未实现）
 
