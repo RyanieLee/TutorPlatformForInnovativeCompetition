@@ -14,5 +14,6 @@ jobs:
           node-version: '20'
       - run: npm ci --no-audit --no-fund
       - run: npm run typecheck
+      - run: npm test
       - run: npm run build:h5
       - run: npm run build:mp-weixin

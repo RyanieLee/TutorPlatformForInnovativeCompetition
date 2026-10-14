@@ -3,7 +3,8 @@ import type { AuthLoginRequest, AuthService, AuthSession, UserRole } from '../ty
 const STORAGE_KEY = 'tutor-platform:mock-session:v1'
 const demoUsers = {
   parent: { id: 'demo-parent', displayName: '演示家长', role: 'parent' },
-  tutor: { id: 'demo-tutor', displayName: '演示家教', role: 'tutor' }
+  tutor: { id: 'demo-tutor', displayName: '演示家教', role: 'tutor' },
+  admin: { id: 'demo-admin', displayName: '演示管理员', role: 'admin' }
 } as const
 
 function isSession(value: unknown): value is AuthSession {
@@ -13,7 +14,7 @@ function isSession(value: unknown): value is AuthSession {
     typeof session.issuedAt === 'string' &&
     !!session.user &&
     typeof session.user.displayName === 'string' &&
-    (session.user.role === 'parent' || session.user.role === 'tutor') &&
+    (session.user.role === 'parent' || session.user.role === 'tutor' || session.user.role === 'admin') &&
     session.user.id === demoUsers[session.user.role].id
 }
 
