@@ -41,6 +41,30 @@
       "style": {
         "navigationBarTitleText": "选择演示身份"
       }
+    },
+    {
+      "path": "pages/tutor/workbench",
+      "style": { "navigationBarTitleText": "家教工作台" }
+    },
+    {
+      "path": "pages/tutor/application",
+      "style": { "navigationBarTitleText": "家教入驻资料" }
+    },
+    {
+      "path": "pages/tutor/booking-detail",
+      "style": { "navigationBarTitleText": "收到的预约" }
+    },
+    {
+      "path": "pages/admin/index",
+      "style": { "navigationBarTitleText": "模拟审核台" }
+    },
+    {
+      "path": "pages/admin/application-detail",
+      "style": { "navigationBarTitleText": "审核申请" }
+    },
+    {
+      "path": "pages/reports/create",
+      "style": { "navigationBarTitleText": "举报演示资料" }
     }
   ],
   "tabBar": {

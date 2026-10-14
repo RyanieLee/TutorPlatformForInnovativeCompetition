@@ -14,7 +14,7 @@ export interface AuthSession {
 }
 
 export type AuthLoginRequest =
-  | { kind: 'demo'; role: 'parent' | 'tutor' }
+  | { kind: 'demo'; role: UserRole }
   | { kind: 'wechat'; code: string }
 
 export interface AuthService {

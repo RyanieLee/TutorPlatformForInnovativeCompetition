@@ -18,7 +18,7 @@ export async function restoreSession(): Promise<AuthSession | null> {
   return restoring
 }
 
-export async function loginDemo(role: 'parent' | 'tutor'): Promise<AuthSession> {
+export async function loginDemo(role: UserRole): Promise<AuthSession> {
   const session = await authService.login({ kind: 'demo', role })
   currentSession.value = session
   restored = true

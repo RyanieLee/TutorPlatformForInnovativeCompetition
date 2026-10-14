@@ -4,9 +4,9 @@ import { onLoad } from '@dcloudio/uni-app'
 import { loginDemo } from '../../utils/session'
 import type { UserRole } from '../../types/auth'
 
-const role = ref<'parent' | 'tutor'>('parent')
+const role = ref<UserRole>('parent')
 const busy = ref(false)
-onLoad(options => { if (options?.role === 'tutor') role.value = 'tutor' })
+onLoad(options => { if (options?.role === 'tutor' || options?.role === 'admin') role.value = options.role })
 
 async function login() {
   if (busy.value) return
@@ -24,7 +24,7 @@ async function login() {
 }
 
 function choose(value: UserRole) {
-  if (value !== 'admin') role.value = value
+  role.value = value
 }
 function goRegister() { uni.navigateTo({ url: '/pages/auth/register' }) }
 </script>
@@ -35,7 +35,8 @@ function goRegister() { uni.navigateTo({ url: '/pages/auth/register' }) }
     <view class="surface-card">
       <view class="section-title">体验角色</view>
       <view class="role" :class="{ selected: role === 'parent' }" @click="choose('parent')"><text>学生 / 家长</text><text class="hint">浏览家教、提交和管理本机演示预约</text></view>
-      <view class="role" :class="{ selected: role === 'tutor' }" @click="choose('tutor')"><text>大学生家教</text><text class="hint">预留家教端入口，暂不能使用家长预约功能</text></view>
+      <view class="role" :class="{ selected: role === 'tutor' }" @click="choose('tutor')"><text>大学生家教</text><text class="hint">填写入驻申请、管理收到的演示预约</text></view>
+      <view class="role" :class="{ selected: role === 'admin' }" @click="choose('admin')"><text>管理员演示</text><text class="hint">查看模拟申请与举报；不代表真实审核权限</text></view>
       <button class="primary-button action" :loading="busy" @click="login">进入演示模式</button>
       <view class="register" @click="goRegister">了解身份选择 / 模拟注册 →</view>
     </view>
