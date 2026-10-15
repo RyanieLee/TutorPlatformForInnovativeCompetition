@@ -1,9 +1,11 @@
+import { onUnauthorized } from '../services/api/client'
 import { shallowRef } from 'vue'
 import { authService, hasRole } from '../services/auth'
 import type { AuthSession, UserRole } from '../types/auth'
 
 export const currentSession = shallowRef<AuthSession | null>(null)
 let restored = false
+onUnauthorized(() => { currentSession.value = null; restored = false })
 let restoring: Promise<AuthSession | null> | null = null
 
 export async function restoreSession(): Promise<AuthSession | null> {
@@ -16,6 +18,13 @@ export async function restoreSession(): Promise<AuthSession | null> {
     }).finally(() => { restoring = null })
   }
   return restoring
+}
+
+export async function loginPassword(loginId: string, password: string): Promise<AuthSession> {
+  const session = await authService.login({ kind: 'password', loginId, password })
+  currentSession.value = session
+  restored = true
+  return session
 }
 
 export async function loginDemo(role: UserRole): Promise<AuthSession> {

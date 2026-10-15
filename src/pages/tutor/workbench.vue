@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { apiMode } from '../../config/runtime'
 import { computed, ref } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
 import { businessService } from '../../services/business'
@@ -38,7 +39,7 @@ const edit = () => uni.navigateTo({ url: '/pages/tutor/application' })
 const openBooking = (id: string) => uni.navigateTo({ url: '/pages/tutor/booking-detail?id=' + id })
 </script>
 <template>
-  <view class="page"><view class="heading">家教工作台</view><view class="notice">仅本机演示，不会收到真实预约通知。示例老师“小林老师”的预约关联当前演示家教。</view>
+  <view class="page"><view class="heading">家教工作台</view><view class="notice">{{ apiMode ? '开发版数据保存在本地数据库，不会发送真实预约通知。' : '仅本机演示，不会收到真实预约通知。示例老师“小林老师”的预约关联当前演示家教。' }}</view>
     <view v-if="!ready" class="surface-card empty-state">正在读取工作台…</view>
     <view v-else-if="!currentSession" class="surface-card empty-state">登录家教演示身份后查看<button class="primary-button action" @click="goLogin">演示登录</button></view>
     <view v-else-if="!canAccess(['tutor'])" class="surface-card empty-state">当前身份不能进入家教工作台<button class="secondary-button action" @click="goProfile">前往我的</button></view>

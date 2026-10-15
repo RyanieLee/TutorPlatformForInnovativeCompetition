@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { apiMode } from '../../config/runtime'
 import { onShow } from '@dcloudio/uni-app'
 import { ref, watch } from 'vue'
 import TutorCard from '../../components/TutorCard.vue'
@@ -36,15 +37,15 @@ const openProfile = () => uni.switchTab({ url: '/pages/profile/index' })
 
 <template>
   <view class="page">
-    <view class="hero"><text class="eyebrow">校园家教 · 连接好老师</text><text class="headline">找到适合自己的学习伙伴</text><text class="intro">按科目筛选老师，查看教学信息，发起本机演示预约。</text><view class="links"><text @click="openOrders">我的预约 →</text><text @click="openProfile">个人中心 →</text></view></view>
+    <view class="hero"><text class="eyebrow">校园家教 · 连接好老师</text><text class="headline">找到适合自己的学习伙伴</text><text class="intro">按科目筛选老师，查看教学信息，{{ apiMode ? '发起开发版预约。' : '发起本机演示预约。' }}</text><view class="links"><text @click="openOrders">我的预约 →</text><text @click="openProfile">个人中心 →</text></view></view>
     <input v-model="query" class="search" placeholder="搜索科目、地区或老师姓名"/>
     <view class="heading">按科目查找</view>
     <scroll-view scroll-x><view class="filters"><text v-for="s in subjects" :key="s" class="chip" :class="{ active: subject === s }" @click="subject = s">{{ s }}</text></view></scroll-view>
-    <view class="heading">推荐家教 <text class="count">{{ tutors.length }} 位演示老师</text></view>
-    <view v-if="loading" class="empty">正在读取演示家教…</view>
+    <view class="heading">推荐家教 <text class="count">{{ tutors.length }} 位{{ apiMode ? '开发版' : '演示' }}老师</text></view>
+    <view v-if="loading" class="empty">{{ apiMode ? '正在读取家教…' : '正在读取演示家教…' }}</view>
     <view v-else-if="error" class="empty">{{ error }} <text class="retry" @click="loadTutors">重试</text></view>
     <template v-else><TutorCard v-for="t in tutors" :key="t.id" :tutor="t" @open="openTutor"/><view v-if="!tutors.length" class="empty">没有匹配的老师，换个关键词试试。</view></template>
-    <view class="notice">所有老师、价格及教学信息均为虚构演示数据，未经过真实资质核验。</view>
+    <view class="notice">{{ apiMode ? '开发版资料仅供测试，审核状态不代表真实身份或资质核验。' : '所有老师、价格及教学信息均为虚构演示数据，未经过真实资质核验。' }}</view>
   </view>
 </template>
 <style scoped>
