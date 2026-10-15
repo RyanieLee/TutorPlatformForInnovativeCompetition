@@ -16,3 +16,20 @@ jobs:
       - run: npm test
       - run: npm run build:h5
       - run: npm run build:mp-weixin
+
+  server:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci --no-audit --no-fund
+      - run: npm run db:generate
+        env:
+          DATABASE_URL: file:./dev.db
+      - run: npm run build
+      - run: npm test
