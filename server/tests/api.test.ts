@@ -29,6 +29,14 @@ describe('认证和服务端权限',()=>{
   for(let i=0;i<6;i++){const r=await app.inject({method:'POST',url:'/api/auth/login',remoteAddress:'10.11.12.13',payload:{loginId:'unknown',password:'wrong'}});statuses.push(r.statusCode)}
   expect(statuses).toEqual([401,401,401,401,401,429])
  })
+ it('更换账户名也不能无限绕过来源限流',async()=>{
+  let lastStatus=0
+  for(let i=0;i<31;i++){
+   const response=await app.inject({method:'POST',url:'/api/auth/login',remoteAddress:'10.11.12.14',payload:{loginId:`unknown-${i}`,password:'wrong'}})
+   lastStatus=response.statusCode
+  }
+  expect(lastStatus).toBe(429)
+ })
  it('普通用户不能访问管理接口',async()=>{expect((await app.inject({method:'GET',url:'/api/admin/tutor-applications',headers:auth(parent)})).statusCode).toBe(403)})
 })
 describe('入驻、审核与公开资料',()=>{
@@ -99,11 +107,42 @@ describe('预约与举报',()=>{
  })
 })
 
+describe('审计失败回滚预约',()=>{
+ it('创建预约时审计失败不留下预约记录',async()=>{
+  const before=await db.booking.count()
+  await db.$executeRawUnsafe(`CREATE TRIGGER fail_create_audit BEFORE INSERT ON AuditLog WHEN NEW.action = 'create' AND NEW.entityType = 'Booking' BEGIN SELECT RAISE(ABORT, 'audit failed'); END`)
+  try {
+   const response=await app.inject({method:'POST',url:'/api/bookings',headers:auth(parent),payload:{tutorId:profileId,studentName:'虚构审计测试',subject:'数学',expectedTime:'周二',note:'',requestId:'audit-create-test-1'}})
+   expect(response.statusCode).toBe(500)
+   expect(await db.booking.count()).toBe(before)
+  } finally { await db.$executeRawUnsafe('DROP TRIGGER fail_create_audit') }
+ })
+ it('状态与审计同事务，审计写入失败时预约仍待确认',async()=>{
+  const created=await app.inject({method:'POST',url:'/api/bookings',headers:auth(parent),payload:{tutorId:profileId,studentName:'虚构审计测试',subject:'数学',expectedTime:'周一',note:''}})
+  const id=created.json().data.id
+  await db.$executeRawUnsafe(`CREATE TRIGGER fail_accept_audit BEFORE INSERT ON AuditLog WHEN NEW.action = 'accept' BEGIN SELECT RAISE(ABORT, 'audit failed'); END`)
+  try {
+   expect((await app.inject({method:'POST',url:`/api/bookings/${id}/accept`,headers:auth(tutor)})).statusCode).toBe(500)
+   expect((await db.booking.findUniqueOrThrow({where:{id}})).status).toBe('pending')
+  } finally { await db.$executeRawUnsafe('DROP TRIGGER fail_accept_audit') }
+ })
+ it('举报处理的状态与审计写入同事务',async()=>{
+  const created=await app.inject({method:'POST',url:'/api/reports',headers:auth(parent),payload:{tutorId:profileId,reason:'其他',description:'虚构审计测试'}})
+  const id=created.json().data.id
+  await db.$executeRawUnsafe(`CREATE TRIGGER fail_report_audit BEFORE INSERT ON AuditLog WHEN NEW.action = 'resolve' BEGIN SELECT RAISE(ABORT, 'audit failed'); END`)
+  try {
+   expect((await app.inject({method:'POST',url:`/api/admin/reports/${id}/resolve`,headers:auth(admin)})).statusCode).toBe(500)
+   expect((await db.report.findUniqueOrThrow({where:{id}})).status).toBe('open')
+  } finally { await db.$executeRawUnsafe('DROP TRIGGER fail_report_audit') }
+ })
+})
 describe('修改已通过资料',()=>{
  it('修改后下架并回到草稿，需重新审核',async()=>{
   const changed=await app.inject({method:'PATCH',url:'/api/tutors/me',headers:auth(tutor),payload:{area:'新的示例地区'}})
   expect(changed.statusCode).toBe(200)
   expect((await app.inject({method:'GET',url:'/api/tutors'})).json().data).toHaveLength(0)
   expect((await app.inject({method:'GET',url:'/api/tutor-applications/mine',headers:auth(tutor)})).json().data.status).toBe('draft')
+  const retry=await app.inject({method:'POST',url:'/api/bookings',headers:auth(parent),payload:{requestId:'integration-retry-001',tutorId:profileId,studentName:'虚构同学',subject:'数学',expectedTime:'周日',note:''}})
+  expect(retry.statusCode).toBe(200)
  })
 })

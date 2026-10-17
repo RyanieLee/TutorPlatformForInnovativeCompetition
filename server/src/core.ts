@@ -33,6 +33,6 @@ export async function actor(request: FastifyRequest, db: PrismaClient, roles?: R
   if (roles && !roles.includes(session.user.role as Role)) return fail('FORBIDDEN', 403, '当前身份无权执行此操作')
   return { user: session.user, session }
 }
-export function audit(db: PrismaClient, actorId: string, action: string, entityType: string, entityId: string) {
+export function audit(db: Pick<PrismaClient, 'auditLog'>, actorId: string, action: string, entityType: string, entityId: string) {
   return db.auditLog.create({ data: { actorId, action, entityType, entityId } })
 }
