@@ -16,6 +16,7 @@ export interface AuthSession {
 export type AuthLoginRequest =
   | { kind: 'demo'; role: UserRole }
   | { kind: 'wechat'; code: string }
+  | { kind: 'password'; loginId: string; password: string }
 
 export interface AuthService {
   /** 真实实现应向服务端交换凭据，并从服务端响应读取角色。 */

@@ -2,7 +2,7 @@
 
 ## 1. 目标
 
-使用 uni-app（Vue 3 + TypeScript）复用业务代码，同时支持微信小程序和 H5。当前采用 Mock 数据完成交互演示，未来再接后端。
+使用 uni-app（Vue 3 + TypeScript）复用业务代码，同时支持微信小程序和 H5。默认采用 Mock 数据完成离线演示；V0.4 新增可选开发 API，详见 `docs/BACKEND_INTEGRATION.md`。
 
 ## 2. 角色
 
@@ -25,7 +25,7 @@
 - `src/mocks/tutors.ts`：虚构老师数据与查询函数。
 - `src/types/tutor.ts`：家教、预约类型定义。
 - `src/utils/bookings.ts`：本地演示预约持久化。
-- `src/types/auth.ts`、`src/services/auth.ts`、`src/utils/session.ts`：角色/会话契约、认证适配、页面共用状态。当前仅 Mock；服务端接入见 `docs/AUTH_INTEGRATION.md`。
+- `src/types/auth.ts`、`src/services/auth.ts`、`src/utils/session.ts`：角色/会话契约、认证适配、页面共用状态。已支持 Mock / 开发 API 双模式；接入见 `docs/BACKEND_INTEGRATION.md`。
 - `src/components/TutorCard.vue`：列表通用卡片。
 - `src/services/contracts.ts`、`src/services/mock/`：统一异步业务接口、Mock 存储与状态规则；`src/services/business.ts` 是页面唯一业务服务入口。
 - `src/pages`：业务页面通过共享会话状态控制演示入口；服务端仍须独立校验权限。
@@ -34,7 +34,7 @@
 
 V0.3 增加家教、管理员与举报路由，保留原 tabBar。预约类型新增英文状态与 `parentId`；旧存储格式仍由兼容层读取。完整迁移和权限约定见 `docs/BUSINESS_INTEGRATION.md`。
 
-## 5. 未来 API 草案（尚未实现）
+## 5. 历史 API 草案（V0.3，实际路径见后端联调文档）
 
 | 方法 | 路径 | 用途 |
 |---|---|---|
@@ -50,7 +50,7 @@ V0.3 增加家教、管理员与举报路由，保留原 tabBar。预约类型�
 | POST | /api/reports | 提交举报 |
 | PATCH | /api/reports/:id/resolve | 管理员处理举报 |
 
-后端技术、数据库与部署方案须在团队评审后确定，不能把上表当成已上线接口。
+V0.4 已提供 Fastify + SQLite 开发实现，路径与部分动词和上表不同；以上草案不代表已上线接口。真实部署方案仍需团队评审。
 
 ## 6. 安全设计待办
 

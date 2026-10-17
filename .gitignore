@@ -9,4 +9,7 @@ dist/
 *.tsbuildinfo
 coverage/
 .vite/
+server/prisma/*.db
+server/prisma/*.db-*
+server/prisma/*.db-journal
 .idea/
