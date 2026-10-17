@@ -16,6 +16,14 @@ jobs:
       - run: npm test
       - run: npm run build:h5
       - run: npm run build:mp-weixin
+      - run: npm run build:h5
+        env:
+          VITE_DATA_MODE: api
+          VITE_API_BASE_URL: http://127.0.0.1:3001
+      - run: npm run build:mp-weixin
+        env:
+          VITE_DATA_MODE: api
+          VITE_API_BASE_URL: http://127.0.0.1:3001
 
   server:
     runs-on: ubuntu-latest
