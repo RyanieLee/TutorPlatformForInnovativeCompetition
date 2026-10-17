@@ -35,7 +35,16 @@ export async function loginDemo(role: UserRole): Promise<AuthSession> {
 }
 
 export async function logout(): Promise<void> {
-  await authService.logout()
+  const serverSession = currentSession.value?.mode === 'server'
+  try {
+    await authService.logout()
+  } catch (error) {
+    // API 退出请求失败时，本机令牌已清除；Mock 存储失败则保留状态供重试。
+    if (!serverSession) throw error
+    currentSession.value = null
+    restored = true
+    throw error
+  }
   currentSession.value = null
   restored = true
 }

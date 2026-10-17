@@ -20,7 +20,7 @@ async function signOut() {
     await logout()
     uni.showToast({ title: '已退出登录', icon: 'none' })
   } catch {
-    uni.showToast({ title: '退出失败，请重试', icon: 'none' })
+    uni.showToast({ title: apiMode ? '本机已退出，服务端撤销未确认' : '退出失败，请重试', icon: 'none' })
   }
 }
 </script>
