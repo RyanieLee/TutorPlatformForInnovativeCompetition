@@ -56,8 +56,18 @@ model TutorProfile {
   updatedAt    DateTime  @updatedAt
   bookings     Booking[]
   reports      Report[]
+  subjects     TutorSubject[]
 
   @@index([published, createdAt])
+}
+
+model TutorSubject {
+  tutorProfileId String
+  subject        String
+  tutorProfile   TutorProfile @relation(fields: [tutorProfileId], references: [id], onDelete: Cascade)
+
+  @@id([tutorProfileId, subject])
+  @@index([subject, tutorProfileId])
 }
 
 model TutorApplication {

@@ -43,6 +43,7 @@ describe('入驻、审核与公开资料',()=>{
  it('校验申请，禁止重复，审核后公开，编辑后撤回公开',async()=>{
   const bad=await app.inject({method:'POST',url:'/api/tutor-applications',headers:auth(tutor),payload:{...input,pricePerHour:0}})
   expect(bad.statusCode).toBe(400)
+  expect((await app.inject({method:'POST',url:'/api/tutor-applications',headers:auth(tutor),payload:{...input,subjects:['数学','数学']}})).statusCode).toBe(400)
   const submit=await app.inject({method:'POST',url:'/api/tutor-applications',headers:auth(tutor),payload:input})
   expect(submit.statusCode).toBe(200);applicationId=submit.json().data.id
   profileId=(await db.tutorProfile.findUniqueOrThrow({where:{userId:tutorId}})).id
@@ -52,6 +53,8 @@ describe('入驻、审核与公开资料',()=>{
   expect((await app.inject({method:'POST',url:`/api/admin/tutor-applications/${applicationId}/review`,headers:auth(admin),payload:{decision:'approved'}})).statusCode).toBe(200)
   expect((await app.inject({method:'GET',url:'/api/admin/tutor-applications',headers:auth(admin)})).json().data.some((a:{status:string})=>a.status==='approved')).toBe(true)
   expect((await app.inject({method:'GET',url:'/api/tutors?subject=数学'})).json().data).toHaveLength(1)
+  expect((await app.inject({method:'GET',url:'/api/tutors?subject=数'})).json().data).toHaveLength(0)
+  expect((await app.inject({method:'GET',url:'/api/tutors?keyword=数学'})).json().data).toHaveLength(1)
   expect((await app.inject({method:'GET',url:'/api/tutors?subject=英语'})).json().data).toHaveLength(0)
   expect((await app.inject({method:'POST',url:`/api/admin/tutor-applications/${applicationId}/review`,headers:auth(admin),payload:{decision:'rejected',reason:'x'}})).statusCode).toBe(409)
  })
@@ -138,11 +141,36 @@ describe('审计失败回滚预约',()=>{
 })
 describe('修改已通过资料',()=>{
  it('修改后下架并回到草稿，需重新审核',async()=>{
-  const changed=await app.inject({method:'PATCH',url:'/api/tutors/me',headers:auth(tutor),payload:{area:'新的示例地区'}})
+  const changed=await app.inject({method:'PATCH',url:'/api/tutors/me',headers:auth(tutor),payload:{area:'新的示例地区',subjects:['物理']}})
   expect(changed.statusCode).toBe(200)
+  expect((await db.tutorSubject.findMany({where:{tutorProfileId:profileId}})).map(row=>row.subject)).toEqual(['物理'])
   expect((await app.inject({method:'GET',url:'/api/tutors'})).json().data).toHaveLength(0)
   expect((await app.inject({method:'GET',url:'/api/tutor-applications/mine',headers:auth(tutor)})).json().data.status).toBe('draft')
   const retry=await app.inject({method:'POST',url:'/api/bookings',headers:auth(parent),payload:{requestId:'integration-retry-001',tutorId:profileId,studentName:'虚构同学',subject:'数学',expectedTime:'周日',note:''}})
   expect(retry.statusCode).toBe(200)
+  const resubmitted=await app.inject({method:'POST',url:'/api/tutor-applications',headers:auth(tutor),payload:{...input,subjects:['物理']}})
+  expect(resubmitted.statusCode).toBe(200)
+  expect((await app.inject({method:'POST',url:`/api/admin/tutor-applications/${applicationId}/review`,headers:auth(admin),payload:{decision:'approved'}})).statusCode).toBe(200)
+  expect((await app.inject({method:'GET',url:'/api/tutors?subject=物理'})).json().data).toHaveLength(1)
+  expect((await app.inject({method:'GET',url:'/api/tutors?subject=数学'})).json().data).toHaveLength(0)
+ })
+})
+
+describe('公开家教数据库分页',()=>{
+ it('按科目精确筛选，分页稳定且不超过每页限制',async()=>{
+  const passwordHash=await hashPassword('local-test-password')
+  const numbers=Array.from({length:23},(_,i)=>i)
+  await db.user.createMany({data:numbers.map(i=>({id:`bulk-user-${i}`,loginId:`bulk-${i}`,displayName:`批量家教 ${i}`,role:'tutor',passwordHash}))})
+  await db.tutorProfile.createMany({data:numbers.map(i=>({id:`bulk-profile-${i}`,userId:`bulk-user-${i}`,displayName:`批量家教 ${i}`,university:'示例大学',major:'示例专业',subjectsJson:JSON.stringify([i<21?'数学':'高等数学']),teachingMode:'线上',area:'示例地区',pricePerHour:80,introduction:'虚构分页测试资料',availability:'周末',published:true}))})
+  await db.tutorSubject.createMany({data:numbers.map(i=>({tutorProfileId:`bulk-profile-${i}`,subject:i<21?'数学':'高等数学'}))})
+  await db.tutorApplication.createMany({data:numbers.map(i=>({userId:`bulk-user-${i}`,displayName:`批量家教 ${i}`,university:'示例大学',major:'示例专业',subjectsJson:JSON.stringify([i<21?'数学':'高等数学']),teachingMode:'线上',area:'示例地区',pricePerHour:80,introduction:'虚构分页测试资料',availability:'周末',status:'approved'}))})
+  const pages=await Promise.all([1,2,3].map(page=>app.inject({method:'GET',url:`/api/tutors?keyword=批量&page=${page}&pageSize=10`})))
+  expect(pages.map(r=>r.json().data.length)).toEqual([10,10,3])
+  expect(pages.map(r=>r.json().meta.total)).toEqual([23,23,23])
+  expect(new Set(pages.flatMap(r=>r.json().data.map((t:{id:string})=>t.id))).size).toBe(23)
+  expect((await app.inject({method:'GET',url:'/api/tutors?subject=数学'})).json().meta.total).toBe(21)
+  expect((await app.inject({method:'GET',url:'/api/tutors?subject=高等数学'})).json().meta.total).toBe(2)
+  expect((await app.inject({method:'GET',url:'/api/tutors?subject=数学&keyword=高等数学'})).json().meta.total).toBe(0)
+  expect((await app.inject({method:'GET',url:'/api/tutors?pageSize=51'})).statusCode).toBe(400)
  })
 })

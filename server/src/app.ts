@@ -1,6 +1,6 @@
 import Fastify from 'fastify'
 import cors from '@fastify/cors'
-import { PrismaClient } from '@prisma/client'
+import { Prisma, PrismaClient } from '@prisma/client'
 import { z } from 'zod'
 import { actor, ApiError, audit, fail, hashPassword, newToken, publicUser, tokenHash, verifyPassword } from './core'
 import { applicationSchema, bookingSchema, draftSchema, idParam, parse, reportSchema } from './validation'
@@ -55,10 +55,18 @@ export function buildApp(db: PrismaClient = new PrismaClient()) {
  app.post('/api/auth/logout',async request=>{const{session}=await actor(request,db);await db.session.update({where:{id:session.id},data:{revokedAt:new Date()}});return{data:{ok:true}}})
 
  app.get('/api/tutors',async request=>{
-  const q=parse(z.object({keyword:z.string().max(80).optional(),subject:z.string().max(30).optional(),page:z.coerce.number().int().min(1).default(1),pageSize:z.coerce.number().int().min(1).max(50).default(20)}),request.query)
-  const rows=await db.tutorProfile.findMany({where:{published:true,user:{status:'active',application:{status:'approved'}}},orderBy:{createdAt:'desc'}})
-  const filtered=rows.filter(p=>(!q.keyword||[p.displayName,p.university,p.major,p.area,...(JSON.parse(p.subjectsJson) as string[])].some(s=>s.includes(q.keyword!)))&&(!q.subject||(JSON.parse(p.subjectsJson) as string[]).includes(q.subject)))
-  return{data:filtered.slice((q.page-1)*q.pageSize,q.page*q.pageSize).map(tutor),meta:{total:filtered.length,page:q.page,pageSize:q.pageSize}}
+  const q=parse(z.object({keyword:z.string().max(80).optional(),subject:z.string().max(30).optional(),page:z.coerce.number().int().min(1).max(100000).default(1),pageSize:z.coerce.number().int().min(1).max(50).default(20)}),request.query)
+  const keyword=q.keyword?.trim(),subject=q.subject?.trim()
+  const where:Prisma.TutorProfileWhereInput={
+   published:true,user:{status:'active',application:{status:'approved'}},
+   ...(subject?{subjects:{some:{subject}}}:{}),
+   ...(keyword?{OR:[{displayName:{contains:keyword}},{university:{contains:keyword}},{major:{contains:keyword}},{area:{contains:keyword}},{subjects:{some:{subject:{contains:keyword}}}}]}:{})
+  }
+  const [total,rows]=await Promise.all([
+   db.tutorProfile.count({where}),
+   db.tutorProfile.findMany({where,orderBy:[{createdAt:'desc'},{id:'desc'}],skip:(q.page-1)*q.pageSize,take:q.pageSize})
+  ])
+  return{data:rows.map(tutor),meta:{total,page:q.page,pageSize:q.pageSize}}
  })
  app.get('/api/tutors/me',async request=>{const{user}=await actor(request,db,['tutor']);const p=await db.tutorProfile.findUnique({where:{userId:user.id}});return{data:p?tutor(p):null}})
  app.patch('/api/tutors/me',async request=>{
@@ -67,7 +75,7 @@ export function buildApp(db: PrismaClient = new PrismaClient()) {
   if(!p)return fail('NOT_FOUND',404,'请先创建入驻申请')
   if((await db.tutorApplication.findUnique({where:{userId:user.id}}))?.status==='pending')return fail('CONFLICT',409,'审核期间不可修改资料')
   const {subjects,...rest}=patch,fields={...rest,...(subjects?{subjectsJson:JSON.stringify(subjects)}:{})}
-  const updated=await db.$transaction(async tx=>{const row=await tx.tutorProfile.update({where:{userId:user.id},data:{...fields,published:false}});await tx.tutorApplication.update({where:{userId:user.id},data:{...fields,status:'draft',reviewedAt:null,rejectionReason:null}});return row})
+  const updated=await db.$transaction(async tx=>{const row=await tx.tutorProfile.update({where:{userId:user.id},data:{...fields,published:false,...(subjects?{subjects:{deleteMany:{},create:subjects.map(subject=>({subject}))}}:{})}});await tx.tutorApplication.update({where:{userId:user.id},data:{...fields,status:'draft',reviewedAt:null,rejectionReason:null}});return row})
   return{data:tutor(updated)}
  })
  app.get('/api/tutors/:id',async request=>{const{id}=parse(idParam,request.params);const p=await db.tutorProfile.findFirst({where:{id,published:true,user:{status:'active',application:{status:'approved'}}}});if(!p)return fail('NOT_FOUND',404,'家教不存在');return{data:tutor(p)}})
@@ -89,7 +97,7 @@ export function buildApp(db: PrismaClient = new PrismaClient()) {
   const current=await db.tutorApplication.findUnique({where:{userId:user.id}})
   if(current&&['pending','approved'].includes(current.status))return fail('CONFLICT',409,'申请正在审核或已通过')
   const a=await db.$transaction(async tx=>{
-   await tx.tutorProfile.upsert({where:{userId:user.id},create:{userId:user.id,...data(input),published:false},update:{...data(input),published:false}})
+   await tx.tutorProfile.upsert({where:{userId:user.id},create:{userId:user.id,...data(input),published:false,subjects:{create:input.subjects.map(subject=>({subject}))}},update:{...data(input),published:false,subjects:{deleteMany:{},create:input.subjects.map(subject=>({subject}))}}})
    const row=await tx.tutorApplication.upsert({where:{userId:user.id},create:{userId:user.id,...data(input),status:'pending'},update:{...data(input),status:'pending',rejectionReason:null,reviewedAt:null}})
    await tx.auditLog.create({data:{actorId:user.id,action:'submit',entityType:'TutorApplication',entityId:row.id}});return row
   });return{data:application(a)}

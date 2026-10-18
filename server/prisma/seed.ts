@@ -16,7 +16,10 @@ async function main(){
  }
  const user=await db.user.findUniqueOrThrow({where:{loginId:'demo.tutor'}})
  const fake={displayName:'演示家教小林',university:'示例大学',major:'数学专业',subjectsJson:JSON.stringify(['数学','物理']),teachingMode:'线上',area:'示例大学城',pricePerHour:80,introduction:'虚构演示资料，用于开发环境预约流程验证。',availability:'周末下午'}
- await db.tutorProfile.upsert({where:{userId:user.id},create:{userId:user.id,...fake,published:true},update:{}})
+ const profile=await db.tutorProfile.upsert({where:{userId:user.id},create:{userId:user.id,...fake,published:true},update:{}})
+ for(const subject of JSON.parse(profile.subjectsJson) as string[]){
+  await db.tutorSubject.upsert({where:{tutorProfileId_subject:{tutorProfileId:profile.id,subject}},create:{tutorProfileId:profile.id,subject},update:{}})
+ }
  await db.tutorApplication.upsert({where:{userId:user.id},create:{userId:user.id,...fake,status:'approved',reviewedAt:new Date()},update:{}})
  console.log('演示账户已生成：demo.parent / demo.tutor / demo.admin。密码由本地环境变量提供。')
 }

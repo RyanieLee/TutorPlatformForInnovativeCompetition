@@ -4,7 +4,7 @@ export const idParam = z.object({ id: z.string().min(1).max(100) })
 const text = (max: number) => z.string().trim().min(1).max(max)
 export const applicationSchema = z.object({
   displayName: text(20), university: text(40), major: text(40),
-  subjects: z.array(text(30)).min(1).max(6), teachingMode: z.enum(['线上', '线下', '均可']),
+  subjects: z.array(text(30)).min(1).max(6).refine(values=>new Set(values).size===values.length,'科目不能重复'), teachingMode: z.enum(['线上', '线下', '均可']),
   area: text(40), pricePerHour: z.number().int().min(1).max(1000),
   introduction: text(500).refine(v => v.length >= 10), availability: text(100)
 }).strict()
