@@ -73,9 +73,12 @@ export function buildApp(db: PrismaClient = new PrismaClient()) {
   const{user}=await actor(request,db,['tutor']),patch=parse(applicationSchema.partial(),request.body)
   const p=await db.tutorProfile.findUnique({where:{userId:user.id}})
   if(!p)return fail('NOT_FOUND',404,'请先创建入驻申请')
-  if((await db.tutorApplication.findUnique({where:{userId:user.id}}))?.status==='pending')return fail('CONFLICT',409,'审核期间不可修改资料')
   const {subjects,...rest}=patch,fields={...rest,...(subjects?{subjectsJson:JSON.stringify(subjects)}:{})}
-  const updated=await db.$transaction(async tx=>{const row=await tx.tutorProfile.update({where:{userId:user.id},data:{...fields,published:false,...(subjects?{subjects:{deleteMany:{},create:subjects.map(subject=>({subject}))}}:{})}});await tx.tutorApplication.update({where:{userId:user.id},data:{...fields,status:'draft',reviewedAt:null,rejectionReason:null}});return row})
+  const updated=await db.$transaction(async tx=>{
+   const changed=await tx.tutorApplication.updateMany({where:{userId:user.id,status:{in:['draft','approved','rejected']}},data:{...fields,status:'draft',reviewedAt:null,rejectionReason:null}})
+   if(changed.count!==1)return fail('CONFLICT',409,'审核期间不可修改资料')
+   return tx.tutorProfile.update({where:{userId:user.id},data:{...fields,published:false,...(subjects?{subjects:{deleteMany:{},create:subjects.map(subject=>({subject}))}}:{})}})
+  })
   return{data:tutor(updated)}
  })
  app.get('/api/tutors/:id',async request=>{const{id}=parse(idParam,request.params);const p=await db.tutorProfile.findFirst({where:{id,published:true,user:{status:'active',application:{status:'approved'}}}});if(!p)return fail('NOT_FOUND',404,'家教不存在');return{data:tutor(p)}})
@@ -86,7 +89,12 @@ export function buildApp(db: PrismaClient = new PrismaClient()) {
   if(current?.status==='pending')return fail('CONFLICT',409,'审核期间不可修改资料')
   const {subjects,...fields}=input
   const row=await db.$transaction(async tx=>{
-   const saved=await tx.tutorApplication.upsert({where:{userId:user.id},create:{userId:user.id,...fields,subjectsJson:JSON.stringify(subjects),status:'draft'},update:{...fields,subjectsJson:JSON.stringify(subjects),status:'draft',reviewedAt:null,rejectionReason:null}})
+   let saved
+   if(current){
+    const changed=await tx.tutorApplication.updateMany({where:{userId:user.id,status:{in:['draft','approved','rejected']}},data:{...fields,subjectsJson:JSON.stringify(subjects),status:'draft',reviewedAt:null,rejectionReason:null}})
+    if(changed.count!==1)return fail('CONFLICT',409,'审核期间不可修改资料')
+    saved=await tx.tutorApplication.findUniqueOrThrow({where:{userId:user.id}})
+   } else saved=await tx.tutorApplication.create({data:{userId:user.id,...fields,subjectsJson:JSON.stringify(subjects),status:'draft'}})
    if(current?.status==='approved')await tx.tutorProfile.update({where:{userId:user.id},data:{published:false}})
    return saved
   })
@@ -97,8 +105,13 @@ export function buildApp(db: PrismaClient = new PrismaClient()) {
   const current=await db.tutorApplication.findUnique({where:{userId:user.id}})
   if(current&&['pending','approved'].includes(current.status))return fail('CONFLICT',409,'申请正在审核或已通过')
   const a=await db.$transaction(async tx=>{
+   let row
+   if(current){
+    const changed=await tx.tutorApplication.updateMany({where:{userId:user.id,status:{in:['draft','rejected']}},data:{...data(input),status:'pending',rejectionReason:null,reviewedAt:null}})
+    if(changed.count!==1)return fail('CONFLICT',409,'申请正在审核或已通过')
+    row=await tx.tutorApplication.findUniqueOrThrow({where:{userId:user.id}})
+   } else row=await tx.tutorApplication.create({data:{userId:user.id,...data(input),status:'pending'}})
    await tx.tutorProfile.upsert({where:{userId:user.id},create:{userId:user.id,...data(input),published:false,subjects:{create:input.subjects.map(subject=>({subject}))}},update:{...data(input),published:false,subjects:{deleteMany:{},create:input.subjects.map(subject=>({subject}))}}})
-   const row=await tx.tutorApplication.upsert({where:{userId:user.id},create:{userId:user.id,...data(input),status:'pending'},update:{...data(input),status:'pending',rejectionReason:null,reviewedAt:null}})
    await tx.auditLog.create({data:{actorId:user.id,action:'submit',entityType:'TutorApplication',entityId:row.id}});return row
   });return{data:application(a)}
  })

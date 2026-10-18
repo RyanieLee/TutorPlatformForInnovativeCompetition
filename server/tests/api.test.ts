@@ -58,6 +58,17 @@ describe('入驻、审核与公开资料',()=>{
   expect((await app.inject({method:'GET',url:'/api/tutors?subject=英语'})).json().data).toHaveLength(0)
   expect((await app.inject({method:'POST',url:`/api/admin/tutor-applications/${applicationId}/review`,headers:auth(admin),payload:{decision:'rejected',reason:'x'}})).statusCode).toBe(409)
  })
+ it('并发重复提交只生成一次申请和审计，待审期间不可改草稿或资料',async()=>{
+  const account=await createUser('concurrent-tutor','tutor')
+  const token=await login('concurrent-tutor')
+  const responses=await Promise.all([1,2].map(()=>app.inject({method:'POST',url:'/api/tutor-applications',headers:auth(token),payload:input})))
+  expect(responses.map(r=>r.statusCode).sort()).toEqual([200,409])
+  const row=await db.tutorApplication.findUniqueOrThrow({where:{userId:account.id}})
+  expect(row.status).toBe('pending')
+  expect(await db.auditLog.count({where:{entityType:'TutorApplication',entityId:row.id,action:'submit'}})).toBe(1)
+  expect((await app.inject({method:'PUT',url:'/api/tutor-applications/draft',headers:auth(token),payload:input})).statusCode).toBe(409)
+  expect((await app.inject({method:'PATCH',url:'/api/tutors/me',headers:auth(token),payload:{area:'新地区'}})).statusCode).toBe(409)
+ })
 })
 describe('草稿与驳回',()=>{
  it('允许不完整草稿，驳回理由可由家教查看，仍不公开',async()=>{
