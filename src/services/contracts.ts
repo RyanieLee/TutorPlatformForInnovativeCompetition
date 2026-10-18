@@ -4,7 +4,7 @@ import type { ReportReason, TutorApplication, TutorApplicationInput, TutorReport
 import type { BookingAction } from './rules'
 
 export interface BusinessService {
-  listTutors(query?: { keyword?: string; subject?: string }): Promise<Tutor[]>
+  listTutors(query?: { keyword?: string; subject?: string; page?: number; pageSize?: number }): Promise<Tutor[]>
   getTutor(id: string): Promise<Tutor | null>
 
   getMyApplication(user: User): Promise<TutorApplication | null>

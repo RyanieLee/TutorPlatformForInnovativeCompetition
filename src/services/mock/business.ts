@@ -87,7 +87,7 @@ export class MockBusinessService implements BusinessService {
     return this.readArray(REPORTS_KEY, isReport) ?? []
   }
 
-  async listTutors(query: { keyword?: string; subject?: string } = {}): Promise<Tutor[]> {
+  async listTutors(query: { keyword?: string; subject?: string; page?: number; pageSize?: number } = {}): Promise<Tutor[]> {
     const approved = this.applications().find(a => a.userId === 'demo-tutor' && a.status === 'approved')
     const list = seedTutors.map(t => t.id === 't001' && approved ? {
       ...t, name: approved.displayName, university: approved.university, major: approved.major,
@@ -95,8 +95,9 @@ export class MockBusinessService implements BusinessService {
       pricePerHour: approved.pricePerHour, introduction: approved.introduction, availability: approved.availability
     } : { ...t, subjects: [...t.subjects], tags: [...t.tags] })
     const keyword = query.keyword?.trim().toLowerCase() ?? ''
-    return list.filter(t => (!query.subject || query.subject === '全部' || t.subjects.includes(query.subject)) &&
+    const filtered = list.filter(t => (!query.subject || query.subject === '全部' || t.subjects.includes(query.subject)) &&
       [t.name, t.university, t.area, ...t.subjects, ...t.tags].join(' ').toLowerCase().includes(keyword))
+    return query.page && query.pageSize ? filtered.slice((query.page - 1) * query.pageSize, query.page * query.pageSize) : filtered
   }
   async getTutor(id: string): Promise<Tutor | null> { return (await this.listTutors()).find(t => t.id === id) ?? null }
 

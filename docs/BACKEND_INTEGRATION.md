@@ -8,19 +8,20 @@
 
 ## 数据模型
 
-迁移：`server/prisma/migrations/20261015000000_init/migration.sql`。
+迁移：`server/prisma/migrations/20261015000000_init/migration.sql` 和 `20261018000000_tutor_subject/migration.sql`。后者为已有家教资料回填科目索引，保留原 `subjectsJson` 字段和公开 API 格式。
 
 | 表 | 关系和用途 |
 |---|---|
 | User | 登录 ID 唯一；角色 parent/tutor/admin、状态 active/disabled；保存 scrypt 加盐哈希 |
 | Session | 用户外键；只存随机令牌 SHA-256 摘要、到期与撤销时间 |
 | TutorProfile | 每个家教用户至多一份；公开标记和查询索引 |
+| TutorSubject | 家教资料的科目索引；按科目精确筛选和数据库分页 |
 | TutorApplication | 每个家教用户至多一份当前申请；draft/pending/approved/rejected，保存审核快照 |
 | Booking | 家长与家教资料外键；状态约束、所属人索引、每家长请求标识去重 |
 | Report | 举报人与家教资料外键；open/resolved |
 | AuditLog | 审核、预约和举报处理的最小操作记录（不写密码或令牌） |
 
-`TutorApplication` 中重复的资料字段是**审核快照**，与可编辑的 `TutorProfile` 分离，防止待审期间展示内容变化。科目目前以 JSON 字符串保存，服务端筛选后分页；数据量增长时应规范化为关联表并改成数据库筛选。SQLite 的角色、状态和价格 CHECK 约束在 SQL 迁移里维护；修改 Prisma schema 时同步维护后续迁移。
+`TutorApplication` 中重复的资料字段是**审核快照**，与可编辑的 `TutorProfile` 分离，防止待审期间展示内容变化。`TutorProfile.subjectsJson` 继续作为前端输出和旧资料兼容字段，`TutorSubject` 是同步维护的查询索引；公开列表在数据库中按关键词、科目过滤并分页，首页每次加载 20 位。迁移已回填旧资料，自动化测试覆盖回填和精确科目筛选。`page` 为 1–100000，`pageSize` 为 1–50；列表返回 `meta.total`。SQLite 的角色、状态和价格 CHECK 约束在 SQL 迁移里维护；修改 Prisma schema 时同步维护后续迁移。
 
 ## API
 

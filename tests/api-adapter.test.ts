@@ -28,6 +28,16 @@ it('API 列表将首页“全部”筛选映射为无科目过滤', async () => 
   expect(request.mock.calls[0][0].url).toBe('http://127.0.0.1:3001/api/tutors')
 })
 
+it('API 列表传递关键词、科目和分页参数', async () => {
+  vi.stubEnv('VITE_API_BASE_URL', 'http://127.0.0.1:3001')
+  vi.resetModules()
+  const request = vi.fn((options: {url:string;success:(value:unknown)=>void}) => options.success({statusCode:200,data:{data:[]}}))
+  vi.stubGlobal('uni', {request, getStorageSync:()=>''})
+  const { ApiBusinessService } = await import('../src/services/api/business')
+  await new ApiBusinessService().listTutors({keyword:'示例 大学',subject:'数学',page:2,pageSize:20})
+  expect(request.mock.calls[0][0].url).toBe('http://127.0.0.1:3001/api/tutors?keyword=%E7%A4%BA%E4%BE%8B%20%E5%A4%A7%E5%AD%A6&subject=%E6%95%B0%E5%AD%A6&page=2&pageSize=20')
+})
+
 it('预约网络失败后重试复用请求标识，避免生成重复预约', async () => {
   vi.stubEnv('VITE_API_BASE_URL', 'http://127.0.0.1:3001')
   vi.resetModules()

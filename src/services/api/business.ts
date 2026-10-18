@@ -8,7 +8,7 @@ import { apiRequest } from './client'
 const enc = encodeURIComponent
 export class ApiBusinessService implements BusinessService {
  private pendingBooking: {fingerprint:string; requestId:string}|null = null
- listTutors(query?:{keyword?:string;subject?:string}) { const q:string[]=[];if(query?.keyword)q.push('keyword='+enc(query.keyword));if(query?.subject && query.subject !== '全部')q.push('subject='+enc(query.subject));return apiRequest<Tutor[]>('GET','/api/tutors'+(q.length?'?'+q.join('&'):''),undefined,false) }
+ listTutors(query?:{keyword?:string;subject?:string;page?:number;pageSize?:number}) { const q:string[]=[];if(query?.keyword)q.push('keyword='+enc(query.keyword));if(query?.subject && query.subject !== '全部')q.push('subject='+enc(query.subject));if(query?.page)q.push('page='+query.page);if(query?.pageSize)q.push('pageSize='+query.pageSize);return apiRequest<Tutor[]>('GET','/api/tutors'+(q.length?'?'+q.join('&'):''),undefined,false) }
  async getTutor(id:string) { try{return await apiRequest<Tutor>('GET','/api/tutors/'+enc(id),undefined,false)}catch(error){if((error as {code?:string}).code==='NOT_FOUND')return null;throw error} }
  getMyApplication(_user:User) { return apiRequest<TutorApplication|null>('GET','/api/tutor-applications/mine') }
  saveApplicationDraft(_user:User,input:TutorApplicationInput) { return apiRequest<TutorApplication>('PUT','/api/tutor-applications/draft',input) }
