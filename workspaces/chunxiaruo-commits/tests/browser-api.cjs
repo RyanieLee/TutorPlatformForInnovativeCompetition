@@ -1,5 +1,5 @@
 const { chromium }=require(process.env.PLAYWRIGHT_MODULE || 'playwright');
-const assert=require('node:assert/strict'),fs=require('node:fs');
+const assert=require('node:assert/strict');
 const base=process.env.B_H5_URL || 'http://127.0.0.1:5174',api=process.env.B_API_URL || 'http://127.0.0.1:3107',shots='workspaces/chunxiaruo-commits/docs/screenshots';
 function password(role){const value=process.env['SEED_'+role.toUpperCase()+'_PASSWORD'];if(!value)throw new Error('请设置虚构演示账户的 SEED_*_PASSWORD 环境变量');return value;}
 async function request(path,method='GET',token,body){const r=await fetch(api+path,{method,headers:{'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{})},...(body?{body:JSON.stringify(body)}:{})});return {status:r.status,body:await r.json()};}
@@ -52,6 +52,6 @@ await tutor.route('**/api/tutor-applications/draft',async route=>{await route.fe
 await text(tutor,'保存草稿').click();await modal(tutor,'确认').click();await text(tutor,'状态待确认').waitFor({timeout:5000});
 assert(await text(tutor,'保存草稿').evaluate(el=>el.hasAttribute('disabled')),'未知状态必须禁止继续提交');
 await tutor.unroute('**/api/tutor-applications/draft');await tutor.unroute('**/api/tutor-applications/mine');await text(tutor,'刷新审核状态').click();await text(tutor,'审核状态：草稿').waitFor();
-assert.deepEqual(errors,[]);fs.writeFileSync('workspaces/chunxiaruo-commits/.local/api/check.json',JSON.stringify({bookingId:booking.id,reportId:report.body.data.id,expectedStatus:'completed'},null,2));
+assert.deepEqual(errors,[]);
 console.log(JSON.stringify({mode:'api',result:'通过',checks:['家长界面创建预约','取消确认零请求','重复点击一次接受','家长刷新看到接受/完成','错误角色403与页面引导','已通过资料先草稿后送审','拒绝重提再批准','举报处理','桌面/390/320布局','丢失响应且查询失败时锁定状态','恢复查询'],pageErrors:errors}));await browser.close();
 })().catch(e=>{console.error(e);process.exit(1)});
