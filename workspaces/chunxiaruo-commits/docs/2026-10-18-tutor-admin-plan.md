@@ -1,6 +1,6 @@
 # B 家教端与管理员端 Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task in the current session. Steps use checkbox (`- [ ]`) syntax for tracking. Native execution is recommended; execution method awaits user selection.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task in the current session. Steps use checkbox (`- [ ]`) syntax for tracking. 用户已确认当前会话执行；本地任务已完成，实际调整与未验证项见 VALIDATION.md。
 
 **Goal:** 在现有 H5 站点交付可联调的家教入驻/预约和管理员审核/举报闭环，保留后续 UI 美化空间。
 
@@ -152,9 +152,13 @@
 | 桌面/手机浏览器链路 | 实际截图与操作结果，页面脚本无未处理错误 |
 | git diff 2622d5849338ce1a1e3d9a14add587b94b84543a...HEAD --name-only | 每一项都位于三个授权目录 |
 
+## 执行结果
+
+2026-10-19：用户确认计划并要求中文网站。五项任务已执行，本地验证结果见 VALIDATION.md，交接见 DEMO_B.md。原计划中的个人目录运行时路径因小程序编译限制迁至 src/pages/tutor/shared/，均在授权范围内。任务中的逐条复选框保留原规划形式，以验证记录作为实际完成依据。
+
 ## 自检
 
 - 设计中的入驻、预约、审核、举报、身份、统计限制、UI 可迭代及双端验证均已映射到任务。
 - 复用现有共享类型，不添加互相冲突的状态值和公共服务签名。
 - 五类重点失败场景已分配自动化测试或明确的浏览器/API 验收；不能用编译替代交互验收。
-- 当前仅计划完成；复选框均未勾选，不能当成实际测试或实现结果。
+- 复选框保留原始计划形式；实际执行结果、证据与未验证项以 VALIDATION.md 为准。
