@@ -65,7 +65,9 @@ npx playwright install --with-deps chromium
 npm run test:e2e
 ```
 
-E2E 自动启动 5173（Mock）、5174（API）和 3001（API）；端口必须空闲。创建临时 SQLite 数据库与随机测试密码，结束后删除，不修改个人 .env 或正式演示数据库。四个项目：Mock/API × 桌面 Chrome/Pixel 7 手机视口。覆盖搜索、空输入、无匹配、推荐理由、详情预约、家教接受、家长查询与刷新恢复、家教申请、管理员审核；API 另含断网错误与重试。HTML 报告 `playwright-report/index.html`；失败 trace 在 `test-results/`，CI 保存 artifact。截图位于 `docs/screenshots/d-*.png`。
+E2E 自动启动 5173（Mock）、5174（桌面 API 前端）、5175（手机 API 前端）和 3001/3002（两套独立 API）；这些端口必须空闲。各 API 实例使用独立临时 SQLite 数据库及独立限流状态，测试不会通过放宽登录限流来绕过反复切换角色的限制。测试使用随机密码，结束后删除临时库，不修改个人 .env 或正式演示数据库。
+
+四个项目：Mock/API × 桌面 Chrome/Pixel 7 手机视口。覆盖组合筛选、空输入、无匹配、推荐理由、详情预约、家教接受和完成、家长查询与刷新恢复、家教申请与审核；进一步验证资料退回草稿后从列表及推荐撤下、重新审核后恢复，已有预约仍可查。API 另含断网错误与重试。HTML 报告 `playwright-report/index.html`；失败 trace 在 `test-results/`，CI 保存 artifact。截图位于 `docs/screenshots/d-*.png`。
 
 这验证 Chromium 浏览器与手机视口，不代表微信开发者工具、iOS Safari 或真机验证。
 
