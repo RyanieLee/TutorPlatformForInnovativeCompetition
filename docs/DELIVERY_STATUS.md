@@ -1,6 +1,23 @@
 # 集成交付状态（2026-10-20）
 
-## 当前结果
+
+
+## 最新补缺：#14 已合并
+
+代码已分两批提交 f426d25、f4d8f2b，并通过 PR #14 合入 main（755e15d）。此前 #12 也已通过完整 CI 后合并。用户已明确免人工评审，合并仍保留 PR 和验证记录。
+
+- 家长端补齐品牌导航、桌面/手机布局、价格区间组合筛选，修正 API 存储文案，预约显示价格/方式并防重复提交。
+- 后端正式 API_CONTRACT 已交付；db:init 在迁移前检查环境与密码，保留已有业务记录；demo:serve 可初始化、编译并启动。
+- 已交付 Linux 服务/持久目录/HTTPS 模板，**未在公网主机上部署实测**。
+- 验证：前端44/44、B9/9、后端19/19；Mock/API H5与小程序4项构建通过；四浏览器项目10项适用测试通过、2项API专用用例在Mock下跳过。
+- 实际检查：通过HTTP完成预约，停止进程，重复初始化同一数据库并重启后，同一预约仍completed，家教ID不变；实际demo:serve启动和健康检查也通过。test:demo已纳入CI。
+- PR #14 的远程 build/server/e2e 全部通过：[CI 39390511077](https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/actions/runs/39390511077)。
+
+入口：[PARENT_EXPERIENCE](PARENT_EXPERIENCE.md)、[API_CONTRACT](API_CONTRACT.md)、[SERVER_DEMO](SERVER_DEMO.md)。公网HTTPS/API及微信真机仍受下文所列账户/资源条件限制；没有把模板和本机验收当作公网部署成功。
+
+以下保留 #12 的历史验收记录，测试数量以本节最新结果为准。
+
+## #12 历史记录
 
 开发后端、规则推荐、B 中文工作台与授课方式筛选已随 #11 合入 main（基线 `be6c1a2`）。本次在该基线上补充公开资料一致性修复、预约完成和资料撤回/恢复的整体验收，并刷新 README、路线图与演示说明。本次变更以对应 PR 的合并状态为准。
 
