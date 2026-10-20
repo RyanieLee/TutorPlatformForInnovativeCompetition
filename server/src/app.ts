@@ -5,16 +5,19 @@ import { z } from 'zod'
 import { actor, ApiError, audit, fail, hashPassword, newToken, publicUser, tokenHash, verifyPassword } from './core'
 import { applicationSchema, bookingSchema, draftSchema, idParam, parse, reportSchema } from './validation'
 import { application, booking, report, tutor } from './format'
+import { containsPersonalInfo, createMatchModel, type MatchModel } from './match-model'
 
 const include = { tutorProfile: true } as const
 const rules = { accept: { from: ['pending'], to: 'accepted', role: 'tutor' }, reject: { from: ['pending'], to: 'rejected', role: 'tutor' }, cancel: { from: ['pending','accepted'], to: 'cancelled', role: 'parent' }, complete: { from: ['accepted'], to: 'completed', role: 'tutor' } } as const
 const data = (input: z.infer<typeof applicationSchema>) => { const {subjects,...fields}=input;return {...fields,subjectsJson:JSON.stringify(subjects)} }
 
-export function buildApp(db: PrismaClient = new PrismaClient()) {
+export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: MatchModel = createMatchModel()) {
  const app=Fastify({logger:process.env.NODE_ENV==='test'?false:{redact:['req.headers.authorization','req.body.password']},bodyLimit:32768})
  app.register(cors,{origin:(process.env.CORS_ORIGINS||'http://localhost:5173,http://127.0.0.1:5173').split(',').map(s=>s.trim())})
  const attempts=new Map<string,{count:number;resetAt:number}>()
  const ipAttempts=new Map<string,{count:number;resetAt:number}>()
+ const modelUserAttempts=new Map<string,{count:number;resetAt:number}>()
+ const modelIpAttempts=new Map<string,{count:number;resetAt:number}>()
  const dummyHash=hashPassword(newToken())
  function countAttempt(store:typeof attempts,key:string,now:number):number {
   const previous=store.get(key)
@@ -53,6 +56,17 @@ export function buildApp(db: PrismaClient = new PrismaClient()) {
  })
  app.get('/api/auth/me',async request=>({data:publicUser((await actor(request,db)).user)}))
  app.post('/api/auth/logout',async request=>{const{session}=await actor(request,db);await db.session.update({where:{id:session.id},data:{revokedAt:new Date()}});return{data:{ok:true}}})
+
+ app.get('/api/match-assistant/status',async()=>({data:{enabled:matchModel.enabled}}))
+ app.post('/api/match-assistant/parse',async request=>{
+  const{user}=await actor(request,db,['parent'])
+  if(!matchModel.enabled)return fail('MODEL_UNAVAILABLE',503,'模型解析尚未配置，请使用规则匹配表单')
+  const{brief}=parse(z.object({brief:z.string().trim().min(6).max(160)}).strict(),request.body)
+  if(containsPersonalInfo(brief))return fail('INVALID',400,'需求中不要填写姓名、联系方式或地址')
+  const now=Date.now()
+  if(countAttempt(modelUserAttempts,user.id,now)>10||countAttempt(modelIpAttempts,request.ip,now)>30)return fail('RATE_LIMIT',429,'模型解析请求过于频繁，请稍后重试')
+  return{data:await matchModel.parse(brief)}
+ })
 
  app.get('/api/tutors',async request=>{
   const q=parse(z.object({keyword:z.string().max(80).optional(),subject:z.string().max(30).optional(),teachingMode:z.enum(['线上','线下']).optional(),minPrice:z.coerce.number().min(0).max(2000).multipleOf(0.01).optional(),maxPrice:z.coerce.number().min(0).max(2000).multipleOf(0.01).optional(),page:z.coerce.number().int().min(1).max(100000).default(1),pageSize:z.coerce.number().int().min(1).max(50).default(20)}).refine(q=>q.minPrice===undefined||q.maxPrice===undefined||q.minPrice<=q.maxPrice,{message:'最低价格不能高于最高价格'}),request.query)
