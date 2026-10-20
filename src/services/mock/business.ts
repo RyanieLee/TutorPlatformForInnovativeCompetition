@@ -88,8 +88,10 @@ export class MockBusinessService implements BusinessService {
   }
 
   async listTutors(query: TutorQuery = {}): Promise<Tutor[]> {
-    const approved = this.applications().find(a => a.userId === 'demo-tutor' && a.status === 'approved')
-    const list = seedTutors.map(t => t.id === 't001' && approved ? {
+    const application = this.applications().find(a => a.userId === 'demo-tutor')
+    const approved = application?.status === 'approved' ? application : undefined
+    // 尚无申请时保留种子演示；一旦进入审核流程，仅公开审核通过的资料。
+    const list = seedTutors.filter(t => t.id !== 't001' || !application || !!approved).map(t => t.id === 't001' && approved ? {
       ...t, name: approved.displayName, university: approved.university, major: approved.major,
       subjects: [...approved.subjects], teachingMode: approved.teachingMode, area: approved.area,
       pricePerHour: approved.pricePerHour, introduction: approved.introduction, availability: approved.availability
