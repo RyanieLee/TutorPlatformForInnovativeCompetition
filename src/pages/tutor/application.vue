@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { apiMode } from '../../config/runtime'
 import { computed, reactive, ref } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
 import { businessService } from '../../services/business'
@@ -45,7 +46,7 @@ async function save(submit: boolean) {
   try {
     const input: TutorApplicationInput = { ...form, subjects: [...form.subjects], pricePerHour: Number(priceText.value) }
     application.value = submit ? await businessService.submitApplication(user, input) : await businessService.saveApplicationDraft(user, input)
-    uni.showToast({ title: submit ? '已提交演示申请' : '草稿已保存', icon: 'none' })
+    uni.showToast({ title: submit ? (apiMode ? '申请已提交' : '已提交演示申请') : '草稿已保存', icon: 'none' })
   } catch (cause) { uni.showToast({ title: errorMessage(cause), icon: 'none' }) }
   finally { busy.value = false }
 }
@@ -55,7 +56,7 @@ const goProfile = () => uni.switchTab({ url: '/pages/profile/index' })
 <template>
   <view class="page">
     <view class="heading">家教入驻资料</view>
-    <view class="notice">仅填写虚构演示资料。请勿上传身份证、学生证或其他真实敏感信息；审核只是本机模拟。</view>
+    <view class="notice">{{ apiMode ? '开发版申请会写入本地数据库；请只填写虚构资料，审核不代表真实资质核验。' : '仅填写虚构演示资料。请勿上传身份证、学生证或其他真实敏感信息；审核只是本机模拟。' }}</view>
     <view v-if="!ready" class="surface-card empty-state">正在读取资料…</view>
     <view v-else-if="!currentSession" class="surface-card empty-state">登录家教演示身份后填写资料<button class="primary-button action" @click="goLogin">演示登录</button></view>
     <view v-else-if="!canAccess(['tutor'])" class="surface-card empty-state">当前身份不能提交家教申请<button class="secondary-button action" @click="goProfile">前往我的</button></view>
@@ -74,7 +75,7 @@ const goProfile = () => uni.switchTab({ url: '/pages/profile/index' })
         <view class="field"><text>可授课时间 *</text><input v-model="form.availability" maxlength="100" placeholder="例如：周末下午"/></view>
         <view class="field"><text>个人介绍 *</text><textarea v-model="form.introduction" maxlength="500" placeholder="至少 10 字，描述演示教学特点"/></view>
         <button class="secondary-button action" :loading="busy" @click="save(false)">保存草稿</button>
-        <button class="primary-button action" :loading="busy" @click="save(true)">提交模拟审核</button>
+        <button class="primary-button action" :loading="busy" @click="save(true)">{{ apiMode ? '提交开发审核' : '提交模拟审核' }}</button>
       </view>
     </template>
   </view>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { apiMode } from '../../config/runtime'
 import { ref } from 'vue'
 import { onLoad, onShow } from '@dcloudio/uni-app'
 import { businessService } from '../../services/business'
@@ -30,7 +31,7 @@ async function act(action: BookingAction) {
   busy.value = true
   try {
     booking.value = await businessService.transitionBooking(user, booking.value.id, action)
-    uni.showToast({ title: '已更新演示预约', icon: 'none' })
+    uni.showToast({ title: apiMode ? '预约状态已更新' : '已更新演示预约', icon: 'none' })
   } catch (cause) { uni.showToast({ title: errorMessage(cause), icon: 'none' }) }
   finally { busy.value = false }
 }
@@ -38,12 +39,12 @@ const goLogin = () => uni.navigateTo({ url: '/pages/auth/login?role=tutor' })
 const goProfile = () => uni.switchTab({ url: '/pages/profile/index' })
 </script>
 <template>
-  <view class="page"><view class="heading">收到的预约</view><view class="notice">仅本机模拟状态，不会联系家长或老师；请勿填写真实资料。</view>
+  <view class="page"><view class="heading">收到的预约</view><view class="notice">{{ apiMode ? '开发版预约不会联系家长或老师；请勿填写真实资料。' : '仅本机模拟状态，不会联系家长或老师；请勿填写真实资料。' }}</view>
     <view v-if="!ready" class="surface-card empty-state">正在读取预约…</view>
     <view v-else-if="!currentSession" class="surface-card empty-state">请进入家教演示身份<button class="primary-button action" @click="goLogin">演示登录</button></view>
     <view v-else-if="!canAccess(['tutor'])" class="surface-card empty-state">当前身份不能查看家教预约<button class="secondary-button action" @click="goProfile">前往我的</button></view>
     <view v-else-if="error" class="surface-card empty-state">{{ error }}<button class="secondary-button action" @click="load">重试</button></view>
-    <view v-else-if="booking" class="surface-card detail"><view class="status">{{ bookingStatusLabels[booking.status] }}</view><view class="row"><text>辅导科目</text><text>{{ booking.subject }}</text></view><view class="row"><text>预约称呼</text><text>{{ booking.studentName }}</text></view><view class="row"><text>演示联系号码</text><text>{{ booking.contact }}</text></view><view class="row"><text>期望时间</text><text>{{ booking.expectedTime }}</text></view><view class="row"><text>辅导需求</text><text>{{ booking.note || '未填写' }}</text></view><view v-if="booking.status === 'pending'"><button class="primary-button action" :loading="busy" @click="act('accept')">接受预约</button><button class="secondary-button action" :loading="busy" @click="act('reject')">拒绝预约</button></view><button v-if="booking.status === 'accepted'" class="secondary-button action" :loading="busy" @click="act('complete')">标记已完成</button></view>
+    <view v-else-if="booking" class="surface-card detail"><view class="status">{{ bookingStatusLabels[booking.status] }}</view><view class="row"><text>辅导科目</text><text>{{ booking.subject }}</text></view><view class="row"><text>预约称呼</text><text>{{ booking.studentName }}</text></view><view v-if="!apiMode" class="row"><text>演示联系号码</text><text>{{ booking.contact }}</text></view><view class="row"><text>期望时间</text><text>{{ booking.expectedTime }}</text></view><view class="row"><text>辅导需求</text><text>{{ booking.note || '未填写' }}</text></view><view v-if="booking.status === 'pending'"><button class="primary-button action" :loading="busy" @click="act('accept')">接受预约</button><button class="secondary-button action" :loading="busy" @click="act('reject')">拒绝预约</button></view><button v-if="booking.status === 'accepted'" class="secondary-button action" :loading="busy" @click="act('complete')">标记已完成</button></view>
   </view>
 </template>
 <style scoped>

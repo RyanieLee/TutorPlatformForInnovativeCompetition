@@ -1,3 +1,5 @@
+import { apiMode } from '../config/runtime'
+import { ApiAuthService } from './api/auth'
 import type { AuthLoginRequest, AuthService, AuthSession, UserRole } from '../types/auth'
 
 const STORAGE_KEY = 'tutor-platform:mock-session:v1'
@@ -47,7 +49,7 @@ export class MockAuthService implements AuthService {
   }
 }
 
-export const authService: AuthService = new MockAuthService()
+export const authService: AuthService = apiMode ? new ApiAuthService() : new MockAuthService()
 
 /** 页面仅用它控制演示流程；真实 API 必须重新校验角色。 */
 export function hasRole(role: UserRole | undefined, allowed: readonly UserRole[]): boolean {

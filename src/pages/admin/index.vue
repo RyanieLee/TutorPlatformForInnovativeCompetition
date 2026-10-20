@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { apiMode } from '../../config/runtime'
 import { computed, ref } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
 import { businessService } from '../../services/business'
@@ -42,7 +43,7 @@ const goProfile = () => uni.switchTab({ url: '/pages/profile/index' })
 const openApplication = (id: string) => uni.navigateTo({ url: '/pages/admin/application-detail?id=' + id })
 </script>
 <template>
-  <view class="page"><view class="heading">模拟审核台</view><view class="notice">仅本机演示审核与举报处理，不代表真实身份或资质核验，也没有服务端权限保障。</view>
+  <view class="page"><view class="heading">{{ apiMode ? '开发审核台' : '模拟审核台' }}</view><view class="notice">{{ apiMode ? '开发 API 在服务端校验管理员角色；本地审核不代表真实资质核验。' : '仅本机演示审核与举报处理，不代表真实身份或资质核验，也没有服务端权限保障。' }}</view>
     <view v-if="!ready" class="surface-card empty-state">正在读取审核数据…</view>
     <view v-else-if="!currentSession" class="surface-card empty-state">请进入管理员演示身份<button class="primary-button action" @click="goLogin">演示登录</button></view>
     <view v-else-if="!canAccess(['admin'])" class="surface-card empty-state">当前身份不能进入审核台<button class="secondary-button action" @click="goProfile">前往我的</button></view>

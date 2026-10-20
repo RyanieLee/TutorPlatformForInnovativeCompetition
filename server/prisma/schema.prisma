@@ -1,0 +1,143 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String             @id @default(cuid())
+  loginId       String             @unique
+  displayName   String
+  role          String
+  status        String             @default("active")
+  passwordHash  String
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  sessions      Session[]
+  tutorProfile  TutorProfile?
+  application   TutorApplication?
+  parentBookings Booking[]         @relation("ParentBookings")
+  reports       Report[]           @relation("ReporterReports")
+  auditLogs     AuditLog[]         @relation("ActorAuditLogs")
+
+  @@index([role, status])
+}
+
+model Session {
+  id        String    @id @default(cuid())
+  tokenHash String    @unique
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId, expiresAt])
+}
+
+model TutorProfile {
+  id           String    @id @default(cuid())
+  userId       String    @unique
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  displayName  String
+  university   String
+  major        String
+  subjectsJson String
+  teachingMode String
+  area         String
+  pricePerHour Int
+  introduction String
+  availability String
+  published    Boolean   @default(false)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  bookings     Booking[]
+  reports      Report[]
+  subjects     TutorSubject[]
+
+  @@index([published, createdAt])
+}
+
+model TutorSubject {
+  tutorProfileId String
+  subject        String
+  tutorProfile   TutorProfile @relation(fields: [tutorProfileId], references: [id], onDelete: Cascade)
+
+  @@id([tutorProfileId, subject])
+  @@index([subject, tutorProfileId])
+}
+
+model TutorApplication {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  displayName     String
+  university      String
+  major           String
+  subjectsJson    String
+  teachingMode    String
+  area            String
+  pricePerHour    Int
+  introduction    String
+  availability    String
+  status          String    @default("draft")
+  rejectionReason String?
+  reviewedAt      DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([status, updatedAt])
+}
+
+model Booking {
+  id             String       @id @default(cuid())
+  parentId       String
+  parent         User         @relation("ParentBookings", fields: [parentId], references: [id], onDelete: Restrict)
+  tutorProfileId String
+  requestId      String?
+  tutorProfile   TutorProfile @relation(fields: [tutorProfileId], references: [id], onDelete: Restrict)
+  studentName    String
+  subject        String
+  expectedTime   String
+  note           String       @default("")
+  status         String       @default("pending")
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@unique([parentId, requestId])
+  @@index([parentId, createdAt])
+  @@index([tutorProfileId, status, createdAt])
+}
+
+model Report {
+  id             String       @id @default(cuid())
+  reporterId     String
+  reporter       User         @relation("ReporterReports", fields: [reporterId], references: [id], onDelete: Restrict)
+  tutorProfileId String
+  tutorProfile   TutorProfile @relation(fields: [tutorProfileId], references: [id], onDelete: Restrict)
+  reason         String
+  description    String       @default("")
+  status         String       @default("open")
+  resolvedAt     DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([status, createdAt])
+  @@index([tutorProfileId, createdAt])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String
+  actor      User     @relation("ActorAuditLogs", fields: [actorId], references: [id], onDelete: Restrict)
+  action     String
+  entityType String
+  entityId   String
+  createdAt  DateTime @default(now())
+
+  @@index([entityType, entityId, createdAt])
+  @@index([actorId, createdAt])
+}

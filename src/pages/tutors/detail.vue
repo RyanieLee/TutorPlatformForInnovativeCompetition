@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { apiMode } from '../../config/runtime'
 import { ref } from 'vue'
 import { onLoad, onShow } from '@dcloudio/uni-app'
 import { businessService } from '../../services/business'
@@ -28,9 +29,9 @@ function report() { if (tutor.value) uni.navigateTo({ url: '/pages/reports/creat
     <view class="panel profile"><view class="avatar">{{ tutor.name.slice(1, 2) }}</view><text class="name">{{ tutor.name }}</text><text class="muted">{{ tutor.university }} · {{ tutor.major }}</text><view class="tags"><text v-for="tag in tutor.tags" :key="tag">{{ tag }}</text></view></view>
     <view class="panel"><text class="heading">教学信息</text><view class="line"><text>擅长科目</text><text>{{ tutor.subjects.join('、') }}</text></view><view class="line"><text>授课地区</text><text>{{ tutor.area }}</text></view><view class="line"><text>授课方式</text><text>{{ tutor.teachingMode }}</text></view><view class="line"><text>参考课时费</text><text class="price">¥{{ tutor.pricePerHour }}/小时</text></view><view v-if="tutor.availability" class="line"><text>可授课时间</text><text>{{ tutor.availability }}</text></view></view>
     <view class="panel"><text class="heading">自我介绍</text><text class="description">{{ tutor.introduction }}</text></view>
-    <view class="notice">虚构演示资料，未进行真实身份、资质或价格验证。</view>
-    <button class="primary-button" @click="book">发起演示预约</button>
-    <view class="report" @click="report">举报演示资料</view>
+    <view class="notice">{{ apiMode ? '开发版资料尚未进行真实身份、资质或价格验证。' : '虚构演示资料，未进行真实身份、资质或价格验证。' }}</view>
+    <button class="primary-button" @click="book">{{ apiMode ? '发起开发预约' : '发起演示预约' }}</button>
+    <view class="report" @click="report">{{ apiMode ? '举报开发资料' : '举报演示资料' }}</view>
   </view>
   <view v-else class="page surface-card empty-state">未找到老师，请返回首页。</view>
 </template>
