@@ -9,6 +9,8 @@ import type { Tutor } from '../../types/tutor'
 
 const query = ref('')
 const subject = ref('全部')
+const teachingMode = ref<'全部' | '线上' | '线下'>('全部')
+const teachingModes = ['全部', '线上', '线下'] as const
 const subjects = ['全部', '数学', '英语', '语文', '物理', '化学']
 const tutors = ref<Tutor[]>([])
 const loading = ref(false)
@@ -26,7 +28,7 @@ async function loadTutors(append = false) {
   loading.value = true
   error.value = ''
   try {
-    const result = await businessService.listTutors({ keyword: query.value, subject: subject.value, page, pageSize })
+    const result = await businessService.listTutors({ keyword: query.value, subject: subject.value, teachingMode: teachingMode.value === '全部' ? undefined : teachingMode.value, page, pageSize })
     if (current === requestId) {
       tutors.value = append ? [...tutors.value, ...result] : result
       loadedPage.value = page
@@ -38,7 +40,7 @@ async function loadTutors(append = false) {
     if (current === requestId) loading.value = false
   }
 }
-watch([query, subject], () => { void loadTutors() })
+watch([query, subject, teachingMode], () => { void loadTutors() })
 onShow(() => { void loadTutors() })
 const openMatch = () => uni.navigateTo({ url: '/pages/match/index' })
 const openTutor = (id: string) => uni.navigateTo({ url: '/pages/tutors/detail?id=' + id })
@@ -53,6 +55,8 @@ const openProfile = () => uni.switchTab({ url: '/pages/profile/index' })
     <input v-model="query" class="search" placeholder="搜索科目、地区或老师姓名"/>
     <view class="heading">按科目查找</view>
     <scroll-view scroll-x><view class="filters"><text v-for="s in subjects" :key="s" class="chip" :class="{ active: subject === s }" @click="subject = s">{{ s }}</text></view></scroll-view>
+    <view class="heading">授课方式</view>
+    <view class="filters teaching-modes"><text v-for="mode in teachingModes" :key="mode" class="chip" :class="{ active: teachingMode === mode }" @click="teachingMode = mode">{{ mode }}</text></view>
     <view class="heading">推荐家教 <text class="count">已显示 {{ tutors.length }} 位{{ apiMode ? '开发版' : '演示' }}老师</text></view>
     <view v-if="loading && !tutors.length" class="empty">{{ apiMode ? '正在读取家教…' : '正在读取演示家教…' }}</view>
     <view v-else-if="error && !tutors.length" class="empty">{{ error }} <text class="retry" @click="loadTutors()">重试</text></view>

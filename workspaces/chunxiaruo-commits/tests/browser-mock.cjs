@@ -1,0 +1,38 @@
+const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const fs = require('node:fs');
+const assert = require('node:assert/strict');
+const root = 'workspaces/chunxiaruo-commits/docs/screenshots';
+fs.mkdirSync(root,{recursive:true});
+(async()=>{
+ const browser=await chromium.launch({headless:true,...(process.env.BROWSER_EXECUTABLE ? {executablePath:process.env.BROWSER_EXECUTABLE} : {})});
+ const ctx=await browser.newContext({viewport:{width:1440,height:1000}});
+ const page=await ctx.newPage();const errors=[];page.on('pageerror',e=>{errors.push(e.message);console.log('ERROR_URL',page.url(),e.stack)});
+ const text=t=>page.getByText(t,{exact:true}); const field=t=>page.locator('.b-field').filter({hasText:t}).locator('input,textarea').first();
+ const goto=async p=>{await page.goto((process.env.B_H5_URL || 'http://127.0.0.1:5173')+'/#/'+p);};
+ const login=async role=>{await goto('pages/auth/login');await text(role).click();await text('进入演示模式').click();await page.waitForURL(url=>!url.hash.includes('auth/login'));};
+ await goto('pages/tutor/workbench');await text('前往登录').waitFor();
+ await login('大学生家教');await goto('pages/tutor/application');await field('展示称呼').waitFor();
+ await field('展示称呼').fill('中文演示老师');
+ await field('学校').fill('示例大学');
+ await field('专业').fill('数学专业');
+ await text('数学').click();await field('服务地区').fill('示例大学城');
+ await field('参考价格').fill('80');
+ await field('可授课时间').fill('周末下午');
+ await field('个人介绍').fill('这里是仅供演示使用的虚构家教教学介绍。');
+ await text('提交审核').click();await page.locator('.uni-modal__btn').filter({hasText:/^取消$/}).click();await text('提交审核').waitFor();
+ await text('提交审核').click();await page.locator('.uni-modal__btn').filter({hasText:/^确认$/}).click();await page.locator('.b-section').filter({hasText:/^申请已提交$/}).waitFor();
+ await login('管理员演示');await goto('pages/admin/index');await text('查看并审核').click();
+ await text('拒绝申请').click();await page.getByText('请填写拒绝原因，不能只填写空格。',{exact:true}).waitFor();
+ await field('拒绝原因').fill('请补充演示教学资料');
+ await text('拒绝申请').click();await page.locator('.uni-modal__btn').filter({hasText:/^确认$/}).click();await page.getByText('申请已拒绝，家教可查看原因后重新提交。',{exact:true}).waitFor();
+ await login('大学生家教');await goto('pages/tutor/application');await page.locator('.b-reason').filter({hasText:'请补充演示教学资料'}).waitFor();
+ await text('提交审核').click();await page.locator('.uni-modal__btn').filter({hasText:/^确认$/}).click();await page.locator('.b-section').filter({hasText:/^申请已提交$/}).waitFor();
+ await login('管理员演示');await goto('pages/admin/index');await text('查看并审核').click();await text('批准申请').click();await page.locator('.uni-modal__btn').filter({hasText:/^确认$/}).click();await text('申请已通过审核。').waitFor();
+ await goto('pages/admin/index');await text('统计仅为本次加载记录，非全平台总量。开发服务最多返回 50 条申请、100 条举报。').waitFor();
+ await page.screenshot({path:root+'/mock-admin-desktop.png',fullPage:true});
+ for(const width of [390,320]){await page.setViewportSize({width,height:1000});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'管理员窄屏溢出');await page.screenshot({path:root+'/mock-admin-'+width+'.png',fullPage:true});}
+ await login('大学生家教');await goto('pages/tutor/workbench');await text('查看 / 编辑资料').waitFor();await page.screenshot({path:root+'/mock-tutor-mobile.png',fullPage:true});
+ await text('退出 / 切换账户').click();await page.locator('.uni-modal__btn').filter({hasText:/^确认$/}).click();await page.waitForURL(/auth\/login/);await goto('pages/admin/index');await text('前往登录').waitFor();
+ assert.deepEqual(errors,[]);console.log(JSON.stringify({mode:'mock',result:'通过',checks:['未登录引导','提交确认取消','入驻提交','拒绝原因校验','管理员拒绝','家教重提','管理员批准','桌面/390/320无横向溢出','退出切换'],pageErrors:errors}));
+ await browser.close();
+})().catch(e=>{console.error(e);process.exit(1)});

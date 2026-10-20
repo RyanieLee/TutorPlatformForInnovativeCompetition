@@ -185,3 +185,16 @@ describe('公开家教数据库分页',()=>{
   expect((await app.inject({method:'GET',url:'/api/tutors?pageSize=51'})).statusCode).toBe(400)
  })
 })
+
+
+it('方式过滤在数据库分页前执行，均可同时兼容线上和线下',async()=>{
+  await db.tutorProfile.update({where:{id:'bulk-profile-0'},data:{teachingMode:'均可'}})
+  await db.tutorProfile.update({where:{id:'bulk-profile-1'},data:{teachingMode:'线下'}})
+  const online=await app.inject({method:'GET',url:'/api/tutors?keyword=批量&subject=数学&teachingMode=线上&pageSize=50'})
+  expect(online.json().meta.total).toBe(20)
+  expect(online.json().data.every((t:{teachingMode:string})=>['线上','均可'].includes(t.teachingMode))).toBe(true)
+  const pages=await Promise.all([1,2].map(page=>app.inject({method:'GET',url:`/api/tutors?keyword=批量&subject=数学&teachingMode=线下&pageSize=1&page=${page}`})))
+  expect(pages.map(r=>r.json().meta.total)).toEqual([2,2])
+  expect(new Set(pages.flatMap(r=>r.json().data.map((t:{id:string})=>t.id)))).toEqual(new Set(['bulk-profile-0','bulk-profile-1']))
+  expect((await app.inject({method:'GET',url:'/api/tutors?teachingMode=其他'})).statusCode).toBe(400)
+})

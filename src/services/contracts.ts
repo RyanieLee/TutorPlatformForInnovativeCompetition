@@ -3,8 +3,16 @@ import type { BookingInput, BookingOrder, Tutor } from '../types/tutor'
 import type { ReportReason, TutorApplication, TutorApplicationInput, TutorReport } from '../types/business'
 import type { BookingAction } from './rules'
 
+export interface TutorQuery {
+  keyword?: string
+  subject?: string
+  teachingMode?: '线上' | '线下'
+  page?: number
+  pageSize?: number
+}
+
 export interface BusinessService {
-  listTutors(query?: { keyword?: string; subject?: string; page?: number; pageSize?: number }): Promise<Tutor[]>
+  listTutors(query?: TutorQuery): Promise<Tutor[]>
   getTutor(id: string): Promise<Tutor | null>
 
   getMyApplication(user: User): Promise<TutorApplication | null>

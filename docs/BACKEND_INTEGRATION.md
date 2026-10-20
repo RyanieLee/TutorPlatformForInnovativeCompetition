@@ -21,7 +21,7 @@
 | Report | 举报人与家教资料外键；open/resolved |
 | AuditLog | 审核、预约和举报处理的最小操作记录（不写密码或令牌） |
 
-`TutorApplication` 中重复的资料字段是**审核快照**，与可编辑的 `TutorProfile` 分离，防止待审期间展示内容变化。`TutorProfile.subjectsJson` 继续作为前端输出和旧资料兼容字段，`TutorSubject` 是同步维护的查询索引；公开列表在数据库中按关键词、科目过滤并分页，首页每次加载 20 位。迁移已回填旧资料，自动化测试覆盖回填和精确科目筛选。`page` 为 1–100000，`pageSize` 为 1–50；列表返回 `meta.total`。SQLite 的角色、状态和价格 CHECK 约束在 SQL 迁移里维护；修改 Prisma schema 时同步维护后续迁移。
+`TutorApplication` 中重复的资料字段是**审核快照**，与可编辑的 `TutorProfile` 分离，防止待审期间展示内容变化。`TutorProfile.subjectsJson` 继续作为前端输出和旧资料兼容字段，`TutorSubject` 是同步维护的查询索引；公开列表在数据库中按关键词、科目、授课方式过滤并分页，首页每次加载 20 位。迁移已回填旧资料，自动化测试覆盖回填和精确科目筛选。`page` 为 1–100000，`pageSize` 为 1–50；列表返回 `meta.total`。SQLite 的角色、状态和价格 CHECK 约束在 SQL 迁移里维护；修改 Prisma schema 时同步维护后续迁移。
 
 入驻申请提交、草稿保存和资料编辑通过申请状态条件更新；同一账号并发重复提交最多一次成功，其余返回冲突。资料与申请状态在同一事务中更新，待审期间不能通过并发请求修改资料。
 
@@ -32,7 +32,7 @@
 | GET | `/health` | 公开 | 数据库健康检查 |
 | POST | `/api/auth/login` | 公开，限流 | 开发账户登录 |
 | GET / POST | `/api/auth/me` / `/api/auth/logout` | 登录 | 当前用户 / 撤销会话 |
-| GET | `/api/tutors`、`/api/tutors/:id` | 公开 | 仅已审核且发布的资料；列表支持 keyword、subject、page、pageSize |
+| GET | `/api/tutors`、`/api/tutors/:id` | 公开 | 仅已审核且发布的资料；列表支持 keyword、subject、teachingMode、page、pageSize |
 | GET / PATCH | `/api/tutors/me` | tutor | 自己的资料；修改会撤销公开并使申请回到草稿 |
 | PUT / POST / GET | `/api/tutor-applications/draft`、`/api/tutor-applications`、`/api/tutor-applications/mine` | tutor | 草稿、提交、状态；已待审/已通过时禁止重复提交 |
 | GET | `/api/admin/tutor-applications`、`/api/admin/tutor-applications/:id` | admin | 申请列表（含历史状态）和详情 |
@@ -57,3 +57,5 @@
 - 前端：继续通过 `src/services/contracts.ts` 和 `src/services/auth.ts` 接入，勿在页面直接读写数据库或相信客户端角色；微信真机请求单独验证。
 - 后端：未来用 PostgreSQL 替换 Prisma datasource 与迁移；完成真实用户注册/微信授权、资料核验、通知、隐私策略和部署运维。
 - 集成：PR 按 `main -> feat/foundation-auth-parent -> feat/core-business-foundation -> feat/real-backend-integration` 顺序审查或调整基线，勿直接覆盖未合并成果。
+
+D 集成 #7：`teachingMode` 可省略或为 `线上`/`线下`；传值时包含该方式及 `均可`，服务端先组合过滤再分页，非法值返回 400。前端“全部”不发送此参数。未改变原调用方或数据表。

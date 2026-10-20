@@ -3,7 +3,7 @@ import type { User, UserRole } from '../../types/auth'
 import type { BookingInput, BookingOrder, BookingStatus, LegacyBookingOrder, Tutor } from '../../types/tutor'
 import type { ReportReason, TutorApplication, TutorApplicationInput, TutorReport } from '../../types/business'
 import { LEGACY_BOOKINGS_KEY } from '../../utils/bookings'
-import type { BusinessService } from '../contracts'
+import type { BusinessService, TutorQuery } from '../contracts'
 import { BusinessError } from '../errors'
 import { nextBookingStatus, validateTutorApplication, type BookingAction } from '../rules'
 import type { StoragePort } from './storage'
@@ -87,7 +87,7 @@ export class MockBusinessService implements BusinessService {
     return this.readArray(REPORTS_KEY, isReport) ?? []
   }
 
-  async listTutors(query: { keyword?: string; subject?: string; page?: number; pageSize?: number } = {}): Promise<Tutor[]> {
+  async listTutors(query: TutorQuery = {}): Promise<Tutor[]> {
     const approved = this.applications().find(a => a.userId === 'demo-tutor' && a.status === 'approved')
     const list = seedTutors.map(t => t.id === 't001' && approved ? {
       ...t, name: approved.displayName, university: approved.university, major: approved.major,
@@ -95,7 +95,7 @@ export class MockBusinessService implements BusinessService {
       pricePerHour: approved.pricePerHour, introduction: approved.introduction, availability: approved.availability
     } : { ...t, subjects: [...t.subjects], tags: [...t.tags] })
     const keyword = query.keyword?.trim().toLowerCase() ?? ''
-    const filtered = list.filter(t => (!query.subject || query.subject === '全部' || t.subjects.includes(query.subject)) &&
+    const filtered = list.filter(t => (!query.teachingMode || t.teachingMode === '均可' || t.teachingMode === query.teachingMode) && (!query.subject || query.subject === '全部' || t.subjects.includes(query.subject)) &&
       [t.name, t.university, t.area, ...t.subjects, ...t.tags].join(' ').toLowerCase().includes(keyword))
     return query.page && query.pageSize ? filtered.slice((query.page - 1) * query.pageSize, query.page * query.pageSize) : filtered
   }

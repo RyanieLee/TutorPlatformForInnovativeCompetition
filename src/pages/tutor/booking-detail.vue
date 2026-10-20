@@ -1,52 +1,54 @@
 <script setup lang="ts">
-import { apiMode } from '../../config/runtime'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { onLoad, onShow } from '@dcloudio/uni-app'
+import RoleShell from './shared/RoleShell.vue'
+import AsyncState from './shared/AsyncState.vue'
+import { useRolePage, identityKey, assertIdentity, confirmAction, isConflict, formatTime } from './shared/page'
+import { runConfirmedAction } from './shared/operations'
+import { tutorActions } from './shared/bookings'
+import { currentSession, canAccess } from '../../utils/session'
 import { businessService } from '../../services/business'
-import { errorMessage } from '../../services/errors'
 import { bookingStatusLabels, type BookingAction } from '../../services/rules'
+import { errorMessage } from '../../services/errors'
 import type { BookingOrder } from '../../types/tutor'
-import { canAccess, currentSession, restoreSession } from '../../utils/session'
-
-const id = ref('')
-const booking = ref<BookingOrder | null>(null)
-const ready = ref(false)
-const busy = ref(false)
-const error = ref('')
-onLoad(options => { id.value = String(options?.id ?? '') })
-onShow(() => { void load() })
-async function load() {
-  ready.value = false
-  error.value = ''
-  try {
-    await restoreSession()
-    const user = currentSession.value?.user
-    if (user && canAccess(['tutor'])) booking.value = await businessService.getTutorBooking(user, id.value)
-  } catch (cause) { error.value = errorMessage(cause) }
-  finally { ready.value = true }
-}
+const id = ref(''), booking = ref<BookingOrder | null>(null), busy = ref(false), feedback = ref('')
+const { ready, error, authorized, load, scope } = useRolePage('tutor', () => { booking.value = null; feedback.value = '' })
+const actions = computed(() => booking.value ? tutorActions(booking.value.status) : [])
+const labels: Partial<Record<BookingAction, string>> = { accept: '接受预约', reject: '拒绝预约', complete: '标记已完成' }
+onLoad(o => { id.value = String(o?.id ?? '') })
+const refresh = () => { if (!busy.value) void load(user => businessService.getTutorBooking(user, id.value), data => { booking.value = data }) }
+onShow(refresh)
 async function act(action: BookingAction) {
-  const user = currentSession.value?.user
-  if (!user || !booking.value || busy.value) return
-  busy.value = true
+  const user = currentSession.value?.user, target = booking.value, owner = identityKey()
+  if (!user || !target || busy.value || !canAccess(['tutor']) || !actions.value.includes(action)) return
+  const operation = scope.begin()
+  busy.value = true; feedback.value = ''
   try {
-    booking.value = await businessService.transitionBooking(user, booking.value.id, action)
-    uni.showToast({ title: apiMode ? '预约状态已更新' : '已更新演示预约', icon: 'none' })
-  } catch (cause) { uni.showToast({ title: errorMessage(cause), icon: 'none' }) }
-  finally { busy.value = false }
+    const result = await runConfirmedAction({ confirm: () => confirmAction(labels[action] ?? '确认操作', action === 'reject' ? '拒绝后该预约将结束，不能恢复。确认拒绝吗？' : action === 'complete' ? '请确认本次演示预约已完成，完成后不能再修改。' : '接受后预约将进入待完成状态。确认接受吗？'), execute: () => { assertIdentity(owner); if (!operation.isCurrent()) throw new Error('操作已失效'); return businessService.transitionBooking(user, target.id, action) } })
+    if (result.kind === 'success' && operation.isCurrent()) { booking.value = result.value; feedback.value = '预约状态已更新为：' + bookingStatusLabels[result.value.status]; uni.showToast({ title: '预约状态已更新', icon: 'none' }) }
+  } catch (cause) {
+    if (operation.isCurrent()) {
+      feedback.value = errorMessage(cause)
+      if (isConflict(cause)) { try { const latest = await businessService.getTutorBooking(user, target.id); if (operation.isCurrent()) { booking.value = latest; feedback.value += '，已刷新最新状态。' } } catch { if (operation.isCurrent()) { booking.value = null; feedback.value += '；刷新失败，请重新加载。' } } }
+    }
+  } finally { busy.value = false }
 }
-const goLogin = () => uni.navigateTo({ url: '/pages/auth/login?role=tutor' })
-const goProfile = () => uni.switchTab({ url: '/pages/profile/index' })
 </script>
 <template>
-  <view class="page"><view class="heading">收到的预约</view><view class="notice">{{ apiMode ? '开发版预约不会联系家长或老师；请勿填写真实资料。' : '仅本机模拟状态，不会联系家长或老师；请勿填写真实资料。' }}</view>
-    <view v-if="!ready" class="surface-card empty-state">正在读取预约…</view>
-    <view v-else-if="!currentSession" class="surface-card empty-state">请进入家教演示身份<button class="primary-button action" @click="goLogin">演示登录</button></view>
-    <view v-else-if="!canAccess(['tutor'])" class="surface-card empty-state">当前身份不能查看家教预约<button class="secondary-button action" @click="goProfile">前往我的</button></view>
-    <view v-else-if="error" class="surface-card empty-state">{{ error }}<button class="secondary-button action" @click="load">重试</button></view>
-    <view v-else-if="booking" class="surface-card detail"><view class="status">{{ bookingStatusLabels[booking.status] }}</view><view class="row"><text>辅导科目</text><text>{{ booking.subject }}</text></view><view class="row"><text>预约称呼</text><text>{{ booking.studentName }}</text></view><view v-if="!apiMode" class="row"><text>演示联系号码</text><text>{{ booking.contact }}</text></view><view class="row"><text>期望时间</text><text>{{ booking.expectedTime }}</text></view><view class="row"><text>辅导需求</text><text>{{ booking.note || '未填写' }}</text></view><view v-if="booking.status === 'pending'"><button class="primary-button action" :loading="busy" @click="act('accept')">接受预约</button><button class="secondary-button action" :loading="busy" @click="act('reject')">拒绝预约</button></view><button v-if="booking.status === 'accepted'" class="secondary-button action" :loading="busy" @click="act('complete')">标记已完成</button></view>
-  </view>
+  <RoleShell title="收到的预约" role="tutor">
+    <template v-if="authorized">
+      <AsyncState v-if="!ready" state="loading" message="正在读取预约详情…" />
+      <AsyncState v-else-if="error" state="error" :message="error" @retry="refresh" />
+      <template v-else>
+        <view v-if="feedback" class="b-info" role="status">{{ feedback }}</view>
+        <view v-if="booking" class="b-grid">
+          <view class="b-panel"><view class="b-section">预约信息</view><text class="b-status">{{ bookingStatusLabels[booking.status] }}</text><view class="b-row"><text>辅导科目</text><text>{{ booking.subject }}</text></view><view class="b-row"><text>预约称呼</text><text>{{ booking.studentName }}</text></view><view class="b-row"><text>期望时间</text><text>{{ booking.expectedTime }}</text></view><view class="b-row"><text>创建时间</text><text>{{ formatTime(booking.createdAt) }}</text></view><view class="b-row"><text>更新时间</text><text>{{ formatTime(booking.updatedAt) }}</text></view></view>
+          <view class="b-panel"><view class="b-section">辅导需求与处理</view><view class="b-text">{{ booking.note || '未填写补充需求。' }}</view><view v-if="!actions.length" class="b-info">该预约已结束，仅可查看记录，不能继续处理。</view><view class="b-actions"><button v-for="a in actions" :key="a" class="b-button" :class="{ danger: a === 'reject' }" :disabled="busy" :loading="busy" @click="act(a)">{{ labels[a] }}</button></view><button class="b-button secondary" :disabled="busy" @click="refresh">刷新预约状态</button></view>
+        </view>
+        <view v-else class="b-panel"><text>预约暂时不可读取。</text><button class="b-button secondary" :disabled="busy" @click="refresh">重新加载</button></view>
+      </template>
+    </template>
+  </RoleShell>
 </template>
-<style scoped>
-.page{padding:28rpx}.heading{font-size:36rpx;font-weight:700;margin-bottom:20rpx}.notice{background:#fff3dd;color:#946c38;padding:20rpx;border-radius:14rpx;font-size:23rpx;line-height:1.7}.surface-card{margin-top:22rpx}.status{font-size:31rpx;font-weight:700;color:#2868e4;margin-bottom:16rpx}.row{display:flex;justify-content:space-between;gap:20rpx;padding:18rpx 0;border-bottom:1rpx solid #eef2f7;color:#54647d;font-size:25rpx}.row text:last-child{text-align:right}.action{margin-top:22rpx}
-</style>
+<style scoped src="./shared/workflow.css"></style>
+

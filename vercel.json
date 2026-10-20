@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npm ci --include=dev --no-audit --no-fund",
+  "buildCommand": "VITE_DATA_MODE=mock VITE_BASE_PATH=/ npm run build:h5",
+  "outputDirectory": "dist/build/h5"
+}

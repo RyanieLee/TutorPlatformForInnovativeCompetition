@@ -14,7 +14,13 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - run: npm run typecheck
       - run: npm test
+      - run: npm run test:workflows
+      - run: npm run typecheck:workflows
       - run: npm run build:h5
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mock-h5-dist
+          path: dist/build/h5
       - run: npm run build:mp-weixin
       - run: npm run build:h5
         env:
