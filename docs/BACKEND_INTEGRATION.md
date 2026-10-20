@@ -1,3 +1,5 @@
+> 正式字段、状态码和权限契约：[API_CONTRACT.md](API_CONTRACT.md)。一键初始化、持久化与部署：[SERVER_DEMO.md](SERVER_DEMO.md)。
+
 # V0.4 开发后端与联调契约
 
 ## 定位和运行方式
@@ -32,7 +34,7 @@
 | GET | `/health` | 公开 | 数据库健康检查 |
 | POST | `/api/auth/login` | 公开，限流 | 开发账户登录 |
 | GET / POST | `/api/auth/me` / `/api/auth/logout` | 登录 | 当前用户 / 撤销会话 |
-| GET | `/api/tutors`、`/api/tutors/:id` | 公开 | 仅已审核且发布的资料；列表支持 keyword、subject、teachingMode、page、pageSize |
+| GET | `/api/tutors`、`/api/tutors/:id` | 公开 | 仅已审核且发布的资料；列表支持 keyword、subject、teachingMode、minPrice、maxPrice、page、pageSize |
 | GET / PATCH | `/api/tutors/me` | tutor | 自己的资料；修改会撤销公开并使申请回到草稿 |
 | PUT / POST / GET | `/api/tutor-applications/draft`、`/api/tutor-applications`、`/api/tutor-applications/mine` | tutor | 草稿、提交、状态；已待审/已通过时禁止重复提交 |
 | GET | `/api/admin/tutor-applications`、`/api/admin/tutor-applications/:id` | admin | 申请列表（含历史状态）和详情 |
