@@ -13,3 +13,6 @@ server/prisma/*.db
 server/prisma/*.db-*
 server/prisma/*.db-journal
 .idea/
+
+playwright-report/
+test-results/

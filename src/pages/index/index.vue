@@ -40,6 +40,7 @@ async function loadTutors(append = false) {
 }
 watch([query, subject], () => { void loadTutors() })
 onShow(() => { void loadTutors() })
+const openMatch = () => uni.navigateTo({ url: '/pages/match/index' })
 const openTutor = (id: string) => uni.navigateTo({ url: '/pages/tutors/detail?id=' + id })
 const openOrders = () => uni.switchTab({ url: '/pages/orders/index' })
 const openProfile = () => uni.switchTab({ url: '/pages/profile/index' })
@@ -48,6 +49,7 @@ const openProfile = () => uni.switchTab({ url: '/pages/profile/index' })
 <template>
   <view class="page">
     <view class="hero"><text class="eyebrow">校园家教 · 连接好老师</text><text class="headline">找到适合自己的学习伙伴</text><text class="intro">按科目筛选老师，查看教学信息，{{ apiMode ? '发起开发版预约。' : '发起本机演示预约。' }}</text><view class="links"><text @click="openOrders">我的预约 →</text><text @click="openProfile">个人中心 →</text></view></view>
+    <button class="ai-entry" @click="openMatch">AI 家教匹配 · 查看推荐理由 →</button>
     <input v-model="query" class="search" placeholder="搜索科目、地区或老师姓名"/>
     <view class="heading">按科目查找</view>
     <scroll-view scroll-x><view class="filters"><text v-for="s in subjects" :key="s" class="chip" :class="{ active: subject === s }" @click="subject = s">{{ s }}</text></view></scroll-view>
@@ -59,6 +61,6 @@ const openProfile = () => uni.switchTab({ url: '/pages/profile/index' })
   </view>
 </template>
 <style scoped>
-.page{padding:25rpx}.hero{background:linear-gradient(135deg,#1852c8,#3c8be9);border-radius:26rpx;padding:40rpx 30rpx;color:#fff;display:flex;flex-direction:column}.eyebrow{font-size:23rpx;opacity:.85}.headline{font-size:40rpx;font-weight:800;margin-top:20rpx}.intro{font-size:24rpx;line-height:1.6;opacity:.9;margin-top:15rpx}.links{display:flex;gap:22rpx;margin-top:26rpx;font-size:25rpx}.links text{background:#ffffff33;padding:13rpx 18rpx;border-radius:50rpx}.search{background:#fff;border-radius:16rpx;padding:20rpx 24rpx;height:90rpx;margin-top:25rpx;font-size:26rpx}.heading{font-size:31rpx;font-weight:700;margin:35rpx 0 20rpx}.count{font-size:22rpx;color:#8590a4;font-weight:400;float:right}.filters{display:flex;gap:12rpx;padding-bottom:8rpx}.chip{flex-shrink:0;background:#fff;color:#54637b;border-radius:60rpx;padding:16rpx 27rpx;font-size:24rpx}.active{background:#2868e4;color:#fff}.notice,.empty{text-align:center;color:#929aab;font-size:22rpx;line-height:1.7;margin:30rpx 0}.retry{color:#2868e4;margin-left:10rpx}
+.ai-entry{margin-top:24rpx;text-align:left;background:#e8f0ff;color:#1b56b4;border-radius:18rpx;font-size:27rpx;padding:12rpx 24rpx}.page{padding:25rpx}.hero{background:linear-gradient(135deg,#1852c8,#3c8be9);border-radius:26rpx;padding:40rpx 30rpx;color:#fff;display:flex;flex-direction:column}.eyebrow{font-size:23rpx;opacity:.85}.headline{font-size:40rpx;font-weight:800;margin-top:20rpx}.intro{font-size:24rpx;line-height:1.6;opacity:.9;margin-top:15rpx}.links{display:flex;gap:22rpx;margin-top:26rpx;font-size:25rpx}.links text{background:#ffffff33;padding:13rpx 18rpx;border-radius:50rpx}.search{background:#fff;border-radius:16rpx;padding:20rpx 24rpx;height:90rpx;margin-top:25rpx;font-size:26rpx}.heading{font-size:31rpx;font-weight:700;margin:35rpx 0 20rpx}.count{font-size:22rpx;color:#8590a4;font-weight:400;float:right}.filters{display:flex;gap:12rpx;padding-bottom:8rpx}.chip{flex-shrink:0;background:#fff;color:#54637b;border-radius:60rpx;padding:16rpx 27rpx;font-size:24rpx}.active{background:#2868e4;color:#fff}.notice,.empty{text-align:center;color:#929aab;font-size:22rpx;line-height:1.7;margin:30rpx 0}.retry{color:#2868e4;margin-left:10rpx}
 .load-more{background:#fff;border-radius:16rpx;color:#2868e4;text-align:center;padding:22rpx;margin:24rpx 0;font-size:25rpx}
 </style>

@@ -44,27 +44,45 @@
     },
     {
       "path": "pages/tutor/workbench",
-      "style": { "navigationBarTitleText": "家教工作台" }
+      "style": {
+        "navigationBarTitleText": "家教工作台"
+      }
     },
     {
       "path": "pages/tutor/application",
-      "style": { "navigationBarTitleText": "家教入驻资料" }
+      "style": {
+        "navigationBarTitleText": "家教入驻资料"
+      }
     },
     {
       "path": "pages/tutor/booking-detail",
-      "style": { "navigationBarTitleText": "收到的预约" }
+      "style": {
+        "navigationBarTitleText": "收到的预约"
+      }
     },
     {
       "path": "pages/admin/index",
-      "style": { "navigationBarTitleText": "模拟审核台" }
+      "style": {
+        "navigationBarTitleText": "模拟审核台"
+      }
     },
     {
       "path": "pages/admin/application-detail",
-      "style": { "navigationBarTitleText": "审核申请" }
+      "style": {
+        "navigationBarTitleText": "审核申请"
+      }
     },
     {
       "path": "pages/reports/create",
-      "style": { "navigationBarTitleText": "举报演示资料" }
+      "style": {
+        "navigationBarTitleText": "举报演示资料"
+      }
+    },
+    {
+      "path": "pages/match/index",
+      "style": {
+        "navigationBarTitleText": "AI 家教匹配"
+      }
     }
   ],
   "tabBar": {
@@ -73,9 +91,18 @@
     "backgroundColor": "#ffffff",
     "borderStyle": "black",
     "list": [
-      { "pagePath": "pages/index/index", "text": "首页" },
-      { "pagePath": "pages/orders/index", "text": "我的预约" },
-      { "pagePath": "pages/profile/index", "text": "我的" }
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/orders/index",
+        "text": "我的预约"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的"
+      }
     ]
   },
   "globalStyle": {
