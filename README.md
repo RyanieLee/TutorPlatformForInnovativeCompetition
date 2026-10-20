@@ -1,5 +1,7 @@
 # 校园家教撮合平台（创新创业项目）
 
+D 交付：**AI 家教匹配规则演示**（无需密钥）已接入首页和原预约流程。启动、演示身份、数据重置与五分钟脚本见 [DEMO_GUIDE.md](DEMO_GUIDE.md)；部署实况与操作见 [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)，架构与规则见 [docs/MATCHING_DESIGN.md](docs/MATCHING_DESIGN.md)。
+
 > **V0.4 · Mock / 开发 API 双模式** | 微信小程序 + H5 网页 | uni-app + Vue 3 + TypeScript
 
 ## 项目简介
