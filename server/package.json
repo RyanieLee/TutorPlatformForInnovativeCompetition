@@ -10,7 +10,10 @@
     "db:generate": "prisma generate",
     "db:migrate": "node scripts/migrate.mjs",
     "db:reset": "prisma migrate reset --force --skip-seed",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:seed": "tsx prisma/seed.ts",
+    "db:init": "node scripts/init-demo.mjs",
+    "demo:serve": "node scripts/serve-demo.mjs",
+    "test:demo": "node scripts/check-demo.mjs"
   },
   "dependencies": {
     "@fastify/cors": "^10.1.0",

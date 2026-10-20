@@ -97,7 +97,7 @@ export class MockBusinessService implements BusinessService {
       pricePerHour: approved.pricePerHour, introduction: approved.introduction, availability: approved.availability
     } : { ...t, subjects: [...t.subjects], tags: [...t.tags] })
     const keyword = query.keyword?.trim().toLowerCase() ?? ''
-    const filtered = list.filter(t => (!query.teachingMode || t.teachingMode === '均可' || t.teachingMode === query.teachingMode) && (!query.subject || query.subject === '全部' || t.subjects.includes(query.subject)) &&
+    const filtered = list.filter(t => (query.minPrice === undefined || t.pricePerHour >= query.minPrice) && (query.maxPrice === undefined || t.pricePerHour <= query.maxPrice) && (!query.teachingMode || t.teachingMode === '均可' || t.teachingMode === query.teachingMode) && (!query.subject || query.subject === '全部' || t.subjects.includes(query.subject)) &&
       [t.name, t.university, t.area, ...t.subjects, ...t.tags].join(' ').toLowerCase().includes(keyword))
     return query.page && query.pageSize ? filtered.slice((query.page - 1) * query.pageSize, query.page * query.pageSize) : filtered
   }

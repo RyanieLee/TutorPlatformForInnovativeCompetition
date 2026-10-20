@@ -31,10 +31,8 @@ cd server
 npm ci
 cp .env.example .env
 # 编辑 .env，设置三个独立的 SEED_*_PASSWORD，至少 12 位；不提交 .env
-npm run db:generate
-npm run db:migrate
-npm run db:seed
-npm run dev
+npm run demo:serve
+# 等价于非破坏性 db:init → build → 启动，日常重启可用 npm start
 ```
 
 另开终端在仓库根目录执行：
@@ -91,3 +89,5 @@ E2E 自动启动 5173（Mock）、5174（桌面 API 前端）、5175（手机 AP
 - 当前未实现大模型；“无密钥降级”即完整规则模式，不演示虚构模型调用。
 
 架构和创新说明：[MATCHING_DESIGN](docs/MATCHING_DESIGN.md)。批次和合并清单：[D_INTEGRATION_PLAN](docs/D_INTEGRATION_PLAN.md)。实际测试结果：[D_ACCEPTANCE](docs/D_ACCEPTANCE.md)。
+
+家长端现已提供桌面品牌导航、响应式卡片网格及价格区间筛选；正式接口契约见 [docs/API_CONTRACT.md](docs/API_CONTRACT.md)，初始化和持久化方案见 [docs/SERVER_DEMO.md](docs/SERVER_DEMO.md)。
