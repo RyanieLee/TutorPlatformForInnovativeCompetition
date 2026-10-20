@@ -21,8 +21,8 @@ async function enter(role: 'parent' | 'tutor') {
   <view class="page">
     <view class="surface-card"><text class="title">选择你的演示身份</text><text class="muted-note intro">这是模拟注册入口，不会创建真实账号。选定身份后可在“我的”退出并切换。</text></view>
     <view class="surface-card choice"><text class="choice-title">学生 / 家长</text><text class="muted-note">找老师，填写和查看本机演示预约。</text><button class="primary-button" :loading="busy" @click="enter('parent')">以此身份体验</button></view>
-    <view class="surface-card choice"><text class="choice-title">大学生家教</text><text class="muted-note">家教工作台由团队后续接入；目前可预览身份状态。</text><button class="secondary-button" :loading="busy" @click="enter('tutor')">以此身份体验</button></view>
-    <view class="muted-note note">管理员身份仅保留在类型和接口中，当前不提供演示入口。</view>
+    <view class="surface-card choice"><text class="choice-title">大学生家教</text><text class="muted-note">填写演示入驻资料、查看审核状态和收到的预约。</text><button class="secondary-button" :loading="busy" @click="enter('tutor')">以此身份体验</button></view>
+    <view class="muted-note note">管理员演示入口位于登录页，不会创建真实管理员账号。</view>
   </view>
 </template>
 

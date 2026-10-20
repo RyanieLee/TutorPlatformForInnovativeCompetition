@@ -11,6 +11,8 @@ const goLogin = () => uni.navigateTo({ url: '/pages/auth/login' })
 const goRegister = () => uni.navigateTo({ url: '/pages/auth/register' })
 const goOrders = () => uni.switchTab({ url: '/pages/orders/index' })
 const goHome = () => uni.switchTab({ url: '/pages/index/index' })
+const goWorkbench = () => uni.navigateTo({ url: '/pages/tutor/workbench' })
+const goAdmin = () => uni.navigateTo({ url: '/pages/admin/index' })
 
 async function signOut() {
   try {
@@ -28,7 +30,7 @@ async function signOut() {
     <view v-if="!ready" class="surface-card muted-note panel">正在读取演示身份…</view>
     <view v-else-if="!currentSession" class="surface-card panel"><view class="section-title">开始体验</view><button class="primary-button" @click="goLogin">演示登录</button><button class="secondary-button second" @click="goRegister">选择身份 / 模拟注册</button></view>
     <view v-else class="surface-card panel"><view class="section-title">当前身份</view><view class="row"><text>角色</text><text>{{ roleLabels[currentSession.user.role] }}</text></view><view class="row"><text>状态</text><text>本机演示会话</text></view><button class="secondary-button second" @click="signOut">退出演示身份</button></view>
-    <view class="surface-card panel"><view class="item" @click="goOrders">我的预约 <text>→</text></view><view class="item" @click="goHome">浏览家教 <text>→</text></view></view>
+    <view class="surface-card panel"><view v-if="currentSession?.user.role === 'tutor'" class="item" @click="goWorkbench">家教工作台 <text>→</text></view><view v-if="currentSession?.user.role === 'admin'" class="item" @click="goAdmin">模拟审核台 <text>→</text></view><view v-if="currentSession?.user.role === 'parent'" class="item" @click="goOrders">我的预约 <text>→</text></view><view class="item" @click="goHome">浏览家教 <text>→</text></view></view>
     <view class="muted-note tip">本版本没有真实身份认证、支付或老师通知。请勿填写真实私人信息。</view>
   </view>
 </template>

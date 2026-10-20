@@ -6,6 +6,7 @@
   "scripts": {
     "dev:h5": "uni",
     "typecheck": "vue-tsc --noEmit",
+    "test": "vitest run",
     "build:h5": "uni build",
     "dev:mp-weixin": "uni -p mp-weixin",
     "build:mp-weixin": "uni build -p mp-weixin"
@@ -24,6 +25,7 @@
     "@dcloudio/vite-plugin-uni": "3.0.0-5020420260813003",
     "typescript": "^5.4.5",
     "vite": "5.2.8",
+    "vitest": "^2.1.9",
     "vue-tsc": "^2.2.12"
   },
   "engines": {
