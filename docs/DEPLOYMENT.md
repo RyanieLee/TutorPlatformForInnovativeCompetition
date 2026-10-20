@@ -4,9 +4,15 @@
 
 当前没有可交付的公开 HTTPS 地址。`gh api .../pages` 返回 404；尝试启用 Pages 返回 **403 Resource not accessible by integration**。这是当前 GitHub 集成权限边界，不是网站构建失败。Sites 技能所需 `site-workflow.mjs` 在当前执行环境中不可用，技能资源读取也失败，因此没有创建空站点或声称发布成功。
 
+## 已补充的 Vercel 静态部署配置
+
+根目录 `vercel.json` 已设置 uni-app 构建与 `dist/build/h5` 产物，并明确构建 Mock 模式与根路径。安装并连接 Vercel 后，可直接导入本仓库的 main 分支发布，无需前端密钥。不要配置旧的 VITE_API_BASE_URL；这个托管版本仅为本机 Mock 演示。当前 Vercel 尚未确认连接，不宣称已发布。
+
+当前 GitHub Actions 还会上传 `mock-h5-dist` artifact，便于下载静态产物部署；artifact 下载地址不是公开网站 URL。
+
 ## 方案一：独立 Mock 静态演示（无需 API 密钥）
 
-仓库管理员在 GitHub **Settings → Pages → Source: GitHub Actions** 启用 Pages。随后在 Actions 选择 **Deploy Mock H5 demo → Run workflow**，branch 选择 `feat/ai-demo-deployment`（最终合并后选择 main）。工作流会类型检查、测试、以仓库子路径构建 Mock H5 并部署。首次部署也可能需要管理员在 Environment 中允许该分支。
+仓库管理员在 [Settings → Pages](https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/settings/pages) 将 **Source 设置为 GitHub Actions** 启用 Pages（现有 API 凭据不能代为启用）。随后在 Actions 选择 **Deploy Mock H5 demo → Run workflow**，branch 选择 `main`（D 及依赖已合并）。工作流会类型检查、测试、以仓库子路径构建 Mock H5 并部署。首次部署也可能需要管理员在 Environment 中允许该分支。
 
 只有 workflow 的 deployment 返回的 `page_url` 且页面验收通过后，才将 URL 记录为公开演示地址。不要把按用户名拼接的预测 URL 当作已上线地址。
 

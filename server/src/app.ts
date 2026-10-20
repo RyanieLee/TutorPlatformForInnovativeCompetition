@@ -55,11 +55,12 @@ export function buildApp(db: PrismaClient = new PrismaClient()) {
  app.post('/api/auth/logout',async request=>{const{session}=await actor(request,db);await db.session.update({where:{id:session.id},data:{revokedAt:new Date()}});return{data:{ok:true}}})
 
  app.get('/api/tutors',async request=>{
-  const q=parse(z.object({keyword:z.string().max(80).optional(),subject:z.string().max(30).optional(),page:z.coerce.number().int().min(1).max(100000).default(1),pageSize:z.coerce.number().int().min(1).max(50).default(20)}),request.query)
+  const q=parse(z.object({keyword:z.string().max(80).optional(),subject:z.string().max(30).optional(),teachingMode:z.enum(['线上','线下']).optional(),page:z.coerce.number().int().min(1).max(100000).default(1),pageSize:z.coerce.number().int().min(1).max(50).default(20)}),request.query)
   const keyword=q.keyword?.trim(),subject=q.subject?.trim()
   const where:Prisma.TutorProfileWhereInput={
    published:true,user:{status:'active',application:{status:'approved'}},
    ...(subject?{subjects:{some:{subject}}}:{}),
+   ...(q.teachingMode?{teachingMode:{in:[q.teachingMode,'均可']}}:{}),
    ...(keyword?{OR:[{displayName:{contains:keyword}},{university:{contains:keyword}},{major:{contains:keyword}},{area:{contains:keyword}},{subjects:{some:{subject:{contains:keyword}}}}]}:{})
   }
   const [total,rows]=await Promise.all([

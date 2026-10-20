@@ -113,3 +113,16 @@ describe('举报', () => {
     await expect(api.resolveReport(admin, report.id)).rejects.toMatchObject({ code: 'CONFLICT' })
   })
 })
+
+
+describe('授课方式与分页组合', () => {
+  it('线上/线下都包含均可，并在过滤后分页', async () => {
+    const s=service()
+    const online=await s.listTutors({subject:'数学',teachingMode:'线上'})
+    const offline=await s.listTutors({subject:'数学',teachingMode:'线下'})
+    expect(online.map(t=>t.id)).toEqual(['t001','t005','t006'])
+    expect(offline.map(t=>t.id)).toEqual(['t001','t003','t005'])
+    expect((await s.listTutors({subject:'数学',teachingMode:'线下',page:2,pageSize:1})).map(t=>t.id)).toEqual(['t003'])
+    expect(await s.listTutors({keyword:'小何',subject:'数学',teachingMode:'线下'})).toEqual([])
+  })
+})
