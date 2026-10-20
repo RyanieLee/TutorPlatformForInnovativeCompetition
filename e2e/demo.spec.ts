@@ -196,6 +196,10 @@ test('模型解析建议需家长登录和主动确认，最终仍按规则推�
   await expect(button(page,'解析需求')).toBeVisible()
   await button(page,'解析需求').click()
   await expect(page.locator('.suggestion')).toContainText('预算：¥80/小时')
+  await expect(button(page,'解析需求')).toBeEnabled()
+  await page.waitForTimeout(1800) // Let the login success toast disappear before recording the UI.
+  mkdirSync('docs/screenshots',{recursive:true})
+  await page.screenshot({path:`docs/screenshots/model-${info.project.name}.png`,fullPage:true})
   expect(sentBrief).toBe('初中数学，每小时预算80元，线上授课，希望耐心')
   await expect(page.locator('.form .chips .selected')).toHaveCount(1)
   await button(page,'确认并填入表单').click()
