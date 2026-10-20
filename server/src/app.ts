@@ -55,12 +55,13 @@ export function buildApp(db: PrismaClient = new PrismaClient()) {
  app.post('/api/auth/logout',async request=>{const{session}=await actor(request,db);await db.session.update({where:{id:session.id},data:{revokedAt:new Date()}});return{data:{ok:true}}})
 
  app.get('/api/tutors',async request=>{
-  const q=parse(z.object({keyword:z.string().max(80).optional(),subject:z.string().max(30).optional(),teachingMode:z.enum(['线上','线下']).optional(),page:z.coerce.number().int().min(1).max(100000).default(1),pageSize:z.coerce.number().int().min(1).max(50).default(20)}),request.query)
+  const q=parse(z.object({keyword:z.string().max(80).optional(),subject:z.string().max(30).optional(),teachingMode:z.enum(['线上','线下']).optional(),minPrice:z.coerce.number().min(0).max(2000).multipleOf(0.01).optional(),maxPrice:z.coerce.number().min(0).max(2000).multipleOf(0.01).optional(),page:z.coerce.number().int().min(1).max(100000).default(1),pageSize:z.coerce.number().int().min(1).max(50).default(20)}).refine(q=>q.minPrice===undefined||q.maxPrice===undefined||q.minPrice<=q.maxPrice,{message:'最低价格不能高于最高价格'}),request.query)
   const keyword=q.keyword?.trim(),subject=q.subject?.trim()
   const where:Prisma.TutorProfileWhereInput={
    published:true,user:{status:'active',application:{status:'approved'}},
    ...(subject?{subjects:{some:{subject}}}:{}),
    ...(q.teachingMode?{teachingMode:{in:[q.teachingMode,'均可']}}:{}),
+   ...((q.minPrice!==undefined||q.maxPrice!==undefined)?{pricePerHour:{...(q.minPrice!==undefined?{gte:Math.ceil(q.minPrice)}:{}),...(q.maxPrice!==undefined?{lte:Math.floor(q.maxPrice)}:{})}}:{}),
    ...(keyword?{OR:[{displayName:{contains:keyword}},{university:{contains:keyword}},{major:{contains:keyword}},{area:{contains:keyword}},{subjects:{some:{subject:{contains:keyword}}}}]}:{})
   }
   const [total,rows]=await Promise.all([

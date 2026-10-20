@@ -198,3 +198,15 @@ it('方式过滤在数据库分页前执行，均可同时兼容线上和线下'
   expect(new Set(pages.flatMap(r=>r.json().data.map((t:{id:string})=>t.id)))).toEqual(new Set(['bulk-profile-0','bulk-profile-1']))
   expect((await app.inject({method:'GET',url:'/api/tutors?teachingMode=其他'})).statusCode).toBe(400)
 })
+
+it('价格区间与科目组合过滤后再分页，包含边界并拒绝非法区间',async()=>{
+ await db.tutorProfile.update({where:{id:'bulk-profile-0'},data:{pricePerHour:70}})
+ await db.tutorProfile.update({where:{id:'bulk-profile-1'},data:{pricePerHour:100}})
+ const pages=await Promise.all([1,2,3].map(page=>app.inject({method:'GET',url:`/api/tutors?keyword=批量&minPrice=80&maxPrice=80&pageSize=10&page=${page}`})))
+ expect(pages.map(r=>r.json().meta.total)).toEqual([21,21,21])
+ expect(pages.map(r=>r.json().data.length)).toEqual([10,10,1])
+ expect((await app.inject({method:'GET',url:'/api/tutors?keyword=批量&subject=数学&minPrice=80&maxPrice=80'})).json().meta.total).toBe(19)
+ expect((await app.inject({method:'GET',url:'/api/tutors?keyword=批量&minPrice=80.01'})).json().meta.total).toBe(1)
+ expect((await app.inject({method:'GET',url:'/api/tutors?keyword=批量&maxPrice=70'})).json().data.map((t:{id:string})=>t.id)).toEqual(['bulk-profile-0'])
+ for(const query of ['minPrice=90&maxPrice=80','minPrice=-1','maxPrice=2001','maxPrice=1.123','minPrice=abc'])expect((await app.inject({method:'GET',url:'/api/tutors?'+query})).statusCode).toBe(400)
+})

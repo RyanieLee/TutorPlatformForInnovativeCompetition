@@ -7,6 +7,8 @@ export interface TutorQuery {
   keyword?: string
   subject?: string
   teachingMode?: '线上' | '线下'
+  minPrice?: number
+  maxPrice?: number
   page?: number
   pageSize?: number
 }

@@ -143,3 +143,10 @@ describe('授课方式与分页组合', () => {
     expect(await s.listTutors({keyword:'小何',subject:'数学',teachingMode:'线下'})).toEqual([])
   })
 })
+
+it('价格区间为包含边界，组合过滤在 Mock 分页之前执行',async()=>{
+ const api=service()
+ expect((await api.listTutors({minPrice:80,maxPrice:80})).map(t=>t.id)).toEqual(['t001'])
+ expect((await api.listTutors({subject:'数学',minPrice:80,maxPrice:90,page:2,pageSize:1})).map(t=>t.id)).toEqual(['t003'])
+ expect(await api.listTutors({maxPrice:60})).toEqual([])
+})
