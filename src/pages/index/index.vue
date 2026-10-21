@@ -59,6 +59,7 @@ watch([query, subject, teachingMode], () => { void loadTutors() })
 onShow(() => { void loadTutors() })
 const openLearning = () => uni.navigateTo({ url: '/pages/learning/index' })
 const openMatch = () => uni.navigateTo({ url: '/pages/match/index' })
+const goTutors = () => uni.pageScrollTo({ selector: '#tutor-results', duration: 260 })
 const openTutor = (id: string) => uni.navigateTo({ url: '/pages/tutors/detail?id=' + id })
 const openOrders = () => uni.switchTab({ url: '/pages/orders/index' })
 const openProfile = () => uni.switchTab({ url: '/pages/profile/index' })
@@ -66,7 +67,7 @@ const openProfile = () => uni.switchTab({ url: '/pages/profile/index' })
 
 <template>
   <ParentLayout title="找到适合你的学习伙伴" active="home"><view class="page">
-    <view class="hero"><view class="hero-copy"><text class="eyebrow">校园家教 · 找到合拍的学习伙伴</text><text class="headline">把不会的，<br/>一步步弄懂。</text><text class="intro">找一位大学生家教，从一道题、一次讲解开始。</text><view class="links"><text @click="openOrders">查看我的预约 ↗</text><text @click="openProfile">切换演示身份 ↗</text></view></view><LessonFlip/></view>
+    <view class="hero"><view class="hero-copy"><text class="eyebrow">领航云学堂 · 陪伴每一步成长</text><text class="headline">让优秀的大学生，<br/>成为孩子的成长伙伴。</text><text class="intro">连接学习需求与大学生家教，按科目、时间和授课方式，找到更合拍的学习节奏。</text><view class="hero-actions"><button class="hero-cta" @click="openMatch">开始智能匹配 →</button><button class="hero-outline" @click="goTutors">浏览家教老师</button></view><view class="links"><text @click="openOrders">查看我的预约 ↗</text><text @click="openProfile">切换演示身份 ↗</text></view></view><view class="hero-art"><image class="hero-mascot" src="/static/linghang-mascot.svg" mode="aspectFit" aria-label="领航云学堂小书灵"/><LessonFlip/></view></view>
     <button class="ai-entry" @click="openMatch"><text class="ai-kicker">AI 家教匹配</text><text class="ai-title">不知道选哪位？</text><text class="ai-note">在西安地图选位置，按科目、预算和授课方式查看匹配理由。</text><text class="ai-arrow" aria-hidden="true">↗</text></button>
     <button class="learning-entry" @click="openLearning"><text class="learning-kicker">AI学习中心 · 各科笔记与智能出卷</text><text class="learning-title">学一个知识点，练一份专属卷</text><text class="learning-note">原创笔记 → 主题练习 → 自测解析 → 找老师讲解 ↗</text></button>
     <input v-model="query" class="search" placeholder="搜索科目、地区或老师姓名"/>
@@ -76,7 +77,7 @@ const openProfile = () => uni.switchTab({ url: '/pages/profile/index' })
     <view class="filters teaching-modes"><text v-for="mode in teachingModes" :key="mode" class="chip" :class="{ active: teachingMode === mode }" @click="teachingMode = mode">{{ mode }}</text></view>
     <view class="price-filter"><view><text class="filter-label">课时价格区间（元 / 小时）</text><view class="price-inputs"><input v-model="minPriceText" @blur="syncPrice('min',$event)" type="digit" maxlength="12" placeholder="最低价格（可空）"/><text>—</text><input v-model="maxPriceText" @blur="syncPrice('max',$event)" type="digit" maxlength="12" placeholder="最高价格（可空）"/></view></view><view class="filter-actions"><button class="apply-price" @click="applyPrices">应用价格</button><button @click="resetFilters">重置筛选</button></view></view>
     <view v-if="priceError" class="price-error" role="alert">{{ priceError }}；仍展示上次已应用的价格条件。</view></view>
-    <view class="heading">推荐家教 <text class="count">已显示 {{ tutors.length }} 位{{ apiMode ? '开发版' : '演示' }}老师</text></view>
+    <view id="tutor-results" class="heading">推荐家教 <text class="count">已显示 {{ tutors.length }} 位{{ apiMode ? '开发版' : '演示' }}老师</text></view>
     <view v-if="loading && !tutors.length" class="empty">{{ apiMode ? '正在读取家教…' : '正在读取演示家教…' }}</view>
     <view v-else-if="error && !tutors.length" class="empty">{{ error }} <text class="retry" @click="loadTutors()">重试</text></view>
     <template v-else><view class="tutor-grid"><TutorCard v-for="t in tutors" :key="t.id" :tutor="t" @open="openTutor"/></view><view v-if="!tutors.length" class="empty">没有匹配的老师，换个关键词试试。</view><view v-if="error" class="empty">{{ error }} <text class="retry" @click="loadTutors(true)">重试</text></view><view v-else-if="hasMore" class="load-more" @click="loadTutors(true)">{{ loading ? '正在加载…' : '加载更多老师' }}</view></template>
