@@ -12,14 +12,14 @@ const homeworkStatus=ref<'checking'|'enabled'|'disabled'|'error'>('checking'),ho
 const instance='companion-'+getCurrentInstance()!.uid
 const last=ref('');let statusVersion=0,running:number|null=null,lastPendingUserId:number|null=null
 const useModel=computed(()=>apiMode&&status.value==='enabled'&&mode.value==='auto')
-watch(()=>currentSession.value?.user.id,id=>{ownCompanion(id??'guest');loginNeeded.value=false},{immediate:true})
+watch(()=>currentSession.value?.user.id,id=>{ownCompanion(id??'guest');loginNeeded.value=false;imagePath.value='';imageConsent.value=false},{immediate:true})
 async function checkStatus(){const v=++statusVersion;status.value='checking';homeworkStatus.value='checking';try{const s=await companionStatus();if(v===statusVersion)status.value=s.enabled?'enabled':'disabled'}catch{if(v===statusVersion)status.value='error'}try{const h=await homeworkImageReviewStatus();if(v===statusVersion){homeworkEnabled.value=h.enabled;homeworkStatus.value=h.enabled?'enabled':'disabled'}}catch{if(v===statusVersion){homeworkEnabled.value=false;homeworkStatus.value='error'}}}
-function stop(){visible.value=false;open.value=false;statusVersion++;if(running!==null&&running===companionState.version){companionState.version++;busy.value=false;error.value='上一条答复已中止，可重新发送';if(lastPendingUserId!==null&&messages.value[messages.value.length-1]?.id===lastPendingUserId)messages.value.pop()}lastPendingUserId=null;running=null}
+function stop(){visible.value=false;open.value=false;statusVersion++;if(running!==null&&running===companionState.version){companionState.version++;busy.value=false;error.value='上一条答复已中止，可重新发送';if(lastPendingUserId!==null&&messages.value[messages.value.length-1]?.id===lastPendingUserId)messages.value.pop()}lastPendingUserId=null;imagePath.value='';imageConsent.value=false;running=null}
 onShow(()=>{visible.value=true})
 onHide(stop);onBeforeUnmount(stop)
 async function toggle(){open.value=!open.value;if(open.value)await checkStatus()}
 async function bottom(){await nextTick();const lastMessage=messages.value[messages.value.length-1];last.value=instance+'-'+lastMessage.id}
-function reset(){clearCompanion();loginNeeded.value=false}
+function reset(){clearCompanion();loginNeeded.value=false;clearHomeworkImage()}
 function modelMode(){const text=draft.value;reset();mode.value='auto';draft.value=text}
 function localMode(){const text=draft.value;reset();mode.value='local';draft.value=text}
 async function send(){
@@ -73,7 +73,6 @@ async function reviewSelectedImage(){
   const bubbleId=token*2
   messages.value.push({role:'user',content:'【作业图片】已提交一张经确认脱敏的图片，请求逐题讲解。',source:'guide',id:bubbleId})
   messages.value.push({role:'assistant',content:result.reply,source:result.source,id:bubbleId+1})
-  history.value=[...history.value.slice(-6),{role:'user',content:'用户主动上传一张作业图片，请求逐题讲解与批改建议。'},{role:'assistant',content:result.reply.slice(0,500)}]
   if(messages.value.length>30)messages.value=messages.value.slice(-30)
   clearHomeworkImage();void bottom()
  }catch(cause){
@@ -100,7 +99,7 @@ function login(){open.value=false;uni.navigateTo({url:'/pages/auth/login'})}
     <view v-if="busy" class="thinking" role="status">正在整理答复…</view>
    </scroll-view>
    <view class="homework-image-tools">
-    <view class="homework-image-heading"><text>作业图片批改</text><text class="homework-image-status">{{homeworkStatus==='enabled'?'视觉模型已配置':homeworkStatus==='checking'?'检查图片服务…':homeworkStatus==='error'?'服务状态暂不可读取':'需要配置视觉模型'}}</text></view>
+    <view class="homework-image-heading"><text>作业图片批改</text><text class="homework-image-status">{{homeworkStatus==='enabled'?'模型已配置（需支持图片）':homeworkStatus==='checking'?'检查图片服务…':homeworkStatus==='error'?'服务状态暂不可读取':'需要配置视觉模型'}}</text></view>
     <view class="homework-image-row">
      <button :disabled="busy" class="homework-image-pick" @click="selectHomeworkImage">选择图片</button>
      <image v-if="imagePath" class="homework-image-preview" :src="imagePath" mode="aspectFit" aria-label="待批改作业图片预览"/>
