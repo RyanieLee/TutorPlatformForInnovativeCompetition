@@ -91,3 +91,7 @@ E2E 自动启动 5173（Mock）、5174（桌面 API 前端）、5175（手机 AP
 架构和创新说明：[MATCHING_DESIGN](docs/MATCHING_DESIGN.md)。批次和合并清单：[D_INTEGRATION_PLAN](docs/D_INTEGRATION_PLAN.md)。实际测试结果：[D_ACCEPTANCE](docs/D_ACCEPTANCE.md)。
 
 家长端现已提供桌面品牌导航、响应式卡片网格及价格区间筛选；正式接口契约见 [docs/API_CONTRACT.md](docs/API_CONTRACT.md)，初始化和持久化方案见 [docs/SERVER_DEMO.md](docs/SERVER_DEMO.md)。
+
+## 西安场景展示
+
+首页 → AI 家教匹配 → 高新·物理专题 → 解析 → 确认填入 → 地图/片区选点 → 5 km 内 → 生成推荐 → 查看片区距离理由 → 原详情预约。数据为24份合成资料，当前无供应商配置时显示本机关键词解析；H5交互地图与小程序片区选点边界见 [XIAN_AI_DEMO](docs/XIAN_AI_DEMO.md)。

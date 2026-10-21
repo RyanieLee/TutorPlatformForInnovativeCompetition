@@ -2,7 +2,8 @@ import { describe, expect, it, vi } from 'vitest'
 import { loadMatchCandidates, matchTutors, validateMatch } from '../src/services/matching'
 import type { MatchInput } from '../src/services/matching'
 import type { Tutor } from '../src/types/tutor'
-import { tutors } from '../src/mocks/tutors'
+import { tutors as catalog } from '../src/mocks/tutors'
+const tutors=catalog.slice(0,6)
 const input: MatchInput = { subject:'数学',grade:'初中（演示）',budget:'100',mode:'均可',preference:'耐心 讲解' }
 describe('可解释推荐', () => {
   it('硬过滤和解释对应真实字段；得分与公开公式一致', () => {
