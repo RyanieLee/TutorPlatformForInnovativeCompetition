@@ -1,0 +1,400 @@
+{
+  "code": "demo-math-g7-linear-equation-v1",
+  "subject": "数学",
+  "grade": "初中七年级（初一）",
+  "unit": "一元一次方程",
+  "student": "DEMO-STUDENT-01",
+  "goal": "理解等式性质，规范求解和检验一元一次方程，将简单生活问题转化为方程，并分步骤解释思路。",
+  "prerequisites": "已学有理数及基本代数表达式；教材版本和实际进度由教师核对。",
+  "diagnostic": [
+    {
+      "id": "D1",
+      "prompt": "计算 -3 + 8",
+      "answer": "5",
+      "solution": "先比较绝对值，结果为正。"
+    },
+    {
+      "id": "D2",
+      "prompt": "计算 -2 × 4",
+      "answer": "-8",
+      "solution": "异号相乘得负。"
+    },
+    {
+      "id": "D3",
+      "prompt": "化简 3x + 2x",
+      "answer": "5x",
+      "solution": "同类项系数相加。"
+    },
+    {
+      "id": "D4",
+      "prompt": "x = 2 是否为 3x + 1 = 7 的解？",
+      "answer": "是",
+      "solution": "代入得 3×2+1=7。"
+    },
+    {
+      "id": "D5",
+      "prompt": "x + 4 = 9，求 x",
+      "answer": "x = 5",
+      "solution": "等式两边同时减4。"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "L1",
+      "title": "认识一元一次方程与等式基本性质",
+      "goals": [
+        "分辨等式与方程，识别一元一次方程",
+        "用等式性质解简单方程并代入检验"
+      ],
+      "knowledge": [
+        "未知数和方程的解",
+        "等式两边执行相同操作",
+        "除数不能为0"
+      ],
+      "blocks": [
+        {
+          "id": "intro",
+          "minutes": 5,
+          "teacher": "用一个数加7等于15引入未知数。",
+          "student": "尝试用字母表示未知数。"
+        },
+        {
+          "id": "concept",
+          "minutes": 7,
+          "teacher": "讲解只含一个未知数且未知数次数为1的方程及解的含义。",
+          "student": "比较等式、方程与一元一次方程。"
+        },
+        {
+          "id": "add",
+          "minutes": 10,
+          "teacher": "演示 x+7=15，两边同时减7，x=8并检验。",
+          "student": "逐步说明两边的相同操作。"
+        },
+        {
+          "id": "multiply",
+          "minutes": 8,
+          "teacher": "演示3x=21，两边同除3得x=7；除数不得为0。",
+          "student": "代入检验并解释为什么不能除0。"
+        },
+        {
+          "id": "practice",
+          "minutes": 10,
+          "teacher": "观察学生独立练习过程并记录错误。",
+          "student": "独立完成3题并验算。"
+        },
+        {
+          "id": "summary",
+          "minutes": 5,
+          "teacher": "回顾等式性质，针对记录订正。",
+          "student": "复述操作原则。"
+        }
+      ],
+      "examples": [
+        {
+          "id": "L1-E1",
+          "prompt": "x + 7 = 15",
+          "answer": "x = 8",
+          "solution": "两边减7，x=8；8+7=15。"
+        },
+        {
+          "id": "L1-E2",
+          "prompt": "3x = 21",
+          "answer": "x = 7",
+          "solution": "两边同除3；3×7=21。"
+        }
+      ],
+      "exercises": [
+        {
+          "id": "L1-Q1",
+          "prompt": "x + 9 = 17",
+          "answer": "x = 8",
+          "solution": "两边减9。"
+        },
+        {
+          "id": "L1-Q2",
+          "prompt": "5x = 30",
+          "answer": "x = 6",
+          "solution": "两边同除5。"
+        },
+        {
+          "id": "L1-Q3",
+          "prompt": "x − 6 = 11",
+          "answer": "x = 17",
+          "solution": "两边加6。"
+        }
+      ],
+      "homework": "各写2道加减类、乘除类方程，完成求解与代入检验。",
+      "observe": [
+        "两边是否执行同样操作",
+        "能否代入验算"
+      ]
+    },
+    {
+      "id": "L2",
+      "title": "合并同类项与移项",
+      "goals": [
+        "正确合并同类项",
+        "解释移项来自等式两边相同操作，记录符号错误"
+      ],
+      "knowledge": [
+        "同类项系数相加",
+        "移项与变号",
+        "负系数变形"
+      ],
+      "blocks": [
+        {
+          "id": "review",
+          "minutes": 5,
+          "teacher": "复习上一课等式性质。",
+          "student": "口述相同操作的原则。"
+        },
+        {
+          "id": "combine",
+          "minutes": 10,
+          "teacher": "演示3x+2x=20，合并得5x=20，x=4。",
+          "student": "解释系数相加。"
+        },
+        {
+          "id": "transpose",
+          "minutes": 10,
+          "teacher": "演示5x−3=2x+9，两边减2x再加3，得3x=12，x=4。",
+          "student": "说明每一步及移项变号。"
+        },
+        {
+          "id": "practice",
+          "minutes": 12,
+          "teacher": "逐题记录5道练习的正误与错因。",
+          "student": "完成下方5题并写步骤。"
+        },
+        {
+          "id": "correction",
+          "minutes": 5,
+          "teacher": "根据已记录错误针对性纠正。",
+          "student": "订正并指出错在何步。"
+        },
+        {
+          "id": "summary",
+          "minutes": 3,
+          "teacher": "请学生解释移项变号的原因。",
+          "student": "口头说明等式性质。"
+        }
+      ],
+      "examples": [
+        {
+          "id": "L2-E1",
+          "prompt": "3x + 2x = 20",
+          "answer": "x = 4",
+          "solution": "合并同类项得到5x=20。"
+        },
+        {
+          "id": "L2-E2",
+          "prompt": "5x − 3 = 2x + 9",
+          "answer": "x = 4",
+          "solution": "两边减2x加3得3x=12。"
+        }
+      ],
+      "exercises": [
+        {
+          "id": "L2-Q1",
+          "prompt": "4x + 3x = 28",
+          "answer": "x = 4",
+          "solution": "7x=28，两边除7。"
+        },
+        {
+          "id": "L2-Q2",
+          "prompt": "6x − 5 = 2x + 7",
+          "answer": "x = 3",
+          "solution": "4x=12，两边除4。"
+        },
+        {
+          "id": "L2-Q3",
+          "prompt": "5x + 7 = 2x + 16",
+          "answer": "x = 3",
+          "solution": "3x=9，两边除3。"
+        },
+        {
+          "id": "L2-Q4",
+          "prompt": "7 − 2x = x + 1",
+          "answer": "x = 2",
+          "solution": "两边加2x减1，得6=3x。"
+        },
+        {
+          "id": "L2-Q5",
+          "prompt": "9 − 4x = 2x − 3",
+          "answer": "x = 2",
+          "solution": "两边加4x加3，得12=6x。"
+        }
+      ],
+      "homework": "完成移项专项5题，标出跨等号移动时的符号变化，并用两边相同操作解释。",
+      "observe": [
+        "移项是否变号",
+        "合并同类项是否正确",
+        "是否漏检验"
+      ]
+    },
+    {
+      "id": "L3",
+      "title": "去括号与去分母",
+      "goals": [
+        "运用去括号和去分母求解方程",
+        "解释分配律及等价变形的合法性"
+      ],
+      "knowledge": [
+        "分配律",
+        "分母最小公倍数",
+        "等价变形"
+      ],
+      "blocks": [
+        {
+          "id": "review",
+          "minutes": 5,
+          "teacher": "复习移项和符号。",
+          "student": "讲解一题移项过程。"
+        },
+        {
+          "id": "bracket",
+          "minutes": 10,
+          "teacher": "讲解2(x+3)=18，去括号或两边除2得x=6。",
+          "student": "检查分配律。"
+        },
+        {
+          "id": "denominator",
+          "minutes": 12,
+          "teacher": "讲解(x−1)/3=(x+2)/6，两边乘6得2x−2=x+2，x=4。",
+          "student": "解释为何要对两边每项乘6。"
+        },
+        {
+          "id": "practice",
+          "minutes": 13,
+          "teacher": "观察分层练习并记录分配律、分母错误。",
+          "student": "完成3题并逐步解释。"
+        },
+        {
+          "id": "summary",
+          "minutes": 5,
+          "teacher": "订正并总结等价变形。",
+          "student": "回代检验。"
+        }
+      ],
+      "examples": [
+        {
+          "id": "L3-E1",
+          "prompt": "2(x + 3) = 18",
+          "answer": "x = 6",
+          "solution": "两边除2得x+3=9。"
+        },
+        {
+          "id": "L3-E2",
+          "prompt": "(x − 1)/3 = (x + 2)/6",
+          "answer": "x = 4",
+          "solution": "两边乘6得2x−2=x+2。"
+        }
+      ],
+      "exercises": [
+        {
+          "id": "L3-Q1",
+          "prompt": "3(x − 2) = 15",
+          "answer": "x = 7",
+          "solution": "两边除3得x−2=5。"
+        },
+        {
+          "id": "L3-Q2",
+          "prompt": "(2x + 1)/3 = 5",
+          "answer": "x = 7",
+          "solution": "两边乘3得2x+1=15。"
+        },
+        {
+          "id": "L3-Q3",
+          "prompt": "2(x + 4) − 3 = 13",
+          "answer": "x = 4",
+          "solution": "去括号得2x+5=13。"
+        }
+      ],
+      "homework": "去括号题2道、去分母题2道、等式变形步骤解释题1道；每题代入检验。",
+      "observe": [
+        "分配律是否正确",
+        "能否使用分母最小公倍数",
+        "每步是否等价"
+      ]
+    },
+    {
+      "id": "L4",
+      "title": "应用题建模与单元总结",
+      "goals": [
+        "读懂数量关系、设未知数并列方程",
+        "在实际情境中检查答案并解释变量"
+      ],
+      "knowledge": [
+        "设未知数",
+        "数量关系建模",
+        "情境检验"
+      ],
+      "blocks": [
+        {
+          "id": "review",
+          "minutes": 8,
+          "teacher": "回顾方程求解步骤。",
+          "student": "复述典型错误及纠正办法。"
+        },
+        {
+          "id": "model",
+          "minutes": 12,
+          "teacher": "示范根据数量关系列方程。",
+          "student": "解释未知数和单位。"
+        },
+        {
+          "id": "practice",
+          "minutes": 15,
+          "teacher": "引导独立完成情境题并口述变量意义。",
+          "student": "完成3道情境题并检验。"
+        },
+        {
+          "id": "summary",
+          "minutes": 7,
+          "teacher": "总结有证据的典型错误。",
+          "student": "说明自己仍需巩固的步骤。"
+        },
+        {
+          "id": "assessment",
+          "minutes": 3,
+          "teacher": "完成单元自评并商定下一阶段目标。",
+          "student": "按练习记录评价，不预测成绩。"
+        }
+      ],
+      "examples": [
+        {
+          "id": "L4-E1",
+          "prompt": "某班42人，男生比女生多6人。女生有多少人？",
+          "answer": "女生18人，男生24人",
+          "solution": "设女生x人，x+(x+6)=42，2x=36，x=18。"
+        }
+      ],
+      "exercises": [
+        {
+          "id": "L4-Q1",
+          "prompt": "某班42人，男生比女生多6人，求男女生人数。",
+          "answer": "女生18人，男生24人",
+          "solution": "设女生x人，x+(x+6)=42；18+24=42且24−18=6。"
+        },
+        {
+          "id": "L4-Q2",
+          "prompt": "商品打八折再优惠4元，实付60元，求原价。",
+          "answer": "80元",
+          "solution": "设原价x元，0.8x−4=60，x=80；80×0.8−4=60。"
+        },
+        {
+          "id": "L4-Q3",
+          "prompt": "A类票比B类票少3张，合计17张，求A、B类票数。",
+          "answer": "A类票7张，B类票10张",
+          "solution": "设A类票x张，x+(x+3)=17，x=7，B=10。"
+        }
+      ],
+      "homework": "完成5题单元小测（基础2题、移项1题、括号或分母1题、应用1题），并描述错误原因。",
+      "observe": [
+        "列式准确性",
+        "解题过程是否规范",
+        "是否回代情境检验"
+      ]
+    }
+  ]
+}
