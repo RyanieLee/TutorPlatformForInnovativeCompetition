@@ -10,11 +10,11 @@ const {messages,history,draft,mode,busy,error,paused}=toRefs(companionState)
 const open=ref(false),visible=ref(true),status=ref<'checking'|'enabled'|'disabled'|'error'>('checking'),loginNeeded=ref(false)
 const homeworkStatus=ref<'checking'|'enabled'|'disabled'|'error'>('checking'),homeworkEnabled=ref(false),imagePath=ref(''),imageConsent=ref(false)
 const instance='companion-'+getCurrentInstance()!.uid
-const last=ref('');let statusVersion=0,running:number|null=null
+const last=ref('');let statusVersion=0,running:number|null=null,lastPendingUserId:number|null=null
 const useModel=computed(()=>apiMode&&status.value==='enabled'&&mode.value==='auto')
 watch(()=>currentSession.value?.user.id,id=>{ownCompanion(id??'guest');loginNeeded.value=false},{immediate:true})
 async function checkStatus(){const v=++statusVersion;status.value='checking';homeworkStatus.value='checking';try{const s=await companionStatus();if(v===statusVersion)status.value=s.enabled?'enabled':'disabled'}catch{if(v===statusVersion)status.value='error'}try{const h=await homeworkImageReviewStatus();if(v===statusVersion){homeworkEnabled.value=h.enabled;homeworkStatus.value=h.enabled?'enabled':'disabled'}}catch{if(v===statusVersion){homeworkEnabled.value=false;homeworkStatus.value='error'}}}
-function stop(){visible.value=false;open.value=false;statusVersion++;if(running!==null&&running===companionState.version){companionState.version++;busy.value=false;error.value='上一条答复已中止，可重新发送';if(messages.value[messages.value.length-1]?.role==='user')messages.value.pop()}running=null}
+function stop(){visible.value=false;open.value=false;statusVersion++;if(running!==null&&running===companionState.version){companionState.version++;busy.value=false;error.value='上一条答复已中止，可重新发送';if(lastPendingUserId!==null&&messages.value[messages.value.length-1]?.id===lastPendingUserId)messages.value.pop()}lastPendingUserId=null;running=null}
 onShow(()=>{visible.value=true})
 onHide(stop);onBeforeUnmount(stop)
 async function toggle(){open.value=!open.value;if(open.value)await checkStatus()}
@@ -29,7 +29,7 @@ async function send(){
  if(apiMode&&status.value==='error'&&mode.value==='auto'){error.value='模型状态暂不可读取，可主动切换本机演示';return}
  error.value='';loginNeeded.value=false
  const token=++companionState.version;running=token;busy.value=true
- const bubbleId=token*2;messages.value.push({role:'user',content:text,source:'guide',id:bubbleId});void bottom()
+ const bubbleId=token*2;lastPendingUserId=bubbleId;messages.value.push({role:'user',content:text,source:'guide',id:bubbleId});void bottom()
  try{
   let result
   if(useModel.value){
@@ -42,8 +42,8 @@ async function send(){
   history.value=[...history.value.slice(-6),{role:'user',content:text},{role:'assistant',content:result.reply.slice(0,500)}]
   if(messages.value.length>30)messages.value=messages.value.slice(-30)
   draft.value='';void bottom()
- }catch(cause){if(token===companionState.version){error.value=cause instanceof Error?errorMessage(cause):'对话失败，请重试';if(messages.value[messages.value.length-1]?.id===bubbleId)messages.value.pop()}}
- finally{if(token===companionState.version)busy.value=false;running=null}
+ }catch(cause){if(token===companionState.version){error.value=cause instanceof Error?errorMessage(cause):'对话失败，请重试';if(messages.value[messages.value.length-1]?.id===bubbleId)messages.value.pop();if(lastPendingUserId===bubbleId)lastPendingUserId=null}}
+ finally{if(token===companionState.version)busy.value=false;if(lastPendingUserId===bubbleId)lastPendingUserId=null;running=null}
 }
 function ask(text:string){draft.value=text;void send()}
 function startHomeworkReview(){draft.value='请帮我批改下面的作业，指出错误、解释理由并给修改建议：\n题目：\n我的答案：\n（选填）参考答案：'}
