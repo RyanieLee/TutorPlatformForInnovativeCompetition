@@ -1,0 +1,17 @@
+{
+  "name": "校园家教平台",
+  "appid": "__UNI__TUTOR_DEMO",
+  "description": "家教平台创新创业MVP",
+  "versionName": "0.1.0",
+  "versionCode": "100",
+  "transformPx": false,
+  "mp-weixin": {
+    "appid": "",
+    "setting": {
+      "urlCheck": false
+    }
+  },
+  "h5": {
+    "title": "校园家教平台"
+  }
+}
