@@ -114,7 +114,8 @@ export async function registerHomeworkImageReview(app: FastifyInstance, db: Pris
   }
 
   app.get('/api/assistant/homework-review/status', async () => ({ data: { enabled: model.enabled, maxImageBytes: MAX_HOMEWORK_IMAGE_BYTES, acceptedTypes: [...allowedMimes] } }))
-  app.post('/api/assistant/homework-review-image', { bodyLimit: MAX_HOMEWORK_IMAGE_BYTES + 65536 }, async request => {
+  app.post('/api/assistant/homework-review-image', { bodyLimit: MAX_HOMEWORK_IMAGE_BYTES + 65536 }, async (request, reply) => {
+    reply.header('cache-control', 'no-store').header('pragma', 'no-cache').header('x-content-type-options', 'nosniff')
     const { user } = await actor(request, db, ['parent', 'tutor'])
     if (!model.enabled) return fail('MODEL_UNAVAILABLE', 503, '尚未配置支持图片输入的模型；可以粘贴题目文字继续')
     const now = Date.now()
