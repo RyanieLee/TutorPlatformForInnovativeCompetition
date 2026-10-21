@@ -1,3 +1,6 @@
+import { createExamModel, examRequestSchema, type ExamModel } from './learning-model'
+import { registerOrderMap } from './order-map'
+import { registerAssistant, createChatModel, type ChatModel } from './assistant'
 import Fastify from 'fastify'
 import {registerLoopRoutes} from './teaching-loop/routes'
 import {createTeachingModel,type TeachingModel} from './teaching-loop/model'
@@ -16,15 +19,19 @@ const include = { tutorProfile: true } as const
 const rules = { accept: { from: ['pending'], to: 'accepted', role: 'tutor' }, reject: { from: ['pending'], to: 'rejected', role: 'tutor' }, cancel: { from: ['pending','accepted'], to: 'cancelled', role: 'parent' }, complete: { from: ['accepted'], to: 'completed', role: 'tutor' } } as const
 const data = (input: z.infer<typeof applicationSchema>) => { const {subjects,...fields}=input;return {...fields,subjectsJson:JSON.stringify(subjects)} }
 
-export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: MatchModel = createMatchModel(), teachingOptions?: TeachingOptions, teachingModel:TeachingModel=createTeachingModel()) {
+export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: MatchModel = createMatchModel(), teachingOptions?: TeachingOptions, examModel: ExamModel = createExamModel(), chatModel: ChatModel = createChatModel(), teachingModel:TeachingModel=createTeachingModel()) {
  const app=Fastify({logger:process.env.NODE_ENV==='test'?false:{redact:['req.headers.authorization','req.body.password']},bodyLimit:32768})
  app.register(cors,{methods:['GET','HEAD','POST','PUT','DELETE','OPTIONS'],origin:(process.env.CORS_ORIGINS||'http://localhost:5173,http://127.0.0.1:5173').split(',').map(s=>s.trim())})
  app.register(async child=>registerLoopRoutes(child,db,teachingModel))
  app.register(async child=>registerTeachingRoutes(child,db,teachingOptions??{uploadRoot:resolve(process.env.TEACHING_UPLOAD_ROOT||'./.teaching-uploads'),now:()=>new Date()}))
+ registerOrderMap(app,db)
+ registerAssistant(app,db,chatModel)
  const attempts=new Map<string,{count:number;resetAt:number}>()
  const ipAttempts=new Map<string,{count:number;resetAt:number}>()
  const modelUserAttempts=new Map<string,{count:number;resetAt:number}>()
  const modelIpAttempts=new Map<string,{count:number;resetAt:number}>()
+ const examUserAttempts=new Map<string,{count:number;resetAt:number}>()
+ const examIpAttempts=new Map<string,{count:number;resetAt:number}>()
  const dummyHash=hashPassword(newToken())
  function countAttempt(store:typeof attempts,key:string,now:number):number {
   const previous=store.get(key)
@@ -46,6 +53,16 @@ export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: Matc
  })
  app.addHook('onClose',async()=>{await db.$disconnect()})
  app.setNotFoundHandler((_request,reply)=>reply.status(404).send({error:{code:'NOT_FOUND',message:'接口不存在'}}))
+ app.get('/api/learning/status',async()=>({data:{enabled:examModel.enabled}}))
+ app.post('/api/learning/exams',async request=>{
+  const{user}=await actor(request,db)
+  const input=parse(examRequestSchema,request.body)
+  if(!examModel.enabled)return fail('MODEL_UNAVAILABLE',503,'尚未配置模型，可先使用原创示例试卷')
+  const now=Date.now()
+  const userCount=countAttempt(examUserAttempts,user.id,now),ipCount=countAttempt(examIpAttempts,request.ip,now)
+  if(userCount>5||ipCount>15)return fail('RATE_LIMIT',429,'生成试卷过于频繁，请稍后重试')
+  return{data:await examModel.generate(input)}
+ })
  app.get('/health',async()=>{await db.$queryRaw`SELECT 1`;return{data:{status:'ok'}}})
  app.post('/api/auth/login',async request=>{
   const body=parse(z.object({loginId:z.string().min(1).max(80),password:z.string().min(1).max(200)}).strict(),request.body)
@@ -185,7 +202,7 @@ export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: Matc
  app.post('/api/bookings',async request=>{
   const{user}=await actor(request,db,['parent']),input=parse(bookingSchema,request.body)
   const existing=input.requestId?await db.booking.findUnique({where:{parentId_requestId:{parentId:user.id,requestId:input.requestId}},include}):null
-  const matches=(row:NonNullable<typeof existing>)=>row.tutorProfileId===input.tutorId&&row.studentName===input.studentName&&row.subject===input.subject&&row.expectedTime===input.expectedTime&&row.note===input.note
+  const matches=(row:NonNullable<typeof existing>)=>row.tutorProfileId===input.tutorId&&row.studentName===input.studentName&&row.subject===input.subject&&row.expectedTime===input.expectedTime&&row.note===input.note&&(row.areaLabel??undefined)===input.areaLabel
   if(existing){if(!matches(existing))return fail('CONFLICT',409,'重复请求标识对应不同预约');return{data:booking(existing)}}
   const p=await db.tutorProfile.findFirst({where:{id:input.tutorId,published:true,user:{status:'active',application:{status:'approved'}}}})
   if(!p)return fail('NOT_FOUND',404,'家教不存在')
@@ -193,7 +210,7 @@ export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: Matc
   let row
   try {
    row=await db.$transaction(async tx=>{
-    const created=await tx.booking.create({data:{parentId:user.id,tutorProfileId:p.id,requestId:input.requestId,studentName:input.studentName,subject:input.subject,expectedTime:input.expectedTime,note:input.note},include})
+    const created=await tx.booking.create({data:{parentId:user.id,tutorProfileId:p.id,requestId:input.requestId,studentName:input.studentName,areaLabel:input.areaLabel,subject:input.subject,expectedTime:input.expectedTime,note:input.note},include})
     await audit(tx,user.id,'create','Booking',created.id)
     return created
    })

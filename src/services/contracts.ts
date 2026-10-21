@@ -1,3 +1,4 @@
+import type { OrderMapPage,OrderMapQuery } from '../types/order-map'
 import type { User } from '../types/auth'
 import type { BookingInput, BookingOrder, Tutor } from '../types/tutor'
 import type { ReportReason, TutorApplication, TutorApplicationInput, TutorReport } from '../types/business'
@@ -24,6 +25,7 @@ export interface BusinessService {
   getApplication(admin: User, id: string): Promise<TutorApplication>
   reviewApplication(admin: User, id: string, decision: 'approved' | 'rejected', reason?: string): Promise<TutorApplication>
 
+  listMapBookings(user:User,query?:OrderMapQuery):Promise<OrderMapPage>
   createBooking(parent: User, input: BookingInput): Promise<BookingOrder>
   listParentBookings(parent: User): Promise<BookingOrder[]>
   listTutorBookings(tutor: User): Promise<BookingOrder[]>

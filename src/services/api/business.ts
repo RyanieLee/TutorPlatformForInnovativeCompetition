@@ -1,3 +1,4 @@
+import type { OrderMapPage,OrderMapQuery } from '../../types/order-map'
 import type { BusinessService, TutorQuery } from '../contracts'
 import type { User } from '../../types/auth'
 import type { Tutor, BookingInput, BookingOrder } from '../../types/tutor'
@@ -16,13 +17,18 @@ export class ApiBusinessService implements BusinessService {
  listApplications(_admin:User) { return apiRequest<TutorApplication[]>('GET','/api/admin/tutor-applications') }
  getApplication(_admin:User,id:string) { return apiRequest<TutorApplication>('GET','/api/admin/tutor-applications/'+enc(id)) }
  reviewApplication(_admin:User,id:string,decision:'approved'|'rejected',reason?:string) { return apiRequest<TutorApplication>('POST','/api/admin/tutor-applications/'+enc(id)+'/review',{decision,reason}) }
+ listMapBookings(_user:User,query:OrderMapQuery={}) {
+  const parts=['page='+(query.page??1),'pageSize='+(query.pageSize??100)]
+  if(query.status)parts.push('status='+enc(query.status))
+  return apiRequest<OrderMapPage>('GET','/api/bookings/map?'+parts.join('&'))
+ }
  async createBooking(parent:User,input:BookingInput) {
-  const {tutorId,studentName,subject,expectedTime,note}=input
-  const fingerprint=JSON.stringify([parent.id,tutorId,studentName,subject,expectedTime,note])
+  const {tutorId,studentName,subject,expectedTime,note,areaLabel}=input
+  const fingerprint=JSON.stringify([parent.id,tutorId,studentName,subject,expectedTime,note,areaLabel??null])
   if(this.pendingBooking?.fingerprint!==fingerprint)this.pendingBooking={fingerprint,requestId:Date.now().toString(36)+Math.random().toString(36).slice(2)}
   const requestId=this.pendingBooking.requestId
   try {
-   const result=await apiRequest<BookingOrder>('POST','/api/bookings',{tutorId,studentName,subject,expectedTime,note,requestId})
+   const result=await apiRequest<BookingOrder>('POST','/api/bookings',{tutorId,studentName,subject,expectedTime,note,requestId,...(areaLabel?{areaLabel}:{})})
    this.pendingBooking=null
    return result
   } catch(error) {

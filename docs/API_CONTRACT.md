@@ -90,7 +90,7 @@ ApplicationInput：以下字段**全部必填**；POST 提交要求非空。价�
 
 ## 预约
 
-POST `/api/bookings` 仅 parent；输入严格为 `{tutorId,studentName,subject,expectedTime,note?,requestId?}`。tutorId 1–100 字符；studentName 1–40、subject 1–30、expectedTime 1–100；note 最多 500，默认空串；requestId 8–100。只允许预约当前公开且已审核的家教及其科目。
+POST `/api/bookings` 仅 parent；输入严格为 `{tutorId,studentName,subject,expectedTime,note?,requestId?,areaLabel?}`。tutorId 1–100 字符；studentName 1–40、subject 1–30、expectedTime 1–100；note 最多 500，默认空串；requestId 8–100。只允许预约当前公开且已审核的家教及其科目。
 
 不接收/存储联系电话。为前端兼容，Booking 的 contact 固定输出空串。Booking：`{id,parentId,tutorId,tutorName,studentName,subject,expectedTime,note,contact:'',status,createdAt,updatedAt}`。
 
@@ -167,3 +167,23 @@ GET `/api/admin/overview` 仅 admin。不接收分页或状态筛选，不返回
 - 账号种子：demo.parent / demo.tutor / demo.admin；密码仅在本机环境的 SEED_*_PASSWORD 中，不写到本文或前端。
 - A/B/D 继续依赖 BusinessService；新增价格参数均为可选，不改变旧调用。前端 `VITE_DATA_MODE=api`、`VITE_API_BASE_URL` 是构建时设置。Mock 记录不自动上传；API 失败不能以虚构数据伪装成功。
 - 初始化/持久化/启动与 HTTPS 方案见 `SERVER_DEMO.md`；启动保护保持不变，`NODE_ENV=production` 拒绝演示服务启动。
+
+## AI练习卷生成
+
+GET `/api/learning/status` 公开返回 `{data:{enabled:boolean}}`，只说明模型已配置。
+
+POST `/api/learning/exams` 要求任一有效演示会话（parent/tutor/admin），严格输入 `{topicId,grade,difficulty,count}`。topicId来自公开笔记目录；grade必须在该主题的grades中；difficulty为基础/巩固/提高；count仅3/5/8。额外字段或错配参数400，未登录401，未配置模型503，每账户每分钟5次/每来源15次超限429，上游无效或超时502/504。不保存试卷或作答，不接收学生姓名及自由文本。
+
+成功data为 `{title,topicId,grade,difficulty,questions,totalPoints,source:'model',createdAt}`。question为 `{id,type:'choice'|'short',stem,options,answer,explanation,points}`；选择题固定4个不同选项，答案字母A/B/C/D且5分，简答题options为空且10分。模型返回题量须与请求一致、题干不能重复；分值与题号由服务端统一。结构校验不代表答案正确性已获证明，需人工核对。
+
+模型配置与需求解析共用MATCH_MODEL_*，EXAM_MODEL_TIMEOUT_MS默认30000、限制1000–45000。输出流上限65536字节，密钥只在服务器，前端没有模型密钥。示例卷由前端原创有限题库生成，source为example，始终3题、固定示例，不伪装成模型响应。更多说明见AI_LEARNING_CENTER.md。
+
+## 小书灵对话与订单地图
+
+GET `/api/assistant/status` 公开返回 `{data:{enabled:boolean}}`，只说明配置存在。POST `/api/assistant/chat` 要求已登录parent/tutor/admin，输入严格为 `{messages:[{role:'user'|'assistant',content:string}]}`；1–9条、每条trim后1–500字、用户开头/结尾并交替。基础私人信息拦截、用户10次/IP30次每分钟限流。成功返回 `{data:{reply:string,source:'model'}}`；未配置503、上游502/超时504，不伪造本机答复。无服务器对话历史表；模型可能按供应商条款处理用户主动发送的文本，真实质量/费用未验收。
+
+预约可选 `areaLabel` 仅接受 `server/src/content/xian-places.json` 的12个公共片区；不接收经纬度，默认未标注；Booking返回该可选字段。重复requestId的内容比较包括片区。新增可空列保留旧记录。
+
+GET `/api/bookings/map` 要求parent/tutor/admin，接受既有page(1–100000)/pageSize(1–100，默认100)/status可选参数。家长过滤parentId=当前用户，家教过滤资料归属，管理员全量；未知userId/role参数不改变归属。成功统一在data内返回 `{items,meta:{total,page,pageSize},scope,serverTime}`，由客户端消费meta。单次count/记录在同一事务；按createdAt DESC、id DESC分页。
+
+items字段：`{id,subject,status,areaLabel:string|null,tutorId,tutorName,teachingMode,referencePrice,expectedTime,createdAt,updatedAt}`。不返回studentName、parentId、contact、note或GPS。referencePrice取家教当前报价，不是订单支付快照；expectedTime仍为用户填写的预约时间文字，仅在授权范围内展示。每次调用读取当前状态，不是SSE/WebSocket；前端10秒轮询当前页，注明数据范围和错误，固定示例不进入接口或统计。

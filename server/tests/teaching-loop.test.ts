@@ -43,7 +43,7 @@ it('stores state in SQLite and does not advertise model success when not configu
 it('does not create a plan if a booking is cancelled while its model request is in flight',async()=>{
  let release!:()=>void,entered!:()=>void
  const gate=new Promise<void>(resolve=>{release=resolve}),started=new Promise<void>(resolve=>{entered=resolve})
- const app=buildApp(h.db,undefined,h.options,{enabled:true,async generate(){entered();await gate;return{requestId:'candidate-only',expectedRevision:0,type:'saveDraft',payload:{course,source:'model'}}}})
+ const app=buildApp(h.db,undefined,h.options,undefined,undefined,{enabled:true,async generate(){entered();await gate;return{requestId:'candidate-only',expectedRevision:0,type:'saveDraft',payload:{course,source:'model'}}}})
  try{
   await app.ready();const pending=app.inject({method:'POST',url:path()+'/generate',headers:{authorization:'Bearer '+h.tutor.token},payload:{kind:'course',requestId:'cancel-during-generation',expectedRevision:0}}).then(r=>r)
   await started;await h.db.booking.update({where:{id:h.booking.id},data:{status:'cancelled'}});release()
