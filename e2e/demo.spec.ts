@@ -243,3 +243,20 @@ test('西安地图选点、离线需求确认、附近推荐及本机位置恢�
  await expect(page.locator('.selected-location')).toHaveCount(0)
  expect(errors).toEqual([])
 })
+
+
+test('快速修改价格后立即应用，校验始终使用最新输入',async({page})=>{
+ await goto(page,'index/index')
+ await expect(page.locator('.tutor-grid .card').first()).toBeVisible()
+ await field(page,'最低价格（可空）').fill('80')
+ await field(page,'最高价格（可空）').fill('80')
+ await button(page,'应用价格').click()
+ await expect(page.locator('.tutor-grid .card')).toHaveCount(1)
+ for(let i=0;i<3;i++){
+  await field(page,'最高价格（可空）').fill('81');await button(page,'应用价格').click()
+  await expect(page.locator('.price-error')).toHaveCount(0)
+  await field(page,'最高价格（可空）').fill('70');await button(page,'应用价格').click()
+  await expect(page.locator('.price-error')).toContainText('最低价格不能高于最高价格')
+  await expect(page.locator('.tutor-grid .card')).toHaveCount(1)
+ }
+})

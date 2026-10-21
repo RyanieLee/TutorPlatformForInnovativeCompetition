@@ -18,6 +18,11 @@ const tutors = ref<Tutor[]>([])
 const loading = ref(false)
 const minPriceText=ref(''),maxPriceText=ref(''),priceError=ref('')
 const priceRange=ref<{minPrice?:number;maxPrice?:number}>({})
+// uni-app H5 对 input 的 model 更新节流 100ms；blur 先同步，防止快速点击读取旧价。
+function syncPrice(side:'min'|'max',event:unknown){
+ const value=(event as {detail?:{value?:unknown}})?.detail?.value
+ if(typeof value==='string'){if(side==='min')minPriceText.value=value;else maxPriceText.value=value}
+}
 function applyPrices() {
   try { priceRange.value=parsePriceRange(minPriceText.value,maxPriceText.value);priceError.value='';void loadTutors() }
   catch(cause) { priceError.value=(cause as Error).message }
@@ -66,7 +71,7 @@ const openProfile = () => uni.switchTab({ url: '/pages/profile/index' })
     <scroll-view scroll-x><view class="filters"><text v-for="s in subjects" :key="s" class="chip" :class="{ active: subject === s }" @click="subject = s">{{ s }}</text></view></scroll-view>
     <view class="heading">授课方式</view>
     <view class="filters teaching-modes"><text v-for="mode in teachingModes" :key="mode" class="chip" :class="{ active: teachingMode === mode }" @click="teachingMode = mode">{{ mode }}</text></view>
-    <view class="price-filter"><view><text class="filter-label">课时价格区间（元 / 小时）</text><view class="price-inputs"><input v-model="minPriceText" type="digit" maxlength="12" placeholder="最低价格（可空）"/><text>—</text><input v-model="maxPriceText" type="digit" maxlength="12" placeholder="最高价格（可空）"/></view></view><view class="filter-actions"><button class="apply-price" @click="applyPrices">应用价格</button><button @click="resetFilters">重置筛选</button></view></view>
+    <view class="price-filter"><view><text class="filter-label">课时价格区间（元 / 小时）</text><view class="price-inputs"><input v-model="minPriceText" @blur="syncPrice('min',$event)" type="digit" maxlength="12" placeholder="最低价格（可空）"/><text>—</text><input v-model="maxPriceText" @blur="syncPrice('max',$event)" type="digit" maxlength="12" placeholder="最高价格（可空）"/></view></view><view class="filter-actions"><button class="apply-price" @click="applyPrices">应用价格</button><button @click="resetFilters">重置筛选</button></view></view>
     <view v-if="priceError" class="price-error" role="alert">{{ priceError }}；仍展示上次已应用的价格条件。</view></view>
     <view class="heading">推荐家教 <text class="count">已显示 {{ tutors.length }} 位{{ apiMode ? '开发版' : '演示' }}老师</text></view>
     <view v-if="loading && !tutors.length" class="empty">{{ apiMode ? '正在读取家教…' : '正在读取演示家教…' }}</view>
