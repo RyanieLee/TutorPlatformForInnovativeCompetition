@@ -1,4 +1,6 @@
 import Fastify from 'fastify'
+import {registerLoopRoutes} from './teaching-loop/routes'
+import {createTeachingModel,type TeachingModel} from './teaching-loop/model'
 import { resolve } from 'node:path'
 import { registerTeachingRoutes } from './teaching/routes'
 import type { TeachingOptions } from './teaching/types'
@@ -14,8 +16,9 @@ const include = { tutorProfile: true } as const
 const rules = { accept: { from: ['pending'], to: 'accepted', role: 'tutor' }, reject: { from: ['pending'], to: 'rejected', role: 'tutor' }, cancel: { from: ['pending','accepted'], to: 'cancelled', role: 'parent' }, complete: { from: ['accepted'], to: 'completed', role: 'tutor' } } as const
 const data = (input: z.infer<typeof applicationSchema>) => { const {subjects,...fields}=input;return {...fields,subjectsJson:JSON.stringify(subjects)} }
 
-export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: MatchModel = createMatchModel(), teachingOptions?: TeachingOptions) {
+export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: MatchModel = createMatchModel(), teachingOptions?: TeachingOptions, teachingModel:TeachingModel=createTeachingModel()) {
  const app=Fastify({logger:process.env.NODE_ENV==='test'?false:{redact:['req.headers.authorization','req.body.password']},bodyLimit:32768})
+ app.register(async child=>registerLoopRoutes(child,db,teachingModel))
  app.register(cors,{methods:['GET','HEAD','POST','PUT','DELETE','OPTIONS'],origin:(process.env.CORS_ORIGINS||'http://localhost:5173,http://127.0.0.1:5173').split(',').map(s=>s.trim())})
  app.register(async child=>registerTeachingRoutes(child,db,teachingOptions??{uploadRoot:resolve(process.env.TEACHING_UPLOAD_ROOT||'./.teaching-uploads'),now:()=>new Date()}))
  const attempts=new Map<string,{count:number;resetAt:number}>()

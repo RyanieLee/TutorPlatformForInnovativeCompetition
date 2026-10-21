@@ -96,6 +96,7 @@ model TutorApplication {
 }
 
 model Booking {
+  teachingLoop   TeachingLoop?
   lessons        Lesson[]
   id             String       @id @default(cuid())
   parentId       String
@@ -114,6 +115,15 @@ model Booking {
   @@unique([parentId, requestId])
   @@index([parentId, createdAt])
   @@index([tutorProfileId, status, createdAt])
+}
+
+model TeachingLoop {
+  bookingId String @id
+  booking Booking @relation(fields:[bookingId],references:[id],onDelete:Restrict)
+  revision Int @default(0)
+  stateJson String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Report {
