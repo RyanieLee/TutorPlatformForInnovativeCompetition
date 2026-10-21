@@ -8,6 +8,8 @@ describe('小书灵教学与平台能力边界', () => {
    expect(platformAssistantInstructions).toContain('完整题目 + 学生作答')
    expect(platformAssistantInstructions).toContain('你看不到平台实时数据库')
    expect(platformAssistantInstructions).toContain('仅收发纯文字')
+   expect(platformAssistantInstructions).toContain('用户主动选择并同意发送')
+   expect(platformAssistantInstructions).toContain('图片只在请求期间驻留内存')
  })
  it('模型请求携带可核对的系统指南，而不是把题目当工具指令', async () => {
    let sent: any = null
