@@ -39,7 +39,7 @@ button:focus-visible,.chip:focus-visible,.card:focus-visible,.b-chip:focus-visib
 }
 .parent-shell .brand-icon.brand-icon{
   width:47px;height:47px;flex:0 0 47px;border-radius:15px;
-  background:transparent url('/static/linghang-logo.svg') center/contain no-repeat!important;
+  background:transparent url('../static/linghang-logo.svg') center/contain no-repeat!important;
 }
 .parent-shell .brand-icon.brand-icon:before,.parent-shell .brand-icon.brand-icon:after{content:none!important;display:none!important}
 .parent-shell .brand-name.brand-name,.shell.shell .brand-name{
@@ -153,7 +153,7 @@ button:focus-visible,.chip:focus-visible,.card:focus-visible,.b-chip:focus-visib
 .location-picker .place-buttons .chosen{background:#218b8c}
 .shell.shell{color:var(--lh-ink);max-width:1330px}
 .shell.shell .brand{padding:10px 14px 18px;border-bottom:1px solid #d8e8ea}
-.shell.shell .brand:before{content:"";background:url('/static/linghang-logo.svg') center/contain no-repeat;width:43px;height:43px;flex:0 0 43px}
+.shell.shell .brand:before{content:"";background:url('../static/linghang-logo.svg') center/contain no-repeat;width:43px;height:43px;flex:0 0 43px}
 .shell.shell .brand-name{margin-right:auto}
 .shell.shell .mode{color:#729099}
 .shell.shell .title{color:#193d54;font-family:inherit!important}
