@@ -3,11 +3,11 @@ import type { LearningTopic, ExamPaper, Question } from '../../shared/learning'
 import bank from '../../shared/example-questions.json'
 export const learningTopics = rawTopics as LearningTopic[]
 export const resourceSources = [
-  { id:'national', title:'国家中小学智慧教育平台 · 电子教材', provider:'国家中小学智慧教育平台', url:'https://basic.smartedu.cn/elecEdu', description:'在原站选择学段、学科、年级与教材版本；部分内容可能需要登录。', status:'官方入口已检索；具体资源按原站提供' },
-  { id:'courses', title:'国家中小学智慧教育平台 · 课程教学', provider:'国家中小学智慧教育平台', url:'https://basic.smartedu.cn/', description:'进入“课程教学”，查找同步课程、学习任务及教学资源。', status:'官方首页已打开；课程内容需原站选择' },
-  { id:'pep', title:'人教社 · 教材与电子版入口', provider:'人民教育出版社', url:'https://www.pep.com.cn/', description:'从“教材电子版”或教材栏目选择对应学段与科目，核对教材版本。', status:'官方检索收录；自动访问返回403，需在浏览器核验' },
-  { id:'standard', title:'义务教育课程方案与课程标准（2022年版）', provider:'教育部', url:'https://www.moe.gov.cn/srcsite/A26/s8001/202204/t20220420_619921.html', description:'小学、初中各学科课程标准入口，适合教师确定学习目标，不是现成题库。', status:'教育部官方检索收录；自动打开超时' },
-  { id:'highstandard', title:'普通高中课程方案与课程标准修订通知', provider:'教育部', url:'https://www.moe.gov.cn/srcsite/A26/s8001/202006/t20200603_462199.html', description:'普通高中课程标准修订入口，使用前核对本地课程与教材安排。', status:'官方通知入口；自动打开超时' }
+  { id:'national', title:'国家中小学智慧教育平台 · 电子教材', provider:'国家中小学智慧教育平台', url:'https://basic.smartedu.cn/elecEdu', description:'在原站选择学段、学科、年级与教材版本；部分内容可能需要登录。', status:'官方教材目录，具体版本以原站为准' },
+  { id:'courses', title:'国家中小学智慧教育平台 · 课程教学', provider:'国家中小学智慧教育平台', url:'https://basic.smartedu.cn/', description:'进入“课程教学”，查找同步课程、学习任务及教学资源。', status:'进入官方平台，选择需要的课程' },
+  { id:'pep', title:'人教社 · 教材与电子版入口', provider:'人民教育出版社', url:'https://www.pep.com.cn/', description:'从“教材电子版”或教材栏目选择对应学段与科目，核对教材版本。', status:'官方出版社入口，部分资源需在原站登录或选择' },
+  { id:'standard', title:'义务教育课程方案与课程标准（2022年版）', provider:'教育部', url:'https://www.moe.gov.cn/srcsite/A26/s8001/202204/t20220420_619921.html', description:'小学、初中各学科课程标准入口，适合教师确定学习目标，不是现成题库。', status:'教育部公开文件，请以原站内容为准' },
+  { id:'highstandard', title:'普通高中课程方案与课程标准修订通知', provider:'教育部', url:'https://www.moe.gov.cn/srcsite/A26/s8001/202006/t20200603_462199.html', description:'普通高中课程标准修订入口，使用前核对本地课程与教材安排。', status:'教育部公开文件，请核对本地课程安排' }
 ]
 export function examplePaper(topicId:string, grade:string): ExamPaper {
   const topic=learningTopics.find(t=>t.id===topicId)
