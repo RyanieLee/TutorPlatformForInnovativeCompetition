@@ -24,7 +24,7 @@ try{
  const command=async(type,payload={})=>{const body={requestId:'http-loop-'+(++serial),expectedRevision:state.revision,type,payload};state=await request('POST',path,body,tutor.token);const retry=await request('POST',path,body,tutor.token);assert.equal(retry.revision,state.revision);return state}
  await command('initialize');assert.equal((await request('GET',path,undefined,parent.token)).plan,null)
  await command('publish')
- await command('record',{lessonId:'L2',date:'2026-10-22',completed:'合并同类项与移项，5道练习',goalMet:'部分达成',results:[1,2,3,4,5].map(n=>({questionId:'L2-Q'+n,correct:n<=3})),errorTypes:['移项符号'],observation:'Q4/Q5在负号与移项出现符号错误',questions:'负系数如何变形',consolidation:'带负号移项'})
+ await command('record',{planVersion:1,lessonId:'L2',date:'2026-10-22',completed:'合并同类项与移项，5道练习',goalMet:'部分达成',results:[1,2,3,4,5].map(n=>({questionId:'L2-Q'+n,correct:n<=3})),errorTypes:['移项符号'],observation:'Q4/Q5在负号与移项出现符号错误',questions:'负系数如何变形',consolidation:'带负号移项'})
  const {makePresetFeedback,makePresetRevision}=require('../dist/src/teaching-loop/engine.js')
  const record=state.records[0];await command('feedback',{recordId:record.id,feedback:makePresetFeedback(state,record.id,new Date().toISOString())});assert.equal((await request('GET',path,undefined,parent.token)).feedbacks.length,0)
  await command('publishFeedback',{feedbackId:state.feedbacks[0].id});await command('suggest',{suggestion:makePresetRevision(state,new Date().toISOString())});await command('applyRevision',{suggestionId:state.suggestions[0].id})

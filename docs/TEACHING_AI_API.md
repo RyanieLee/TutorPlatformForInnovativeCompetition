@@ -12,6 +12,6 @@
 
 成功写入revision递增；相同ID与命令重试不重复写入；同ID不同内容或过期revision返回409。普通请求最多180KB，历史最多2MB。model来源只能由服务端生成接口写入，普通命令不能伪造。无模型503 MODEL_UNAVAILABLE；超时/无效上游502或504 MODEL_UPSTREAM；限流429。modelEnabled只表示配置齐备，不证明供应商连通。
 
-课程每节45分钟，题号稳定。课堂事实包含lessonId/date/completed/goalMet/results[{questionId,correct}]/errorTypes/observation/questions/consolidation。统计由逐题事实计算，证据引用已有题号或teacher-observation。家长仅收到教师发布版本；采纳建议只生成草稿，另外发布形成v2。已发布快照不可覆盖；新课堂事实使旧建议失效。
+课程每节45分钟，题号稳定。课堂事实包含planVersion/lessonId/date/completed/goalMet/results[{questionId,correct}]/errorTypes/observation/questions/consolidation，planVersion必须是当前发布快照版本，不能依据未发布改题记分。统计由逐题事实计算，证据引用已有题号或teacher-observation。家长仅收到教师发布版本；采纳建议只生成草稿，另外发布形成v2。草稿保留修订证据上下文，编辑后仍在发布时重验；已发布快照不可覆盖，新事实使旧修订草稿也不能发布。
 
 模型只接收匿名课程与课堂事实，不接收预约称呼、用户ID或附件；保留已核验题目及答案，教师须核验。Mock复用纯规则及本机存储，不具备服务端安全能力。

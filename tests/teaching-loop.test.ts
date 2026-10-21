@@ -5,7 +5,7 @@ const time='2026-10-22T10:00:00.000Z'
 let serial=0
 function send(state:any,type:string,payload:any={}){return applyCommand(state,{requestId:'test-command-'+(++serial),expectedRevision:state.revision,type,payload},time)}
 function setup(){return send(createLoop('booking-1'),'initialize')}
-function record(state:any){return send(state,'record',{lessonId:'L2',date:'2026-10-22',completed:'完成合并同类项及移项练习',goalMet:'部分达成',results:[1,2,3,4,5].map(n=>({questionId:'L2-Q'+n,correct:n<=3})),errorTypes:['移项符号'],observation:'Q4和Q5中负号与移项出现符号错误；简单合并同类项正确。',questions:'负系数移项后符号如何变化？',consolidation:'带负号移项'})}
+function record(state:any){return send(state,'record',{planVersion:1,lessonId:'L2',date:'2026-10-22',completed:'完成合并同类项及移项练习',goalMet:'部分达成',results:[1,2,3,4,5].map(n=>({questionId:'L2-Q'+n,correct:n<=3})),errorTypes:['移项符号'],observation:'Q4和Q5中负号与移项出现符号错误；简单合并同类项正确。',questions:'负系数移项后符号如何变化？',consolidation:'带负号移项'})}
 function feedback(state:any){const r=state.records.at(-1);state=send(state,'feedback',{recordId:r.id,feedback:makePresetFeedback(state,r.id,time)});return send(state,'publishFeedback',{feedbackId:state.feedbacks.at(-1).id})}
 describe('预约教学闭环',()=>{
  it('contains four teachable lessons, exactly45 minutes each and independently checked algebra answers',()=>{
@@ -64,12 +64,20 @@ describe('预约教学闭环',()=>{
  })
  it('returns a validation error for impossible classroom dates',()=>{
   const s=send(setup(),'publish'),valid=record(s).records[0]
-  const {id,createdAt,planVersion,...input}=valid
+  const {id,createdAt,...input}=valid
   expect(()=>send(s,'record',{...input,date:'2026-99-99'})).toThrowError(expect.objectContaining({code:'INVALID'}))
  })
  it('rejects diff descriptions that do not match the proposed course',()=>{
   const s=feedback(record(send(setup(),'publish'))),p=makePresetRevision(s,time)
   p.changes[0].proposedBlock='凭空添加的变化，没有对应课表环节'
   expect(()=>send(s,'suggest',{suggestion:p})).toThrow()
+ })
+ it('blocks publishing an applied revision after classroom facts change, even after editing the draft',()=>{
+  let s=feedback(record(send(setup(),'publish')));s=send(s,'suggest',{suggestion:makePresetRevision(s,time)});s=send(s,'applyRevision',{suggestionId:s.suggestions[0].id})
+  s=record(s)
+  expect(()=>send(s,'publish')).toThrowError(/课堂事实已更新/)
+  s=send(s,'saveDraft',{course:{...s.draft!.course,goal:'教师继续编辑候选修订'},source:'manual'})
+  expect(()=>send(s,'publish')).toThrowError(/课堂事实已更新/)
+  expect(parentView(s).plan?.version).toBe(1)
  })
 })

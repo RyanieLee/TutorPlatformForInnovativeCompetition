@@ -19,3 +19,6 @@ Node.js20及以上，仓库根目录npm ci、npm run dev:h5，打开终端本地
 网络结果未知时暂停新操作，使用“重试上次提交”保留同一请求ID，或刷新确认；409须核对最新状态，不覆盖其他窗口。修改课堂事实后须重新生成并确认反馈，旧建议不能用于新事实。取消或完成预约保留可读历史，不能新增教学操作。
 
 样例修订仅适用于第二课Q4/Q5均错误且教师记录移项符号错因的场景；其他情况需手工备课或另行验证模型建议。现有课件及作业页面保留，闭环不做OCR、自动批改、支付或实时视频。
+
+## 单文件HTML预览
+在Mock模式构建后运行：node workspaces/chunxiaruo-commits/tools/package-teaching-preview.cjs dist/build/h5 outputs/preview.html。下载或复制生成的HTML，用浏览器打开；无需Node服务也能进行本机教学演示。地图底图仍需网络，不把单文件预览当作API或公网验收。

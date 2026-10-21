@@ -8,12 +8,12 @@
 | --- | --- |
 | 根与server的npm ci --no-audit --no-fund | 成功，未更换依赖 |
 | 根类型检查与B类型检查 | 通过 |
-| 根npm test | 78/78通过，包含课程/数学答案/发布隔离/证据/版本/幂等/错误日期及服务重试 |
+| 根npm test | 81/81通过，包含课程/数学答案/发布隔离/证据/版本/幂等/错误日期、未保存多字段编辑与服务重试 |
 | B工作流测试 | 9/9通过 |
-| server Prisma生成、构建与npm test | 通过，88/88，包含权限、迁移、文件收交、分页及新教学API/模型适配 |
-| H5和微信小程序构建 | 通过；最终Mock/API四项构建及远程CI另行记录 |
+| server Prisma生成、构建与npm test | 通过，89/89，包含权限、迁移、文件收交、分页及新教学API/模型适配；含取消预约与模型生成并发 |
+| H5和微信小程序构建 | Mock/API四项构建通过；审查后重新构建及H5预览通过，最终远程CI另行记录 |
 | 原业务浏览器回归 | 一次完整运行原流程20项通过、4项API专用在Mock下跳过 |
-| 教学Mock/API桌面/手机 | 隔离套件4/4通过；最终增加真实写入成功后响应丢失场景继续回归 |
+| 教学Mock/API桌面/手机 | 隔离套件4/4通过；含实际写入成功后丢失响应、同ID重试、草稿题目隔离及未保存编辑保留；独立审查修复后再跑4/4通过 |
 | npm run test:demo | 通过，含重复初始化、HTTP重启、WAL快照、恢复库、demo:serve |
 | npm run test:teaching-demo | 通过，真实HTTP生成v1/课堂事实/反馈/v2；API停止、重复初始化、启动新进程后同一版本和反馈仍在 |
 
@@ -31,6 +31,8 @@
 docs/screenshots/teaching-{mock-desktop,mock-mobile,api-desktop,api-mobile}-{course,feedback,revision,parent}.png为实际浏览器操作截图。桌面1440px、手机390px；测试检查文档无横向溢出及pageerror。预置课程完整人类可读内容见TEACHING_DEMO_COURSE.md；录屏路径见TEACHING_LOOP_DEMO.md；接口见TEACHING_AI_API.md。
 
 ## 能力边界
+
+独立审查发现并修复三项Important，见TEACHING_AI_REVIEW.md。单文件HTML从最新Mock构建打包，在file URL的390px真实浏览器中完成同一教学故事线；先前一次预览打包读取了旧复制产物，已改为直接读取最新构建并重新验证。它是本机预览文件，不是公网部署。
 
 模型测试使用虚构transport；真实供应商连通、延迟、费用和教学质量未验证。modelEnabled仅表示配置齐全。未提供公网部署、微信开发者工具/真机或真实教学试点证明。当前支持一个有完整内容的初一数学4课案例；样例修订适用于第二课Q4/Q5移项错误，不宣称覆盖任意学科。
 

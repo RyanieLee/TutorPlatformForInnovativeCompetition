@@ -7,6 +7,7 @@ import ClassRecordForm from './shared/ClassRecordForm.vue'
 import FeedbackReport from './shared/FeedbackReport.vue'
 import RevisionCompare from './shared/RevisionCompare.vue'
 import {useTeachingPage,formatTime} from './shared/page'
+import {reconcileCourse} from './shared/course-state'
 import {confirmAction} from '../tutor/shared/page'
 import {loopService,loopApiMode,type LoopView,type LoopState,type Course,type RecordInput,type Command} from '../../services/teaching-loop'
 import {makePresetFeedback,makePresetRevision} from '../../../server/src/teaching-loop/engine'
@@ -28,20 +29,21 @@ const latestFeedback=computed(()=>teacher.value?.feedbacks.filter(f=>f.recordId=
 const suggestion=computed(()=>teacher.value?.suggestions.slice(-1)[0])
 const original=computed(()=>teacher.value?.versions.find(p=>p.version===suggestion.value?.baseVersion)?.course.lessons[2])
 const source=(s:string)=>s==='preset'?'预置演示样例（非实时生成）':s==='model'?'模型生成 · 需教师核验':'教师编辑'
-function apply(data:LoopView,force=true){view.value=data;pending.value=loopService.hasPending(bookingId.value);if(force||!dirty.value){const c='draft'in data?(data.draft?.course??data.versions.slice(-1)[0]?.course):data.plan?.course;course.value=c?JSON.parse(JSON.stringify(c)):null;dirty.value=false;reviewed.value=false}}
+function apply(data:LoopView,force=false){view.value=data;pending.value=loopService.hasPending(bookingId.value);const c='draft'in data?(data.draft?.course??data.versions.slice(-1)[0]?.course):data.plan?.course;const next=reconcileCourse(course.value,dirty.value,c??null,force);course.value=next.course;dirty.value=next.dirty;if(!next.dirty)reviewed.value=false}
 onLoad(o=>{bookingId.value=String(o?.bookingId||'')})
 async function getBooking(){if(loopApiMode)return teachingService.getBooking(bookingId.value);const user=currentSession.value!.user;return user.role==='tutor'?businessService.getTutorBooking(user,bookingId.value):(await businessService.listParentBookings(user)).find(b=>b.id===bookingId.value)??null}
 const refresh=()=>{if(busy.value)return;void page.load(async()=>{const[data,b]=await Promise.all([loopService.read(bookingId.value),getBooking()]);return{data,b}},({data,b})=>{booking.value=b;apply(data,false)})}
 onShow(refresh)
 function changed(value:Course){course.value=value;dirty.value=true;reviewed.value=false}
-async function act(work:(guard:()=>void)=>Promise<LoopView>,message:string){await page.act(work,data=>{apply(data);feedback.value=message});pending.value=loopService.hasPending(bookingId.value)}
-function command(type:Command['type'],payload:Record<string,any>={},message='教学内容已保存'){return act(()=>loopService.command(bookingId.value,view.value!.revision,type,payload),message)}
+async function act(work:(guard:()=>void)=>Promise<LoopView>,message:string,replaceCourse=false){await page.act(work,data=>{apply(data,replaceCourse);feedback.value=message});pending.value=loopService.hasPending(bookingId.value)}
+function command(type:Command['type'],payload:Record<string,any>={},message='教学内容已保存'){const replace=['initialize','saveDraft','discardDraft','publish','applyRevision'].includes(type);return act(async guard=>{if(dirty.value&&['discardDraft','applyRevision'].includes(type)){if(!await confirmAction('处理未保存编辑','此操作将替换当前未保存的课程编辑，确认继续？'))throw new BusinessError('INVALID','已保留未保存编辑');guard()}return loopService.command(bookingId.value,view.value!.revision,type,payload)},message,replace)}
+function discardLocal(){return act(async guard=>{if(!await confirmAction('放弃未保存编辑','仅放弃当前页面未保存的课程内容，服务端草稿和历史保留。'))throw new BusinessError('INVALID','已保留未保存编辑');guard();return view.value!},'已放弃页面未保存编辑，服务端内容保留。',true)}
 async function saveDraft(){if(course.value)await command('saveDraft',{course:JSON.parse(JSON.stringify(course.value)),source:'manual'},'课程草稿已保存，仅教师可见。')}
-async function publish(){if(!reviewed.value)return;await act(async guard=>{if(!await confirmAction('确认发布教学计划','请确认已核验目标、45分钟安排、题目和答案。发布后关联家长可见，旧版本保留。'))throw new BusinessError('INVALID','已取消发布');guard();let revision=view.value!.revision;if(dirty.value){const saved=await loopService.command(bookingId.value,revision,'saveDraft',{course:JSON.parse(JSON.stringify(course.value)),source:'manual'});revision=saved.revision;guard()}return loopService.command(bookingId.value,revision,'publish',{})},'教学计划已确认发布，家长现在可以查看。')}
+async function publish(){if(!reviewed.value)return;await act(async guard=>{if(!await confirmAction('确认发布教学计划','请确认已核验目标、45分钟安排、题目和答案。发布后关联家长可见，旧版本保留。'))throw new BusinessError('INVALID','已取消发布');guard();let revision=view.value!.revision;if(dirty.value){const saved=await loopService.command(bookingId.value,revision,'saveDraft',{course:JSON.parse(JSON.stringify(course.value)),source:'manual'});revision=saved.revision;guard()}return loopService.command(bookingId.value,revision,'publish',{})},'教学计划已确认发布，家长现在可以查看。',true)}
 async function saveRecord(input:RecordInput){await command('record',input,'课堂事实已保存，可生成候选反馈；改课需使用本次新反馈。')}
 async function sampleFeedback(){try{if(!teacher.value||!latestRecord.value)return;await command('feedback',{recordId:latestRecord.value.id,feedback:makePresetFeedback(teacher.value,latestRecord.value.id,new Date().toISOString())},'样例反馈已生成，尚未发布，请教师审核。')}catch(e){feedback.value=e instanceof Error?e.message:'无法生成样例反馈';failed.value=true}}
 async function sampleRevision(){try{if(teacher.value)await command('suggest',{suggestion:makePresetRevision(teacher.value,new Date().toISOString())},'样例调整建议已生成，原发布版保持可见。')}catch(e){feedback.value=e instanceof Error?e.message:'无法生成调整建议';failed.value=true}}
-function generate(kind:'course'|'feedback'|'revision'){return act(()=>loopService.generate(bookingId.value,view.value!.revision,kind),'模型候选内容已返回，尚未自动发布，请教师核验。')}
+function generate(kind:'course'|'feedback'|'revision'){return act(async guard=>{if(kind==='course'&&dirty.value){if(!await confirmAction('处理未保存编辑','生成新课程将替换当前未保存编辑，确认继续？'))throw new BusinessError('INVALID','已保留未保存编辑');guard()}return loopService.generate(bookingId.value,view.value!.revision,kind)},'模型候选内容已返回，尚未自动发布，请教师核验。',kind==='course')}
 async function publishFeedback(){if(!latestFeedback.value)return;await act(async guard=>{if(!await confirmAction('确认发布课后反馈','请核对逐题事实、证据引用与家长报告。确认后家长可见。'))throw new BusinessError('INVALID','已取消发布');guard();return loopService.command(bookingId.value,view.value!.revision,'publishFeedback',{feedbackId:latestFeedback.value!.id})},'课后反馈已由教师确认发布。')}
 const parentReports=computed(()=>view.value?.feedbacks.filter(f=>f.status==='published')??[])
 </script>
@@ -65,7 +67,9 @@ const parentReports=computed(()=>view.value?.feedbacks.filter(f=>f.status==='pub
       <view v-if="course&&(teacher.draft||dirty)" class="publish-box"><label class="review-check"><checkbox :checked="reviewed" :disabled="locked" @click="reviewed=!reviewed"/><text>我已核验课程目标、每节45分钟安排、练习及标准答案</text></label><view class="t-actions"><button role="button" class="t-btn" data-testid="publish-course" :disabled="locked||!reviewed" @click="publish">确认发布课程</button><button v-if="teacher.draft" role="button" class="t-btn secondary" :disabled="locked" @click="command('discardDraft',{},'未发布草稿已撤销，发布历史保留。')">撤销未发布草稿</button></view></view>
      </view>
      <CourseOutline v-if="course" :course="course" :editable="editing&&writable" :disabled="locked" @update:course="changed"/>
-     <ClassRecordForm v-if="course" :lesson="course.lessons[1]" :disabled="locked" @save="saveRecord"/>
+     <view v-if="dirty" class="t-card"><text class="t-note">当前有未保存课程编辑，课堂记录与反馈操作不会覆盖它。</text><button role="button" class="t-btn secondary" :disabled="locked" @click="discardLocal">放弃未保存编辑</button></view>
+     <ClassRecordForm v-if="published" :key="'record-v'+published.version" :lesson="published.course.lessons[1]" :version="published.version" :disabled="locked" @save="saveRecord"/>
+     <view v-else class="t-card t-note">请先确认发布课程，再依据发布版题目录入课堂事实。</view>
      <view v-if="latestRecord" class="t-card"><view class="t-section-title">课堂事实已保存 · {{latestRecord.date}}</view><view class="t-content">{{latestRecord.completed}}</view><view class="t-content">教师观察：{{latestRecord.observation}}</view><view class="t-actions"><button role="button" class="t-btn" data-testid="sample-feedback" :disabled="locked" @click="sampleFeedback">生成样例反馈（非实时AI）</button><button role="button" class="t-btn secondary" :disabled="locked||!view?.modelEnabled" @click="generate('feedback')">调用模型生成课后反馈</button></view></view>
      <FeedbackReport v-if="latestFeedback" :value="latestFeedback" :disabled="locked" editable @edit="command('editFeedback',{feedbackId:latestFeedback.id,report:$event},'家长报告已修改，来源标记为教师编辑。')" @publish="publishFeedback"/>
      <view v-if="latestFeedback?.status==='published'" class="t-card"><view class="t-section-title">用已确认反馈规划下一课</view><view class="t-actions"><button role="button" class="t-btn" data-testid="sample-revision" :disabled="locked||!!teacher.draft" @click="sampleRevision">生成第三课样例调整建议</button><button role="button" class="t-btn secondary" :disabled="locked||!view?.modelEnabled||!!teacher.draft" @click="generate('revision')">调用模型建议调整第三课</button></view></view>

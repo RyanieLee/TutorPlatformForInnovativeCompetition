@@ -1,5 +1,7 @@
 import {beforeEach,afterEach,it,expect} from 'vitest'
 import {teachingHarness} from './teaching-fixtures'
+import {buildApp} from '../src/app'
+import course from '../src/teaching-loop/course.json'
 let h:Awaited<ReturnType<typeof teachingHarness>>,serial=0
 beforeEach(async()=>{h=await teachingHarness()})
 afterEach(async()=>{await h.app.close()})
@@ -37,4 +39,15 @@ it('stores state in SQLite and does not advertise model success when not configu
  const result=await h.request('POST',path(),h.tutor,command(0,'initialize'));expect(result.statusCode).toBe(200)
  const row=await (h.db as any).teachingLoop.findUnique({where:{bookingId:h.booking.id}});expect(JSON.parse(row.stateJson).draft.course.lessons[1].exercises).toHaveLength(5)
  const generated=await h.request('POST',path()+'/generate',h.tutor,{kind:'course',requestId:'generate-request-1',expectedRevision:1});expect(generated.statusCode).toBe(503);expect(generated.json().error.code).toBe('MODEL_UNAVAILABLE')
+})
+it('does not create a plan if a booking is cancelled while its model request is in flight',async()=>{
+ let release!:()=>void,entered!:()=>void
+ const gate=new Promise<void>(resolve=>{release=resolve}),started=new Promise<void>(resolve=>{entered=resolve})
+ const app=buildApp(h.db,undefined,h.options,{enabled:true,async generate(){entered();await gate;return{requestId:'candidate-only',expectedRevision:0,type:'saveDraft',payload:{course,source:'model'}}}})
+ try{
+  await app.ready();const pending=app.inject({method:'POST',url:path()+'/generate',headers:{authorization:'Bearer '+h.tutor.token},payload:{kind:'course',requestId:'cancel-during-generation',expectedRevision:0}}).then(r=>r)
+  await started;await h.db.booking.update({where:{id:h.booking.id},data:{status:'cancelled'}});release()
+  expect((await pending).statusCode).toBe(409)
+  expect(await h.db.teachingLoop.findUnique({where:{bookingId:h.booking.id}})).toBeNull()
+ }finally{release();await app.close()}
 })

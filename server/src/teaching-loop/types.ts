@@ -4,8 +4,8 @@ export interface Block{id:string;minutes:number;teacher:string;student:string}
 export interface CourseLesson{id:string;title:string;goals:string[];knowledge:string[];blocks:Block[];examples:Question[];exercises:Question[];homework:string;observe:string[];resources:string[]}
 export interface Course{code:string;subject:string;grade:string;unit:string;student:string;goal:string;prerequisites:string;diagnostic:Question[];lessons:CourseLesson[]}
 export interface Plan{version:number;course:Course;source:Source;createdAt:string;publishedAt:string;explanation:string}
-export interface Draft{course:Course;source:Source;createdAt:string;explanation:string}
-export interface RecordInput{lessonId:string;date:string;completed:string;goalMet:string;results:{questionId:string;correct:boolean}[];errorTypes:string[];observation:string;questions:string;consolidation:string}
+export interface Draft{course:Course;source:Source;createdAt:string;explanation:string;revisionContext?:{suggestionId:string;recordId:string;feedbackId:string;baseVersion:number}}
+export interface RecordInput{planVersion:number;lessonId:string;date:string;completed:string;goalMet:string;results:{questionId:string;correct:boolean}[];errorTypes:string[];observation:string;questions:string;consolidation:string}
 export interface ClassRecord extends RecordInput{id:string;createdAt:string;planVersion:number}
 export interface EvidencePoint{text:string;evidenceRefs:string[]}
 export interface Feedback{ id:string;recordId:string;lessonId:string;source:Source;createdAt:string;promptVersion:string;correct:number;total:number;percent:number;strengths:EvidencePoint[];consolidation:EvidencePoint[];next:EvidencePoint[];report:string;status:'draft'|'published';publishedAt:string|null }

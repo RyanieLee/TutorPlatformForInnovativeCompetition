@@ -26,8 +26,9 @@ export function createLoop(bookingId:string):LoopState{return{bookingId,revision
 function currentCourse(s:LoopState):Course{return s.draft?.course??s.versions.slice(-1)[0]?.course??invalid('请先加载教学课程')}
 function latestRecord(s:LoopState,id:string){const r=s.records.find(x=>x.id===id);if(!r)invalid('课堂记录不存在');if(s.records.filter(x=>x.lessonId===r.lessonId).slice(-1)[0]?.id!==r.id)conflict('课堂事实已更新，请重新生成反馈');return r}
 function checkRecord(s:LoopState,r:RecordInput){
- object(r,['lessonId','date','completed','goalMet','results','errorTypes','observation','questions','consolidation'])
- const lesson=currentCourse(s).lessons.find(l=>l.id===r.lessonId);if(!lesson)invalid('课次不存在')
+ object(r,['planVersion','lessonId','date','completed','goalMet','results','errorTypes','observation','questions','consolidation'])
+ const plan=s.versions.slice(-1)[0];if(!plan||r.planVersion!==plan.version)conflict('课堂记录必须依据当前已发布版本，请刷新后核对题目')
+ const lesson=plan.course.lessons.find(l=>l.id===r.lessonId);if(!lesson)invalid('课次不存在')
  const date=new Date(r.date+'T00:00:00Z')
  if(typeof r.date!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(r.date)||Number.isNaN(date.getTime())||date.toISOString().slice(0,10)!==r.date)invalid('授课日期无效')
  text(r.completed);text(r.goalMet,100);text(r.observation);text(r.questions);text(r.consolidation);strings(r.errorTypes,0,8)
@@ -94,15 +95,15 @@ export function applyCommand(state:LoopState,command:Command,now:string):LoopSta
  const s=copy(state),p=command.payload??{},id=command.requestId;const source=()=>{if(p.source!==undefined&&!['preset','model','manual'].includes(p.source))invalid('课程来源无效');return p.source??'manual'}
  switch(command.type){
   case 'initialize':object(p,[]);if(s.draft||s.versions.length)conflict('已有教学计划，请继续编辑');s.draft={course:copy(preset),source:'preset',createdAt:now,explanation:'预置演示课程，非实时模型生成；请教师核对教学适配。'};break
-  case 'saveDraft':object(p,['course','source']);validateCourse(p.course);s.draft={course:copy(p.course),source:source(),createdAt:now,explanation:'教师编辑草稿，发布前请核验题目与答案。'};break
+  case 'saveDraft':object(p,['course','source']);validateCourse(p.course);s.draft={course:copy(p.course),source:source(),createdAt:now,explanation:'教师编辑草稿，发布前请核验题目与答案。',...(s.draft?.revisionContext?{revisionContext:copy(s.draft.revisionContext)}:{})};break
   case 'discardDraft':object(p,[]);if(s.draft)for(const proposal of s.suggestions)if(proposal.status==='applied'&&proposal.baseVersion===s.versions.slice(-1)[0]?.version&&JSON.stringify(proposal.course)===JSON.stringify(s.draft.course))proposal.status='rejected';s.draft=null;break
-  case 'publish':object(p,[]);if(!s.draft)conflict('没有待发布草稿');validateCourse(s.draft.course);s.versions.push({...s.draft,version:s.versions.length+1,publishedAt:now});s.draft=null;break
+  case 'publish':{object(p,[]);if(!s.draft)conflict('没有待发布草稿');validateCourse(s.draft.course);if(s.draft.revisionContext){const context=s.draft.revisionContext,proposal=s.suggestions.find(x=>x.id===context.suggestionId&&x.recordId===context.recordId&&x.feedbackId===context.feedbackId&&x.baseVersion===context.baseVersion&&x.status==='applied');if(!proposal)conflict('修订依据已失效，请重新规划');checkSuggestion(s,proposal)}const{revisionContext,...draft}=s.draft;s.versions.push({...draft,version:s.versions.length+1,publishedAt:now});s.draft=null;break}
   case 'record':checkRecord(s,p as RecordInput);s.records.push({...copy(p as RecordInput),id,createdAt:now,planVersion:s.versions.slice(-1)[0]?.version??0});break
   case 'feedback':{object(p,['recordId','feedback']);const r=latestRecord(s,p.recordId);validateFeedback(s,r,p.feedback);s.feedbacks.push({...copy(p.feedback),id,createdAt:now,status:'draft',publishedAt:null});break}
   case 'editFeedback':{object(p,['feedbackId','report']);const f=s.feedbacks.find(f=>f.id===p.feedbackId);if(!f||f.status!=='draft')conflict('仅能编辑候选反馈');latestRecord(s,f.recordId);text(p.report);f.report=p.report;f.source='manual';break}
   case 'publishFeedback':{object(p,['feedbackId']);const f=s.feedbacks.find(f=>f.id===p.feedbackId);if(!f||f.status!=='draft')conflict('反馈已发布或不存在');latestRecord(s,f.recordId);f.status='published';f.publishedAt=now;break}
   case 'suggest':object(p,['suggestion']);if(s.draft)conflict('请先发布或撤销当前草稿，再比较已发布原版');checkSuggestion(s,p.suggestion);if(s.suggestions.some(x=>x.feedbackId===p.suggestion.feedbackId&&x.baseVersion===p.suggestion.baseVersion&&x.status==='pending'&&JSON.stringify(x.course)===JSON.stringify(p.suggestion.course)))conflict('已有相同反馈的待确认建议，请先处理');s.suggestions.push({...copy(p.suggestion),id,createdAt:now,status:'pending'});break
-  case 'applyRevision':case 'rejectRevision':{object(p,['suggestionId']);const proposal=s.suggestions.find(x=>x.id===p.suggestionId);if(!proposal||proposal.status!=='pending')conflict('此建议已处理或不存在');checkSuggestion(s,proposal);if(command.type==='applyRevision'){if(s.draft)conflict('已有未发布草稿，请先处理');s.draft={course:copy(proposal.course),source:proposal.source,createdAt:now,explanation:proposal.why};proposal.status='applied'}else proposal.status='rejected';break}
+  case 'applyRevision':case 'rejectRevision':{object(p,['suggestionId']);const proposal=s.suggestions.find(x=>x.id===p.suggestionId);if(!proposal||proposal.status!=='pending')conflict('此建议已处理或不存在');checkSuggestion(s,proposal);if(command.type==='applyRevision'){if(s.draft)conflict('已有未发布草稿，请先处理');s.draft={course:copy(proposal.course),source:proposal.source,createdAt:now,explanation:proposal.why,revisionContext:{suggestionId:proposal.id,recordId:proposal.recordId,feedbackId:proposal.feedbackId,baseVersion:proposal.baseVersion}};proposal.status='applied'}else proposal.status='rejected';break}
   default:invalid('不支持的教学操作')
  }
  if(s.records.length>200||s.feedbacks.length>200||s.versions.length>100||s.suggestions.length>200||s.receipts.length>2000)invalid('演示历史已达上限，请使用其他演示预约')
