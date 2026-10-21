@@ -20,6 +20,8 @@
 | 409 | CONFLICT | 已处理、非法状态转换、并发更新或请求标识冲突；刷新查询 |
 | 429 | RATE_LIMIT | 等待限流窗口结束后重试 |
 | 500 | INTERNAL | 服务/数据库异常；不返回内部堆栈 |
+| 502 / 504 | MODEL_UPSTREAM | 模型异常、无效结果或超时；回到手工表单 |
+| 503 | MODEL_UNAVAILABLE | 未配置模型，仍可使用规则推荐 |
 
 Fastify 的其他 4xx（如过大请求 413）也封装为 INVALID。字段校验细节见 validation.ts。
 
@@ -124,6 +126,19 @@ reason 为 `资料不实/内容不当/其他`，description 最多 500 字符，
 申请按 updatedAt DESC、id DESC 排序，预约和举报按 createdAt DESC、id DESC 排序。单次请求的计数与记录查询在同一数据库事务中执行，预约计数与记录使用相同归属条件。同一时间戳下通过 ID 排序保证顺序确定；页码分页不提供跨请求快照，翻页期间有新增记录或申请更新时，应从第一页刷新。
 
 示例：`GET /api/bookings/received?page=2&pageSize=20`，携带家教令牌。前端现有适配器只读取 data，继续显示默认第一页；本次没有新增前端“加载更多”。前端负责人接入时需要扩展 BusinessService 和 Mock 契约、保留 meta 并提供分页操作，不能直接把 total 当成当前页条数。
+
+## 可选模型需求解析
+
+此能力来自已合入的 PR #16，模型只解析用户主动提交的需求，不替代规则排序。
+
+| 方法 / 路径 | 身份 | 输入与输出 |
+| --- | --- | --- |
+| GET `/api/match-assistant/status` | 公开 | data 为 `{enabled:boolean}`，只说明配置齐全，不代表上游可用 |
+| POST `/api/match-assistant/parse` | parent | 严格输入 `{brief:string}`，trim 后 6–160 字；返回五项建议 |
+
+建议固定为 subject、grade、budget、mode、preference，未明确字段为 null。非 null 时：subject 为数学/英语/语文/物理/化学；grade 为小学（演示）/初中（演示）/高中（演示）；budget 为 0.01–2000；mode 为线上/线下/均可；preference 最多40字。用户确认建议后才应用到表单。
+
+基础个人信息拦截不保证识别全部隐私内容。模型未配置时，在参数校验前返回 503；启用时有效请求按账户每分钟10次、来源每分钟30次内存限流，超限429。配置、数据边界和真实供应商未验证项见 MODEL_INTEGRATION.md。
 
 ## 管理员全量概览
 

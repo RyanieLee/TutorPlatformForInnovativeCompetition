@@ -82,3 +82,23 @@ it('API 返回 401 时移除失效令牌并清除页面会话', async () => {
   expect(token).toBe('')
   expect(session.value).toBeNull()
 })
+
+it('模型状态公开可查；解析调用由后端鉴权且保留明确错误', async () => {
+  vi.stubEnv('VITE_API_BASE_URL', 'http://127.0.0.1:3001')
+  vi.resetModules()
+  const requests: {url:string;header:Record<string,string>;data?:{brief:string}}[] = []
+  vi.stubGlobal('uni', {
+    getStorageSync: () => 'test-token',
+    request: (options: {url:string;header:Record<string,string>;data?:{brief:string};success:(value:unknown)=>void}) => {
+      requests.push({url:options.url,header:options.header,data:options.data})
+      if(options.url.endsWith('/status'))options.success({statusCode:200,data:{data:{enabled:true}}})
+      else options.success({statusCode:503,data:{error:{code:'MODEL_UNAVAILABLE',message:'模型解析尚未配置'}}})
+    }
+  })
+  const { matchAssistantStatus, parseMatchBrief } = await import('../src/services/api/match-assistant')
+  expect(await matchAssistantStatus()).toEqual({enabled:true})
+  await expect(parseMatchBrief('初中数学预算80元')).rejects.toMatchObject({code:'MODEL_UNAVAILABLE'})
+  expect(requests[0].header).toEqual({})
+  expect(requests[1]).toMatchObject({header:{Authorization:'Bearer test-token'},data:{brief:'初中数学预算80元'}})
+  expect(JSON.stringify(requests)).not.toContain('MATCH_MODEL_API_KEY')
+})

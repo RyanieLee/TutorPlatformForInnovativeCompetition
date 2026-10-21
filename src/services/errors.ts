@@ -1,4 +1,4 @@
-export type BusinessErrorCode = 'UNAUTHORIZED' | 'FORBIDDEN' | 'NOT_FOUND' | 'INVALID' | 'CONFLICT' | 'RATE_LIMIT' | 'STORAGE'
+export type BusinessErrorCode = 'UNAUTHORIZED' | 'FORBIDDEN' | 'NOT_FOUND' | 'INVALID' | 'CONFLICT' | 'RATE_LIMIT' | 'MODEL_UNAVAILABLE' | 'MODEL_UPSTREAM' | 'STORAGE'
 export class BusinessError extends Error {
   constructor(public readonly code: BusinessErrorCode, message: string) {
     super(message)

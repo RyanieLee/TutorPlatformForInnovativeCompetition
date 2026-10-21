@@ -148,7 +148,6 @@ test('API 连接失败时显示错误，保持数据源明确',async({page},info
   await expect(page.locator('.match-card').first()).toBeVisible()
 })
 
-
 test('家长端价格区间、错误提示、清空筛选和响应式卡片布局',async({page},info)=>{
  await goto(page,'index/index')
  await expect(page.locator('.tutor-grid .card').first()).toBeVisible()
@@ -174,4 +173,37 @@ test('家长端价格区间、错误提示、清空筛选和响应式卡片布�
  await expect(page.getByText('体验访客',{exact:true})).toBeVisible()
  await page.locator('.parent-nav').getByText('找家教',{exact:true}).click()
  await expect(page.locator('.tutor-grid .card').first()).toBeVisible()
+})
+
+test('模型解析建议需家长登录和主动确认，最终仍按规则推荐',async({page},info)=>{
+  test.skip(!info.project.name.startsWith('api'),'仅 API 模式')
+  let sentBrief=''
+  await page.route('**/api/match-assistant/status',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({data:{enabled:true}})}))
+  // Isolate this UI test from the shared demo account's real login rate limit.
+  await page.route('**/api/auth/login',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({data:{token:'browser-model-test-token',user:{id:'browser-model-parent',displayName:'虚构测试家长',role:'parent'}}})}))
+  await page.route('**/api/match-assistant/parse',route=>{
+    sentBrief=route.request().postDataJSON().brief as string
+    return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({data:{subject:'数学',grade:'初中（演示）',budget:80,mode:'线上',preference:'耐心'}})})
+  })
+  await goto(page,'match/index')
+  await page.locator('.assistant textarea').fill('初中数学，每小时预算80元，线上授课，希望耐心')
+  await button(page,'解析需求').click()
+  await expect(page.getByText('请先登录家长/学生开发账户',{exact:false})).toBeVisible()
+  await page.getByText('前往登录').click()
+  await field(page,'账户 ID').fill('browser-model-parent')
+  await field(page,'密码',{exact:true}).fill(process.env.E2E_PASSWORD!)
+  await button(page,'登录开发账户').click()
+  await expect(button(page,'解析需求')).toBeVisible()
+  await button(page,'解析需求').click()
+  await expect(page.locator('.suggestion')).toContainText('预算：¥80/小时')
+  await expect(button(page,'解析需求')).toBeEnabled()
+  await page.waitForTimeout(1800) // Let the login success toast disappear before recording the UI.
+  mkdirSync('docs/screenshots',{recursive:true})
+  await page.screenshot({path:`docs/screenshots/model-${info.project.name}.png`,fullPage:true})
+  expect(sentBrief).toBe('初中数学，每小时预算80元，线上授课，希望耐心')
+  await expect(page.locator('.form .chips .selected')).toHaveCount(1)
+  await button(page,'确认并填入表单').click()
+  await expect(page.locator('.form .chips .selected')).toHaveCount(3)
+  await button(page,'生成推荐').click()
+  await expect(page.locator('.match-card').first()).toContainText('科目匹配：数学 +50')
 })
