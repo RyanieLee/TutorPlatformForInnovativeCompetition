@@ -1,6 +1,6 @@
 import { BusinessError } from './errors'
 import { shallowRef } from 'vue'
-import { apiRequest } from './api/client'
+import { apiRequest, apiUploadFile } from './api/client'
 import { apiMode } from '../config/runtime'
 import { parseBriefLocally } from './brief-parser'
 import { learningTopics } from '../data/learning'
@@ -10,6 +10,18 @@ export interface AssistantReply{reply:string;source:'model'|'local';matchBrief?:
 export const pendingCompanionBrief=shallowRef<string|null>(null)
 export function companionStatus():Promise<{enabled:boolean}>{return apiMode?apiRequest('GET','/api/assistant/status',undefined,false):Promise.resolve({enabled:false})}
 export function remoteChat(messages:ChatMessage[]):Promise<AssistantReply>{return apiRequest('POST','/api/assistant/chat',{messages})}
+
+export interface HomeworkImageReviewStatus { enabled: boolean; maxImageBytes: number; acceptedTypes: string[] }
+export async function homeworkImageReviewStatus(): Promise<HomeworkImageReviewStatus> {
+  return apiMode
+    ? apiRequest<HomeworkImageReviewStatus>('GET', '/api/assistant/homework-review/status', undefined, false)
+    : { enabled: false, maxImageBytes: 3 * 1024 * 1024, acceptedTypes: ['image/jpeg', 'image/png', 'image/webp'] }
+}
+export function reviewHomeworkImage(filePath: string): Promise<AssistantReply> {
+  if (!apiMode) throw new BusinessError('MODEL_UNAVAILABLE', '图片批改需要启动开发 API 并配置支持图片输入的模型')
+  return apiUploadFile<AssistantReply>('/api/assistant/homework-review-image', filePath, 'image')
+}
+
 export function localChat(text:string):AssistantReply{
  const brief=text.trim()
  if(!brief||brief.length>500)throw new BusinessError('INVALID','请输入1–500字的问题')
