@@ -233,3 +233,129 @@ button:focus-visible,.chip:focus-visible,.card:focus-visible,.b-chip:focus-visib
  button,.card,.chip,.surface-card,.b-card,.b-panel,.parent-shell .hero-mascot,.companion-root .mascot-img,.companion-root .companion-panel{transition:none!important;animation:none!important;transform:none!important}
 }
 @media print{.parent-shell .parent-header.parent-header{display:none}}
+
+
+/* Interior pages: cosmetic classes only, with original form actions preserved. */
+.linghang-auth,.linghang-register,.linghang-report{max-width:780px;margin:18px auto 50px;box-sizing:border-box}
+.linghang-auth .banner{
+ position:relative;isolation:isolate;overflow:hidden;min-height:205px;
+ padding:35px 38px 36px 103px;background:linear-gradient(118deg,#e3f8f4,#e4f2ff 73%,#d5edf8);
+ border:1px solid rgba(255,255,255,.96);border-radius:28px;color:#183e56;
+ box-shadow:var(--lh-shadow);align-items:flex-start;justify-content:center;
+}
+.linghang-auth .banner:after{
+ content:"";position:absolute;z-index:-1;width:240px;height:240px;right:-55px;top:-95px;
+ border:36px solid #ffffff68;border-radius:50%;pointer-events:none;
+}
+.linghang-auth .auth-emblem{position:absolute;left:32px;top:38px;width:51px;height:51px}
+.linghang-auth .mark{color:#258a91;font-weight:700;letter-spacing:.07em;opacity:1}
+.linghang-auth .title{color:#1a455d;font-weight:800}
+.linghang-auth .intro{color:#507887}
+.linghang-auth .surface-card,.linghang-register .surface-card,.linghang-report .surface-card{
+ margin-top:18px;background:rgba(255,255,255,.8);border:1px solid #fff;
+ border-radius:23px;padding:27px;box-shadow:var(--lh-shadow);backdrop-filter:blur(15px);
+}
+.linghang-auth .role{
+ border:1px solid #d5e8ec;background:rgba(247,252,254,.9);
+ border-radius:17px;min-height:78px;cursor:pointer;
+ transition:background .2s ease,border-color .2s ease,transform .2s ease;
+}
+.linghang-auth .role.selected{background:#e6f7f5;border-color:#69b9b0;color:#206477}
+.linghang-auth .credentials input,.linghang-booking .field input,.linghang-booking .field textarea,
+.linghang-booking .input,.linghang-report .field textarea,.linghang-report .input{
+ background:#f7fbfd;border:1px solid #d3e8eb;border-radius:15px;color:#22485f;
+}
+.linghang-auth .register{color:#147e88}
+.linghang-register .title{color:#1b4860}
+.linghang-register .choice{position:relative;overflow:hidden}
+.linghang-register .choice:before{content:"";position:absolute;right:-34px;top:-42px;width:118px;height:118px;background:#ddf5f1;border-radius:50%;pointer-events:none}
+.linghang-register .choice-title{color:#276978}
+.linghang-report .heading{color:#1e4a60}
+.linghang-report .notice,.linghang-booking .notice,.linghang-orders .notice{
+ background:rgba(255,248,230,.82);border:1px solid #fff;
+ border-radius:17px;color:#896c3f;box-shadow:0 5px 15px #ab8f4e10;
+}
+.linghang-booking .panel,.linghang-detail .panel,.linghang-orders .card{
+ background:var(--lh-glass);border:1px solid #ffffffed;
+ border-radius:24px;box-shadow:var(--lh-shadow);backdrop-filter:blur(18px);
+}
+.linghang-booking .title,.linghang-orders .title{color:#1e4c61}
+.linghang-booking .booking-summary{color:#338b92}
+.linghang-orders .card .head{color:#234c65;border-bottom-color:#dcecf0}
+.linghang-orders .status{color:#168b87}
+.linghang-orders .line{color:#577889}
+.linghang-profile .hero{
+ position:relative;overflow:hidden;min-height:160px;padding:35px;
+ background:linear-gradient(120deg,#e2f8f1,#dcedfc);
+ color:#193e55;border:1px solid #fff;border-radius:26px;box-shadow:var(--lh-shadow);
+}
+.linghang-profile .hero:after{content:"";position:absolute;right:-62px;top:-81px;width:225px;height:225px;border:38px solid #ffffff55;border-radius:50%;pointer-events:none}
+.linghang-profile .avatar{
+ position:relative;z-index:1;background:linear-gradient(130deg,#9cdac9,#8cc7ef);
+ color:#164e68;border:2px solid #fff;border-radius:25px;box-shadow:0 9px 23px #5b92a626;
+}
+.linghang-profile .name{color:#193e55}
+.linghang-profile .sub{color:#5b7b88}
+.linghang-profile .section-title{color:#25566b}
+.linghang-profile .row,.linghang-profile .item{border-bottom-color:#e1eef1}
+.linghang-profile .row{color:#58788a}
+.linghang-profile .item text{color:#168d8b}
+.linghang-detail .profile{
+ background:linear-gradient(110deg,rgba(225,247,247,.85),rgba(232,244,255,.9));
+ border:1px solid #fff;position:relative;overflow:hidden;
+}
+.linghang-detail .profile:after{
+ content:"";position:absolute;right:-42px;top:-95px;width:180px;height:180px;
+ border:29px solid #ffffff69;border-radius:50%;pointer-events:none;
+}
+.linghang-detail .avatar{
+ position:relative;z-index:1;width:95px;height:95px;border:3px solid #fff;
+ border-radius:28px;background:linear-gradient(145deg,#caeff1,#b5dfed);
+ color:#1e828c;box-shadow:0 12px 24px #6faab126;
+}
+.linghang-detail .name{color:#1c465b}
+.linghang-detail .heading{color:#1e5365}
+.linghang-detail .muted,.linghang-detail .description{color:#62808c}
+.linghang-detail .line{border-bottom-color:#deedf0;color:#557488}
+.linghang-detail .tags text{color:#387ea0;background:#e5f5fb;border-radius:100px}
+.linghang-detail .price{color:#dc804d}
+.linghang-match .hero{
+ position:relative;overflow:hidden;background:linear-gradient(113deg,#e2f8f3,#dfedfc)!important;
+ border:1px solid #fff!important;border-radius:26px!important;color:#19465d!important;
+ box-shadow:var(--lh-shadow)!important;
+}
+.linghang-match .hero:after{content:"";position:absolute;right:-65px;top:-75px;width:200px;height:200px;border:34px solid #ffffff62;border-radius:50%;pointer-events:none}
+.linghang-match .hero .title{font-weight:850;color:#1b4c60}
+.linghang-match .hero .eyebrow{color:#168986}
+.linghang-match .hero .intro{color:#5d7e8d}
+.linghang-match .surface-card{
+ border:1px solid #ffffffef!important;border-radius:23px!important;
+ background:rgba(255,255,255,.81)!important;box-shadow:var(--lh-shadow)!important;
+ backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+}
+.linghang-match .label{color:#245366}
+.linghang-match .hint{color:#5d7d8a}
+.linghang-match .rules{color:#4e7280}
+.linghang-match .chips button{border-radius:100px}
+.linghang-match .ai-steps text{background:rgba(226,249,248,.91);border:1px solid #fff;border-radius:15px;color:#287c85}
+.linghang-match .suggestion{padding:16px;border-radius:18px;background:linear-gradient(115deg,#f0fcf9,#eef7ff)}
+.linghang-match .match-card{position:relative;overflow:hidden}
+.linghang-match .match-card:after{content:"";position:absolute;right:-38px;top:-40px;width:102px;height:102px;background:#cfeeee63;border-radius:50%;pointer-events:none}
+.linghang-match .score{color:#168c89}
+.linghang-match .reason{color:#517380}
+.linghang-match .nearby .label{color:#2b7485}
+.linghang-match .study-context{background:#e8f8f2;border:1px solid #cfe9dd;border-radius:20px;color:#486d61}
+.linghang-match .study-context button{color:#21716b;border-radius:100px}
+@media(max-width:700px){
+ .linghang-auth,.linghang-register,.linghang-report{margin:0 auto 32px}
+ .linghang-auth .banner{padding:85px 24px 30px;min-height:0}
+ .linghang-auth .auth-emblem{top:22px;left:23px;width:43px;height:43px}
+ .linghang-auth .surface-card,.linghang-register .surface-card,.linghang-report .surface-card{padding:20px}
+ .linghang-profile .hero{min-height:135px;padding:25px}
+ .linghang-detail .avatar{width:86px;height:86px}
+ .linghang-booking .panel{padding:20px}
+}
+@media(prefers-reduced-transparency:reduce),(prefers-contrast:more){
+ .linghang-auth .surface-card,.linghang-detail .panel,.linghang-orders .card,
+ .linghang-booking .panel,.linghang-match .surface-card{background:#fff!important;backdrop-filter:none}
+}
