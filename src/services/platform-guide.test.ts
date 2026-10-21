@@ -11,7 +11,7 @@ describe('领航云学堂小书灵平台指南', () => {
   it('按任务解释匹配、预约和订单，而不是夸大自动操作', () => {
     expect(platformHelpAnswer('怎么匹配老师')).toContain('生成推荐')
     expect(platformHelpAnswer('怎么预约')).toContain('我的预约')
-    expect(platformHelpAnswer('怎么取消预约')).toContain('无法从聊天中直接查询')
+    expect(platformHelpAnswer('怎么取消预约')).toContain('无法在对话中直接查询')
   })
   it('作业批改明确要求文本作答和真实模型', () => {
     const answer=platformHelpAnswer('帮我批改作业')!
