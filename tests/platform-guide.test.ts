@@ -18,7 +18,8 @@ describe('领航云学堂小书灵平台指南', () => {
     expect(answer).toContain('题目 + 我的答案')
     expect(answer).toContain('模型')
     expect(answer).toContain('不能判定')
-    expect(answer).toContain('无法读取上传的作业或图片')
+    expect(answer).toContain('视觉输入的模型')
+    expect(answer).toContain('不会保存到平台数据库')
   })
   it('学习和隐私指引忠于演示能力', () => {
     expect(platformHelpAnswer('学习中心能做什么')).toContain('固定示例题')
