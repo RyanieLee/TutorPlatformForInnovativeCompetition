@@ -1,0 +1,299 @@
+{
+  "baseSha": "5c189221bb80a6232e20c3902e550f1d867eb97b",
+  "files": [
+    {
+      "target": "server/package-lock.json",
+      "baselineSha256": "a652c68bd038c5d559d6a5a539c0d8b616763d3e5f60382ea61185fa4c467afc",
+      "overlaySha256": "f469fed5854b2fcb0d4b308724e857ff6b7cd42ee04f2fedaa2df13b7194a786",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "server/package.json",
+      "baselineSha256": "7336fbf053e53d280e7f09d5e5cfc24aa6052f047bf18ead681eb9515cf610d4",
+      "overlaySha256": "e840e258eaf5180633cfda7428b5611f69a5483300e3f9c1bbe97574126c8e1c",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "server/prisma/migrations/20261021000000_teaching/migration.sql",
+      "baselineSha256": null,
+      "overlaySha256": "c53e0478a9a84b99ffa1b5255b9e14d8bf0d0e2b39d22c2d3624f239585b05fc",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "server/prisma/schema.prisma",
+      "baselineSha256": "c3a9a8ba8ba9fb82a79f63c21e4229178dc4b96dd52d81e98e51c8fb085c9fa2",
+      "overlaySha256": "1b5085b997fb9881d5cc846f8a4419f515ffcc96ddbc76eb1dcb31d2737faa3a",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "server/src/app.ts",
+      "baselineSha256": "9a7afe942c488feece36c63e48672a4f12c9cc6ad85cae435a45a5a560784a40",
+      "overlaySha256": "5f1b1ef5d5461302e9249fd853c32b13823b4a6e17b557fed4bad30de3da4e30",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "server/src/teaching/access.ts",
+      "baselineSha256": null,
+      "overlaySha256": "5ab5bfbb9a67cff1c22e3a64cf9d3864be9de16a52853f434084a3268e03fa69",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "server/src/teaching/cleanup-cli.ts",
+      "baselineSha256": null,
+      "overlaySha256": "22cbc4d24f41c6017c62d30aa27531931ad567968d6b9a388e56144ad0d30ee7",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "server/src/teaching/cleanup.ts",
+      "baselineSha256": null,
+      "overlaySha256": "bee6da86e38306bc5b3a6cfe48ab78b35b5ecd6f6625bb261f1bdecf80dc0e62",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "server/src/teaching/file-types.ts",
+      "baselineSha256": null,
+      "overlaySha256": "aaf428fea806ea4ebdc3c952f577814d14c4fe62f43709897f710f4f34c8861f",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "server/src/teaching/files.ts",
+      "baselineSha256": null,
+      "overlaySha256": "fa9765b603bd86e81bb0a29f4df4ecc7ac084f6ffac414088f5c18671bf7989d",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "server/src/teaching/lessons.ts",
+      "baselineSha256": null,
+      "overlaySha256": "155fabc6dba21f7e29e8700be625f22cf4f65a81a89dc704fa6c97b387a3ee82",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "server/src/teaching/quota.ts",
+      "baselineSha256": null,
+      "overlaySha256": "9483ab3c05f3e559512000c75eaa77bf36475a6cf8f0833a4da42eb84a47c295",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "server/src/teaching/routes.ts",
+      "baselineSha256": null,
+      "overlaySha256": "5a99e3e3c1ed1fb1ff131b4a6e4596260565c576723fe0aabd1317659a9bc5a7",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "server/src/teaching/submissions.ts",
+      "baselineSha256": null,
+      "overlaySha256": "f9daf84fa94a13291fb297d935a35dcf260c7bf8c6f3cb0aa67fa3dd0285a471",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "server/src/teaching/types.ts",
+      "baselineSha256": null,
+      "overlaySha256": "ec09cf04fcf18a51d11d3b6bea33ec8402f48fae1585d9fcf4f66f64ed5ad203",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "server/src/teaching/validation.ts",
+      "baselineSha256": null,
+      "overlaySha256": "e72be3053d7142624ddb72ab0365cfb77d819017e35b420d576069f8311fc437",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "server/tests/teaching-file-utils.ts",
+      "baselineSha256": null,
+      "overlaySha256": "bb74eb780d4105aca0611357aa23bffe996ab48e157a2364af99d5fea0ef3e11",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "server/tests/teaching-files.test.ts",
+      "baselineSha256": null,
+      "overlaySha256": "953327077abc1a609d647fd806f4dc87d2ebe50e0442f630f13819d0eed0ae8c",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "server/tests/teaching-fixtures.ts",
+      "baselineSha256": null,
+      "overlaySha256": "fa169a9a8c190534c427ce0280fb9b0abaa30924a190f45119a8b1e71a933f4d",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "server/tests/teaching-lessons.test.ts",
+      "baselineSha256": null,
+      "overlaySha256": "da5428e567a68cde1a23db0e3759c1258f997ca5430689334c30b497ec3ccab8",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "server/tests/teaching-submissions.test.ts",
+      "baselineSha256": null,
+      "overlaySha256": "b122b374c01176030b30d27c747944332a4f2741465a2799ab12f40c842c82de",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "src/pages/orders/index.vue",
+      "baselineSha256": "a9c1a417135f94ea6698f7ec66082b359af7ceb85b58faf0ad59daaccccb2a72",
+      "overlaySha256": "7c7ab4fa85f135283771d341d41a069ab3dd08d6c8828439d45178a49a7d2921",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "src/pages/teaching/detail.vue",
+      "baselineSha256": null,
+      "overlaySha256": "919ec343b74cc2d35af6562bd8f64bc90338fb52dfd4699b395be8c908456c79",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "src/pages/teaching/edit.vue",
+      "baselineSha256": null,
+      "overlaySha256": "caa5b4400870af2ef4d484cb9d2aba228abf9bc782d0a5fd71ec822f871fc16a",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "src/pages/teaching/index.vue",
+      "baselineSha256": null,
+      "overlaySha256": "b5c9172405567534db64fad5259e98ca1772cc4dcbd0555043710215b9898189",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "src/pages/teaching/shared/AttachmentList.vue",
+      "baselineSha256": null,
+      "overlaySha256": "74670109e4e66800d53dc9e930afea464c31db7fcd9a760dd068885e49d0717d",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "src/pages/teaching/shared/SubmissionHistory.vue",
+      "baselineSha256": null,
+      "overlaySha256": "6386b7edace7ca759573e7ba112cd2525d2eee4af70d74305f27b4adf0bccf58",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "src/pages/teaching/shared/TeachingShell.vue",
+      "baselineSha256": null,
+      "overlaySha256": "6cd28cfba1182f919a7856ab88066c8ade34ee2d1e7ecff6a489420a11e99087",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "src/pages/teaching/shared/UploadPicker.vue",
+      "baselineSha256": null,
+      "overlaySha256": "287f623f4ddba20dd97bc782784e96e6e64570c8df87ae6813432cb62238d8dc",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "src/pages/teaching/shared/files.ts",
+      "baselineSha256": null,
+      "overlaySha256": "be46d1b35cb7d0e66892b56c8f924c88932f3ef25bdef0444c82d7be66a26b31",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "src/pages/teaching/shared/page.ts",
+      "baselineSha256": null,
+      "overlaySha256": "d3edf28e18aed30015a91b03e5a337cccc359c0158bb811a4e70e0dc98c9daf0",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "src/pages/teaching/shared/request-state.ts",
+      "baselineSha256": null,
+      "overlaySha256": "39b21805815eb52294a1724e6a6a33ac5ea6283296da1f276e90f0e5f7f174eb",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "src/pages/teaching/shared/teaching.css",
+      "baselineSha256": null,
+      "overlaySha256": "7547029ca3398218604dc25f39f3804dbe6b98b019c8445aac7c876b7d13ad8a",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "src/pages/tutor/booking-detail.vue",
+      "baselineSha256": "e2afb59d5a77aa7ac822e91396c8205bb6a23f4c9cf8b0e2b939a33565bf3338",
+      "overlaySha256": "73e23ebe3a7c67dbe959eda3161180c34028235dccc9aa78186a159e1528f768",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "src/pages.json",
+      "baselineSha256": "8dd8e21f8cdf428fd73e20623a9837c8d1da70bdc91a2c63cf695dfd6a5d0200",
+      "overlaySha256": "c61de715de55b00e4d7d94473521e946b64a0f9935b4e35e064fb903a1a5ac99",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "src/services/api/teaching.ts",
+      "baselineSha256": null,
+      "overlaySha256": "1ebc7d156c8bbbb07b44044370173c5c0186e290c378e46294d4075818310fc2",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "src/services/mock/teaching.ts",
+      "baselineSha256": null,
+      "overlaySha256": "99fc23761fcc43c9fe3d0ec0ef07ffaad81a36b44a8b717207664e86eff6c617",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "src/services/teaching.ts",
+      "baselineSha256": null,
+      "overlaySha256": "06d452f3474bdbaceb02435e608e780316f7760ce5d0beb19f1c87a74cd16a19",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "src/types/teaching.ts",
+      "baselineSha256": null,
+      "overlaySha256": "16b8dce051f143952e1628e3690d785b39655b23557bb93560e02c60a4233b14",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "tests/teaching-page.test.ts",
+      "baselineSha256": null,
+      "overlaySha256": "7c63f897ebd1b71b1c499e60415fce4c312fcebb4226c068174bd676226ddeab",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "tests/teaching-request-state.test.ts",
+      "baselineSha256": null,
+      "overlaySha256": "11c44bc3c3271dff2c9b334c3afd93e2f744a0618d7f088a9a99b2f6fca9228c",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    },
+    {
+      "target": "tests/teaching-service.test.ts",
+      "baselineSha256": null,
+      "overlaySha256": "ecac052446a88f46ebb7e25f3ba08451260eafc879498a0e7a45f0acf11aaab9",
+      "reason": "教学审核版：个人目录中的待集成副本",
+      "approvedForIntegration": false
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "name": "tutor-platform-server",
+  "version": "0.4.0",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/src/main.js",
+    "test": "node scripts/run-tests.mjs",
+    "db:generate": "prisma generate",
+    "db:migrate": "node scripts/migrate.mjs",
+    "db:reset": "prisma migrate reset --force --skip-seed",
+    "db:seed": "node --import tsx prisma/seed.ts",
+    "db:backup": "node scripts/backup-demo.mjs",
+    "db:init": "node scripts/init-demo.mjs",
+    "demo:setup": "node scripts/setup-demo.mjs",
+    "demo:serve": "node scripts/serve-demo.mjs",
+    "test:demo": "node scripts/check-demo.mjs"
+  },
+  "dependencies": {
+    "@fastify/cors": "^10.1.0",
+    "@fastify/multipart": "9.4.0",
+    "@prisma/client": "6.19.0",
+    "dotenv": "^16.6.1",
+    "fastify": "^5.6.0",
+    "yauzl": "3.4.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "@types/yauzl": "2.10.3",
+    "prisma": "6.19.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vitest": "^2.1.9"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
