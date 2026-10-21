@@ -8,8 +8,9 @@ Node.js 20+，在 server/ 运行。先安装依赖并配置本机环境：
 
 ```bash
 npm ci
-cp .env.example .env
-# 编辑 .env：DATABASE_URL=file:./dev.db，三个 SEED_*_PASSWORD 各至少12位
+npm run demo:setup
+# 首次生成 .env 和三个随机演示密码；已有 .env 不会覆盖
+# 在本机打开 .env 查看密码，勿放进截图或提交 Git
 npm run db:init
 ```
 
@@ -21,7 +22,7 @@ npm run db:init
 npm run demo:serve
 ```
 
-该命令先 db:init、后 TypeScript build，再启动编译后的 API；Ctrl+C/SIGTERM 会传给 API 子进程。已有编译和已初始化数据库的日常重启只运行 `npm start`，不需要反复 seed。
+该命令先 db:init、后 TypeScript build，再启动编译后的 API；Ctrl+C/SIGTERM 会传给 API 子进程，API 等待请求关闭并断开数据库连接。默认只监听 127.0.0.1；可在 .env 显式设置 HOST，PORT 要求 1–65535 的整数。已有编译和已初始化数据库的日常重启只运行 `npm start`，不需要反复 seed。
 
 健康检查：GET `http://127.0.0.1:3001/health`，成功为 `{"data":{"status":"ok"}}`。检测会实际执行 SQLite SELECT 1。
 
@@ -31,7 +32,9 @@ npm run demo:serve
 npm run test:demo
 ```
 
-检查脚本创建临时数据库和随机测试密码，验证：production/缺密码在创建数据库前被拒绝 → 初始化 → 启动实际 HTTP API → 家长预约 → 家教接受并完成 → 停止进程 → 重复初始化同一数据库 → 启动新进程 → 按同一预约 ID 查询仍为 completed，家教 ID 不变。完成后停止子进程并清理临时数据。它不读取或重置个人 .env 对应数据库，密码和 token 不输出；CI server job 也执行该检查。
+检查脚本创建临时目录、数据库和随机密码，实际验证配置生成不覆盖已有文件、production/缺密码初始化保护、HTTP 健康、预约重试去重与接受/完成、资料撤回与驳回重提/批准、举报处理、管理员权限及全量统计。随后停止进程、重复初始化并重启，检查预约和举报记录；再对正在运行的 WAL 数据库生成一致性快照，确认重复输出不会覆盖旧备份，并将快照复制到另一临时数据库，执行 integrity_check、检查审计和预约去重，最后通过 demo:serve 启动恢复库并经 HTTP 查询状态。
+
+检查不读取或重置个人 .env 对应数据库，不打印密码或令牌；结束后停止服务并清理临时数据。已接入现有 CI server job。本轮 Linux Node 24 环境通过，不替代 Windows、微信真机或公网验收。
 
 ## Linux 持久服务模板
 
@@ -44,7 +47,7 @@ npm run test:demo
 3. 按 env.example 创建 `/etc/tutor-demo.env`，设置真实演示域名和三个独立随机演示密码；仅 root/服务账户组可读。不要将真实 env 文件加入 Git。
 4. 以服务账户身份并加载上述环境，执行一次 `npm run db:init`。可通过管理员配置的 systemd oneshot/init 服务加载 EnvironmentFile，或在受控终端中设置这些变量；不要在共享日志、截图或命令参数中粘贴密码。
 5. 将 unit 复制到 `/etc/systemd/system/tutor-demo.service`，执行 `systemctl daemon-reload`、`systemctl enable --now tutor-demo`，检查 status 和本机 /health。unit 的 StateDirectory 和 ReadWritePaths 仅允许持久目录写入；源代码在启动前已经编译。
-6. API 本身监听0.0.0.0，**服务器防火墙仅允许反向代理访问3001端口**；公网只开放HTTPS入口。unit 使用 development 是明确的演示模式，不是绕过保护后声称生产可用。
+6. API 默认只监听127.0.0.1，**服务器防火墙仅允许反向代理访问3001端口**；公网只开放HTTPS入口。unit 使用 development 是明确的演示模式，不是绕过保护后声称生产可用。
 
 模板未在 systemd 主机上实测。已验证的范围是前述本机子进程启动、健康、初始化与持久化检查。
 
@@ -59,6 +62,16 @@ npm run test:demo
 
 ## 备份与重置
 
-停止演示 API 后，备份 SQLite 数据库及其同目录 journal/WAL 相关文件，或使用 SQLite 的正式备份能力。单纯重复 db:init 不会清空记录。
+在 server/ 执行：
 
-需要清空**自己的演示库**时，先确认 DATABASE_URL 指向正确位置、备份并停止服务，再执行 `npm run db:reset`，随后 `npm run db:init`；reset 会删除该库数据，不能作为每次启动步骤。环境/密码文件独立保管，不放入静态产物、Git 或公开截图。
+```bash
+npm run db:backup
+# 或指定一个全新的输出路径，可含空格
+npm run db:backup -- --output "backups/before-demo.db"
+```
+
+命令默认写入 server/backups/ 下的时间戳文件；该目录已忽略 Git。通过 SQLite VACUUM INTO 生成独立一致性快照，可包含 WAL 中已提交的记录，不修改源数据库；输出文件已存在或指向源库时拒绝覆盖。备份含账户密码哈希、会话及业务数据，不能公开上传。Linux 创建权限为 0600；Windows 请通过目录访问权限控制保管。进程被强制中断可能留下不完整文件，该文件不能直接当作可用备份。
+
+恢复时先停止所有使用目标库的进程。推荐将快照复制到一个全新路径，更新本机 DATABASE_URL 指向该绝对路径，再启动 demo:serve，避免旧库的 journal/WAL 文件混入恢复库；保留原库供回退。演示账户密码取自当前 .env，初始化会更新演示账户密码；备份本身不包含 .env。本轮自动验收已在临时目录按此流程恢复并通过 HTTP 检查，无需对自己的库执行破坏性恢复测试。
+
+单纯重复 db:init 不会清空记录。确需清空自己的演示库时，先确认 DATABASE_URL、备份并停止服务，再执行 db:reset 和 db:init。不要将 reset 作为日常启动步骤。

@@ -83,3 +83,93 @@ describe.each(endpoints)('$url 分页和权限', endpoint => {
     expect(forbidden.json().meta).toBeUndefined()
   })
 })
+
+describe.each([
+  { ...endpoints[0], status: 'completed', ids: ['pagination-booking-104', 'pagination-booking-103'], table: 'booking' as const, original: 'pending' },
+  { ...endpoints[1], status: 'completed', ids: ['pagination-booking-104', 'pagination-booking-103'], table: 'booking' as const, original: 'pending' },
+  { ...endpoints[2], status: 'rejected', ids: ['pagination-app-054', 'pagination-app-053'], table: 'tutorApplication' as const, original: 'draft' },
+  { ...endpoints[3], status: 'resolved', ids: ['pagination-report-104', 'pagination-report-103'], table: 'report' as const, original: 'open' }
+])('$url 服务端状态筛选', endpoint => {
+  it('先按状态和归属过滤，再分页和计数，忽略伪造归属', async () => {
+    const update = async (status: string) => {
+      const where = { id: { in: endpoint.ids } }
+      if (endpoint.table === 'booking') return db.booking.updateMany({ where, data: { status } })
+      if (endpoint.table === 'report') return db.report.updateMany({ where, data: { status } })
+      return db.tutorApplication.updateMany({ where, data: { status, updatedAt: stamp } })
+    }
+    // Other test files may contain records with the same status. Fixture IDs sort first.
+    await update(endpoint.status)
+    try {
+      const first = await get(`${endpoint.url}?status=${endpoint.status}&pageSize=1&userId=pagination-foreign-parent`, endpoint.role)
+      const second = await get(`${endpoint.url}?status=${endpoint.status}&pageSize=1&page=2`, endpoint.role)
+      expect(first.statusCode).toBe(200)
+      expect(second.statusCode).toBe(200)
+      expect(first.json().data[0].id).toBe(endpoint.ids[0])
+      expect(second.json().data[0].id).toBe(endpoint.ids[1])
+      expect(first.json().data[0].status).toBe(endpoint.status)
+      expect(first.json().meta.total).toBeGreaterThanOrEqual(2)
+      expect(second.json().meta.total).toBe(first.json().meta.total)
+      if (endpoint.table === 'booking') expect(first.json().meta.total).toBe(2)
+      expect(Object.keys(first.json().meta).sort()).toEqual(['page', 'pageSize', 'total'])
+    } finally { await update(endpoint.original) }
+  })
+  it('拒绝无效、空和重复状态值', async () => {
+    for (const query of ['status=invalid', 'status=', `status=${endpoint.status}&status=${endpoint.status}`]) {
+      const response = await get(`${endpoint.url}?${query}`, endpoint.role)
+      expect(response.statusCode).toBe(400)
+      expect(response.json().error.code).toBe('INVALID')
+    }
+  })
+})
+
+describe('管理员全量概览与请求边界', () => {
+  it('只有管理员能读取概览', async () => {
+    expect((await get('/api/admin/overview')).statusCode).toBe(401)
+    for (const role of ['parent', 'tutor']) expect((await get('/api/admin/overview', role)).statusCode).toBe(403)
+  })
+  it('超过一页的记录仍计入全量统计，状态变化后统计同步', async () => {
+    const before = (await get('/api/admin/overview', 'admin')).json().data
+    expect(before.applications.draft).toBeGreaterThanOrEqual(55)
+    expect(before.bookings.pending).toBeGreaterThanOrEqual(106)
+    expect(before.reports.open).toBeGreaterThanOrEqual(105)
+    expect(before.applications.total).toBe(await db.tutorApplication.count())
+    expect(before.bookings.total).toBe(await db.booking.count())
+    expect(before.reports.total).toBe(await db.report.count())
+    expect(before.tutors.published).toBe((await get('/api/tutors')).json().meta.total)
+    await db.booking.update({ where: { id: 'pagination-booking-104' }, data: { status: 'completed' } })
+    try {
+      const after = (await get('/api/admin/overview', 'admin')).json().data
+      expect(after.bookings.total).toBe(before.bookings.total)
+      expect(after.bookings.pending).toBe(before.bookings.pending - 1)
+      expect(after.bookings.completed).toBe(before.bookings.completed + 1)
+      for (const category of ['applications', 'bookings', 'reports']) {
+        const { total, ...states } = after[category]
+        expect(Object.values(states).reduce<number>((sum, count) => sum + Number(count), 0)).toBe(total)
+      }
+    } finally { await db.booking.update({ where: { id: 'pagination-booking-104' }, data: { status: 'pending' } }) }
+  })
+  it('账户停用后既有令牌立即失效，不能读取列表及统计', async () => {
+    await db.user.update({ where: { id: 'pagination-admin' }, data: { status: 'disabled' } })
+    try {
+      expect((await get('/api/admin/overview', 'admin')).statusCode).toBe(401)
+      expect((await get('/api/admin/reports', 'admin')).statusCode).toBe(401)
+    } finally { await db.user.update({ where: { id: 'pagination-admin' }, data: { status: 'active' } }) }
+  })
+  it('未知接口、畸形JSON及过大请求使用统一错误结构', async () => {
+    const missing = await get('/api/does-not-exist')
+    expect(missing.statusCode).toBe(404)
+    expect(missing.json()).toEqual({ error: { code: 'NOT_FOUND', message: '接口不存在' } })
+    for (const [payload, status] of [['{', 400], [JSON.stringify({ password: 'x'.repeat(33000) }), 413]] as const) {
+      const response = await app.inject({ method: 'POST', url: '/api/auth/login', payload, headers: { 'content-type': 'application/json' } })
+      expect(response.statusCode).toBe(status)
+      expect(response.json().error.code).toBe('INVALID')
+      expect(response.json().error).not.toHaveProperty('stack')
+    }
+  })
+  it('CORS仅允许配置的前端来源', async () => {
+    const allowed = await app.inject({ method: 'GET', url: '/health', headers: { origin: 'http://127.0.0.1:5173' } })
+    expect(allowed.headers['access-control-allow-origin']).toBe('http://127.0.0.1:5173')
+    const other = await app.inject({ method: 'GET', url: '/health', headers: { origin: 'https://unlisted.invalid' } })
+    expect(other.headers['access-control-allow-origin']).toBeUndefined()
+  })
+})

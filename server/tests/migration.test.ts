@@ -4,6 +4,8 @@ import { closeSync, copyFileSync, cpSync, mkdirSync, mkdtempSync, openSync, rmSy
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { spawnSync } from 'node:child_process'
+import { createRequire } from 'node:module'
+const require=createRequire(import.meta.url)
 
 it('旧家教资料迁移后可按原有科目查询，JSON 资料保留', async () => {
  const dir=mkdtempSync(join(tmpdir(),'tutor-subject-migration-'))
@@ -12,7 +14,7 @@ it('旧家教资料迁移后可按原有科目查询，JSON 资料保留', async
  const source=resolve('prisma')
  const url=`file:${join(dir,'legacy.db')}`
  const migrate=()=>{
-  const result=spawnSync('npx',['prisma','migrate','deploy','--schema',schema],{cwd:process.cwd(),env:{...process.env,DATABASE_URL:url},encoding:'utf8'})
+  const result=spawnSync(process.execPath,[require.resolve('prisma/build/index.js'),'migrate','deploy','--schema',schema],{cwd:process.cwd(),env:{...process.env,DATABASE_URL:url},encoding:'utf8'})
   if(result.status!==0)throw new Error(`Prisma migration failed (${result.status}): ${result.stdout}\n${result.stderr}`)
  }
  try {
