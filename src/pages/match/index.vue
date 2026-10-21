@@ -15,7 +15,7 @@ import { demoGrades, loadMatchCandidates, matchSubjects, matchTutors, validateMa
 import type { MatchInput, MatchResponse } from '../../services/matching'
 import type { TeachingMode } from '../../types/tutor'
 import { restoreSession, currentSession } from '../../utils/session'
-const input = ref<MatchInput>({ subject: '', grade: '', budget: '', mode: '均可', preference: '' })
+const input = ref<MatchInput>({ subject: '', grade: '', budget: '', mode: '均可', preference: '', desiredTime: '' })
 const parentLocation=ref<LocationPoint|null>(null)
 const radiusKm=ref<number|undefined>()
 const locationError=ref('')
@@ -117,12 +117,14 @@ function openLogin() { uni.navigateTo({ url: '/pages/auth/login' }) }
       <text class="label">每小时预算上限（元）*</text><input v-model="input.budget" :disabled="loading" type="digit" maxlength="12" placeholder="如 100，范围 0.01–2000" @input="edit"/>
       <text class="label">授课方式</text><view class="chips"><button v-for="m in modes" :key="m" :disabled="loading" :class="{selected:input.mode===m}" @click="setMode(m)">{{ m }}</button></view>
       <view v-if="parentLocation && input.mode==='线下'" class="nearby"><text class="label">附近筛选（片区参考直线距离）</text><view class="chips"><button :class="{selected:radiusKm===undefined}" @click="radiusKm=undefined;edit()">不限距离</button><button v-for="r in [5,10,20]" :key="r" :class="{selected:radiusKm===r}" @click="radiusKm=r;edit()">{{r}} km 内</button></view></view>
+      <text class="label">期望上课时间（推荐填写，最高30分）</text><input v-model="input.desiredTime" :disabled="loading" maxlength="100" placeholder="例如：周六下午、周日晚上" @input="edit"/>
+      <text class="hint">星期和时段需与老师公开空闲时间吻合；未提供或无法识别时此项不加分，不推断老师有空。</text>
       <text class="label">教学偏好（选填）</text><input v-model="input.preference" :disabled="loading" maxlength="40" placeholder="如 耐心 讲解，以空格分隔" @input="edit"/>
       <text class="hint">只填写教学偏好，不要输入姓名、联系方式、学校班级等个人信息。</text>
       <button class="primary-button submit" :loading="loading" :disabled="loading" @click="recommend">{{ loading ? '正在匹配…' : '生成推荐' }}</button>
       <view v-if="error" class="error" role="alert">{{ error }}</view>
     </view>
-    <view class="surface-card rules"><text class="label">推荐规则公开可查</text><text>先过滤科目、预算和授课方式。得分 = 科目 50 + 方式 20 + 预算余量 0–20 + 偏好命中 0–10；选位置后，线下同分优先距离近的片区，再按价格、ID 排序；线上不受位置限制。距离不加分，无法识别片区的资料不进入附近筛选。预算余量 = 四舍五入(20 × (1 − 课时费 / 预算))。偏好按资料关键词命中比例评分；空偏好为 0。</text></view>
+    <view class="surface-card rules"><text class="label">推荐规则公开可查</text><text>先过滤科目、预算和授课方式。满分100分：科目35 + 时间吻合0–30 + 简介明确声明的教学经验0–20 + 价格优势0–10 + 教学偏好0–5；选位置后，线下同分优先距离近的片区，再按价格、ID 排序；线上不受位置限制。距离不加分，无法识别片区的资料不进入附近筛选。价格优势 = 四舍五入(10 × (1 − 课时费 / 预算))。时间按星期、上午/下午/晚上作保守文本匹配，经验只读取明确填写的年限且未经核实。偏好按资料关键词命中比例评分；空偏好为 0。</text></view>
     <view v-if="result" class="results">
       <text class="label">{{ summary }}</text><text class="hint">{{ result.total }} 位候选，{{ result.eligible }} 位符合条件。排除：科目 {{ result.excluded.subject }}、预算 {{ result.excluded.budget }}、方式 {{ result.excluded.mode }}、距离或位置缺失 {{ result.excluded.distance }}（按首个不满足条件统计）。</text>
       <view v-if="!result.results.length" class="surface-card empty">没有符合条件的家教。可尝试提高预算、调整方式或科目；不会自动放宽你的条件。</view>
