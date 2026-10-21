@@ -20,7 +20,7 @@ async function enter(role: 'parent' | 'tutor') {
 </script>
 
 <template>
-  <view class="page">
+  <view class="page linghang-register">
     <view v-if="apiMode" class="surface-card"><text class="title">开发账户由本地初始化</text><text class="muted-note intro">API 模式暂不开放自助注册；请使用开发账户登录。</text><button class="primary-button" @click="goLogin">返回登录</button></view>
     <template v-else>
     <view class="surface-card"><text class="title">选择你的演示身份</text><text class="muted-note intro">这是模拟注册入口，不会创建真实账号。选定身份后可在“我的”退出并切换。</text></view>
