@@ -145,7 +145,7 @@ button:focus-visible,.chip:focus-visible,.card:focus-visible,.b-chip:focus-visib
 .page .chips .selected{background:linear-gradient(130deg,#61c6b1,#188894)!important;color:#fff}
 .page .example-briefs button{background:#e6f7f7;color:#247a85;border-radius:12px}
 .page .score{color:#148e88}
-.page .form input,.page .assistant textarea{border:1px solid #d7eaf0;border-radius:15px;background:rgba(249,253,255,.9)}
+.page .form uni-input,.page .assistant uni-textarea{border:1px solid #d7eaf0;border-radius:15px;background:rgba(249,253,255,.9)}
 .page .match-card{border-radius:23px}
 .location-picker .location-title{color:#235775!important}
 .location-picker .xian-map{border:1px solid #d4e6e7;border-radius:20px}
@@ -261,8 +261,8 @@ button:focus-visible,.chip:focus-visible,.card:focus-visible,.b-chip:focus-visib
  transition:background .2s ease,border-color .2s ease,transform .2s ease;
 }
 .linghang-auth .role.selected{background:#e6f7f5;border-color:#69b9b0;color:#206477}
-.linghang-auth .credentials input,.linghang-booking .field input,.linghang-booking .field textarea,
-.linghang-booking .input,.linghang-report .field textarea,.linghang-report .input{
+.linghang-auth .credentials uni-input,.linghang-booking .field uni-input,.linghang-booking .field uni-textarea,
+.linghang-booking .input,.linghang-report .field uni-textarea,.linghang-report .input{
  background:#f7fbfd;border:1px solid #d3e8eb;border-radius:15px;color:#22485f;
 }
 .linghang-auth .register{color:#147e88}
@@ -358,4 +358,24 @@ button:focus-visible,.chip:focus-visible,.card:focus-visible,.b-chip:focus-visib
 @media(prefers-reduced-transparency:reduce),(prefers-contrast:more){
  .linghang-auth .surface-card,.linghang-detail .panel,.linghang-orders .card,
  .linghang-booking .panel,.linghang-match .surface-card{background:#fff!important;backdrop-filter:none}
+}
+
+/* Uni-app H5 renders a visually styled <uni-input> shell around its
+   actual native <input>. Never style the internal input node globally:
+   doing so can conceal the editable control in mobile Chromium. */
+.page.linghang-auth .banner.banner{
+ background:linear-gradient(118deg,#e3f8f4,#e4f2ff 73%,#d5edf8)!important;
+ color:#183e56!important;min-height:205px;padding:35px 38px 36px 103px!important;
+ border:1px solid #fff!important;border-radius:28px!important;box-shadow:var(--lh-shadow)!important;
+}
+.page.linghang-auth .mark.mark{color:#258a91!important;opacity:1!important}
+.page.linghang-auth .title.title{color:#1a455d!important}
+.page.linghang-auth .intro.intro{color:#507887!important}
+.page.linghang-auth .credentials uni-input{min-height:48px;display:block;width:100%;padding:12px 14px}
+.page.linghang-auth .credentials uni-input .uni-input-input{
+ display:block;visibility:visible;opacity:1;position:relative;min-width:0;
+}
+@media(max-width:700px){
+ .page.linghang-auth .banner.banner{padding:85px 24px 30px!important;min-height:0}
+ .page.linghang-auth .auth-emblem{top:20px;left:25px}
 }
