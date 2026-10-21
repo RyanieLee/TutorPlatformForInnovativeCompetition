@@ -38,6 +38,8 @@ describe('小书灵作业图片批改',()=>{
   const image=multipartImage(png)
   const response=await app.inject({method:'POST',url:'/api/assistant/homework-review-image',headers:{...auth(parent),...image.headers},payload:image.payload})
   expect(response.statusCode).toBe(200)
+  expect(response.headers['cache-control']).toBe('no-store')
+  expect(response.headers['x-content-type-options']).toBe('nosniff')
   expect(response.json().data).toEqual({reply:'第1题：需要修改。请检查移项时的符号，并核对计算步骤。',source:'model'})
   expect(imageReview).toHaveBeenCalledWith(png,'image/png')
   expect(response.body).not.toContain(png.toString('base64'))
