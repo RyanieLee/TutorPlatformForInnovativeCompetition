@@ -5,6 +5,7 @@ import { ref, watch } from 'vue'
 import ParentLayout from '../../components/ParentLayout.vue'
 import { parsePriceRange } from '../../services/tutor-query'
 import TutorCard from '../../components/TutorCard.vue'
+import LessonFlip from '../../components/LessonFlip.vue'
 import { businessService } from '../../services/business'
 import { errorMessage } from '../../services/errors'
 import type { Tutor } from '../../types/tutor'
@@ -64,8 +65,8 @@ const openProfile = () => uni.switchTab({ url: '/pages/profile/index' })
 
 <template>
   <ParentLayout title="找到适合你的学习伙伴" active="home"><view class="page">
-    <view class="hero"><text class="eyebrow">西安校园家教 · 连接好老师</text><text class="headline">每一次学习需求，<br/>都值得被认真匹配。</text><text class="intro">按科目筛选老师，查看教学信息，{{ apiMode ? '发起开发版预约。' : '发起本机演示预约。' }}</text><view class="links"><text @click="openOrders">我的预约 →</text><text @click="openProfile">个人中心 →</text></view></view>
-    <button class="ai-entry" @click="openMatch">AI 家教匹配 · 西安地图选点与推荐理由 →</button>
+    <view class="hero"><view class="hero-copy"><text class="eyebrow">校园家教 · 找到合拍的学习伙伴</text><text class="headline">把不会的，<br/>一步步弄懂。</text><text class="intro">找一位大学生家教，从一道题、一次讲解开始。</text><view class="links"><text @click="openOrders">查看我的预约 ↗</text><text @click="openProfile">切换演示身份 ↗</text></view></view><LessonFlip/></view>
+    <button class="ai-entry" @click="openMatch"><text class="ai-kicker">AI 家教匹配</text><text class="ai-title">不知道选哪位？</text><text class="ai-note">在西安地图选位置，按科目、预算和授课方式查看匹配理由。</text><text class="ai-arrow" aria-hidden="true">↗</text></button>
     <input v-model="query" class="search" placeholder="搜索科目、地区或老师姓名"/>
     <view class="filter-panel"><view class="heading">按科目查找</view>
     <scroll-view scroll-x><view class="filters"><text v-for="s in subjects" :key="s" class="chip" :class="{ active: subject === s }" @click="subject = s">{{ s }}</text></view></scroll-view>

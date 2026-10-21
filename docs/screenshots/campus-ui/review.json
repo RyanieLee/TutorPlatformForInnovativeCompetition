@@ -1,0 +1,82 @@
+[
+  {
+    "width": 390,
+    "name": "home",
+    "metrics": {
+      "body": 390,
+      "viewport": 390
+    }
+  },
+  {
+    "width": 390,
+    "name": "match",
+    "metrics": {
+      "body": 390,
+      "viewport": 390
+    }
+  },
+  {
+    "width": 390,
+    "name": "tutor-workbench",
+    "metrics": {
+      "body": 390,
+      "viewport": 390
+    }
+  },
+  {
+    "width": 390,
+    "name": "teaching-shell",
+    "metrics": {
+      "body": 390,
+      "viewport": 390
+    }
+  },
+  {
+    "width": 390,
+    "name": "admin-workbench",
+    "metrics": {
+      "body": 390,
+      "viewport": 390
+    }
+  },
+  {
+    "width": 1440,
+    "name": "home",
+    "metrics": {
+      "body": 1440,
+      "viewport": 1440
+    }
+  },
+  {
+    "width": 1440,
+    "name": "match",
+    "metrics": {
+      "body": 1440,
+      "viewport": 1440
+    }
+  },
+  {
+    "width": 1440,
+    "name": "tutor-workbench",
+    "metrics": {
+      "body": 1440,
+      "viewport": 1440
+    }
+  },
+  {
+    "width": 1440,
+    "name": "teaching-shell",
+    "metrics": {
+      "body": 1440,
+      "viewport": 1440
+    }
+  },
+  {
+    "width": 1440,
+    "name": "admin-workbench",
+    "metrics": {
+      "body": 1440,
+      "viewport": 1440
+    }
+  }
+]

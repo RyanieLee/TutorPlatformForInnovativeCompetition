@@ -1,0 +1,77 @@
+/* Campus Tutoring: one visual language across parent, tutor and admin roles. */
+page{background:#edf2ee!important;color:#263b2d!important;background-image:radial-gradient(ellipse at 4% 5%,#dcebe0,transparent 37%),radial-gradient(ellipse at 95% 37%,#e4eaf4,transparent 42%),radial-gradient(ellipse at 50% 96%,#f4e8d3,transparent 45%)!important;background-repeat:no-repeat!important;font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif!important;overflow-x:clip}
+.parent-shell.parent-shell,.shell.shell{color:#263b2d;font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;letter-spacing:.012em}
+button{transition:background-color .2s ease,color .2s ease,box-shadow .2s ease,transform .2s ease}
+button:focus-visible,.chip:focus-visible,.b-chip:focus-visible,.brand:focus-visible{outline:3px solid #2a5b40;outline-offset:3px}
+.parent-shell.parent-shell{max-width:1400px;padding:0 40px 42px}
+.parent-shell .parent-header.parent-header{margin:16px -8px 0;padding:18px 24px;background:#ffffffb8;border:1px solid #fff;border-radius:22px;box-shadow:0 5px 24px #3253440b;backdrop-filter:blur(15px)}
+.parent-shell .brand-icon.brand-icon{position:relative;width:38px;height:38px;background:transparent;border:0;border-radius:0;box-shadow:none}
+.parent-shell .brand-icon:before,.parent-shell .brand-icon:after{content:"";position:absolute;top:7px;width:15px;height:21px;border:2px solid #2c5540;border-radius:2px 5px 4px 2px}
+.parent-shell .brand-icon:before{left:3px;transform:skewY(7deg);border-right-width:1px}.parent-shell .brand-icon:after{right:3px;transform:skewY(-7deg);border-left-width:1px}
+.parent-shell .brand-name.brand-name{font-family:"Noto Serif SC","Songti SC","SimSun",serif;font-size:23px;font-weight:700;color:#24402f;letter-spacing:.045em}
+.parent-shell .brand-note.brand-note{font-size:10px;color:#657668;letter-spacing:.06em}
+.parent-shell.parent-shell .parent-nav button{color:#435c4a;border-radius:10px;min-height:44px}
+.parent-shell.parent-shell .parent-nav .current{color:#fff;background:#2b513b}
+.parent-shell .parent-caption{padding:10px 0;color:#617166}
+.parent-shell .page .search{display:block;width:100%;margin:0;grid-column:1/-1;grid-row:1;height:60px;padding:0 22px 0 50px;background:#ffffffdf;border:1px solid #8ca895;border-radius:18px;box-shadow:0 7px 22px #3652440c;font-size:16px}
+.parent-shell .page:has(.tutor-grid){display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:20px;align-items:stretch}
+.parent-shell .page .hero{grid-column:1/10;grid-row:2;position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr);gap:28px;align-items:center;min-height:420px;padding:34px 38px;background:#f3f8f0cb;color:#253e2e;border:2px solid #385846;border-radius:28px;overflow:visible;box-shadow:0 16px 35px #3652440d}
+.parent-shell .page .hero:before{content:"";position:absolute;inset:16px -12px -12px 16px;border:1px solid #98ad9c;border-radius:28px;z-index:-1;transform:rotate(-.8deg);pointer-events:none}
+.parent-shell .hero-copy{min-width:0}
+.parent-shell .page .eyebrow{color:#46644d;font-size:12px;letter-spacing:.07em;opacity:1}
+.parent-shell .page .headline{display:block;font-family:"Noto Serif SC","Songti SC","SimSun",serif;font-size:clamp(36px,3.3vw,48px);line-height:1.34;font-weight:700;letter-spacing:.015em;margin-top:20px}
+.parent-shell .page .intro{display:block;color:#546b58;font-size:16px;line-height:1.85;opacity:1;margin-top:18px}
+.parent-shell .page .links{font-size:13px;color:#315b43;gap:18px}.parent-shell .page .links text{padding:6px 0;background:transparent;border-bottom:1px solid #8ca492;border-radius:0;min-height:44px;display:flex;align-items:center}
+.parent-shell .page .ai-entry{grid-column:10/-1;grid-row:2;z-index:2;display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:15px;min-height:315px;margin:64px 0 28px -42px;padding:30px;background:#e8f1e7e8;color:#254533;border:2px solid #385846;border-radius:26px;box-shadow:4px 5px 0 #385846,0 12px 24px #37514115;backdrop-filter:blur(14px)}
+.parent-shell .ai-title{display:block;font-size:25px;font-weight:700;line-height:1.4}.parent-shell .ai-note{display:block;color:#42604a;font-size:14px;line-height:1.8}.parent-shell .ai-arrow{display:grid;place-items:center;align-self:flex-end;margin-top:auto;width:52px;height:52px;border-radius:50%;color:#fff;background:#2b513b;font-size:26px}
+.parent-shell .page .filter-panel{grid-column:1/-1;grid-row:3;display:grid;grid-template-columns:1.1fr .7fr 1fr;gap:10px 25px;margin:8px 0 0;padding:20px 22px;background:#ffffffd6;border:1px solid #adbeae;border-top:3px solid #385846;border-radius:22px;box-shadow:0 8px 24px #36524408}
+.parent-shell .page .filter-panel>.heading{font-size:14px;margin:0;color:#47614e}.parent-shell .page .filter-panel>.heading:first-child{grid-column:1;grid-row:1}.parent-shell .page .filter-panel>uni-scroll-view{grid-column:1;grid-row:2;min-width:0}.parent-shell .page .filter-panel>.heading:nth-of-type(2){grid-column:2;grid-row:1}.parent-shell .page .filter-panel>.teaching-modes{grid-column:2;grid-row:2}.parent-shell .page .price-filter{grid-column:3;grid-row:1/3;display:block;margin:0;min-width:0}
+.parent-shell .page .chip{background:#e9f0e8;color:#3d5943;border-radius:9px;min-height:44px;box-sizing:border-box}.parent-shell .page .chip.active{background:#2d573f;color:#fff}.parent-shell .page .price-inputs input{width:0;flex:1;min-width:0;background:#fff;border:1px solid #b7c9b9}.parent-shell .page .filter-actions .apply-price,.primary-button{background:#2b573d!important;color:#fff!important}.parent-shell .page>.heading{grid-column:1/-1;margin:12px 0 0;color:#263b2d}.parent-shell .page .tutor-grid{grid-column:1/-1;gap:22px}
+.parent-shell .tutor-grid .card{border:1px solid #b9c9bb;border-radius:20px;background:#fff;box-shadow:0 7px 17px #36524408;overflow:hidden}.parent-shell .tutor-grid .avatar{background:#e8f1e7;color:#315b43}.parent-shell .tutor-grid .price{color:#2b6043;font-variant-numeric:tabular-nums}.parent-shell .tutor-grid .tag{background:#edf3ec;color:#46684d}
+.parent-shell .page .notice,.parent-shell .page .load-more{grid-column:1/-1}.parent-shell .page .load-more{color:#2c5b3b;background:#fff;border:1px solid #b9c9bb}
+/* Shared surfaces keep business controls and error messages intact. */
+.surface-card.surface-card{background:#fff;border:1px solid #becdbf;border-radius:20px;box-shadow:0 7px 22px #36524408}.secondary-button.secondary-button{background:#e9f0e8;color:#2d5a3d}.muted-note.muted-note{color:#5d7062}
+.page .hero:has(+ .ai-steps){background:#edf4ed;color:#263e2d;border:2px solid #385846;box-shadow:0 7px 20px #3858460c}.page .hero:has(+ .ai-steps) :is(.eyebrow,.intro){color:#48654d;opacity:1}.page .ai-steps text{background:#e5efe5;color:#2d6040;border:1px solid #b5c9b7}.page .chips .selected{background:#2b573d!important;color:#fff}.page .example-briefs button{background:#e9f1e9;color:#325c41}.page .score{color:#2e6846}
+.location-picker .location-title{font-family:"Noto Serif SC","Songti SC","SimSun",serif;color:#284936;font-weight:700}.location-picker .xian-map{border:2px solid #5f8068;border-radius:16px}.location-picker .place-buttons button{background:#e9f1e9;color:#325b40;min-height:44px}.location-picker .place-buttons .chosen{background:#2d6645;color:#fff}.location-picker .selected-location{color:#2d6042}.location-picker .map-warning{color:#925618}
+/* Tutor and admin share the same identity, with different task density. */
+.shell.shell{max-width:1280px;padding:24px 38px 54px}.shell.shell .brand{border-bottom-color:#bdcdbf}.shell.shell .brand-name{font-family:"Noto Serif SC","Songti SC","SimSun",serif;color:#284936;font-size:23px}.shell.shell .mode{color:#536c59}.shell.shell .eyebrow{color:#54745b;letter-spacing:.08em}.shell.shell .title{font-family:"Noto Serif SC","Songti SC","SimSun",serif;color:#203c2c;font-size:36px}.shell.shell .identity{color:#5b6f5e}.shell.shell .nav button{background:#fff;color:#315b40;border:1px solid #abc0ad;min-height:44px}.shell.shell .notice{background:#e8f1e9;color:#3b5d44;border:1px solid #b7cbb8}.shell.shell .access{border:2px solid #385846}.shell.shell .access button{background:#2b573d;color:#fff}
+.shell.shell .b-panel{background:#ffffffed;border:1px solid #b9c9bb;border-radius:20px;box-shadow:0 8px 24px #36524409}.shell.shell .b-section{font-family:"Noto Serif SC","Songti SC","SimSun",serif;color:#284434;font-size:21px}.shell.shell .b-card{border:1px solid #c6d4c7;border-left:3px solid #587a60;border-radius:13px}.shell.shell .b-metric{border:1px solid #aabfaa;border-top:3px solid #375c41;background:#f9fbf8;border-radius:14px}.shell.shell .b-number{color:#2d6042;font-variant-numeric:tabular-nums}.shell.shell .b-status{background:#e7f0e7;color:#2f6341}.shell.shell .b-button{background:#2b573d;color:#fff;min-height:44px}.shell.shell .b-button.secondary{background:#e7efe7;color:#2b573d}.shell.shell .b-chip{color:#405f47;background:#fff;border-color:#aebfaf;min-height:44px}.shell.shell .b-chip.active{background:#2b573d;color:#fff;border-color:#2b573d}.shell.shell .b-input,.shell.shell .b-textarea{background:#fff;border-color:#b9c9bb}.shell.shell .b-row{border-bottom-color:#e0e9df}.shell.shell .b-info{background:#eef4ec;color:#45604b}.shell.shell .b-muted{color:#596d5d}
+@media(hover:hover) and (pointer:fine){.parent-shell .tutor-grid .card:hover{transform:translateY(-3px);box-shadow:0 16px 30px #36524418}.shell.shell .b-button:hover,.parent-shell .page .ai-entry:hover{filter:brightness(.97)}}
+@media(max-width:1000px){.parent-shell .page .hero{grid-column:1/-1}.parent-shell .page .ai-entry{grid-column:1/-1;grid-row:3;min-height:0;margin:-34px 24px 0 46px;display:grid;grid-template-columns:1fr auto;align-items:center}.parent-shell .page .ai-title,.parent-shell .page .ai-note{grid-column:1}.parent-shell .page .ai-arrow{grid-column:2;grid-row:1/3}.parent-shell .page .filter-panel{grid-row:4}}
+@media(max-width:700px){.parent-shell.parent-shell{padding:0 14px 30px}.parent-shell .parent-header.parent-header{margin:12px 0 0;padding:15px;border-radius:18px}.parent-shell .page:has(.tutor-grid){display:flex;flex-direction:column;gap:16px}.parent-shell .page .hero{grid-template-columns:minmax(0,1fr);min-height:0;padding:24px 20px 28px;gap:18px}.parent-shell .page .headline{font-size:clamp(29px,8vw,36px);margin-top:12px}.parent-shell .page .intro{font-size:15px}.parent-shell .page .ai-entry{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-height:0;margin:-32px 5px 0 20px;padding:18px;flex:none}.parent-shell .ai-title{font-size:18px}.parent-shell .ai-note{font-size:12px}.parent-shell .ai-arrow{width:40px;height:40px;font-size:22px}.parent-shell .page .filter-panel{display:block;padding:18px 14px}.parent-shell .page .filter-panel>.heading{margin:16px 0 8px}.parent-shell .page .price-filter{margin-top:16px}.parent-shell .page .tutor-grid{width:100%}.shell.shell{padding:18px 14px 36px}.shell.shell .title{font-size:29px}.shell.shell .b-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.parent-shell .parent-header.parent-header,.parent-shell .page .ai-entry{background:#f8fbf7}}
+@media(prefers-contrast:more),(prefers-reduced-transparency:reduce){.parent-shell .parent-header.parent-header,.parent-shell .page .ai-entry,.parent-shell .page .hero{background:#fff;backdrop-filter:none;border-color:#264c34}.shell.shell .b-panel,.surface-card.surface-card{background:#fff;border-color:#496c50}}
+@media(prefers-reduced-motion:reduce){button,.parent-shell .tutor-grid .card{transition:none!important;animation:none!important;transform:none!important}}
+/* Component-scoped legacy blue rules have the same specificity; these role rules are decisive. */
+.shell.shell .b-button,.shell.shell .access button{background:#2b573d;color:#fff}
+.shell.shell .b-button.secondary,.shell.shell .nav button{background:#e7efe7;color:#2b573d;border-color:#acc2af}
+.shell.shell .b-chip.active{background:#2b573d;color:#fff;border-color:#2b573d}
+.shell.shell .b-number,.shell.shell .brand-name{color:#2d6042}
+.shell.shell .b-status{background:#e7f0e7;color:#2f6341}
+.shell.shell .notice{background:#e8f1e9;color:#3b5d44;border-color:#b7cbb8}
+.parent-shell.parent-shell .parent-nav .current{background:#2b513b;color:#fff}
+/* Teaching: course sequence and files read like ordered pages, with clear actions. */
+.t-wrap.t-wrap{color:#263b2d;font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif}
+.t-wrap.t-wrap .t-hero{background:#eef5eb;border:2px solid #385846;border-radius:22px;box-shadow:4px 5px 0 #a2bba2}
+.t-wrap.t-wrap .t-kicker{color:#496a52;letter-spacing:.08em}
+.t-wrap.t-wrap .t-title{font-family:"Noto Serif SC","Songti SC","SimSun",serif;color:#284535;font-weight:700}
+.t-wrap.t-wrap .t-subtitle,.t-wrap.t-wrap .t-muted,.t-wrap.t-wrap .t-meta{color:#5a6f5e}
+.t-wrap.t-wrap .t-card{border:1px solid #b9cbbb;border-top:3px solid #385846;background:#fffefa;border-radius:20px;box-shadow:0 9px 22px #3858460e}
+.t-wrap.t-wrap .t-section-title{font-family:"Noto Serif SC","Songti SC","SimSun",serif;color:#294734;font-weight:700}
+.t-wrap.t-wrap .t-lesson{border-color:#d8e5d8}
+.t-wrap.t-wrap .t-lesson-title{font-weight:700;color:#263e2d}
+.t-wrap.t-wrap .t-btn{min-height:44px;border-color:#2b573d;background:#2b573d;color:#fff;border-radius:10px}
+.t-wrap.t-wrap .t-btn.secondary{background:#e8f1e7;color:#2b573d;border-color:#a7c0aa}
+.t-wrap.t-wrap .t-btn.plain{background:transparent;color:#386246;border-color:transparent}
+.t-wrap.t-wrap .t-badge{background:#e6f0e5;color:#2d6040}
+.t-wrap.t-wrap .t-badge.muted{background:#edf0ed;color:#5a6b5d}
+.t-wrap.t-wrap .t-badge.late{background:#fbebd3;color:#8c581b}
+.t-wrap.t-wrap .t-field input,.t-wrap.t-wrap .t-field textarea{background:#fff;border-color:#aebfaf;color:#263b2d}
+.t-wrap.t-wrap .t-upload{background:#f8fbf7;border-color:#98b49d}
+.t-wrap.t-wrap .t-note,.t-wrap.t-wrap .t-feedback{background:#eaf2e9;border-color:#b8cbb9;color:#3d6345}
+.t-wrap.t-wrap .t-feedback.error{background:#fff1ed;border-color:#edc5b8;color:#944833}
+.t-wrap.t-wrap .t-back{color:#2e6243}
+.t-wrap.t-wrap .t-preview{background:#f9fbf7;border-color:#a9c2aa}
+@media(max-width:700px){.t-wrap.t-wrap .t-hero{padding:20px 17px}.t-wrap.t-wrap .t-card{padding:18px 15px}}
+.parent-shell .ai-kicker{display:block;color:#476a4d;font-size:12px;font-weight:700;letter-spacing:.1em}
+@media(max-width:1000px){.parent-shell .page .ai-kicker{grid-column:1}.parent-shell .page .ai-arrow{grid-row:1/4}}

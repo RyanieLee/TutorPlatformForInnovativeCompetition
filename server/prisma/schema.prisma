@@ -16,6 +16,9 @@ model User {
   passwordHash  String
   createdAt     DateTime           @default(now())
   updatedAt     DateTime           @updatedAt
+  teachingAttachments TeachingAttachment[]
+  homeworkSubmissions HomeworkSubmission[]
+  uploadQuotas UploadQuota[]
   sessions      Session[]
   tutorProfile  TutorProfile?
   application   TutorApplication?
@@ -93,6 +96,7 @@ model TutorApplication {
 }
 
 model Booking {
+  lessons        Lesson[]
   id             String       @id @default(cuid())
   parentId       String
   parent         User         @relation("ParentBookings", fields: [parentId], references: [id], onDelete: Restrict)
@@ -140,4 +144,87 @@ model AuditLog {
 
   @@index([entityType, entityId, createdAt])
   @@index([actorId, createdAt])
+}
+
+model Lesson {
+  id String @id @default(cuid())
+  bookingId String
+  booking Booking @relation(fields:[bookingId], references:[id], onDelete:Restrict)
+  title String
+  scheduledAt DateTime
+  previewText String @default("")
+  homeworkText String
+  dueAt DateTime?
+  status String @default("draft")
+  publishedAt DateTime?
+  version Int @default(1)
+  requestId String
+  requestFingerprint String
+  publishedFingerprint String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  uploads TeachingAttachment[]
+  attachments LessonAttachment[]
+  submissions HomeworkSubmission[]
+  @@unique([bookingId,requestId])
+  @@index([bookingId,status,scheduledAt,createdAt,id])
+}
+model TeachingAttachment {
+  id String @id @default(cuid())
+  lessonId String
+  lesson Lesson @relation(fields:[lessonId],references:[id],onDelete:Restrict)
+  ownerId String
+  owner User @relation(fields:[ownerId],references:[id],onDelete:Restrict)
+  purpose String
+  originalName String
+  mediaType String @default("")
+  size Int @default(0)
+  storageKey String @unique
+  uploadState String @default("uploading")
+  reservedBytes Int @default(0)
+  quotaDate String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  lessonBinding LessonAttachment?
+  submissionBinding SubmissionAttachment?
+  @@index([uploadState,expiresAt])
+}
+model LessonAttachment {
+  lessonId String
+  lesson Lesson @relation(fields:[lessonId],references:[id],onDelete:Restrict)
+  attachmentId String @unique
+  attachment TeachingAttachment @relation(fields:[attachmentId],references:[id],onDelete:Restrict)
+  @@id([lessonId,attachmentId])
+}
+model HomeworkSubmission {
+  id String @id @default(cuid())
+  lessonId String
+  lesson Lesson @relation(fields:[lessonId],references:[id],onDelete:Restrict)
+  parentId String
+  parent User @relation(fields:[parentId],references:[id],onDelete:Restrict)
+  revision Int
+  requestId String
+  requestFingerprint String
+  note String
+  submittedAt DateTime
+  late Boolean
+  attachments SubmissionAttachment[]
+  @@unique([lessonId,revision])
+  @@unique([parentId,requestId])
+  @@index([lessonId,revision])
+}
+model SubmissionAttachment {
+  submissionId String
+  submission HomeworkSubmission @relation(fields:[submissionId],references:[id],onDelete:Restrict)
+  attachmentId String @unique
+  attachment TeachingAttachment @relation(fields:[attachmentId],references:[id],onDelete:Restrict)
+  @@id([submissionId,attachmentId])
+}
+model UploadQuota {
+  userId String
+  user User @relation(fields:[userId],references:[id],onDelete:Restrict)
+  day String
+  usedBytes Int @default(0)
+  reservedBytes Int @default(0)
+  @@id([userId,day])
 }
