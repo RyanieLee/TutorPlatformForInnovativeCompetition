@@ -8,7 +8,7 @@
 - 成功 HTTP **200**：`{"data":...}`。家教、预约、审核与举报分页列表另含 `meta`。时间为 ISO 8601 UTC；ID 为不透明字符串，不从名称推导。
 - 失败：`{"error":{"code":"INVALID","message":"..."}}`。客户端按 code 处理，message 用于提示，不将具体文案当协议。
 - 登录后发送 `Authorization: Bearer <token>`；没有 Cookie 登录或 JWT 解码约定。用户 ID、角色、记录归属取自服务端会话，忽略前端自行声明的 User/角色。
-- 请求 JSON 最大 32768 字节。业务写入字段按下表校验；严格 schema 拒绝额外字段。无真实文件上传接口。
+- 普通 JSON 请求最大 32768 字节。业务写入字段按下表校验；严格 schema 拒绝额外字段。课次附件和下文专用作业图片批改使用受限 multipart 上传，不提供任意通用文件上传接口。
 - `Tutor.id` 是公开家教资料 ID，**不同于**登录用户 ID。详情、预约、举报均使用 Tutor.id。
 
 | HTTP | code | 客户端处理 |
@@ -185,3 +185,15 @@ GET `/api/assistant/status` 公开返回 `{data:{enabled:boolean}}`，只说明�
 GET `/api/bookings/map` 要求parent/tutor/admin，接受既有page(1–100000)/pageSize(1–100，默认100)/status可选参数。家长过滤parentId=当前用户，家教过滤资料归属，管理员全量；未知userId/role参数不改变归属。成功统一在data内返回 `{items,meta:{total,page,pageSize},scope,serverTime}`，由客户端消费meta。单次count/记录在同一事务；按createdAt DESC、id DESC分页。
 
 items字段：`{id,subject,status,areaLabel:string|null,tutorId,tutorName,teachingMode,referencePrice,expectedTime,createdAt,updatedAt}`。不返回studentName、parentId、contact、note或GPS。referencePrice取家教当前报价，不是订单支付快照；expectedTime仍为用户填写的预约时间文字，仅在授权范围内展示。每次调用读取当前状态，不是SSE/WebSocket；前端10秒轮询当前页，注明数据范围和错误，固定示例不进入接口或统计。
+
+
+## 小书灵作业图片批改（可选视觉模型）
+
+| 方法 / 路径 | 身份 | 输入与输出 |
+| --- | --- | --- |
+| GET `/api/assistant/homework-review/status` | 公开 | 返回 `{enabled,maxImageBytes,acceptedTypes}`；enabled 只表示视觉模型配置齐全，不保证供应商实际支持图片 |
+| POST `/api/assistant/homework-review-image` | parent / tutor | multipart 字段 `image`，仅一张 JPG/JPEG、PNG 或 WebP，最多 3 MiB；返回 `{reply,source:'model'}` |
+
+上传前端必须提示用户遮挡姓名、学校、班级、联系方式和二维码，并要求用户明确同意发送给已配置的模型服务。后端验证角色、MIME 与文件签名、大小和限流；图片仅在请求内存中处理，不写入平台数据库或文件系统。图片会发送到配置的模型供应商，因此这不等于供应商侧不留存；使用前应审阅其数据处理与保留条款。每账户每分钟最多 5 次、每 IP 每分钟最多 15 次，单进程内存限流仅适合演示。仅接受 JPEG、PNG、WebP；不支持 PDF、语音或多图。模型必须支持 OpenAI-compatible Chat Completions 的 `image_url` 内容格式。
+
+配置可用 `HOMEWORK_MODEL_BASE_URL`、`HOMEWORK_MODEL_NAME`、`HOMEWORK_MODEL_API_KEY`、`HOMEWORK_MODEL_TIMEOUT_MS`；未配置专用变量时回退至 `MATCH_MODEL_*`。未配置时返回 503，前端应提示用户粘贴文字版题目。模型回复不是学校正式评分，模糊内容必须标为无法判断。
