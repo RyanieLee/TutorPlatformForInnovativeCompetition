@@ -101,6 +101,12 @@
       "style": {
         "navigationBarTitleText": "课次详情与作业"
       }
+    },
+    {
+      "path": "pages/learning/index",
+      "style": {
+        "navigationBarTitleText": "AI学习中心"
+      }
     }
   ],
   "tabBar": {
