@@ -105,7 +105,7 @@ function login(){open.value=false;uni.navigateTo({url:'/pages/auth/login'})}
      <image v-if="imagePath" class="homework-image-preview" :src="imagePath" mode="aspectFit" aria-label="待批改作业图片预览"/>
      <button v-if="imagePath" :disabled="busy" class="homework-image-remove" @click="clearHomeworkImage">移除</button>
     </view>
-    <button class="homework-image-consent" :aria-pressed="imageConsent" @click="imageConsent=!imageConsent">{{imageConsent?'☑':'□'}} 我已遮挡姓名、学校等个人信息，并同意将图片发送给已配置的模型服务处理。</button>
+    <button class="homework-image-consent" :disabled="busy" :aria-pressed="imageConsent" @click="imageConsent=!imageConsent">{{imageConsent?'☑':'□'}} 我已遮挡姓名、学校等个人信息，并同意将图片发送给已配置的模型服务处理。</button>
     <text class="homework-image-note">{{!apiMode?'本机演示不支持图片识别；可粘贴文字题目。':homeworkEnabled?'支持 JPG、PNG、WebP，单张不超过3 MiB。图片不会保存到本平台数据库，但会发送给模型服务。':'需要在服务端配置支持图片输入的视觉模型；普通文字模型可能不支持。'}}</text>
     <button class="homework-image-submit" :disabled="busy||!imagePath||!imageConsent||!homeworkEnabled" :loading="busy" @click="reviewSelectedImage">上传并批改</button>
    </view>
