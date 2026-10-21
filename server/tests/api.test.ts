@@ -1,9 +1,10 @@
-import { beforeAll, afterAll, describe, expect, it } from 'vitest'
+import { beforeAll, afterAll, describe, expect, it, vi } from 'vitest'
 import { PrismaClient } from '@prisma/client'
 import { buildApp } from '../src/app'
 import { hashPassword, tokenHash } from '../src/core'
 const db=new PrismaClient()
-const app=buildApp(db)
+const modelParse=vi.fn(async()=>({subject:'数学' as const,grade:'初中（演示）' as const,budget:80,mode:'线上' as const,preference:'耐心'}))
+const app=buildApp(db,{enabled:true,parse:modelParse})
 let parent='',otherParent='',tutor='',otherTutor='',admin=''
 let parentId='',tutorId='',otherTutorId='',profileId='',bookingId='',applicationId='',reportId=''
 async function createUser(loginId:string,role:string){return db.user.create({data:{loginId,displayName:loginId,role,passwordHash:await hashPassword('local-test-password')}})}
@@ -38,6 +39,27 @@ describe('认证和服务端权限',()=>{
   expect(lastStatus).toBe(429)
  })
  it('普通用户不能访问管理接口',async()=>{expect((await app.inject({method:'GET',url:'/api/admin/tutor-applications',headers:auth(parent)})).statusCode).toBe(403)})
+})
+describe('可选模型需求解析',()=>{
+ it('状态公开，但解析只允许家长身份且拒绝私人信息',async()=>{
+  expect((await app.inject({method:'GET',url:'/api/match-assistant/status'})).json().data).toEqual({enabled:true})
+  const payload={brief:'初中数学，预算80元，线上'}
+  expect((await app.inject({method:'POST',url:'/api/match-assistant/parse',payload})).statusCode).toBe(401)
+  expect((await app.inject({method:'POST',url:'/api/match-assistant/parse',headers:auth(tutor),payload})).statusCode).toBe(403)
+  expect((await app.inject({method:'POST',url:'/api/match-assistant/parse',headers:auth(parent),payload:{brief:'初中数学，电话13800138000'}})).statusCode).toBe(400)
+  expect((await app.inject({method:'POST',url:'/api/match-assistant/parse',headers:auth(parent),payload:{brief:'太短'}})).statusCode).toBe(400)
+  expect(modelParse).not.toHaveBeenCalled()
+  const parsed=await app.inject({method:'POST',url:'/api/match-assistant/parse',headers:auth(parent),payload})
+  expect(parsed.statusCode).toBe(200)
+  expect(parsed.json().data).toMatchObject({subject:'数学',budget:80})
+  expect(modelParse).toHaveBeenCalledWith(payload.brief)
+ })
+ it('对每个账户限制模型请求次数',async()=>{
+  const account=await createUser('model-rate-parent','parent'),token=await login(account.loginId)
+  const statuses=[]
+  for(let i=0;i<11;i++)statuses.push((await app.inject({method:'POST',url:'/api/match-assistant/parse',headers:auth(token),payload:{brief:'初中数学，预算80元，线上'}})).statusCode)
+  expect(statuses).toEqual([...Array(10).fill(200),429])
+ })
 })
 describe('入驻、审核与公开资料',()=>{
  it('校验申请，禁止重复，审核后公开，编辑后撤回公开',async()=>{

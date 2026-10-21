@@ -17,7 +17,7 @@ export async function apiRequest<T>(method: 'GET'|'POST'|'PUT', path: string, da
   const body = response.data as Envelope<T>
   if (response.statusCode >= 200 && response.statusCode < 300 && body && 'data' in body) return body.data as T
   if (response.statusCode === 401 && authenticated) { clearToken(); unauthorized?.() }
-  const codes = ['UNAUTHORIZED','FORBIDDEN','NOT_FOUND','INVALID','CONFLICT','RATE_LIMIT'] as const
+  const codes = ['UNAUTHORIZED','FORBIDDEN','NOT_FOUND','INVALID','CONFLICT','RATE_LIMIT','MODEL_UNAVAILABLE','MODEL_UPSTREAM'] as const
   const code = codes.find(c => c === body?.error?.code) || 'STORAGE'
   throw new BusinessError(code, body?.error?.message || `请求失败（${response.statusCode}）`)
 }
