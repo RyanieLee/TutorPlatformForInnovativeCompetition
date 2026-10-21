@@ -45,6 +45,7 @@ async function send(){
  finally{if(token===companionState.version)busy.value=false;running=null}
 }
 function ask(text:string){draft.value=text;void send()}
+function startHomeworkReview(){draft.value='请帮我批改下面的作业，指出错误、解释理由并给修改建议：\n题目：\n我的答案：\n（选填）参考答案：'}
 function go(where:'match'|'learning'|'map',brief?:string){
  if(brief)pendingCompanionBrief.value=brief
  const url=where==='match'?'/pages/match/index':where==='learning'?'/pages/learning/index':'/pages/order-map/index'
@@ -58,17 +59,24 @@ function login(){open.value=false;uni.navigateTo({url:'/pages/auth/login'})}
 <template>
  <view v-if="visible" class="companion-root" :class="{'motion-off':paused}" @keydown.esc="open=false">
   <view v-if="open" class="companion-panel" role="dialog" aria-label="小书灵 AI 对话">
-   <view class="companion-head"><view><text class="companion-title">小书灵 · 学习陪伴</text><text class="companion-source">{{useModel?'服务端模型对话':status==='checking'&&mode==='auto'?'检查模型配置中':'本机演示 · 非大模型'}}</text></view><button aria-label="关闭AI对话" class="companion-close" @click="open=false">×</button></view>
-   <text class="companion-notice">{{useModel?'发送你输入的对话，不自动发送账户、订单或定位。':'本机答复仅支持需求整理、本站笔记与页面指引。'}} 请勿输入私人信息；对话不会执行预约或改动订单。</text>
+   <view class="companion-head"><view><text class="companion-title">小书灵 · 学习与平台助手</text><text class="companion-source">{{useModel?'服务端模型对话':status==='checking'&&mode==='auto'?'检查模型配置中':'本机演示 · 非大模型'}}</text></view><button aria-label="关闭AI对话" class="companion-close" @click="open=false">×</button></view>
+   <text class="companion-notice">{{useModel?'发送你输入的对话，不自动发送账户、订单或定位。':'本机答复仅提供页面指引、知识笔记与需求整理，不能批改新题。'}} 可粘贴文字版题目和学生答案咨询批改建议（仅模型已配置时）。请勿输入私人信息；对话不会执行预约或改动订单。</text>
    <scroll-view scroll-y class="companion-log" :scroll-into-view="last" role="log" aria-live="polite">
     <view v-for="m in messages" :id="instance+'-'+m.id" :key="m.id" class="companion-message" :class="m.role"><text class="message-label">{{m.role==='user'?'你':m.source==='model'?'模型答复':m.source==='local'?'本机演示答复':'小书灵'}}</text><text class="message-text">{{m.content}}</text><button v-if="m.matchBrief" class="message-action" @click="go('match',m.matchBrief)">带入匹配需求 →</button></view>
     <view v-if="busy" class="thinking" role="status">正在整理答复…</view>
    </scroll-view>
-   <view class="companion-shortcuts"><button :disabled="busy" @click="ask('初中数学，预算100元，线上耐心讲解')">帮我找老师</button><button :disabled="busy" @click="ask('怎么查看订单地图')">怎么看订单</button><button :disabled="busy" @click="ask('一元一次方程怎么学习')">学习小问题</button></view>
+   <view class="companion-shortcuts">
+    <button :disabled="busy" @click="ask('平台怎么用')">使用指南</button>
+    <button :disabled="busy" @click="ask('请解释一元一次方程的解题步骤')">解题答疑</button>
+    <button :disabled="busy" @click="startHomeworkReview">作业批改</button>
+    <button :disabled="busy" @click="ask('初中数学，预算100元，线上耐心讲解')">帮我找老师</button>
+    <button :disabled="busy" @click="ask('怎么查看订单地图')">怎么看订单</button>
+    <button :disabled="busy" @click="ask('一元一次方程怎么学习')">学习小问题</button>
+   </view>
    <view v-if="error" class="companion-error" role="alert">{{error}}<button v-if="loginNeeded" @click="login">登录后继续</button><button v-if="apiMode&&mode!=='local'&&(status==='enabled'||status==='error')" @click="localMode">改用本机演示</button></view>
-   <view class="companion-compose"><textarea v-model="draft" :disabled="busy" maxlength="500" placeholder="和小书灵聊学习，或整理找家教的需求…" aria-label="对话内容"/><button :disabled="busy||!draft.trim()||(status==='checking'&&mode==='auto')" :loading="busy" @click="send">发送</button></view>
+   <view class="companion-compose"><textarea v-model="draft" :disabled="busy" maxlength="500" placeholder="问知识点、贴文字题目与答案，或咨询平台怎么用…" aria-label="对话内容"/><button :disabled="busy||!draft.trim()||(status==='checking'&&mode==='auto')" :loading="busy" @click="send">发送</button></view>
    <view class="companion-tools"><button v-if="apiMode&&status==='enabled'&&mode==='local'" :disabled="busy" @click="modelMode">使用模型对话</button><button @click="go('learning')">学习中心</button><button @click="go('map')">订单地图</button><button :disabled="busy" @click="reset">清空对话</button><button :aria-pressed="paused" @click="paused=!paused">{{paused?'恢复动作':'暂停动作'}}</button></view>
-   <text class="companion-memory">对话仅保存在当前应用内存，刷新或切换账户会清空。</text>
+   <text class="companion-memory">聊天只保存当前应用内存；作业批改意见仅供参考，需要老师再核对。</text>
   </view>
   <button class="companion-launcher" :aria-expanded="open" aria-label="打开小书灵 AI 对话" @click="toggle">
    <image class="mascot-img" src="/static/linghang-mascot.svg" mode="aspectFit" aria-hidden="true"/><text class="pet-label">小书灵</text>
