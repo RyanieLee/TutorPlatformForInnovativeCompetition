@@ -1,5 +1,7 @@
 # 校园家教撮合平台（创新创业项目）
 
+本分支新增预约内四课教学大纲、逐题课堂事实、教师确认的课后反馈、第三课修订对比与发布历史。无需模型密钥可用明确标注的预置课程和样例反馈。见[教学演示](docs/TEACHING_LOOP_DEMO.md)、[四课完整内容](docs/TEACHING_DEMO_COURSE.md)、[验收记录](docs/TEACHING_AI_VALIDATION.md)。
+
 本批新增：**西安 AI 需求助手 + 地图家长选点 + 附近家教推荐**，Mock/API 共用 24 份合成家教资料。输入需求 → 确认解析 → 地图选点 → 查看推荐理由 → 原流程预约。体验及边界见 [西安演示指南](docs/XIAN_AI_DEMO.md)。
 
 已集成家长端响应式展示、价格筛选、服务端分页/状态筛选/全量统计和备份恢复；接口与启动见 [API 契约](docs/API_CONTRACT.md)、[演示后端](docs/SERVER_DEMO.md)。

@@ -4,8 +4,9 @@ import {validateCourse,makePresetFeedback,makePresetRevision,applyCommand,type L
 import preset from './course.json'
 export interface TeachingModel{enabled:boolean;generate(kind:'course'|'feedback'|'revision',state:LoopState,now:string):Promise<Command>}
 function sameQuestionBank(course:any){
- for(let i=0;i<4;i++)for(const key of ['examples','exercises']as const)if(JSON.stringify(course.lessons[i][key])!==JSON.stringify(preset.lessons[i][key]))throw new Error('模型改变了已经核验的题目与答案')
- if(JSON.stringify(course.diagnostic)!==JSON.stringify(preset.diagnostic))throw new Error('模型改变了预诊断题')
+ const fields=(list:any[])=>list.map(q=>[q.id,q.prompt,q.answer,q.solution])
+ for(let i=0;i<4;i++)for(const key of ['examples','exercises']as const)if(JSON.stringify(fields(course.lessons[i][key]))!==JSON.stringify(fields(preset.lessons[i][key])))throw new Error('模型改变了已经核验的题目与答案')
+ if(JSON.stringify(fields(course.diagnostic))!==JSON.stringify(fields(preset.diagnostic)))throw new Error('模型改变了预诊断题')
 }
 const bad=()=>new ApiError('MODEL_UPSTREAM',502,'教学模型返回无效或未经核验的内容，请改用样例或手工编辑')
 export function createTeachingModel(env:Record<string,string|undefined>=process.env,transport:typeof fetch=fetch):TeachingModel{

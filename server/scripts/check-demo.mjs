@@ -1,8 +1,7 @@
 import { mkdtempSync, rmSync, existsSync, copyFileSync, readFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
-import { randomBytes, createHash } from 'node:crypto'
-import { PrismaClient } from '@prisma/client'
+import { randomBytes } from 'node:crypto'
 import { spawn, spawnSync } from 'node:child_process'
 import { createServer } from 'node:net'
 import assert from 'node:assert/strict'
@@ -38,13 +37,16 @@ try {
  const port=await new Promise(resolve=>{const listener=createServer();listener.listen(0,'127.0.0.1',()=>{const port=listener.address().port;listener.close(()=>resolve(port))})})
  const origin='http://127.0.0.1:'+port
  async function start(databaseUrl=env.DATABASE_URL,serve=false){
-  server=spawn(process.execPath,[serve?'scripts/serve-demo.mjs':'dist/src/main.js'],{env:{...env,DATABASE_URL:databaseUrl,HOST:'127.0.0.1',PORT:String(port)},stdio:'ignore'})
+  let output=''
+  server=spawn(process.execPath,[serve?'scripts/serve-demo.mjs':'dist/src/main.js'],{env:{...env,DATABASE_URL:databaseUrl,HOST:'127.0.0.1',PORT:String(port)},stdio:['ignore','pipe','pipe']})
+  server.stdout.on('data',chunk=>{output=(output+chunk).slice(-4000)})
+  server.stderr.on('data',chunk=>{output=(output+chunk).slice(-4000)})
   for(let i=0;i<200;i++){
-   if(server.exitCode!==null)throw new Error('API exited before readiness')
+   if(server.exitCode!==null)throw new Error('API exited before readiness: '+output)
    try{const response=await fetch(origin+'/health');if(response.ok)return}catch{}
    await new Promise(resolve=>setTimeout(resolve,150))
   }
-  throw new Error('API health probe timed out')
+  throw new Error('API health probe timed out: '+output)
  }
  async function request(method,path,body,token){
   const response=await fetch(origin+path,{method,headers:{'content-type':'application/json',...(token?{authorization:'Bearer '+token}:{})},...(body?{body:JSON.stringify(body)}:{}),signal:AbortSignal.timeout(5000)})
@@ -79,21 +81,13 @@ try {
  assert.equal(overview.tutors.published,24)
  assert.equal((await request('GET','/api/bookings/mine?status=completed&pageSize=1',undefined,parent.token))[0].id,order.id)
  assert.equal((await fetch(origin+'/api/admin/overview',{headers:{authorization:'Bearer '+parent.token}})).status,403)
- const inspection=new PrismaClient({datasources:{db:{url:env.DATABASE_URL}}})
- let auditCount
- try {
-  // Keep a WAL connection open during backup; the snapshot must include committed data.
-  await inspection.$queryRawUnsafe('PRAGMA journal_mode=WAL')
-  await inspection.auditLog.create({data:{actorId:parent.user.id,action:'backup-check',entityType:'Booking',entityId:order.id}})
-  auditCount=await inspection.auditLog.count()
-  const backup=join(directory,'snapshot.db')
-  successful('db:backup',['--output',backup])
-  const digest=()=>createHash('sha256').update(readFileSync(backup)).digest('hex')
-  const before=digest()
-  assert.notEqual(run('db:backup',env,['--output',backup]).status,0,'must not overwrite backup')
-  assert.equal(digest(),before)
-  assert.notEqual(run('db:backup',env,['--output',database]).status,0,'must not overwrite active database')
- } finally {await inspection.$disconnect()}
+ function inspect(action,databasePath,expectedCount=''){
+  const result=spawnSync(process.execPath,['scripts/inspect-demo.mjs',action,databasePath,join(directory,'snapshot.db'),parent.user.id,order.id,String(expectedCount)],{env,encoding:'utf8'})
+  if(result.error)throw result.error
+  assert.equal(result.status,0,result.stderr)
+  return JSON.parse(result.stdout.trim())
+ }
+ const {auditCount}=inspect('backup',database)
  await stop()
  // Repeat initialization against the same database, then start a fresh API process.
  successful('db:init')
@@ -110,12 +104,7 @@ try {
  // Restore into another fresh path, leaving the original database and .env untouched.
  const restoredDatabase=join(directory,'restored.db')
  copyFileSync(join(directory,'snapshot.db'),restoredDatabase)
- const restoredDb=new PrismaClient({datasources:{db:{url:'file:'+restoredDatabase}}})
- try {
-  assert.equal((await restoredDb.$queryRawUnsafe('PRAGMA integrity_check'))[0].integrity_check,'ok')
-  assert.equal(await restoredDb.auditLog.count(),auditCount)
-  assert.equal(await restoredDb.auditLog.count({where:{action:'create',entityType:'Booking',entityId:order.id}}),1)
- } finally {await restoredDb.$disconnect()}
+ inspect('restore',restoredDatabase,auditCount)
  await start('file:'+restoredDatabase,true)
  const backupParent=await login('parent'),backupAdmin=await login('admin')
  assert.equal((await request('GET','/api/bookings/'+order.id,undefined,backupParent.token)).status,'completed')

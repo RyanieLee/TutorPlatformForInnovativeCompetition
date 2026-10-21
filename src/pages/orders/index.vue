@@ -36,6 +36,7 @@ function cancel(id: string) {
   } })
 }
 const teaching = (id: string) => uni.navigateTo({url:'/pages/teaching/index?bookingId='+encodeURIComponent(id)})
+const teachingLoop = (id: string) => uni.navigateTo({url:'/pages/teaching/loop?bookingId='+encodeURIComponent(id)})
 const goLogin = () => uni.navigateTo({ url: '/pages/auth/login' })
 const goProfile = () => uni.switchTab({ url: '/pages/profile/index' })
 const goHome = () => uni.switchTab({ url: '/pages/index/index' })
@@ -47,7 +48,7 @@ const goHome = () => uni.switchTab({ url: '/pages/index/index' })
     <view v-else-if="!currentSession" class="surface-card empty-state">登录后查看演示预约<button class="primary-button guide" @click="goLogin">进入演示登录</button></view>
     <view v-else-if="!canAccess(['parent'])" class="surface-card empty-state">当前身份不能查看家长预约<view class="muted-note">可在“我的”切换身份。</view><button class="secondary-button guide" @click="goProfile">前往我的</button></view>
     <view v-else-if="error" class="surface-card empty-state">{{ error }}<button class="secondary-button guide" @click="loadBookings">重试</button></view>
-    <template v-else><view v-if="!bookings.length" class="surface-card empty-state">暂无预约记录<button class="primary-button guide" @click="goHome">去找家教</button></view><view v-for="b in bookings" :key="b.id" class="card"><view class="head"><text>{{ b.tutorName }}</text><text class="status">{{ bookingStatusLabels[b.status] }}</text></view><view class="line">辅导科目：{{ b.subject }}</view><view class="line">期望时间：{{ b.expectedTime }}</view><view class="line">预约称呼：{{ b.studentName }}</view><view class="line">创建时间：{{ b.createdAt }}</view><button v-if="['accepted','completed','cancelled'].includes(b.status)" role="button" class="secondary-button guide" @click="teaching(b.id)">课次与作业</button><text v-if="b.status === 'pending' || b.status === 'accepted'" class="cancel" @click="cancel(b.id)">取消预约</text></view></template>
+    <template v-else><view v-if="!bookings.length" class="surface-card empty-state">暂无预约记录<button class="primary-button guide" @click="goHome">去找家教</button></view><view v-for="b in bookings" :key="b.id" class="card"><view class="head"><text>{{ b.tutorName }}</text><text class="status">{{ bookingStatusLabels[b.status] }}</text></view><view class="line">辅导科目：{{ b.subject }}</view><view class="line">期望时间：{{ b.expectedTime }}</view><view class="line">预约称呼：{{ b.studentName }}</view><view class="line">创建时间：{{ b.createdAt }}</view><button v-if="['accepted','completed','cancelled'].includes(b.status)" role="button" class="secondary-button guide" @click="teachingLoop(b.id)">查看教学计划与反馈</button><button v-if="['accepted','completed','cancelled'].includes(b.status)" role="button" class="secondary-button guide" @click="teaching(b.id)">课次与作业</button><text v-if="b.status === 'pending' || b.status === 'accepted'" class="cancel" @click="cancel(b.id)">取消预约</text></view></template>
   </view>
 </ParentLayout>
 </template>

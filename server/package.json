@@ -15,7 +15,8 @@
     "db:init": "node scripts/init-demo.mjs",
     "demo:setup": "node scripts/setup-demo.mjs",
     "demo:serve": "node scripts/serve-demo.mjs",
-    "test:demo": "node scripts/check-demo.mjs"
+    "test:demo": "node scripts/check-demo.mjs",
+    "test:teaching-demo": "node scripts/check-teaching-loop.mjs"
   },
   "dependencies": {
     "@fastify/cors": "^10.1.0",

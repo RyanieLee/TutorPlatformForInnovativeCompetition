@@ -48,6 +48,7 @@ jobs:
       - run: npm run build
       - run: npm test
       - run: npm run test:demo
+      - run: npm run test:teaching-demo
 
   e2e:
     runs-on: ubuntu-latest
@@ -69,3 +70,4 @@ jobs:
             playwright-report/
             test-results/
             docs/screenshots/d-*.png
+            docs/screenshots/teaching-*.png

@@ -58,4 +58,18 @@ describe('预约教学闭环',()=>{
   s=send(s,'rejectRevision',{suggestionId:s.suggestions[0].id});expect(()=>send(s,'applyRevision',{suggestionId:s.suggestions[0].id})).toThrow()
   s=send(s,'saveDraft',{course:{...course,goal:'临时修改目标'}});s=send(s,'discardDraft');expect(s.draft).toBeNull();expect(s.versions).toHaveLength(1)
  })
+ it('does not apply the same classroom feedback repeatedly to later published versions',()=>{
+  let s=feedback(record(send(setup(),'publish')));s=send(s,'suggest',{suggestion:makePresetRevision(s,time)});s=send(s,'applyRevision',{suggestionId:s.suggestions[0].id});s=send(s,'publish')
+  expect(()=>makePresetRevision(s,time)).toThrowError(/已用于修订/)
+ })
+ it('returns a validation error for impossible classroom dates',()=>{
+  const s=send(setup(),'publish'),valid=record(s).records[0]
+  const {id,createdAt,planVersion,...input}=valid
+  expect(()=>send(s,'record',{...input,date:'2026-99-99'})).toThrowError(expect.objectContaining({code:'INVALID'}))
+ })
+ it('rejects diff descriptions that do not match the proposed course',()=>{
+  const s=feedback(record(send(setup(),'publish'))),p=makePresetRevision(s,time)
+  p.changes[0].proposedBlock='凭空添加的变化，没有对应课表环节'
+  expect(()=>send(s,'suggest',{suggestion:p})).toThrow()
+ })
 })

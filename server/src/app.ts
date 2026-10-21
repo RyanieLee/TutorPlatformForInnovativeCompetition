@@ -18,8 +18,8 @@ const data = (input: z.infer<typeof applicationSchema>) => { const {subjects,...
 
 export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: MatchModel = createMatchModel(), teachingOptions?: TeachingOptions, teachingModel:TeachingModel=createTeachingModel()) {
  const app=Fastify({logger:process.env.NODE_ENV==='test'?false:{redact:['req.headers.authorization','req.body.password']},bodyLimit:32768})
- app.register(async child=>registerLoopRoutes(child,db,teachingModel))
  app.register(cors,{methods:['GET','HEAD','POST','PUT','DELETE','OPTIONS'],origin:(process.env.CORS_ORIGINS||'http://localhost:5173,http://127.0.0.1:5173').split(',').map(s=>s.trim())})
+ app.register(async child=>registerLoopRoutes(child,db,teachingModel))
  app.register(async child=>registerTeachingRoutes(child,db,teachingOptions??{uploadRoot:resolve(process.env.TEACHING_UPLOAD_ROOT||'./.teaching-uploads'),now:()=>new Date()}))
  const attempts=new Map<string,{count:number;resetAt:number}>()
  const ipAttempts=new Map<string,{count:number;resetAt:number}>()

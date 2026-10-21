@@ -1,7 +1,7 @@
 export type Source='preset'|'model'|'manual'
 export interface Question{id:string;prompt:string;answer:string;solution:string}
 export interface Block{id:string;minutes:number;teacher:string;student:string}
-export interface CourseLesson{id:string;title:string;goals:string[];knowledge:string[];blocks:Block[];examples:Question[];exercises:Question[];homework:string;observe:string[]}
+export interface CourseLesson{id:string;title:string;goals:string[];knowledge:string[];blocks:Block[];examples:Question[];exercises:Question[];homework:string;observe:string[];resources:string[]}
 export interface Course{code:string;subject:string;grade:string;unit:string;student:string;goal:string;prerequisites:string;diagnostic:Question[];lessons:CourseLesson[]}
 export interface Plan{version:number;course:Course;source:Source;createdAt:string;publishedAt:string;explanation:string}
 export interface Draft{course:Course;source:Source;createdAt:string;explanation:string}

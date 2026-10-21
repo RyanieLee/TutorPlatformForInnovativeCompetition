@@ -1,6 +1,10 @@
 {
   "pages": [
     {
+      "path": "pages/teaching/loop",
+      "style": { "navigationBarTitleText": "教学计划与反馈" }
+    },
+    {
       "path": "pages/index/index",
       "style": {
         "navigationBarTitleText": "找家教"
