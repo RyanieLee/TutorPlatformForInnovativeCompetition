@@ -86,4 +86,3 @@ const open = (id: string) => uni.navigateTo({ url: '/pages/admin/application-det
   </RoleShell>
 </template>
 <style scoped src="../tutor/shared/workflow.css"></style>
-

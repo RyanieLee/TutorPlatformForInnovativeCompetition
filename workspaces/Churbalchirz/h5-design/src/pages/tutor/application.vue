@@ -100,4 +100,3 @@ async function save(submit: boolean) {
   </RoleShell>
 </template>
 <style scoped src="./shared/workflow.css"></style>
-

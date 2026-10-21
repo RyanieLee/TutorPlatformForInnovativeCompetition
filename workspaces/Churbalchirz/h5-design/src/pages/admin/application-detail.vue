@@ -56,4 +56,3 @@ async function review(decision: 'approved' | 'rejected') {
   </RoleShell>
 </template>
 <style scoped src="../tutor/shared/workflow.css"></style>
-

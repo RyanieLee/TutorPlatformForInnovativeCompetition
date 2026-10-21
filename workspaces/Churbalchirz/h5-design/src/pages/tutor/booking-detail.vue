@@ -51,4 +51,3 @@ async function act(action: BookingAction) {
   </RoleShell>
 </template>
 <style scoped src="./shared/workflow.css"></style>
-
