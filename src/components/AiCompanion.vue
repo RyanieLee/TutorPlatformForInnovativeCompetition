@@ -43,7 +43,7 @@ async function send(){
   if(messages.value.length>30)messages.value=messages.value.slice(-30)
   draft.value='';void bottom()
  }catch(cause){if(token===companionState.version){error.value=cause instanceof Error?errorMessage(cause):'对话失败，请重试';if(messages.value[messages.value.length-1]?.id===bubbleId)messages.value.pop();if(lastPendingUserId===bubbleId)lastPendingUserId=null}}
- finally{if(token===companionState.version)busy.value=false;if(lastPendingUserId===bubbleId)lastPendingUserId=null;running=null}
+ finally{if(token===companionState.version)busy.value=false;if(lastPendingUserId===bubbleId)lastPendingUserId=null;if(running===token)running=null}
 }
 function ask(text:string){draft.value=text;void send()}
 function startHomeworkReview(){draft.value='请帮我批改下面的作业，指出错误、解释理由并给修改建议：\n题目：\n我的答案：\n（选填）参考答案：'}
@@ -77,7 +77,7 @@ async function reviewSelectedImage(){
   clearHomeworkImage();void bottom()
  }catch(cause){
   if(token===companionState.version){error.value=errorMessage(cause);if(cause instanceof BusinessError&&cause.code==='UNAUTHORIZED')loginNeeded.value=true}
- }finally{if(token===companionState.version)busy.value=false;running=null}
+ }finally{if(token===companionState.version)busy.value=false;if(running===token)running=null}
 }
 function go(where:'match'|'learning'|'map',brief?:string){
  if(brief)pendingCompanionBrief.value=brief
