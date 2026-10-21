@@ -71,7 +71,7 @@ function login(){open.value=false;uni.navigateTo({url:'/pages/auth/login'})}
    <text class="companion-memory">对话仅保存在当前应用内存，刷新或切换账户会清空。</text>
   </view>
   <button class="companion-launcher" :aria-expanded="open" aria-label="打开小书灵 AI 对话" @click="toggle">
-   <view class="book-pet" aria-hidden="true"><view class="pet-leaf"/><view class="pet-wing left"/><view class="pet-wing right"/><view class="pet-body"><view class="pet-eyes"><view/><view/></view><view class="pet-mouth"/><view class="pet-pages"/></view><text class="pet-ai">AI</text></view><text class="pet-label">小书灵</text>
+   <image class="mascot-img" src="/static/linghang-mascot.svg" mode="aspectFit" aria-hidden="true"/><text class="pet-label">小书灵</text>
   </button>
  </view>
 </template>
