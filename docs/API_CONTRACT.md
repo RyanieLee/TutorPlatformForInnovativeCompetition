@@ -165,3 +165,13 @@ GET `/api/admin/overview` 仅 admin。不接收分页或状态筛选，不返回
 - 账号种子：demo.parent / demo.tutor / demo.admin；密码仅在本机环境的 SEED_*_PASSWORD 中，不写到本文或前端。
 - A/B/D 继续依赖 BusinessService；新增价格参数均为可选，不改变旧调用。前端 `VITE_DATA_MODE=api`、`VITE_API_BASE_URL` 是构建时设置。Mock 记录不自动上传；API 失败不能以虚构数据伪装成功。
 - 初始化/持久化/启动与 HTTPS 方案见 `SERVER_DEMO.md`；启动保护保持不变，`NODE_ENV=production` 拒绝演示服务启动。
+
+## AI练习卷生成
+
+GET `/api/learning/status` 公开返回 `{data:{enabled:boolean}}`，只说明模型已配置。
+
+POST `/api/learning/exams` 要求任一有效演示会话（parent/tutor/admin），严格输入 `{topicId,grade,difficulty,count}`。topicId来自公开笔记目录；grade必须在该主题的grades中；difficulty为基础/巩固/提高；count仅3/5/8。额外字段或错配参数400，未登录401，未配置模型503，每账户每分钟5次/每来源15次超限429，上游无效或超时502/504。不保存试卷或作答，不接收学生姓名及自由文本。
+
+成功data为 `{title,topicId,grade,difficulty,questions,totalPoints,source:'model',createdAt}`。question为 `{id,type:'choice'|'short',stem,options,answer,explanation,points}`；选择题固定4个不同选项，答案字母A/B/C/D且5分，简答题options为空且10分。模型返回题量须与请求一致、题干不能重复；分值与题号由服务端统一。结构校验不代表答案正确性已获证明，需人工核对。
+
+模型配置与需求解析共用MATCH_MODEL_*，EXAM_MODEL_TIMEOUT_MS默认30000、限制1000–45000。输出流上限65536字节，密钥只在服务器，前端没有模型密钥。示例卷由前端原创有限题库生成，source为example，始终3题、固定示例，不伪装成模型响应。更多说明见AI_LEARNING_CENTER.md。

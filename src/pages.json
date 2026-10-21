@@ -83,6 +83,12 @@
       "style": {
         "navigationBarTitleText": "AI 家教匹配"
       }
+    },
+    {
+      "path": "pages/learning/index",
+      "style": {
+        "navigationBarTitleText": "AI学习中心"
+      }
     }
   ],
   "tabBar": {
