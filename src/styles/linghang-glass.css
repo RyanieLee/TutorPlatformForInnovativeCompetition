@@ -379,3 +379,29 @@ button:focus-visible,.chip:focus-visible,.card:focus-visible,.b-chip:focus-visib
  .page.linghang-auth .banner.banner{padding:85px 24px 30px!important;min-height:0}
  .page.linghang-auth .auth-emblem{top:20px;left:25px}
 }
+
+
+/* Accessible form controls in uni-app H5: style the host, not its native input.
+   Mobile Playwright's native editable node must retain its own dimensions. */
+.linghang-auth .banner.banner {
+ background:linear-gradient(118deg,#e3f8f4,#e4f2ff 73%,#d5edf8)!important;
+ color:#183e56!important; border:1px solid #fff!important;box-shadow:var(--lh-shadow)!important;
+ padding:35px 38px 36px 103px!important;border-radius:28px!important;
+}
+.linghang-auth .banner .mark {color:#258a91!important;opacity:1!important}
+.linghang-auth .banner .title {color:#1a455d!important}
+.linghang-auth .banner .intro {color:#507887!important}
+.linghang-auth .credentials uni-input {
+ display:block;min-height:46px;height:46px;box-sizing:border-box;
+ border:1px solid #d3e8eb;border-radius:14px;
+ background:#f7fbfd;padding:0 13px;position:relative;
+}
+.linghang-auth .credentials uni-input .uni-input-input {
+ display:block!important;opacity:1!important;visibility:visible!important;
+ width:100%!important;height:100%!important;min-height:38px!important;
+ background:transparent!important;border:0!important;padding:0!important;
+ box-shadow:none!important;
+}
+@media(max-width:700px){
+ .linghang-auth .banner.banner {padding:85px 24px 30px!important}
+}
