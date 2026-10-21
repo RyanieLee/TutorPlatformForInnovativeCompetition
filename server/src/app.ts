@@ -1,3 +1,4 @@
+import { createExamModel, examRequestSchema, type ExamModel } from './learning-model'
 import Fastify from 'fastify'
 import { resolve } from 'node:path'
 import { registerTeachingRoutes } from './teaching/routes'
@@ -14,7 +15,7 @@ const include = { tutorProfile: true } as const
 const rules = { accept: { from: ['pending'], to: 'accepted', role: 'tutor' }, reject: { from: ['pending'], to: 'rejected', role: 'tutor' }, cancel: { from: ['pending','accepted'], to: 'cancelled', role: 'parent' }, complete: { from: ['accepted'], to: 'completed', role: 'tutor' } } as const
 const data = (input: z.infer<typeof applicationSchema>) => { const {subjects,...fields}=input;return {...fields,subjectsJson:JSON.stringify(subjects)} }
 
-export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: MatchModel = createMatchModel(), teachingOptions?: TeachingOptions) {
+export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: MatchModel = createMatchModel(), teachingOptions?: TeachingOptions, examModel: ExamModel = createExamModel()) {
  const app=Fastify({logger:process.env.NODE_ENV==='test'?false:{redact:['req.headers.authorization','req.body.password']},bodyLimit:32768})
  app.register(cors,{methods:['GET','HEAD','POST','PUT','DELETE','OPTIONS'],origin:(process.env.CORS_ORIGINS||'http://localhost:5173,http://127.0.0.1:5173').split(',').map(s=>s.trim())})
  app.register(async child=>registerTeachingRoutes(child,db,teachingOptions??{uploadRoot:resolve(process.env.TEACHING_UPLOAD_ROOT||'./.teaching-uploads'),now:()=>new Date()}))
@@ -22,6 +23,8 @@ export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: Matc
  const ipAttempts=new Map<string,{count:number;resetAt:number}>()
  const modelUserAttempts=new Map<string,{count:number;resetAt:number}>()
  const modelIpAttempts=new Map<string,{count:number;resetAt:number}>()
+ const examUserAttempts=new Map<string,{count:number;resetAt:number}>()
+ const examIpAttempts=new Map<string,{count:number;resetAt:number}>()
  const dummyHash=hashPassword(newToken())
  function countAttempt(store:typeof attempts,key:string,now:number):number {
   const previous=store.get(key)
@@ -43,6 +46,16 @@ export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: Matc
  })
  app.addHook('onClose',async()=>{await db.$disconnect()})
  app.setNotFoundHandler((_request,reply)=>reply.status(404).send({error:{code:'NOT_FOUND',message:'接口不存在'}}))
+ app.get('/api/learning/status',async()=>({data:{enabled:examModel.enabled}}))
+ app.post('/api/learning/exams',async request=>{
+  const{user}=await actor(request,db)
+  const input=parse(examRequestSchema,request.body)
+  if(!examModel.enabled)return fail('MODEL_UNAVAILABLE',503,'尚未配置模型，可先使用原创示例试卷')
+  const now=Date.now()
+  const userCount=countAttempt(examUserAttempts,user.id,now),ipCount=countAttempt(examIpAttempts,request.ip,now)
+  if(userCount>5||ipCount>15)return fail('RATE_LIMIT',429,'生成试卷过于频繁，请稍后重试')
+  return{data:await examModel.generate(input)}
+ })
  app.get('/health',async()=>{await db.$queryRaw`SELECT 1`;return{data:{status:'ok'}}})
  app.post('/api/auth/login',async request=>{
   const body=parse(z.object({loginId:z.string().min(1).max(80),password:z.string().min(1).max(200)}).strict(),request.body)
