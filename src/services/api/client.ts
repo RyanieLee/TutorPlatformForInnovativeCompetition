@@ -21,3 +21,27 @@ export async function apiRequest<T>(method: 'GET'|'POST'|'PUT', path: string, da
   const code = codes.find(c => c === body?.error?.code) || 'STORAGE'
   throw new BusinessError(code, body?.error?.message || `请求失败（${response.statusCode}）`)
 }
+
+
+export async function apiUploadFile<T>(path: string, filePath: string, name = 'image'): Promise<T> {
+  if (!apiBaseUrl) throw new BusinessError('STORAGE', '请配置 VITE_API_BASE_URL')
+  const token = readToken()
+  if (!token) throw new BusinessError('UNAUTHORIZED', '请先登录再上传')
+  const response = await new Promise<{ statusCode: number; data: string }>((resolve, reject) => {
+    uni.uploadFile({
+      url: apiBaseUrl + path,
+      filePath,
+      name,
+      header: { Authorization: 'Bearer ' + token },
+      success: result => resolve({ statusCode: result.statusCode, data: String(result.data ?? '') }),
+      fail: reject
+    })
+  }).catch(() => { throw new BusinessError('STORAGE', '上传失败，请检查网络后重试') })
+  let body: Envelope<T>
+  try { body = JSON.parse(response.data) as Envelope<T> } catch { throw new BusinessError('STORAGE', '服务器返回格式无效，请稍后重试') }
+  if (response.statusCode >= 200 && response.statusCode < 300 && body && 'data' in body) return body.data as T
+  if (response.statusCode === 401) { clearToken(); unauthorized?.() }
+  const codes = ['UNAUTHORIZED','FORBIDDEN','NOT_FOUND','INVALID','CONFLICT','RATE_LIMIT','MODEL_UNAVAILABLE','MODEL_UPSTREAM'] as const
+  const code = codes.find(c => c === body?.error?.code) || 'STORAGE'
+  throw new BusinessError(code, body?.error?.message || '上传失败（' + response.statusCode + '）')
+}
