@@ -60,7 +60,7 @@ function login(){open.value=false;uni.navigateTo({url:'/pages/auth/login'})}
  <view v-if="visible" class="companion-root" :class="{'motion-off':paused}" @keydown.esc="open=false">
   <view v-if="open" class="companion-panel" role="dialog" aria-label="小书灵 AI 对话">
    <view class="companion-head"><view><text class="companion-title">小书灵 · 学习与平台助手</text><text class="companion-source">{{useModel?'服务端模型对话':status==='checking'&&mode==='auto'?'检查模型配置中':'本机演示 · 非大模型'}}</text></view><button aria-label="关闭AI对话" class="companion-close" @click="open=false">×</button></view>
-   <text class="companion-notice">{{useModel?'发送你输入的对话，不自动发送账户、订单或定位。':'本机答复仅提供页面指引、知识笔记与需求整理，不能批改新题。'}} 可粘贴文字版题目和学生答案咨询批改建议（仅模型已配置时）。请勿输入私人信息；对话不会执行预约或改动订单。</text>
+   <text class="companion-notice">{{useModel?'发送你输入的对话，不自动发送账户、订单或定位。':'本机可介绍平台、引导学生学习和整理需求，但不能批改新题或作文。'}} 可粘贴文字版题目和学生答案咨询批改建议（仅模型已配置时）。请勿输入私人信息；对话不会执行预约或改动订单。</text>
    <scroll-view scroll-y class="companion-log" :scroll-into-view="last" role="log" aria-live="polite">
     <view v-for="m in messages" :id="instance+'-'+m.id" :key="m.id" class="companion-message" :class="m.role"><text class="message-label">{{m.role==='user'?'你':m.source==='model'?'模型答复':m.source==='local'?'本机演示答复':'小书灵'}}</text><text class="message-text">{{m.content}}</text><button v-if="m.matchBrief" class="message-action" @click="go('match',m.matchBrief)">带入匹配需求 →</button></view>
     <view v-if="busy" class="thinking" role="status">正在整理答复…</view>
@@ -68,6 +68,8 @@ function login(){open.value=false;uni.navigateTo({url:'/pages/auth/login'})}
    <view class="companion-shortcuts">
     <button :disabled="busy" @click="ask('平台怎么用')">使用指南</button>
     <button :disabled="busy" @click="ask('请解释一元一次方程的解题步骤')">解题答疑</button>
+    <button :disabled="busy" @click="ask('学生如何使用平台学习和练习？')">学生学习</button>
+    <button :disabled="busy" @click="ask('怎样批改作文、找出错别字？')">作文修改</button>
     <button :disabled="busy" @click="startHomeworkReview">作业批改</button>
     <button :disabled="busy" @click="ask('初中数学，预算100元，线上耐心讲解')">帮我找老师</button>
     <button :disabled="busy" @click="ask('怎么查看订单地图')">怎么看订单</button>
