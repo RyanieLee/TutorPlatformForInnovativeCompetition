@@ -27,7 +27,7 @@ function report() { if (tutor.value) uni.navigateTo({ url: '/pages/reports/creat
   <ParentLayout title="家教资料" active="home">
   <view v-if="loading" class="page muted-note">正在读取家教资料…</view>
   <view v-else-if="error" class="page surface-card empty-state">{{ error }} <text @click="loadTutor">重试</text></view>
-  <view v-else-if="tutor" class="page">
+  <view v-else-if="tutor" class="page linghang-detail">
     <view class="panel profile"><view class="avatar">{{ tutor.name.slice(1, 2) }}</view><text class="name">{{ tutor.name }}</text><text class="muted">{{ tutor.university }} · {{ tutor.major }}</text><view class="tags"><text v-for="tag in tutor.tags" :key="tag">{{ tag }}</text></view></view>
     <view class="panel"><text class="heading">教学信息</text><view class="line"><text>擅长科目</text><text>{{ tutor.subjects.join('、') }}</text></view><view class="line"><text>授课地区</text><text>{{ tutor.area }}</text></view><view class="line"><text>授课方式</text><text>{{ tutor.teachingMode }}</text></view><view class="line"><text>参考课时费</text><text class="price">¥{{ tutor.pricePerHour }}/小时</text></view><view v-if="tutor.availability" class="line"><text>可授课时间</text><text>{{ tutor.availability }}</text></view></view>
     <view class="panel"><text class="heading">自我介绍</text><text class="description">{{ tutor.introduction }}</text></view>
