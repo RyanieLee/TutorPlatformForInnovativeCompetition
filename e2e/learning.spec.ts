@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test'
 import { mkdirSync } from 'node:fs'
 const button=(page:import('@playwright/test').Page,text:string)=>page.locator('uni-button').filter({hasText:text})
 test('学习中心：笔记筛选、示例自测与有无答案导出',async({page},info)=>{
+ const pageErrors:string[]=[];page.on('pageerror',error=>pageErrors.push(error.message))
  await page.goto('/#/pages/index/index')
  await button(page,'AI学习中心 · 各科笔记与智能出卷').click()
  await expect(page.getByText('先学一个知识点，再练一份专属卷。')).toBeVisible()
@@ -26,7 +27,10 @@ test('学习中心：笔记筛选、示例自测与有无答案导出',async({pa
  await button(page,'隐藏答案与解析').click()
  await expect(page.locator('.answer')).toHaveCount(0)
  mkdirSync('docs/screenshots',{recursive:true})
- await page.screenshot({path:`docs/screenshots/learning-${info.project.name}.png`,fullPage:true})
+ const screenshot=`docs/screenshots/learning-${info.project.name}.png`
+ await page.screenshot({path:screenshot,fullPage:true})
+ await info.attach('学习中心实际页面',{path:screenshot,contentType:'image/png'})
+ expect(pageErrors).toEqual([])
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
 })
 test('AI出卷：登录、结构化结果与失败后保留示例入口',async({page},info)=>{
