@@ -104,6 +104,7 @@ model Booking {
   requestId      String?
   tutorProfile   TutorProfile @relation(fields: [tutorProfileId], references: [id], onDelete: Restrict)
   studentName    String
+  areaLabel      String?
   subject        String
   expectedTime   String
   note           String       @default("")

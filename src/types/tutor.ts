@@ -16,6 +16,7 @@ export interface Tutor {
 
 /** 保留原表单字段，便于旧页面和旧本机数据兼容。 */
 export interface BookingInput {
+  areaLabel?: string
   tutorId: string
   tutorName: string
   studentName: string
