@@ -2,9 +2,11 @@ import { mkdtempSync, openSync, closeSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { spawnSync } from 'node:child_process'
+import { createRequire } from 'node:module'
+const require=createRequire(import.meta.url)
 const dir=mkdtempSync(join(tmpdir(),'tutor-api-test-'))
 const db=join(dir,'test.db')
 closeSync(openSync(db,'w'))
 const env={...process.env,DATABASE_URL:`file:${db}`,NODE_ENV:'test'}
-function run(command,args){const result=spawnSync(command,args,{stdio:'inherit',env,shell:process.platform==='win32'});if(result.status!==0)throw new Error(`${command} ${args.join(' ')} failed`)}
-try{run('npx',['prisma','migrate','deploy']);run('npx',['vitest','run'])}finally{rmSync(dir,{recursive:true,force:true})}
+function run(entry,args){const result=spawnSync(process.execPath,[require.resolve(entry),...args],{stdio:'inherit',env});if(result.error)throw result.error;if(result.status!==0)throw new Error(`${entry} failed`)}
+try{run('prisma/build/index.js',['migrate','deploy']);run('vitest/vitest.mjs',['run'])}finally{rmSync(dir,{recursive:true,force:true})}

@@ -5,6 +5,12 @@ export const listQuerySchema = (defaultSize: number) => z.object({
   page: z.coerce.number().int().min(1).max(100000).default(1),
   pageSize: z.coerce.number().int().min(1).max(100).default(defaultSize)
 })
+export const bookingStatuses = ['pending', 'accepted', 'rejected', 'cancelled', 'completed'] as const
+export const applicationStatuses = ['draft', 'pending', 'approved', 'rejected'] as const
+export const reportStatuses = ['open', 'resolved'] as const
+export const bookingListQuery = listQuerySchema(100).extend({ status: z.enum(bookingStatuses).optional() })
+export const applicationListQuery = listQuerySchema(50).extend({ status: z.enum(applicationStatuses).optional() })
+export const reportListQuery = listQuerySchema(100).extend({ status: z.enum(reportStatuses).optional() })
 const text = (max: number) => z.string().trim().min(1).max(max)
 export const applicationSchema = z.object({
   displayName: text(20), university: text(40), major: text(40),

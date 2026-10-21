@@ -78,7 +78,7 @@ ApplicationInput：以下字段**全部必填**；POST 提交要求非空。价�
 | GET `/api/tutor-applications/mine` | tutor | 无 | 自己的 Application 或 null |
 | PUT `/api/tutor-applications/draft` | tutor | 完整草稿字段 | Application；pending 时 409；修改 approved 会撤回公开 |
 | POST `/api/tutor-applications` | tutor | ApplicationInput | pending Application；pending/approved 重复提交 409 |
-| GET `/api/admin/tutor-applications` | admin | page / pageSize 可省略 | Application[] 与 meta；默认每页 50 条 |
+| GET `/api/admin/tutor-applications` | admin | page / pageSize / status 可省略 | Application[] 与 meta；默认每页 50 条 |
 | GET `/api/admin/tutor-applications/:id` | admin | 无 | Application 或 404 |
 | POST `/api/admin/tutor-applications/:id/review` | admin | `{decision:'approved'/'rejected',reason?:string}` | Application；只有 pending 可处理；拒绝原因 trim 后非空且最多 500 字符 |
 
@@ -119,14 +119,32 @@ reason 为 `资料不实/内容不当/其他`，description 最多 500 字符，
 
 以下四个 GET 接口接受可选的 `page`（整数 1–100000，默认 1）与 `pageSize`（整数 1–100）：`/api/bookings/mine`、`/api/bookings/received`、`/api/admin/tutor-applications`、`/api/admin/reports`。申请列表默认每页 50，其余默认 100；不传参数保持原默认条数。公开家教接口仍使用原来的 20 默认值和 50 上限。
 
-统一返回 `{data:[...],meta:{total,page,pageSize}}`。超出末页返回空 data 和真实 total；非法范围、空值、非整数及重复分页参数返回 400 INVALID。未知查询字段忽略，不允许通过 userId/role 参数更换归属。先验证身份与角色，再查询；401/403 不返回 meta。
+统一返回 `{data:[...],meta:{total,page,pageSize}}`。超出末页返回空 data 和真实 total；非法范围、空值、非整数及重复分页参数返回 400 INVALID。未知查询字段忽略，不允许通过 userId/role 参数更换归属。status 为可选单值：预约 pending/accepted/rejected/cancelled/completed，申请 draft/pending/approved/rejected，举报 open/resolved；空、非法或重复值返回 400。状态条件在数据库分页前执行，meta.total 是状态过滤后、当前账户可见的记录数。meta 保持 total/page/pageSize 三个字段。先验证身份与角色，再查询；401/403 不返回 meta。
 
 申请按 updatedAt DESC、id DESC 排序，预约和举报按 createdAt DESC、id DESC 排序。单次请求的计数与记录查询在同一数据库事务中执行，预约计数与记录使用相同归属条件。同一时间戳下通过 ID 排序保证顺序确定；页码分页不提供跨请求快照，翻页期间有新增记录或申请更新时，应从第一页刷新。
 
 示例：`GET /api/bookings/received?page=2&pageSize=20`，携带家教令牌。前端现有适配器只读取 data，继续显示默认第一页；本次没有新增前端“加载更多”。前端负责人接入时需要扩展 BusinessService 和 Mock 契约、保留 meta 并提供分页操作，不能直接把 total 当成当前页条数。
 
+## 管理员全量概览
+
+GET `/api/admin/overview` 仅 admin。不接收分页或状态筛选，不返回个人资料与记录明细。返回 data：
+
+```json
+{
+  "applications": {"total": 0, "draft": 0, "pending": 0, "approved": 0, "rejected": 0},
+  "bookings": {"total": 0, "pending": 0, "accepted": 0, "rejected": 0, "cancelled": 0, "completed": 0},
+  "reports": {"total": 0, "open": 0, "resolved": 0},
+  "tutors": {"published": 0}
+}
+```
+
+上例仅说明结构；实际数值来自数据库全量聚合，不受每页上限影响。所有查询在同一事务内执行；没有记录的合法状态返回 0。published 仅统计账户 active、申请 approved 且已发布的家教，与公开列表口径一致。401/403 不包含统计数据。前端尚未接入此接口，不把现有页面统计误称为全量。
+
+未知路径统一返回 404 NOT_FOUND 的 error 封装；畸形 JSON、请求体超限等继续按对应 4xx 和 INVALID 封装。
+
 ## 环境、CORS 与前端交接
 
+- `HOST` 默认 `127.0.0.1`，适合本机演示和同机反向代理；确需局域网访问时显式设置 `0.0.0.0`，再检查防火墙与 CORS。PORT 必须为 1–65535 整数。
 - `DATABASE_URL=file:...`：相对路径相对于 server/prisma；长期演示使用受控持久磁盘上的绝对路径。
 - `CORS_ORIGINS`：逗号分隔的精确前端 origin，不含路径或末尾 `/`。跨域允许不是身份校验，API 每个受保护请求仍检查令牌。
 - 账号种子：demo.parent / demo.tutor / demo.admin；密码仅在本机环境的 SEED_*_PASSWORD 中，不写到本文或前端。

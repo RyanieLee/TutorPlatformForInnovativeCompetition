@@ -10,8 +10,10 @@
     "db:generate": "prisma generate",
     "db:migrate": "node scripts/migrate.mjs",
     "db:reset": "prisma migrate reset --force --skip-seed",
-    "db:seed": "tsx prisma/seed.ts",
+    "db:seed": "node --import tsx prisma/seed.ts",
+    "db:backup": "node scripts/backup-demo.mjs",
     "db:init": "node scripts/init-demo.mjs",
+    "demo:setup": "node scripts/setup-demo.mjs",
     "demo:serve": "node scripts/serve-demo.mjs",
     "test:demo": "node scripts/check-demo.mjs"
   },
