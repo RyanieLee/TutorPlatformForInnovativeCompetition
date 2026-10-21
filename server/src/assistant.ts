@@ -23,7 +23,7 @@ export function createChatModel(env:Record<string,string|undefined>=process.env,
  return {enabled:true,async reply(messages){
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),Math.min(30000,Math.max(1000,Number(env.CHAT_MODEL_TIMEOUT_MS)||15000)))
   try{
-   const response=await transport(endpoint,{method:'POST',redirect:'error',signal:controller.signal,headers:{'Content-Type':'application/json',...(key?{Authorization:'Bearer '+key}:{})},body:JSON.stringify({model:name,temperature:.3,max_tokens:700,messages:[{role:'system',content:platformAssistantInstructions,...messages]})})
+   const response=await transport(endpoint,{method:'POST',redirect:'error',signal:controller.signal,headers:{'Content-Type':'application/json',...(key?{Authorization:'Bearer '+key}:{})},body:JSON.stringify({model:name,temperature:.3,max_tokens:700,messages:[{role:'system',content:platformAssistantInstructions},...messages]})})
    if(!response.ok||!response.body||Number(response.headers.get('content-length'))>32768){await response.body?.cancel();throw new Error('upstream')}
    const reader=response.body.getReader(),decoder=new TextDecoder();let raw='',size=0
    try{while(true){const c=await reader.read();if(c.done)break;size+=c.value.byteLength;if(size>32768){await reader.cancel();throw new Error('oversize')}raw+=decoder.decode(c.value,{stream:true})}raw+=decoder.decode()}finally{reader.releaseLock()}
