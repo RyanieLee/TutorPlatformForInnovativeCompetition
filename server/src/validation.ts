@@ -1,6 +1,10 @@
 import { z } from 'zod'
 import { fail } from './core'
 export const idParam = z.object({ id: z.string().min(1).max(100) })
+export const listQuerySchema = (defaultSize: number) => z.object({
+  page: z.coerce.number().int().min(1).max(100000).default(1),
+  pageSize: z.coerce.number().int().min(1).max(100).default(defaultSize)
+})
 const text = (max: number) => z.string().trim().min(1).max(max)
 export const applicationSchema = z.object({
   displayName: text(20), university: text(40), major: text(40),

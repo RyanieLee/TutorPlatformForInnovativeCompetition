@@ -3,7 +3,7 @@ import cors from '@fastify/cors'
 import { Prisma, PrismaClient } from '@prisma/client'
 import { z } from 'zod'
 import { actor, ApiError, audit, fail, hashPassword, newToken, publicUser, tokenHash, verifyPassword } from './core'
-import { applicationSchema, bookingSchema, draftSchema, idParam, parse, reportSchema } from './validation'
+import { applicationSchema, bookingSchema, draftSchema, idParam, listQuerySchema, parse, reportSchema } from './validation'
 import { application, booking, report, tutor } from './format'
 
 const include = { tutorProfile: true } as const
@@ -117,7 +117,15 @@ export function buildApp(db: PrismaClient = new PrismaClient()) {
    await tx.auditLog.create({data:{actorId:user.id,action:'submit',entityType:'TutorApplication',entityId:row.id}});return row
   });return{data:application(a)}
  })
- app.get('/api/admin/tutor-applications',async request=>{await actor(request,db,['admin']);return{data:(await db.tutorApplication.findMany({orderBy:{updatedAt:'desc'},take:50})).map(application)}})
+ app.get('/api/admin/tutor-applications',async request=>{
+  await actor(request,db,['admin'])
+  const q=parse(listQuerySchema(50),request.query)
+  const [total,rows]=await db.$transaction([
+   db.tutorApplication.count(),
+   db.tutorApplication.findMany({orderBy:[{updatedAt:'desc'},{id:'desc'}],skip:(q.page-1)*q.pageSize,take:q.pageSize})
+  ])
+  return{data:rows.map(application),meta:{total,...q}}
+ })
  app.get('/api/admin/tutor-applications/:id',async request=>{await actor(request,db,['admin']);const{id}=parse(idParam,request.params),a=await db.tutorApplication.findUnique({where:{id}});if(!a)return fail('NOT_FOUND',404,'申请不存在');return{data:application(a)}})
  app.post('/api/admin/tutor-applications/:id/review',async request=>{
   const{user}=await actor(request,db,['admin']),{id}=parse(idParam,request.params)
@@ -159,8 +167,24 @@ export function buildApp(db: PrismaClient = new PrismaClient()) {
   }
   return{data:booking(row)}
  })
- app.get('/api/bookings/mine',async request=>{const{user}=await actor(request,db,['parent']);return{data:(await db.booking.findMany({where:{parentId:user.id},include,orderBy:{createdAt:'desc'},take:100})).map(booking)}})
- app.get('/api/bookings/received',async request=>{const{user}=await actor(request,db,['tutor']);return{data:(await db.booking.findMany({where:{tutorProfile:{userId:user.id}},include,orderBy:{createdAt:'desc'},take:100})).map(booking)}})
+ app.get('/api/bookings/mine',async request=>{
+  const{user}=await actor(request,db,['parent']),q=parse(listQuerySchema(100),request.query)
+  const where:Prisma.BookingWhereInput={parentId:user.id}
+  const [total,rows]=await db.$transaction([
+   db.booking.count({where}),
+   db.booking.findMany({where,include,orderBy:[{createdAt:'desc'},{id:'desc'}],skip:(q.page-1)*q.pageSize,take:q.pageSize})
+  ])
+  return{data:rows.map(booking),meta:{total,...q}}
+ })
+ app.get('/api/bookings/received',async request=>{
+  const{user}=await actor(request,db,['tutor']),q=parse(listQuerySchema(100),request.query)
+  const where:Prisma.BookingWhereInput={tutorProfile:{userId:user.id}}
+  const [total,rows]=await db.$transaction([
+   db.booking.count({where}),
+   db.booking.findMany({where,include,orderBy:[{createdAt:'desc'},{id:'desc'}],skip:(q.page-1)*q.pageSize,take:q.pageSize})
+  ])
+  return{data:rows.map(booking),meta:{total,...q}}
+ })
  app.get('/api/bookings/:id',async request=>{const{user}=await actor(request,db,['parent','tutor']),{id}=parse(idParam,request.params),row=await db.booking.findUnique({where:{id},include});if(!row||!(user.role==='parent'?row.parentId===user.id:row.tutorProfile.userId===user.id))return fail('NOT_FOUND',404,'预约不存在');return{data:booking(row)}})
  app.post('/api/bookings/:id/:action',async request=>{
   const{id,action}=parse(z.object({id:idParam.shape.id,action:z.enum(['accept','reject','cancel','complete'])}),request.params),rule=rules[action]
@@ -188,7 +212,15 @@ export function buildApp(db: PrismaClient = new PrismaClient()) {
   })
   return{data:report(row)}
  })
- app.get('/api/admin/reports',async request=>{await actor(request,db,['admin']);return{data:(await db.report.findMany({orderBy:{createdAt:'desc'},take:100})).map(report)}})
+ app.get('/api/admin/reports',async request=>{
+  await actor(request,db,['admin'])
+  const q=parse(listQuerySchema(100),request.query)
+  const [total,rows]=await db.$transaction([
+   db.report.count(),
+   db.report.findMany({orderBy:[{createdAt:'desc'},{id:'desc'}],skip:(q.page-1)*q.pageSize,take:q.pageSize})
+  ])
+  return{data:rows.map(report),meta:{total,...q}}
+ })
  app.post('/api/admin/reports/:id/resolve',async request=>{
   const{user}=await actor(request,db,['admin']),{id}=parse(idParam,request.params)
   const row=await db.report.findUnique({where:{id}})
