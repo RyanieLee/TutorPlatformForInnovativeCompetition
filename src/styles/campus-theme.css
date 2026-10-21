@@ -73,3 +73,5 @@ button:focus-visible,.chip:focus-visible,.b-chip:focus-visible,.brand:focus-visi
 .t-wrap.t-wrap .t-back{color:#2e6243}
 .t-wrap.t-wrap .t-preview{background:#f9fbf7;border-color:#a9c2aa}
 @media(max-width:700px){.t-wrap.t-wrap .t-hero{padding:20px 17px}.t-wrap.t-wrap .t-card{padding:18px 15px}}
+.parent-shell .ai-kicker{display:block;color:#476a4d;font-size:12px;font-weight:700;letter-spacing:.1em}
+@media(max-width:1000px){.parent-shell .page .ai-kicker{grid-column:1}.parent-shell .page .ai-arrow{grid-row:1/4}}

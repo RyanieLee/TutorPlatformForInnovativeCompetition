@@ -15,6 +15,7 @@ const fs=require('node:fs');
    await page.screenshot({path:`docs/screenshots/campus-ui/${name}-${width}.jpg`,type:'jpeg',quality:72,fullPage:true});
    if(metrics.body>width){const offenders=await page.evaluate(()=>[...document.querySelectorAll('*')].filter(e=>e.getBoundingClientRect().right>innerWidth+0.5).slice(0,8).map(e=>({tag:e.tagName,cls:e.className?.baseVal||e.className,right:e.getBoundingClientRect().right})));throw Error(`${name} overflow at ${width}: ${metrics.body} ${JSON.stringify(offenders)}`)}
    report.push({width,name,metrics});
+   if(name==='home'){await page.locator('uni-button').filter({hasText:'AI 家教匹配'}).click();await page.waitForFunction(()=>location.hash.includes('/pages/match/index'))}
   }
   for(const role of ['tutor','admin']){
    await page.goto(`${preview}/#/pages/auth/login?role=${role}`);await page.waitForTimeout(350);
