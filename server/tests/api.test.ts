@@ -42,6 +42,15 @@ describe('小书灵作业图片批改',()=>{
   expect(imageReview).toHaveBeenCalledWith(png,'image/png')
   expect(response.body).not.toContain(png.toString('base64'))
  })
+ it('对图片批改按账户每分钟限流',async()=>{
+  const image=multipartImage(png)
+  const statuses:number[]=[]
+  for(let i=0;i<6;i++){
+   const response=await app.inject({method:'POST',url:'/api/assistant/homework-review-image',remoteAddress:'10.20.30.40',headers:{...auth(otherParent),...image.headers},payload:image.payload})
+   statuses.push(response.statusCode)
+  }
+  expect(statuses).toEqual([200,200,200,200,200,429])
+ })
 })
 
 describe('认证和服务端权限',()=>{
