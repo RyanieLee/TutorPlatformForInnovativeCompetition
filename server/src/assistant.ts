@@ -4,6 +4,7 @@ import type { PrismaClient } from '@prisma/client'
 import { actor,ApiError,fail } from './core'
 import { parse } from './validation'
 import { containsPersonalInfo } from './match-model'
+import { platformAssistantInstructions } from './platform-assistant-guide'
 export const chatSchema=z.object({messages:z.array(z.object({role:z.enum(['user','assistant']),content:z.string().trim().min(1).max(500)}).strict()).min(1).max(9)}).strict().superRefine((v,c)=>{
  if(v.messages.length%2!==1||v.messages.some((m,i)=>m.role!==(i%2===0?'user':'assistant')))c.addIssue({code:'custom',message:'对话应由用户开始并以用户消息结束'})
  if(v.messages.some(m=>m.role==='user'&&containsPersonalInfo(m.content)))c.addIssue({code:'custom',message:'请勿在对话中填写姓名、联系方式或地址'})
@@ -22,7 +23,7 @@ export function createChatModel(env:Record<string,string|undefined>=process.env,
  return {enabled:true,async reply(messages){
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),Math.min(30000,Math.max(1000,Number(env.CHAT_MODEL_TIMEOUT_MS)||15000)))
   try{
-   const response=await transport(endpoint,{method:'POST',redirect:'error',signal:controller.signal,headers:{'Content-Type':'application/json',...(key?{Authorization:'Bearer '+key}:{})},body:JSON.stringify({model:name,temperature:.3,max_tokens:700,messages:[{role:'system',content:'你是校园家教平台的学习陪伴助手“小书灵”。用简短中文帮助梳理学习需求、解释知识点和指导操作。你看不到本平台账户、订单、定位、文件或成绩，也不能执行预约、改订单、查询家长信息或保证教学效果；不得假装执行过这些动作。涉及订单请引导用户打开订单地图/我的预约。平台有AI学习中心（笔记与练习）和家教匹配页。不要索取或输出姓名、联系方式、住址等个人信息；不编造资质、成绩和交易。学习解答仅供核对，超过能力时坦诚说明。'},...messages]})})
+   const response=await transport(endpoint,{method:'POST',redirect:'error',signal:controller.signal,headers:{'Content-Type':'application/json',...(key?{Authorization:'Bearer '+key}:{})},body:JSON.stringify({model:name,temperature:.3,max_tokens:700,messages:[{role:'system',content:platformAssistantInstructions,...messages]})})
    if(!response.ok||!response.body||Number(response.headers.get('content-length'))>32768){await response.body?.cancel();throw new Error('upstream')}
    const reader=response.body.getReader(),decoder=new TextDecoder();let raw='',size=0
    try{while(true){const c=await reader.read();if(c.done)break;size+=c.value.byteLength;if(size>32768){await reader.cancel();throw new Error('oversize')}raw+=decoder.decode(c.value,{stream:true})}raw+=decoder.decode()}finally{reader.releaseLock()}
