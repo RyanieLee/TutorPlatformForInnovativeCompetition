@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import AiCompanion from '../../components/AiCompanion.vue'
+import {pendingCompanionBrief} from '../../services/assistant'
 import XianLocationPicker from '../../components/XianLocationPicker.vue'
 import { readParentLocation, saveParentLocation, xianPlaces, type LocationPoint } from '../../services/location'
 import { parseBriefLocally } from '../../services/brief-parser'
@@ -36,6 +38,7 @@ const parseLoading = ref(false)
 const parseError = ref('')
 const needsLogin = ref(false)
 onShow(() => {
+  if(pendingCompanionBrief.value){brief.value=pendingCompanionBrief.value;pendingCompanionBrief.value=null;editBrief()}
   parentLocation.value=readParentLocation()
   if(!parentLocation.value)radiusKm.value=undefined
   if (apiMode) void matchAssistantStatus().then(status => { assistantState.value = status.enabled ? 'enabled' : 'disabled' }).catch(() => { assistantState.value = 'error' })
@@ -90,6 +93,7 @@ function openLogin() { uni.navigateTo({ url: '/pages/auth/login' }) }
 </script>
 <template>
   <view class="page">
+    <AiCompanion/>
     <view class="hero"><text class="eyebrow">AI 家教匹配 · 西安</text><text class="title">说出学习需求，找到身边的老师</text><text class="intro">{{ apiMode ? '读取开发 API 的公开家教' : '使用本机虚构家教' }}。推荐始终按公开规则生成；模型解析仅在服务端配置后可选使用。</text></view>
     <view v-if="study" class="study-context"><text class="study-tag">来自 AI 学习中心</text><text class="study-title">{{study.topic.stage}}{{study.topic.subject}} · {{study.topic.title}}</text><text>{{study.supported?'已带入科目和学段，请补充预算与授课方式。知识点供沟通参考，不代表家教已具备该专题教学资质。':'当前家教目录暂不支持该科目，不会自动换成其他学科。可返回笔记继续学习，或自行选择其他科目。'}}</text><button @click="returnToStudy">返回这份知识点笔记 ↗</button></view>
     <view class="ai-steps"><text>01 需求解析</text><text>02 地理筛选</text><text>03 推荐解释</text></view>

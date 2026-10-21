@@ -9,6 +9,8 @@ for(const args of [['run','db:migrate'],['run','db:seed']]) {
   const result=spawnSync('npm',args,{cwd:'server',env,stdio:'inherit'})
   if(result.status!==0){rmSync(directory,{recursive:true,force:true});process.exit(result.status||1)}
 }
+const mapFixture=spawnSync(process.execPath,['scripts/seed-map-e2e.mjs'],{cwd:'server',env,stdio:'inherit'})
+if(mapFixture.status!==0){rmSync(directory,{recursive:true,force:true});process.exit(mapFixture.status||1)}
 const child=spawn(process.execPath,['--import','tsx','src/main.ts'],{cwd:'server',env,stdio:'inherit'})
 for(const signal of ['SIGTERM','SIGINT'])process.on(signal,()=>child.kill(signal))
 child.on('exit',code=>{rmSync(directory,{recursive:true,force:true});process.exit(code||0)})

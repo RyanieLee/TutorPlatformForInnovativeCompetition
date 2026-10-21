@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AiCompanion from '../../../components/AiCompanion.vue'
 import { ref, computed } from 'vue'
 import { currentSession, canAccess, logout } from '../../../utils/session'
 import { apiMode } from '../../../config/runtime'
@@ -6,6 +7,7 @@ import { confirmAction } from './page'
 defineProps<{ title: string; role: 'tutor' | 'admin' }>()
 const busy = ref(false)
 const roleName = computed(() => currentSession.value?.user.role === 'admin' ? '管理员' : currentSession.value?.user.role === 'tutor' ? '大学生家教' : '学生/家长')
+const orderMap=()=>uni.navigateTo({url:'/pages/order-map/index'})
 const home = () => uni.switchTab({ url: '/pages/index/index' })
 const workbench = (role: string) => uni.redirectTo({ url: role === 'admin' ? '/pages/admin/index' : '/pages/tutor/workbench' })
 const login = (role: string) => uni.navigateTo({ url: '/pages/auth/login?role=' + role })
@@ -23,11 +25,12 @@ async function switchAccount(role: string) {
 <template>
   <view class="shell">
     <view class="brand"><text class="brand-name">校园家教</text><text class="mode">{{ apiMode ? '开发联调 · 演示资料' : '本机模拟 · 演示资料' }}</text></view>
-    <view class="header"><view><text class="eyebrow">{{ role === 'admin' ? '审核与管理' : '家教服务中心' }}</text><view class="title">{{ title }}</view><view class="identity">{{ currentSession ? currentSession.user.displayName + ' · ' + roleName : '访客 · 尚未登录' }}</view></view><view class="nav"><button @click="home">返回首页</button><button v-if="canAccess([role])" @click="workbench(role)">我的工作台</button><button v-if="currentSession" :disabled="busy" @click="switchAccount(role)">{{ busy ? '正在退出…' : '退出 / 切换账户' }}</button></view></view>
+    <view class="header"><view><text class="eyebrow">{{ role === 'admin' ? '审核与管理' : '家教服务中心' }}</text><view class="title">{{ title }}</view><view class="identity">{{ currentSession ? currentSession.user.displayName + ' · ' + roleName : '访客 · 尚未登录' }}</view></view><view class="nav"><button @click="home">返回首页</button><button @click="orderMap">订单地图</button><button v-if="canAccess([role])" @click="workbench(role)">我的工作台</button><button v-if="currentSession" :disabled="busy" @click="switchAccount(role)">{{ busy ? '正在退出…' : '退出 / 切换账户' }}</button></view></view>
     <view class="notice">{{ apiMode ? '仅使用虚构演示资料。审核和预约由开发服务记录，不代表真实资质认证，也不会发送真实通知。' : '仅当前设备模拟，不跨设备同步。所有老师和价格均为虚构演示数据，不代表真实认证或交易。' }}</view>
     <view v-if="!currentSession" class="access"><text>请先登录{{ role === 'admin' ? '管理员' : '家教' }}演示账户</text><button @click="login(role)">前往登录</button></view>
     <view v-else-if="!canAccess([role])" class="access"><text>当前身份不能访问此工作台</text><button :disabled="busy" @click="switchAccount(role)">切换演示账户</button></view>
     <slot/>
+    <AiCompanion/>
   </view>
 </template>
 <style scoped>

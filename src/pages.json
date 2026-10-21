@@ -107,6 +107,12 @@
       "style": {
         "navigationBarTitleText": "AI学习中心"
       }
+    },
+    {
+      "path": "pages/order-map/index",
+      "style": {
+        "navigationBarTitleText": "西安订单地图"
+      }
     }
   ],
   "tabBar": {

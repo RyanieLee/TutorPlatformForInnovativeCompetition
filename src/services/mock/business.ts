@@ -1,3 +1,5 @@
+import type { OrderMapPage,OrderMapQuery } from '../../types/order-map'
+import { xianPlaces } from '../location'
 import { tutors as seedTutors } from '../../mocks/tutors'
 import type { User, UserRole } from '../../types/auth'
 import type { BookingInput, BookingOrder, BookingStatus, LegacyBookingOrder, Tutor } from '../../types/tutor'
@@ -154,8 +156,21 @@ export class MockBusinessService implements BusinessService {
     return updated
   }
 
+  async listMapBookings(user:User,query:OrderMapQuery={}):Promise<OrderMapPage>{
+    if(!user?.id)throw new BusinessError('UNAUTHORIZED','请先登录')
+    if(!['parent','tutor','admin'].includes(user.role))throw new BusinessError('FORBIDDEN','无权查看订单地图')
+    const page=query.page??1,pageSize=query.pageSize??100
+    if(!Number.isInteger(page)||page<1||page>100000||!Number.isInteger(pageSize)||pageSize<1||pageSize>100||(query.status&&!bookingStatuses.includes(query.status)))throw new BusinessError('INVALID','分页或状态参数无效')
+    const scoped=this.bookings().filter(b=>(user.role==='admin'||(user.role==='parent'?b.parentId===user.id:this.ownsTutor(user,b.tutorId)))&&(!query.status||b.status===query.status)).sort((a,b)=>b.createdAt.localeCompare(a.createdAt)||b.id.localeCompare(a.id))
+    const items=await Promise.all(scoped.slice((page-1)*pageSize,page*pageSize).map(async b=>{
+      const t=await this.getTutor(b.tutorId)
+      return{id:b.id,subject:b.subject,status:b.status,areaLabel:xianPlaces.some(p=>p.label===b.areaLabel)?b.areaLabel!:null,tutorId:b.tutorId,tutorName:b.tutorName,teachingMode:t?.teachingMode??null,referencePrice:t?.pricePerHour??null,expectedTime:b.expectedTime,createdAt:b.createdAt,updatedAt:b.updatedAt}
+    }))
+    return{items,meta:{total:scoped.length,page,pageSize},scope:user.role,serverTime:now()}
+  }
   async createBooking(parent: User, input: BookingInput): Promise<BookingOrder> {
     requireRole(parent, 'parent')
+    if(input.areaLabel!==undefined&&!xianPlaces.some(p=>p.label===input.areaLabel))throw new BusinessError('INVALID','请选择公共片区')
     const tutor = await this.getTutor(input.tutorId)
     if (!tutor) throw new BusinessError('NOT_FOUND', '家教信息不存在')
     if (!tutor.subjects.includes(input.subject)) throw new BusinessError('INVALID', '辅导科目与家教资料不匹配')
