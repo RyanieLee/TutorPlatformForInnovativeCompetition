@@ -1,3 +1,4 @@
+import { BusinessError } from './errors'
 import { shallowRef } from 'vue'
 import { apiRequest } from './api/client'
 import { apiMode } from '../config/runtime'
@@ -10,8 +11,8 @@ export function companionStatus():Promise<{enabled:boolean}>{return apiMode?apiR
 export function remoteChat(messages:ChatMessage[]):Promise<AssistantReply>{return apiRequest('POST','/api/assistant/chat',{messages})}
 export function localChat(text:string):AssistantReply{
  const brief=text.trim()
- if(!brief||brief.length>500)throw new Error('请输入1–500字的问题')
- if(/(?:1[3-9]\d{9}|[\w.+-]+@[\w.-]+\.[a-z]{2,}|身份证|微信|住址|姓名|电话)/i.test(brief))throw new Error('请勿填写姓名、联系方式或地址')
+ if(!brief||brief.length>500)throw new BusinessError('INVALID','请输入1–500字的问题')
+ if(/(?:1[3-9]\d{9}|[\w.+-]+@[\w.-]+\.[a-z]{2,}|身份证|微信|住址|姓名|电话|QQ号)/i.test(brief))throw new BusinessError('INVALID','请勿填写姓名、联系方式或地址')
  if(/订单|地图|接单|预约/.test(brief))return {source:'local',reply:'我可以带你打开订单地图：登录后，家长查看自己的预约，家教查看收到的预约，管理员查看全部。页面每10秒刷新一次；我无法在对话中直接查询、接单或改动订单。'}
  if(brief.length>=6&&brief.length<=160){
   const s=parseBriefLocally(brief)
