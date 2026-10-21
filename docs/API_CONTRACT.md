@@ -1,11 +1,11 @@
 # 开发演示 API 契约
 
-版本：2026-10-20。实现以 `server/src/app.ts`、`validation.ts`、`format.ts` 为准；沿用 Fastify / Prisma / SQLite 单实例演示方案，不提供真实微信身份、通知、支付或生产交易。此文档明确当前接口，不代表额外新增了接口。
+版本：2026-10-21。实现以 `server/src/app.ts`、`validation.ts`、`format.ts` 为准；沿用 Fastify / Prisma / SQLite 单实例演示方案，不提供真实微信身份、通知、支付或生产交易。此文档明确当前接口，不代表额外新增了接口。
 
 ## 通用约定
 
 - 本机默认 origin：`http://127.0.0.1:3001`。公开演示须在 HTTPS 反向代理后访问。
-- 成功 HTTP **200**：`{"data":...}`。家教分页列表另含 `meta`。时间为 ISO 8601 UTC；ID 为不透明字符串，不从名称推导。
+- 成功 HTTP **200**：`{"data":...}`。家教、预约、审核与举报分页列表另含 `meta`。时间为 ISO 8601 UTC；ID 为不透明字符串，不从名称推导。
 - 失败：`{"error":{"code":"INVALID","message":"..."}}`。客户端按 code 处理，message 用于提示，不将具体文案当协议。
 - 登录后发送 `Authorization: Bearer <token>`；没有 Cookie 登录或 JWT 解码约定。用户 ID、角色、记录归属取自服务端会话，忽略前端自行声明的 User/角色。
 - 请求 JSON 最大 32768 字节。业务写入字段按下表校验；严格 schema 拒绝额外字段。无真实文件上传接口。
@@ -78,7 +78,7 @@ ApplicationInput：以下字段**全部必填**；POST 提交要求非空。价�
 | GET `/api/tutor-applications/mine` | tutor | 无 | 自己的 Application 或 null |
 | PUT `/api/tutor-applications/draft` | tutor | 完整草稿字段 | Application；pending 时 409；修改 approved 会撤回公开 |
 | POST `/api/tutor-applications` | tutor | ApplicationInput | pending Application；pending/approved 重复提交 409 |
-| GET `/api/admin/tutor-applications` | admin | 无 | 最近更新最多 50 条，不代表全站总量 |
+| GET `/api/admin/tutor-applications` | admin | page / pageSize 可省略 | Application[] 与 meta；默认每页 50 条 |
 | GET `/api/admin/tutor-applications/:id` | admin | 无 | Application 或 404 |
 | POST `/api/admin/tutor-applications/:id/review` | admin | `{decision:'approved'/'rejected',reason?:string}` | Application；只有 pending 可处理；拒绝原因 trim 后非空且最多 500 字符 |
 
@@ -95,25 +95,35 @@ POST `/api/bookings` 仅 parent；输入严格为 `{tutorId,studentName,subject,
 | 方法 / 路径 | 身份 | data / 归属 |
 | --- | --- | --- |
 | POST `/api/bookings` | parent | 创建并返回 Booking |
-| GET `/api/bookings/mine` | parent | 自己最近 100 条预约 |
-| GET `/api/bookings/received` | tutor | 预约家教资料归属自己的最近 100 条预约 |
+| GET `/api/bookings/mine` | parent | 仅自己的预约与 meta；默认每页 100 条 |
+| GET `/api/bookings/received` | tutor | 仅预约家教资料归属自己的预约与 meta；默认每页 100 条 |
 | GET `/api/bookings/:id` | parent/tutor | 仅自己创建/收到的预约，越权按 404 返回 |
 | POST `/api/bookings/:id/accept` | tutor | pending → accepted |
 | POST `/api/bookings/:id/reject` | tutor | pending → rejected |
 | POST `/api/bookings/:id/complete` | tutor | accepted → completed |
 | POST `/api/bookings/:id/cancel` | parent | pending/accepted → cancelled |
 
-状态操作返回 Booking。同一角色、归属正确且当前已经是目标状态时返回现有记录；其他非法转换 409。并发使用条件更新，状态与审计同事务。列表暂不支持分页，不把固定上限称为全量统计。
+状态操作返回 Booking。同一角色、归属正确且当前已经是目标状态时返回现有记录；其他非法转换 409。并发使用条件更新，状态与审计同事务。列表支持下述分页；total 仅统计当前登录账户有权查看的预约。
 
 ## 举报
 
 | 方法 / 路径 | 身份 | 输入 / data |
 | --- | --- | --- |
 | POST `/api/reports` | parent | `{tutorId,reason,description?}`；家教必须已发布，返回 Report |
-| GET `/api/admin/reports` | admin | 最近 100 条 Report |
+| GET `/api/admin/reports` | admin | Report[] 与 meta；默认每页 100 条 |
 | POST `/api/admin/reports/:id/resolve` | admin | 返回 resolved Report；重复处理返回已有结果 |
 
 reason 为 `资料不实/内容不当/其他`，description 最多 500 字符，默认空串。Report：`{id,reporterId,tutorId,reason,description,status,createdAt,updatedAt}`，status 为 `open/resolved`。处理举报不自动封禁、发送消息或联系用户。
+
+## 预约与管理列表分页
+
+以下四个 GET 接口接受可选的 `page`（整数 1–100000，默认 1）与 `pageSize`（整数 1–100）：`/api/bookings/mine`、`/api/bookings/received`、`/api/admin/tutor-applications`、`/api/admin/reports`。申请列表默认每页 50，其余默认 100；不传参数保持原默认条数。公开家教接口仍使用原来的 20 默认值和 50 上限。
+
+统一返回 `{data:[...],meta:{total,page,pageSize}}`。超出末页返回空 data 和真实 total；非法范围、空值、非整数及重复分页参数返回 400 INVALID。未知查询字段忽略，不允许通过 userId/role 参数更换归属。先验证身份与角色，再查询；401/403 不返回 meta。
+
+申请按 updatedAt DESC、id DESC 排序，预约和举报按 createdAt DESC、id DESC 排序。单次请求的计数与记录查询在同一数据库事务中执行，预约计数与记录使用相同归属条件。同一时间戳下通过 ID 排序保证顺序确定；页码分页不提供跨请求快照，翻页期间有新增记录或申请更新时，应从第一页刷新。
+
+示例：`GET /api/bookings/received?page=2&pageSize=20`，携带家教令牌。前端现有适配器只读取 data，继续显示默认第一页；本次没有新增前端“加载更多”。前端负责人接入时需要扩展 BusinessService 和 Mock 契约、保留 meta 并提供分页操作，不能直接把 total 当成当前页条数。
 
 ## 环境、CORS 与前端交接
 
