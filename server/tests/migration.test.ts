@@ -30,12 +30,16 @@ it('旧家教资料迁移后可按原有科目查询，JSON 资料保留', async
    await db.$executeRaw`INSERT INTO "TutorProfile" ("id","userId","displayName","university","major","subjectsJson","teachingMode","area","pricePerHour","introduction","availability","published","updatedAt") VALUES ('legacy-profile','legacy-user','虚构旧家教','示例大学','数学专业','["数学","物理"]','线上','示例地区',80,'虚构资料','周末',true,CURRENT_TIMESTAMP)`
   } finally { await db.$disconnect() }
   cpSync(join(source,'migrations','20261018000000_tutor_subject'),join(migrations,'20261018000000_tutor_subject'),{recursive:true})
+  cpSync(join(source,'migrations','20261021000000_teaching'),join(migrations,'20261021000000_teaching'),{recursive:true})
+  cpSync(join(source,'migrations','20261021010000_tutor_evidence_photo'),join(migrations,'20261021010000_tutor_evidence_photo'),{recursive:true})
   migrate()
   const upgraded=new PrismaClient({datasources:{db:{url}}})
   try {
    const profile=await upgraded.tutorProfile.findUniqueOrThrow({where:{id:'legacy-profile'},include:{subjects:true}})
    expect(profile.subjectsJson).toBe('["数学","物理"]')
    expect(profile.subjects.map(row=>row.subject).sort()).toEqual(['数学','物理'])
+   expect(profile.photoKey).toBeNull()
+   expect(profile.experienceMonths).toBeNull()
    expect(await upgraded.tutorProfile.count({where:{subjects:{some:{subject:'数学'}}}})).toBe(1)
   } finally { await upgraded.$disconnect() }
  } finally { rmSync(dir,{recursive:true,force:true}) }
