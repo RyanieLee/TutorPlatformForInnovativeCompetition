@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { onShow, onHide } from '@dcloudio/uni-app'
+import { onLoad, onShow, onHide } from '@dcloudio/uni-app'
 import ParentLayout from '../../components/ParentLayout.vue'
 import { learningTopics, resourceSources, examplePaper } from '../../data/learning'
 import { stages, paperText, type Stage, type ExamPaper, type PaperRequest } from '../../../shared/learning'
@@ -17,6 +17,7 @@ const paper=ref<ExamPaper|null>(null),showAnswers=ref(false),busy=ref(false),err
 const answers=ref<Record<string,string>>({}),status=ref<'checking'|'enabled'|'disabled'|'error'>('checking')
 const loginNeeded=ref(false),notice=ref('')
 let version=0,statusVersion=0
+onLoad(options=>{const found=learningTopics.find(t=>t.id===options?.topicId);if(found){stage.value=found.stage;subject.value=found.subject;pick(found.id)}})
 onShow(()=>{const v=++statusVersion;void examModelStatus().then(s=>{if(v===statusVersion)status.value=s.enabled?'enabled':'disabled'}).catch(()=>{if(v===statusVersion)status.value='error'})})
 onHide(()=>{version++;statusVersion++;busy.value=false})
 function reset(){version++;paper.value=null;checked.value=false;answers.value={};showAnswers.value=false;error.value='';notice.value='';loginNeeded.value=false}
@@ -71,7 +72,7 @@ function printPaper(){
  // #endif
 }
 const login=()=>uni.navigateTo({url:'/pages/auth/login'})
-const match=()=>uni.navigateTo({url:'/pages/match/index'})
+const match=()=>uni.navigateTo({url:'/pages/match/index?topicId='+encodeURIComponent(topic.value.id)})
 </script>
 <template>
  <ParentLayout title="AI学习中心 · 资料、笔记与试卷" active="learning">
