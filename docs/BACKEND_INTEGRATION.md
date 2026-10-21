@@ -10,7 +10,7 @@
 
 ## 数据模型
 
-迁移：`server/prisma/migrations/20261015000000_init/migration.sql` 和 `20261018000000_tutor_subject/migration.sql`。后者为已有家教资料回填科目索引，保留原 `subjectsJson` 字段和公开 API 格式。
+迁移：`server/prisma/migrations/` 按顺序包含初始数据、科目索引、教学功能和 `20261021010000_tutor_evidence_photo`。后者以可空字段新增照片引用与自述经历/成绩/能力/案例，不删除旧资料；科目索引迁移保留原 `subjectsJson` 与公开 API 格式。
 
 | 表 | 关系和用途 |
 |---|---|
@@ -36,6 +36,7 @@
 | GET / POST | `/api/auth/me` / `/api/auth/logout` | 登录 | 当前用户 / 撤销会话 |
 | GET | `/api/tutors`、`/api/tutors/:id` | 公开 | 仅已审核且发布的资料；列表支持 keyword、subject、teachingMode、minPrice、maxPrice、page、pageSize |
 | GET / PATCH | `/api/tutors/me` | tutor | 自己的资料；修改会撤销公开并使申请回到草稿 |
+| POST / GET | `/api/tutor-applications/photo`、`/api/tutors/:id/photo` | tutor / 公开 | 家教上传照片到申请草稿；仅审核通过后按资料 ID 公开读取 |
 | PUT / POST / GET | `/api/tutor-applications/draft`、`/api/tutor-applications`、`/api/tutor-applications/mine` | tutor | 草稿、提交、状态；已待审/已通过时禁止重复提交 |
 | GET | `/api/admin/tutor-applications`、`/api/admin/tutor-applications/:id` | admin | 申请列表（含历史状态）和详情 |
 | POST | `/api/admin/tutor-applications/:id/review` | admin | `{decision:"approved"|"rejected", reason?}`，驳回必填理由 |

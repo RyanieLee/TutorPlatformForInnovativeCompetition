@@ -51,7 +51,7 @@ GET `/api/tutors` 公开查询，仅返回 published、账户 active 且申请 a
 
 所有过滤在数据库分页之前执行，排序为 createdAt DESC、id DESC。返回 `{data:Tutor[],meta:{total,page,pageSize}}`。当前家教报价为整数元；小数筛选下限向上取整、上限向下取整后执行数据库比较，避免 Prisma 整数字段截断边界。例如 minPrice=80.01 不包含 80 元，maxPrice=79.99 不包含 80 元。查询参数中的未知字段被忽略，不作为新筛选能力。
 
-Tutor：`{id,name,university,major,subjects:string[],teachingMode,area,pricePerHour,introduction,availability,tags:string[]}`。API 当前 tags 为空数组，不生成虚构标签。
+Tutor：`{id,name,university,major,subjects:string[],teachingMode,area,pricePerHour,introduction,availability,tags:string[],photoUrl?,experienceMonths?,academicScore?,teachingSkillLevel?,caseCount?,caseSummary?}`。新增字段可缺省；照片 URL 只在审核通过且资料公开时返回，API 当前 tags 为空数组。
 
 | 方法 / 路径 | 身份 | 输入 / data |
 | --- | --- | --- |
@@ -61,7 +61,7 @@ Tutor：`{id,name,university,major,subjects:string[],teachingMode,area,pricePerH
 
 ## 入驻与审核
 
-ApplicationInput：以下字段**全部必填**；POST 提交要求非空。价格是整数元，不改变既有存储结构。
+ApplicationInput：以下基础字段必填；POST 提交要求非空。价格是整数元。新增自述字段可省略，以兼容旧客户端。
 
 | 字段 | 提交要求 |
 | --- | --- |
@@ -72,14 +72,18 @@ ApplicationInput：以下字段**全部必填**；POST 提交要求非空。价�
 | pricePerHour | integer，1–1000 |
 | introduction | 10–500 字符 |
 | availability | 1–100 字符 |
+| experienceMonths / academicScore / teachingSkillLevel / caseCount | 可省略或设为 null（清空），整数范围分别为 0–120 / 0–100 / 0–5 / 0–50 |
+| caseSummary | 可省略，最多 120 字；不得包含常见联系方式或身份字段；只写匿名案例 |
 
-草稿 PUT 同样需要完整字段集合，但字符串可空、subjects 可为空（最多 6 项）、价格允许 0–1000；不接受任意额外字段。Application 返回输入字段加 `{id,userId,status,createdAt,updatedAt,reviewedAt?,rejectionReason?}`，status 为 `draft/pending/approved/rejected`。
+草稿 PUT 同样需要基础字段集合，但字符串可空、subjects 可为空（最多 6 项）、价格允许 0–1000；不接受任意额外字段。Application 返回输入字段加 `{id,userId,status,createdAt,updatedAt,reviewedAt?,rejectionReason?,photoUrl?}`，status 为 `draft/pending/approved/rejected`。本人申请与管理员详情中的 `photoUrl` 是仅在已授权响应中返回的 JPEG data URL；公开 Tutor 中的相对照片路径需拼接 API 基址。
 
 | 方法 / 路径 | 身份 | 输入 | data / 规则 |
 | --- | --- | --- | --- |
 | GET `/api/tutor-applications/mine` | tutor | 无 | 自己的 Application 或 null |
 | PUT `/api/tutor-applications/draft` | tutor | 完整草稿字段 | Application；pending 时 409；修改 approved 会撤回公开 |
 | POST `/api/tutor-applications` | tutor | ApplicationInput | pending Application；pending/approved 重复提交 409 |
+| POST `/api/tutor-applications/photo` | tutor | multipart，字段 `file`，JPG/PNG/WebP ≤ 2 MB；须先保存草稿 | 返回带私人预览的 Application；pending 时 409；修改 approved 会下架并回到 draft |
+| GET `/api/tutors/:id/photo` | 公开 | 无 | 仅已批准、已发布且有照片的老师返回 JPEG，否则 404 |
 | GET `/api/admin/tutor-applications` | admin | page / pageSize / status 可省略 | Application[] 与 meta；默认每页 50 条 |
 | GET `/api/admin/tutor-applications/:id` | admin | 无 | Application 或 404 |
 | POST `/api/admin/tutor-applications/:id/review` | admin | `{decision:'approved'/'rejected',reason?:string}` | Application；只有 pending 可处理；拒绝原因 trim 后非空且最多 500 字符 |
