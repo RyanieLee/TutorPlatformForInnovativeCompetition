@@ -59,8 +59,8 @@ const openProfile = () => uni.switchTab({ url: '/pages/profile/index' })
 
 <template>
   <ParentLayout title="找到适合你的学习伙伴" active="home"><view class="page">
-    <view class="hero"><text class="eyebrow">校园家教 · 连接好老师</text><text class="headline">每一次学习需求，<br/>都值得被认真匹配。</text><text class="intro">按科目筛选老师，查看教学信息，{{ apiMode ? '发起开发版预约。' : '发起本机演示预约。' }}</text><view class="links"><text @click="openOrders">我的预约 →</text><text @click="openProfile">个人中心 →</text></view></view>
-    <button class="ai-entry" @click="openMatch">AI 家教匹配 · 查看推荐理由 →</button>
+    <view class="hero"><text class="eyebrow">西安校园家教 · 连接好老师</text><text class="headline">每一次学习需求，<br/>都值得被认真匹配。</text><text class="intro">按科目筛选老师，查看教学信息，{{ apiMode ? '发起开发版预约。' : '发起本机演示预约。' }}</text><view class="links"><text @click="openOrders">我的预约 →</text><text @click="openProfile">个人中心 →</text></view></view>
+    <button class="ai-entry" @click="openMatch">AI 家教匹配 · 西安地图选点与推荐理由 →</button>
     <input v-model="query" class="search" placeholder="搜索科目、地区或老师姓名"/>
     <view class="filter-panel"><view class="heading">按科目查找</view>
     <scroll-view scroll-x><view class="filters"><text v-for="s in subjects" :key="s" class="chip" :class="{ active: subject === s }" @click="subject = s">{{ s }}</text></view></scroll-view>

@@ -1,6 +1,8 @@
 # 校园家教撮合平台（创新创业项目）
 
-已合并补缺 #14：家长端品牌导航、响应式卡片网格、价格区间筛选、[正式 API 契约](docs/API_CONTRACT.md)及[一键初始化与持久化方案](docs/SERVER_DEMO.md)。
+本批新增：**西安 AI 需求助手 + 地图家长选点 + 附近家教推荐**，Mock/API 共用 24 份合成家教资料。输入需求 → 确认解析 → 地图选点 → 查看推荐理由 → 原流程预约。体验及边界见 [西安演示指南](docs/XIAN_AI_DEMO.md)。
+
+已集成家长端响应式展示、价格筛选、服务端分页/状态筛选/全量统计和备份恢复；接口与启动见 [API 契约](docs/API_CONTRACT.md)、[演示后端](docs/SERVER_DEMO.md)。
 
 D 交付：**AI 家教匹配规则演示**（无需密钥）已接入首页和原预约流程。启动、演示身份、数据重置与五分钟脚本见 [DEMO_GUIDE.md](DEMO_GUIDE.md)；部署实况与操作见 [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)，架构与规则见 [docs/MATCHING_DESIGN.md](docs/MATCHING_DESIGN.md)。
 
@@ -124,3 +126,7 @@ CONTRIBUTING.md      团队协作规范
 后续上线前必须补齐身份及家教资质审核、未成年人保护、监护人同意、隐私政策、个人信息最小化收集、投诉举报与数据删除等机制。不要提交真实学生资料、密码、AppSecret 或 API Key。
 
 认证与角色接入约定见 [docs/AUTH_INTEGRATION.md](docs/AUTH_INTEGRATION.md)；预约状态、Mock 存储和后端交接见 [docs/BUSINESS_INTEGRATION.md](docs/BUSINESS_INTEGRATION.md)。
+
+### 西安 AI 与地图演示
+
+已扩充 24 份合成家教，支持西安地图家长选点、线下附近筛选及需求解析确认。体验路径与真实能力边界见 [XIAN_AI_DEMO](docs/XIAN_AI_DEMO.md)。
