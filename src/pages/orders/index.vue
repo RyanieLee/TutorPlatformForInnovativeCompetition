@@ -42,7 +42,7 @@ const goHome = () => uni.switchTab({ url: '/pages/index/index' })
 </script>
 <template>
   <ParentLayout title="我的预约" active="orders">
-  <view class="page"><view class="title">我的预约</view><view class="notice">{{ apiMode ? '开发版预约保存在本地数据库，不会通知老师，也不代表真实订单。' : '本机模拟记录，不跨设备同步，不会真实通知老师，也不代表真实订单。' }}</view>
+  <view class="page linghang-orders"><view class="title">我的预约</view><view class="notice">{{ apiMode ? '开发版预约保存在本地数据库，不会通知老师，也不代表真实订单。' : '本机模拟记录，不跨设备同步，不会真实通知老师，也不代表真实订单。' }}</view>
     <view v-if="!ready || loading" class="surface-card empty-state">正在读取预约…</view>
     <view v-else-if="!currentSession" class="surface-card empty-state">登录后查看演示预约<button class="primary-button guide" @click="goLogin">进入演示登录</button></view>
     <view v-else-if="!canAccess(['parent'])" class="surface-card empty-state">当前身份不能查看家长预约<view class="muted-note">可在“我的”切换身份。</view><button class="secondary-button guide" @click="goProfile">前往我的</button></view>
