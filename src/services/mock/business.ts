@@ -7,6 +7,7 @@ import type { BusinessService, TutorQuery } from '../contracts'
 import { BusinessError } from '../errors'
 import { nextBookingStatus, validateTutorApplication, type BookingAction } from '../rules'
 import type { StoragePort } from './storage'
+import { readDemoPhoto } from '../photo-file'
 
 const APPLICATIONS_KEY = 'tutor-platform:demo-applications:v1'
 const BOOKINGS_KEY = 'tutor-platform:demo-bookings:v2'
@@ -25,7 +26,10 @@ function cleanInput(input: TutorApplicationInput): TutorApplicationInput {
     displayName: input.displayName.trim(), university: input.university.trim(), major: input.major.trim(),
     subjects: [...new Set(input.subjects.map(s => s.trim()).filter(Boolean))],
     teachingMode: input.teachingMode, area: input.area.trim(), pricePerHour: Number.isFinite(price) ? price : 0,
-    introduction: input.introduction.trim(), availability: input.availability.trim()
+    introduction: input.introduction.trim(), availability: input.availability.trim(),
+    experienceMonths: input.experienceMonths, academicScore: input.academicScore,
+    teachingSkillLevel: input.teachingSkillLevel, caseCount: input.caseCount,
+    caseSummary: input.caseSummary?.trim() ?? ''
   }
 }
 function isLegacyBooking(value: unknown): value is LegacyBookingOrder {
@@ -94,7 +98,9 @@ export class MockBusinessService implements BusinessService {
     const list = seedTutors.filter(t => t.id !== 't001' || !application || !!approved).map(t => t.id === 't001' && approved ? {
       ...t, name: approved.displayName, university: approved.university, major: approved.major,
       subjects: [...approved.subjects], teachingMode: approved.teachingMode, area: approved.area,
-      pricePerHour: approved.pricePerHour, introduction: approved.introduction, availability: approved.availability
+      pricePerHour: approved.pricePerHour, introduction: approved.introduction, availability: approved.availability,
+      photoUrl: approved.photoUrl, experienceMonths: approved.experienceMonths, academicScore: approved.academicScore,
+      teachingSkillLevel: approved.teachingSkillLevel, caseCount: approved.caseCount, caseSummary: approved.caseSummary
     } : { ...t, subjects: [...t.subjects], tags: [...t.tags] })
     const keyword = query.keyword?.trim().toLowerCase() ?? ''
     const filtered = list.filter(t => (query.minPrice === undefined || t.pricePerHour >= query.minPrice) && (query.maxPrice === undefined || t.pricePerHour <= query.maxPrice) && (!query.teachingMode || t.teachingMode === '均可' || t.teachingMode === query.teachingMode) && (!query.subject || query.subject === '全部' || t.subjects.includes(query.subject)) &&
@@ -113,7 +119,7 @@ export class MockBusinessService implements BusinessService {
     const previous = records.find(a => a.userId === user.id)
     if (previous?.status === 'pending') throw new BusinessError('CONFLICT', '申请正在审核，暂不能修改')
     const timestamp = now()
-    const draft: TutorApplication = { ...cleanInput(input), id: previous?.id ?? uid('application'), userId: user.id,
+    const draft: TutorApplication = { ...cleanInput(input), photoUrl:previous?.photoUrl, id: previous?.id ?? uid('application'), userId: user.id,
       status: 'draft', createdAt: previous?.createdAt ?? timestamp, updatedAt: timestamp }
     this.storage.set(APPLICATIONS_KEY, [draft, ...records.filter(a => a.userId !== user.id)])
     return draft
@@ -126,10 +132,21 @@ export class MockBusinessService implements BusinessService {
     const previous = records.find(a => a.userId === user.id)
     if (previous?.status === 'pending') throw new BusinessError('CONFLICT', '申请已提交，请等待审核')
     const timestamp = now()
-    const application: TutorApplication = { ...cleaned, id: previous?.id ?? uid('application'), userId: user.id,
+    const application: TutorApplication = { ...cleaned, photoUrl:previous?.photoUrl, id: previous?.id ?? uid('application'), userId: user.id,
       status: 'pending', createdAt: previous?.createdAt ?? timestamp, updatedAt: timestamp }
     this.storage.set(APPLICATIONS_KEY, [application, ...records.filter(a => a.userId !== user.id)])
     return application
+  }
+  async uploadTutorPhoto(user: User, filePath: string): Promise<TutorApplication> {
+    requireRole(user, 'tutor')
+    const records = this.applications()
+    const previous = records.find(a => a.userId === user.id)
+    if (!previous) throw new BusinessError('CONFLICT', '请先保存入驻草稿，再上传照片')
+    if (previous.status === 'pending') throw new BusinessError('CONFLICT', '审核期间不可修改照片')
+    const photoUrl = await readDemoPhoto(filePath)
+    const updated: TutorApplication = { ...previous, photoUrl, status:'draft', reviewedAt:undefined, rejectionReason:undefined, updatedAt:now() }
+    this.storage.set(APPLICATIONS_KEY, records.map(a => a.id === updated.id ? updated : a))
+    return updated
   }
   async listApplications(admin: User): Promise<TutorApplication[]> {
     requireRole(admin, 'admin')

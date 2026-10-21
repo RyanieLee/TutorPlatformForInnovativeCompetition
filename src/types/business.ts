@@ -11,6 +11,11 @@ export interface TutorApplicationInput {
   pricePerHour: number
   introduction: string
   availability: string
+  experienceMonths?: number | null
+  academicScore?: number | null
+  teachingSkillLevel?: number | null
+  caseCount?: number | null
+  caseSummary?: string
 }
 export interface TutorApplication extends TutorApplicationInput {
   id: string
@@ -20,6 +25,7 @@ export interface TutorApplication extends TutorApplicationInput {
   updatedAt: string
   reviewedAt?: string
   rejectionReason?: string
+  photoUrl?: string
 }
 
 export type ReportReason = '资料不实' | '内容不当' | '其他'
