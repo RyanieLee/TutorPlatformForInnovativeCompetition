@@ -139,7 +139,7 @@ export async function registerHomeworkImageReview(app: FastifyInstance, db: Pris
     if (part.file.truncated || image.length === 0) return fail('INVALID', 413, '图片为空或超过3 MiB，请重新选择')
     const detected = detectHomeworkImageMime(image)
     if (!detected || detected !== part.mimetype) return fail('INVALID', 400, '无法识别图片格式，请上传真实的 JPG、PNG 或 WebP 图片')
-    const reply = await model.review(image, detected)
-    return { data: { reply, source: 'model' as const } }
+    const reviewText = await model.review(image, detected)
+    return { data: { reply: reviewText, source: 'model' as const } }
   })
 }
