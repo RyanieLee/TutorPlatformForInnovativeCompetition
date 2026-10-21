@@ -9,7 +9,7 @@ const match = () => uni.navigateTo({url:'/pages/match/index'})
 <template>
   <view class="parent-shell">
     <view class="parent-header">
-      <view class="brand" @click="home"><text class="brand-icon">学</text><view><text class="brand-name">校园家教</text><text class="brand-note">连接学习需求与大学生家教</text></view></view>
+      <view class="brand" @click="home"><text class="brand-icon" aria-hidden="true"></text><view><text class="brand-name">校园家教</text><text class="brand-note">一起找到适合的学习节奏</text></view></view>
       <view class="parent-nav"><button :class="{current:active==='home'}" @click="home">找家教</button><button @click="match">智能匹配</button><button :class="{current:active==='orders'}" @click="orders">我的预约</button><button :class="{current:active==='profile'}" @click="profile">我的 / 切换角色</button></view>
     </view>
     <view class="parent-caption"><text>{{ title }}</text><text class="mode">{{ apiMode ? '开发 API · 虚构资料' : '本机 Mock · 演示数据' }}</text></view>

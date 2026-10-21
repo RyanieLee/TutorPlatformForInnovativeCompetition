@@ -16,6 +16,7 @@ const { ready, error, authorized, load, scope } = useRolePage('tutor', () => { b
 const actions = computed(() => booking.value ? tutorActions(booking.value.status) : [])
 const labels: Partial<Record<BookingAction, string>> = { accept: '接受预约', reject: '拒绝预约', complete: '标记已完成' }
 onLoad(o => { id.value = String(o?.id ?? '') })
+const teaching = () => uni.navigateTo({url:'/pages/teaching/index?bookingId='+encodeURIComponent(id.value)})
 const refresh = () => { if (!busy.value) void load(user => businessService.getTutorBooking(user, id.value), data => { booking.value = data }) }
 onShow(refresh)
 async function act(action: BookingAction) {
@@ -41,7 +42,7 @@ async function act(action: BookingAction) {
       <AsyncState v-else-if="error" state="error" :message="error" @retry="refresh" />
       <template v-else>
         <view v-if="feedback" class="b-info" role="status">{{ feedback }}</view>
-        <view v-if="booking" class="b-grid">
+        <view v-if="booking" class="b-grid"><view v-if="booking.status === 'accepted' || booking.status === 'completed' || booking.status === 'cancelled'" class="b-panel"><view class="b-section">教学安排</view><text class="b-muted">按课次发布预习资料，布置作业并查看学生提交。</text><button role="button" class="b-button" @click="teaching">课次与作业</button></view>
           <view class="b-panel"><view class="b-section">预约信息</view><text class="b-status">{{ bookingStatusLabels[booking.status] }}</text><view class="b-row"><text>辅导科目</text><text>{{ booking.subject }}</text></view><view class="b-row"><text>预约称呼</text><text>{{ booking.studentName }}</text></view><view class="b-row"><text>期望时间</text><text>{{ booking.expectedTime }}</text></view><view class="b-row"><text>创建时间</text><text>{{ formatTime(booking.createdAt) }}</text></view><view class="b-row"><text>更新时间</text><text>{{ formatTime(booking.updatedAt) }}</text></view></view>
           <view class="b-panel"><view class="b-section">辅导需求与处理</view><view class="b-text">{{ booking.note || '未填写补充需求。' }}</view><view v-if="!actions.length" class="b-info">该预约已结束，仅可查看记录，不能继续处理。</view><view class="b-actions"><button v-for="a in actions" :key="a" class="b-button" :class="{ danger: a === 'reject' }" :disabled="busy" :loading="busy" @click="act(a)">{{ labels[a] }}</button></view><button class="b-button secondary" :disabled="busy" @click="refresh">刷新预约状态</button></view>
         </view>
@@ -51,4 +52,3 @@ async function act(action: BookingAction) {
   </RoleShell>
 </template>
 <style scoped src="./shared/workflow.css"></style>
-

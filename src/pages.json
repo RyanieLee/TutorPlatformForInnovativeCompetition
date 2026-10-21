@@ -83,11 +83,29 @@
       "style": {
         "navigationBarTitleText": "AI 家教匹配"
       }
+    },
+    {
+      "path": "pages/teaching/index",
+      "style": {
+        "navigationBarTitleText": "课次与作业"
+      }
+    },
+    {
+      "path": "pages/teaching/edit",
+      "style": {
+        "navigationBarTitleText": "发布课次与作业"
+      }
+    },
+    {
+      "path": "pages/teaching/detail",
+      "style": {
+        "navigationBarTitleText": "课次详情与作业"
+      }
     }
   ],
   "tabBar": {
     "color": "#7a879a",
-    "selectedColor": "#2868e4",
+    "selectedColor": "#2b573d",
     "backgroundColor": "#ffffff",
     "borderStyle": "black",
     "list": [
@@ -108,6 +126,6 @@
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarBackgroundColor": "#ffffff",
-    "backgroundColor": "#f6f8fc"
+    "backgroundColor": "#edf2ee"
   }
 }
