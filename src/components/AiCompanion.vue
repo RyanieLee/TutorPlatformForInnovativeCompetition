@@ -123,7 +123,7 @@ function login(){open.value=false;uni.navigateTo({url:'/pages/auth/login'})}
     <button :disabled="busy" @click="ask('请解释一元一次方程的解题步骤')">解题答疑</button>
     <button :disabled="busy" @click="startHomeworkReview">作业批改</button>
     <button :disabled="busy" @click="ask('怎样批改作文、找出错别字？')">作文修改</button>
-    <button :disabled="busy" @click="ask('请帮我匹配初中数学，预算100元，线上，周六下午')">帮我找老师</button>
+    <button :disabled="busy" @click="ask('初中数学，预算100元，线上耐心讲解')">帮我找老师</button>
     <button :disabled="busy" @click="ask('家长怎样使用平台？')">家长使用</button>
    </view>
    <view v-if="error" class="companion-error" role="alert">{{error}}<button v-if="loginNeeded" @click="login">登录后继续</button><button v-if="apiMode&&mode!=='local'&&(status==='enabled'||status==='error')" @click="localMode">改用本机演示</button></view>
@@ -213,7 +213,7 @@ function login(){open.value=false;uni.navigateTo({url:'/pages/auth/login'})}
 }
 .companion-root .voice-tools{display:flex;align-items:center;gap:8px;padding:8px 12px}
 .companion-root .voice-tools button{
- margin:0;min-height:40px;background:rgba(231,247,247,.95);border:1px solid #fff;
+ margin:0;min-height:44px;display:flex;align-items:center;background:rgba(231,247,247,.95);border:1px solid #fff;
  color:#307582;border-radius:100px;padding:0 13px;font-size:12px;
 }
 .companion-root .voice-tools text,.companion-root .voice-note{color:#688692}
@@ -271,5 +271,15 @@ function login(){open.value=false;uni.navigateTo({url:'/pages/auth/login'})}
 }
 @media(prefers-reduced-transparency:reduce),(prefers-contrast:more){
  .companion-root .companion-panel,.companion-root .companion-head,.companion-root .companion-notice,.companion-root .companion-message,.companion-root .homework-image-tools{background:#fff!important;backdrop-filter:none!important;border-color:#8db5be!important}
+}
+
+@media(max-width:700px){
+ .companion-root.companion-fullpage .companion-shortcuts{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;padding:6px 10px}
+ .companion-root.companion-fullpage .companion-shortcuts button{min-height:34px;font-size:10px;padding:5px 4px}
+ .companion-root.companion-fullpage .companion-tools{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:5px 10px}
+ .companion-root.companion-fullpage .companion-tools button{min-height:34px;font-size:10px;padding:5px 4px}
+ .companion-root.companion-fullpage .companion-log{height:clamp(100px,18vh,145px);min-height:100px}
+ .companion-root.companion-fullpage .companion-compose textarea{height:60px}
+ .companion-root.companion-fullpage .voice-note{max-height:30px;overflow:hidden}
 }
 </style>
