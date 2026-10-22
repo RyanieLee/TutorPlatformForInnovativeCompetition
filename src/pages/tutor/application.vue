@@ -130,7 +130,7 @@ async function save(submit: boolean) {
           <view class="b-panel">
             <view class="b-section">教学安排</view>
             <view class="b-field"><text class="b-label">服务地区 *</text><input class="b-input" v-model="form.area" :disabled="busy || uncertain" maxlength="40" placeholder="例如：示例大学城"/></view>
-            <view class="b-field"><text class="b-label">个人定位（公开服务片区，选填）</text><XianLocationPicker service-area :model-value="servicePoint" @update:model-value="chooseServicePoint"/><text class="b-muted">选点会保存为最近的公共片区，审核后用于公开服务地区和附近匹配；不上传你点击的精确坐标。也可直接编辑上方地区。</text></view>
+            <view class="b-field"><text class="b-label">个人定位（公开服务片区，选填）</text><XianLocationPicker service-area :disabled="busy||uncertain" :model-value="servicePoint" @update:model-value="chooseServicePoint"/><text class="b-muted">选点会保存为最近的公共片区，审核后用于公开服务地区和附近匹配；不上传你点击的精确坐标。也可直接编辑上方地区。</text></view>
             <view class="b-field"><text class="b-label">参考价格（元 / 小时）*</text><input class="b-input" v-model="price" :disabled="busy || uncertain" type="digit" placeholder="填写 1–1000 元"/></view>
             <view class="b-field"><text class="b-label">可授课时间 *</text><input class="b-input" v-model="form.availability" :disabled="busy || uncertain" maxlength="100" placeholder="例如：周末下午"/></view>
             <view class="b-chips"><button v-for="slot in scheduleChoices" :key="slot" class="b-chip" :class="{active:form.availability.split('、').includes(slot)}" :disabled="busy||uncertain" @click="toggleTime(slot)">{{slot}}</button></view><text class="b-muted">可点击常用空闲时段，或直接填写时间。匹配只给可确定的星期与时段吻合加分，最终时间仍需双方确认。</text>
