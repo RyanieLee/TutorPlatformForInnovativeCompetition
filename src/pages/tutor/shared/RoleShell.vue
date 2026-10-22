@@ -24,7 +24,7 @@ async function switchAccount(role: string) {
 </script>
 <template>
   <view class="shell">
-    <view class="brand"><text class="brand-name">校园家教</text><text class="mode">{{ apiMode ? '开发联调 · 演示资料' : '本机模拟 · 演示资料' }}</text></view>
+    <view class="brand"><text class="brand-name">领航云学堂</text><text class="mode">{{ apiMode ? '开发联调 · 演示资料' : '本机模拟 · 演示资料' }}</text></view>
     <view class="header"><view><text class="eyebrow">{{ role === 'admin' ? '审核与管理' : '家教服务中心' }}</text><view class="title">{{ title }}</view><view class="identity">{{ currentSession ? currentSession.user.displayName + ' · ' + roleName : '访客 · 尚未登录' }}</view></view><view class="nav"><button @click="home">返回首页</button><button @click="orderMap">订单地图</button><button v-if="canAccess([role])" @click="workbench(role)">我的工作台</button><button v-if="currentSession" :disabled="busy" @click="switchAccount(role)">{{ busy ? '正在退出…' : '退出 / 切换账户' }}</button></view></view>
     <view class="notice">{{ apiMode ? '仅使用虚构演示资料。审核和预约由开发服务记录，不代表真实资质认证，也不会发送真实通知。' : '仅当前设备模拟，不跨设备同步。所有老师和价格均为虚构演示数据，不代表真实认证或交易。' }}</view>
     <view v-if="!currentSession" class="access"><text>请先登录{{ role === 'admin' ? '管理员' : '家教' }}演示账户</text><button @click="login(role)">前往登录</button></view>

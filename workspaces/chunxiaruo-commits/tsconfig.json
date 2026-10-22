@@ -1,5 +1,15 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["./**/*.ts", "./**/*.vue", "../../src/pages/tutor/**/*.vue", "../../src/pages/admin/**/*.vue", "../../src/env.d.ts"],
-  "exclude": [".local", "node_modules"]
+  "include": [
+    "./**/*.ts",
+    "./**/*.vue",
+    "../../src/pages/tutor/**/*.vue",
+    "../../src/pages/admin/**/*.vue",
+    "../../src/env.d.ts"
+  ],
+  "exclude": [
+    ".local",
+    "node_modules",
+    "teaching/**"
+  ]
 }

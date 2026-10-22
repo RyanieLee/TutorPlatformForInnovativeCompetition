@@ -1,7 +1,7 @@
 {
-  "name": "校园家教平台",
+  "name": "领航云学堂",
   "appid": "__UNI__TUTOR_DEMO",
-  "description": "家教平台创新创业MVP",
+  "description": "领航云学堂大学生家教平台",
   "versionName": "0.1.0",
   "versionCode": "100",
   "transformPx": false,
@@ -12,6 +12,6 @@
     }
   },
   "h5": {
-    "title": "校园家教平台"
+    "title": "领航云学堂"
   }
 }

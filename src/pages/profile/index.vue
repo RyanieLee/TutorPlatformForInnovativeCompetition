@@ -28,7 +28,7 @@ async function signOut() {
 
 <template>
   <ParentLayout title="个人中心" active="profile">
-  <view class="page">
+  <view class="page linghang-profile">
     <view class="hero"><view class="avatar">{{ currentSession?.user.displayName.slice(0, 1) ?? '访' }}</view><view><text class="name">{{ currentSession?.user.displayName ?? '体验访客' }}</text><text class="sub">{{ currentSession ? roleLabels[currentSession.user.role] + (apiMode ? ' · 开发账户' : ' · 本机模拟登录') : '尚未登录 · 可浏览演示家教' }}</text></view></view>
     <view v-if="!ready" class="surface-card muted-note panel">正在读取演示身份…</view>
     <view v-else-if="!currentSession" class="surface-card panel"><view class="section-title">开始体验</view><button class="primary-button" @click="goLogin">演示登录</button><button v-if="!apiMode" class="secondary-button second" @click="goRegister">选择身份 / 模拟注册</button></view>

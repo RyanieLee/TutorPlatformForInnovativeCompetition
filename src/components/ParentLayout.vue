@@ -12,13 +12,13 @@ const match = () => uni.navigateTo({url:'/pages/match/index'})
 <template>
   <view class="parent-shell">
     <view class="parent-header">
-      <view class="brand" @click="home"><text class="brand-icon" aria-hidden="true"></text><view><text class="brand-name">校园家教</text><text class="brand-note">一起找到适合的学习节奏</text></view></view>
+      <view class="brand" @click="home"><text class="brand-icon" aria-hidden="true"></text><view><text class="brand-name">领航云学堂</text><text class="brand-note">让优质教育更容易遇见</text></view></view>
       <view class="parent-nav"><button :class="{current:active==='home'}" @click="home">找家教</button><button @click="match">智能匹配</button><button :class="{current:active==='learning'}" @click="learning">AI学习中心</button><button :class="{current:active==='order-map'}" @click="orderMap">订单地图</button><button :class="{current:active==='orders'}" @click="orders">我的预约</button><button :class="{current:active==='profile'}" @click="profile">我的 / 切换角色</button></view>
     </view>
     <view class="parent-caption"><text>{{ title }}</text><text class="mode">{{ apiMode ? '开发 API · 虚构资料' : '本机 Mock · 演示数据' }}</text></view>
     <slot/>
     <AiCompanion/>
-    <view class="parent-footer">校园家教 · 创新创业演示项目。所有资料仅供测试，请勿填写真实个人信息。</view>
+    <view class="parent-footer">领航云学堂 · 创新创业演示项目。所有资料仅供测试，请勿填写真实个人信息。</view>
   </view>
 </template>
 <style scoped>

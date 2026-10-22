@@ -1,0 +1,78 @@
+{
+  "checkedAt": "2026-10-21T10:52:58.733Z",
+  "baseSha": "5c189221bb80a6232e20c3902e550f1d867eb97b",
+  "checks": [
+    {
+      "label": "isolation",
+      "command": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node --test /workspace/workspaces/chunxiaruo-commits/teaching/.local/worktree/workspaces/chunxiaruo-commits/teaching/tests/review-isolation.test.mjs",
+      "startedAt": "2026-10-21T10:51:53.365Z",
+      "exitCode": 0,
+      "log": ".local/verification/isolation.log"
+    },
+    {
+      "label": "backend-tests",
+      "command": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node /workspace/workspaces/chunxiaruo-commits/teaching/.local/worktree/workspaces/chunxiaruo-commits/teaching/scripts/test-server.mjs",
+      "startedAt": "2026-10-21T10:51:53.640Z",
+      "exitCode": 0,
+      "log": ".local/verification/backend-tests.log"
+    },
+    {
+      "label": "frontend-tests",
+      "command": "npm test",
+      "startedAt": "2026-10-21T10:52:05.169Z",
+      "exitCode": 0,
+      "log": ".local/verification/frontend-tests.log"
+    },
+    {
+      "label": "existing-b-workflows",
+      "command": "npm run test:workflows",
+      "startedAt": "2026-10-21T10:52:07.253Z",
+      "exitCode": 0,
+      "log": ".local/verification/existing-b-workflows.log"
+    },
+    {
+      "label": "existing-b-types",
+      "command": "npm run typecheck:workflows",
+      "startedAt": "2026-10-21T10:52:08.743Z",
+      "exitCode": 0,
+      "log": ".local/verification/existing-b-types.log"
+    },
+    {
+      "label": "frontend-types",
+      "command": "npm run typecheck",
+      "startedAt": "2026-10-21T10:52:10.915Z",
+      "exitCode": 0,
+      "log": ".local/verification/frontend-types.log"
+    },
+    {
+      "label": "backend-build",
+      "command": "npm run build",
+      "startedAt": "2026-10-21T10:52:13.885Z",
+      "exitCode": 0,
+      "log": ".local/verification/backend-build.log"
+    },
+    {
+      "label": "h5-build",
+      "command": "npm run build:h5",
+      "startedAt": "2026-10-21T10:52:16.513Z",
+      "exitCode": 0,
+      "log": ".local/verification/h5-build.log"
+    },
+    {
+      "label": "wechat-build",
+      "command": "npm run build:mp-weixin",
+      "startedAt": "2026-10-21T10:52:24.616Z",
+      "exitCode": 0,
+      "log": ".local/verification/wechat-build.log"
+    },
+    {
+      "label": "browser-flow",
+      "command": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node /workspace/workspaces/chunxiaruo-commits/teaching/.local/worktree/workspaces/chunxiaruo-commits/teaching/scripts/browser-test.mjs",
+      "startedAt": "2026-10-21T10:52:30.829Z",
+      "exitCode": 0,
+      "log": ".local/verification/browser-flow.log"
+    }
+  ],
+  "persistence": true,
+  "personalDirectoryOnly": true
+}
