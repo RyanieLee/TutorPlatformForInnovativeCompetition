@@ -10,6 +10,12 @@ describe('小书灵本机演示能力', () => {
     expect(answer.reply).toContain('本站原创笔记')
   })
 
+  it('首页快捷入口仍先整理预算需求，不直接自动提交匹配', () => {
+    const answer = localChat('初中数学，预算100元，线上耐心讲解')
+    expect(answer.matchBrief).toContain('预算100元')
+    expect(answer.reply).toContain('不会自动提交预约')
+  })
+
   it('明确的找老师需求仍可带入匹配页面', () => {
     const answer = localChat('帮我找初中数学老师，预算100元，线上授课')
     expect(answer.matchBrief).toContain('初中数学老师')
