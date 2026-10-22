@@ -8,7 +8,7 @@ const db=new PrismaClient()
 const app=buildApp(db)
 let tutorToken='',parentToken='',adminToken=''
 const auth=(token:string)=>({authorization:`Bearer ${token}`})
-const input={displayName:'虚构照片老师',university:'示例大学',major:'数学',subjects:['数学'],teachingMode:'线上',area:'示例地区',pricePerHour:80,introduction:'仅用于测试的虚构家教介绍。',availability:'周末下午',experienceMonths:24,academicScore:88,teachingSkillLevel:4,caseCount:3,caseSummary:'虚构匿名案例：错题复盘。'}
+const input={displayName:'虚构照片老师',university:'示例大学',major:'数学',subjects:['数学'],teachingMode:'线上',area:'长安区 · 大学城',pricePerHour:80,introduction:'字'.repeat(1000),availability:'周末下午',experienceMonths:24,academicScore:88,teachingSkillLevel:4,caseCount:3,caseSummary:'虚构匿名案例：错题复盘。'}
 async function login(loginId:string,role:string){
  await db.user.create({data:{loginId,displayName:loginId,role,passwordHash:await hashPassword('photo-test-password')}})
  const response=await app.inject({method:'POST',url:'/api/auth/login',payload:{loginId,password:'photo-test-password'}})
@@ -48,7 +48,7 @@ it('照片只能由本人上传，审核前不公开；经验字段与照片经�
  expect((await app.inject({method:'GET',url:`/api/admin/tutor-applications/${applicationId}`,headers:auth(parentToken)})).statusCode).toBe(403)
  expect((await app.inject({method:'POST',url:`/api/admin/tutor-applications/${applicationId}/review`,headers:auth(adminToken),payload:{decision:'approved'}})).statusCode).toBe(200)
  const tutor=await app.inject({method:'GET',url:`/api/tutors/${profile.id}`})
- expect(tutor.json().data).toMatchObject({experienceMonths:24,academicScore:88,teachingSkillLevel:4,caseCount:3,photoUrl:`/api/tutors/${profile.id}/photo`})
+ expect(tutor.json().data).toMatchObject({area:'长安区 · 大学城',introduction:'字'.repeat(1000),experienceMonths:24,academicScore:88,teachingSkillLevel:4,caseCount:3,photoUrl:`/api/tutors/${profile.id}/photo`})
  const publicPhoto=await app.inject({method:'GET',url:`/api/tutors/${profile.id}/photo`})
  expect(publicPhoto.statusCode).toBe(200)
  expect(publicPhoto.headers['content-type']).toContain('image/jpeg')

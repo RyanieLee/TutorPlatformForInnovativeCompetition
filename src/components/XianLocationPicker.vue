@@ -6,7 +6,7 @@ import { xianPlaces, validLocation, type LocationPoint } from '../services/locat
 // #ifdef H5
 import 'leaflet/dist/leaflet.css'
 // #endif
-const props=withDefaults(defineProps<{modelValue:LocationPoint|null;readOnly?:boolean;orders?:OrderMapItem[];selectedArea?:string}>(),{readOnly:false,orders:()=>[]})
+const props=withDefaults(defineProps<{modelValue:LocationPoint|null;serviceArea?:boolean;readOnly?:boolean;orders?:OrderMapItem[];selectedArea?:string}>(),{readOnly:false,orders:()=>[]})
 const emit=defineEmits<{(e:'update:modelValue',value:LocationPoint|null):void;(e:'order-area-select',area:string):void}>()
 const mapId='xian-location-map-'+getCurrentInstance()!.uid
 const mapWarning=ref(''),selectionError=ref('')
@@ -60,8 +60,8 @@ onBeforeUnmount(()=>{destroyed=true;removeMap?.()})
 </script>
 <template>
  <view class="location-picker">
-  <view class="location-title">{{readOnly?'西安市 · 家长订单分布':'西安市 · 选择家长位置'}}</view>
-  <text v-if="!readOnly" class="location-note">选择附近公共地点即可，不必填写住址。点位只存在本机，不发送给模型；在线底图由 Esri World Street Map 提供。</text>
+  <view class="location-title">{{readOnly?'西安市 · 家长订单分布':serviceArea?'西安市 · 选择家教服务片区':'西安市 · 选择家长位置'}}</view>
+  <text v-if="!readOnly" class="location-note">{{serviceArea?'选择公共教学地点，保存为附近服务片区；随资料提交审核。不填写住址。':'选择附近公共地点即可，不必填写住址。点位只存在本机，不发送给模型。'}} 在线底图由 Esri World Street Map 提供。</text>
   <!-- #ifdef H5 -->
   <view :id="mapId" class="xian-map" aria-label="西安市地图，点击选择家长参考位置"/>
   <text class="location-note">{{readOnly?'圆点数字为同片区的本页订单数，点击可筛选对应订单。点位是公共片区参考点，不是家长住址。':'点击地图任意点或绿色片区标记；可拖动、双指缩放，或用 + / − 按钮缩放。'}}</text>

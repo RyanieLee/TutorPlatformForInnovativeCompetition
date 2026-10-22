@@ -30,6 +30,6 @@ export function validateTutorApplication(input: TutorApplicationInput): void {
   if (!input.area.trim() || input.area.trim().length > 40) throw new BusinessError('INVALID', '请填写服务地区（最多 40 字）')
   if (!Number.isFinite(input.pricePerHour) || input.pricePerHour < 1 || input.pricePerHour > 1000) throw new BusinessError('INVALID', '参考价格应为 1–1000 元/小时')
   if (!input.availability.trim() || input.availability.trim().length > 100) throw new BusinessError('INVALID', '请填写可授课时间（最多 100 字）')
-  if (input.introduction.trim().length < 10 || input.introduction.trim().length > 500) throw new BusinessError('INVALID', '个人介绍需 10–500 字')
+  if (input.introduction.trim().length < 10 || input.introduction.trim().length > 1000) throw new BusinessError('INVALID', '个人介绍需 10–1000 字')
   if ((input.caseSummary?.length ?? 0) > 120 || /(?:1[3-9]\d{9}|[\w.+-]+@[\w.-]+\.[a-z]{2,}|手机号|微信|身份证|住址|详细地址|姓名)/i.test(input.caseSummary??'')) throw new BusinessError('INVALID','案例摘要最多 120 字，不能包含学生个人信息')
 }

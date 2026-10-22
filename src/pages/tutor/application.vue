@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
+import XianLocationPicker from '../../components/XianLocationPicker.vue'
+import {areaReference, xianPlaces, distanceKm, type LocationPoint} from '../../services/location'
+import {scheduleChoices} from '../../services/availability'
 import RoleShell from './shared/RoleShell.vue'
 import AsyncState from './shared/AsyncState.vue'
 import { useRolePage, identityKey, assertIdentity, confirmAction } from './shared/page'
@@ -15,6 +18,17 @@ import type { TeachingMode } from '../../types/tutor'
 
 const emptyForm = (): TutorApplicationInput => ({ displayName: '', university: '', major: '', subjects: [], teachingMode: '均可', area: '', pricePerHour: 0, introduction: '', availability: '', caseSummary:'' })
 const form = reactive(emptyForm())
+const servicePoint=computed(()=>areaReference(form.area)??null)
+function chooseServicePoint(point:LocationPoint|null){
+ if(busy.value||uncertain.value)return
+ if(!point){form.area='';return}
+ const nearest=[...xianPlaces].sort((a,b)=>distanceKm(point,a)-distanceKm(point,b))[0]
+ form.area=nearest.label
+}
+function toggleTime(slot:string){
+ const slots=form.availability.split('、').filter(Boolean)
+ form.availability=(slots.includes(slot)?slots.filter(s=>s!==slot):[...slots,slot]).join('、').slice(0,100)
+}
 const evidence = reactive({experienceMonths:'',academicScore:'',teachingSkillLevel:'',caseCount:''})
 const price = ref(''), application = ref<TutorApplication | null>(null), busy = ref(false), feedback = ref('')
 const uncertain = ref(false)
@@ -116,15 +130,17 @@ async function save(submit: boolean) {
           <view class="b-panel">
             <view class="b-section">教学安排</view>
             <view class="b-field"><text class="b-label">服务地区 *</text><input class="b-input" v-model="form.area" :disabled="busy || uncertain" maxlength="40" placeholder="例如：示例大学城"/></view>
+            <view class="b-field"><text class="b-label">个人定位（公开服务片区，选填）</text><XianLocationPicker service-area :model-value="servicePoint" @update:model-value="chooseServicePoint"/><text class="b-muted">选点会保存为最近的公共片区，审核后用于公开服务地区和附近匹配；不上传你点击的精确坐标。也可直接编辑上方地区。</text></view>
             <view class="b-field"><text class="b-label">参考价格（元 / 小时）*</text><input class="b-input" v-model="price" :disabled="busy || uncertain" type="digit" placeholder="填写 1–1000 元"/></view>
             <view class="b-field"><text class="b-label">可授课时间 *</text><input class="b-input" v-model="form.availability" :disabled="busy || uncertain" maxlength="100" placeholder="例如：周末下午"/></view>
+            <view class="b-chips"><button v-for="slot in scheduleChoices" :key="slot" class="b-chip" :class="{active:form.availability.split('、').includes(slot)}" :disabled="busy||uncertain" @click="toggleTime(slot)">{{slot}}</button></view><text class="b-muted">可点击常用空闲时段，或直接填写时间。匹配只给可确定的星期与时段吻合加分，最终时间仍需双方确认。</text>
             <view class="b-field"><text class="b-label">教学经历（月，自述）</text><input class="b-input" v-model="evidence.experienceMonths" :disabled="busy || uncertain" type="number" maxlength="3" placeholder="0–120，可空"/></view>
             <view class="b-field"><text class="b-label">相关课程成绩（0–100，自述）</text><input class="b-input" v-model="evidence.academicScore" :disabled="busy || uncertain" type="number" maxlength="3" placeholder="0–100，可空"/></view>
             <view class="b-field"><text class="b-label">教学能力（0–5，自评）</text><input class="b-input" v-model="evidence.teachingSkillLevel" :disabled="busy || uncertain" type="number" maxlength="1" placeholder="0–5，可空"/></view>
             <view class="b-field"><text class="b-label">匿名教学案例数（自述）</text><input class="b-input" v-model="evidence.caseCount" :disabled="busy || uncertain" type="number" maxlength="2" placeholder="0–50，可空"/></view>
             <view class="b-field"><text class="b-label">案例摘要（选填）</text><textarea class="b-textarea" v-model="form.caseSummary" :disabled="busy || uncertain" maxlength="120" placeholder="只写匿名教学方法与结果，不写学生姓名、学校或联系方式"/></view>
             <text class="b-muted">上述数据是个人自述；当前审核不核验成绩或教学结果。留空不会被填上虚构评分。</text>
-            <view class="b-field"><text class="b-label">个人介绍 *（10–500 字）</text><textarea class="b-textarea" v-model="form.introduction" :disabled="busy || uncertain" maxlength="500" placeholder="介绍虚构的教学经历与特点"/></view>
+            <view class="b-field"><text class="b-label">个人介绍 *（10–1000 字）</text><textarea class="b-textarea" v-model="form.introduction" :disabled="busy || uncertain" maxlength="1000" placeholder="介绍虚构的教学经历与特点"/><text class="b-muted">{{form.introduction.length}} / 1000 字</text></view>
             <text class="b-muted">草稿可暂不完整；提交审核前需填写所有必填项。请勿填写真实身份信息或上传证件。</text>
             <view class="b-actions"><button class="b-button secondary" :disabled="busy || uncertain" @click="save(false)">保存草稿</button><button class="b-button" :disabled="busy || uncertain" :loading="busy" @click="save(true)">{{ application?.status === 'approved' ? '修改并重新送审' : '提交审核' }}</button></view>
           </view>

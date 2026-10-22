@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import {scheduleChoices} from '../../services/availability'
 import AiCompanion from '../../components/AiCompanion.vue'
-import {pendingCompanionBrief} from '../../services/assistant'
+import {desiredSchedule} from '../../services/assistant-command'
+import {pendingCompanionBrief,pendingCompanionAuto} from '../../services/assistant'
 import XianLocationPicker from '../../components/XianLocationPicker.vue'
 import { readParentLocation, saveParentLocation, xianPlaces, type LocationPoint } from '../../services/location'
 import { parseBriefLocally } from '../../services/brief-parser'
@@ -42,7 +44,15 @@ const parseLoading = ref(false)
 const parseError = ref('')
 const needsLogin = ref(false)
 onShow(() => {
-  if(pendingCompanionBrief.value){brief.value=pendingCompanionBrief.value;pendingCompanionBrief.value=null;editBrief()}
+  parentLocation.value=readParentLocation()
+  if(pendingCompanionBrief.value){
+    brief.value=pendingCompanionBrief.value;pendingCompanionBrief.value=null;editBrief()
+    if(pendingCompanionAuto.value){
+      pendingCompanionAuto.value=false
+      input.value={...suggestionInput(parseBriefLocally(brief.value)),desiredTime:desiredSchedule(brief.value)}
+      void recommend()
+    }
+  }
   parentLocation.value=readParentLocation()
   if(!parentLocation.value)radiusKm.value=undefined
   if (apiMode) void matchAssistantStatus().then(status => { assistantState.value = status.enabled ? 'enabled' : 'disabled' }).catch(() => { assistantState.value = 'error' })
@@ -73,7 +83,7 @@ async function parseBrief() {
 function applySuggestion() {
   const value = suggestion.value
   if (!value) return
-  input.value = suggestionInput(value)
+  input.value = {...suggestionInput(value),desiredTime:desiredSchedule(brief.value)}
   suggestion.value = null
   if(input.value.mode!=='线下')radiusKm.value=undefined
   edit()
@@ -122,13 +132,14 @@ function openLogin() { uni.navigateTo({ url: '/pages/auth/login' }) }
       <text class="label">每小时预算上限（元）*</text><input v-model="input.budget" :disabled="loading" type="digit" maxlength="12" placeholder="如 100，范围 0.01–2000" @input="edit"/>
       <text class="label">授课方式</text><view class="chips"><button v-for="m in modes" :key="m" :disabled="loading" :class="{selected:input.mode===m}" @click="setMode(m)">{{ m }}</button></view>
       <view v-if="parentLocation && input.mode==='线下'" class="nearby"><text class="label">附近筛选（片区参考直线距离）</text><view class="chips"><button :class="{selected:radiusKm===undefined}" @click="radiusKm=undefined;edit()">不限距离</button><button v-for="r in [5,10,20]" :key="r" :class="{selected:radiusKm===r}" @click="radiusKm=r;edit()">{{r}} km 内</button></view></view>
+      <text class="label">期望上课时间（选填）</text><input v-model="input.desiredTime" :disabled="loading" maxlength="100" placeholder="例如：周六下午；精确钟点需双方确认" @input="edit"/><picker :range="scheduleChoices" @change="input.desiredTime=scheduleChoices[Number($event.detail.value)];edit()"><view class="hint">选择每周常用时段 ⌄</view></picker>
       <text class="label">教学偏好（选填）</text><input v-model="input.preference" :disabled="loading" maxlength="40" placeholder="如 耐心 讲解，以空格分隔" @input="edit"/>
       <text class="hint">只填写教学偏好，不要输入姓名、联系方式、学校班级等个人信息。</text>
-      <view class="weight-panel"><view class="weight-heading"><text class="label">调整量化评分权重</text><button class="secondary-button" @click="resetWeights">恢复默认</button></view><text class="hint">默认偏重教学经历、相关课程成绩与教学能力。价格仍是预算硬条件，评分中仅占 5/100；拖动滑块可调整各因子，相对权重会归一为 100 分。自述资料未经真实核验，不能代表教学效果。</text><view v-for="factor in matchFactors" :key="factor.key" class="weight-row"><text>{{ factor.label }} {{ weights[factor.key] }}</text><slider :value="weights[factor.key]" :min="0" :max="50" :step="1" activeColor="#2868e4" @change="setWeight(factor.key,$event)"/></view><text class="hint">当前权重合计 {{ weightTotal }}；至少保留一项非零。</text></view>
+      <view class="weight-panel"><view class="weight-heading"><text class="label">调整量化评分权重</text><button class="secondary-button" @click="resetWeights">恢复默认</button></view><text class="hint">默认学科35、时间30、经验20、费用10、其他5。价格仍是预算硬条件；拖动滑块可调整各因子，相对权重会归一为 100 分。自述资料未经真实核验，不能代表教学效果。</text><view v-for="factor in matchFactors" :key="factor.key" class="weight-row"><text>{{ factor.label }} {{ weights[factor.key] }}</text><slider :value="weights[factor.key]" :min="0" :max="50" :step="1" activeColor="#2868e4" @change="setWeight(factor.key,$event)"/></view><text class="hint">当前权重合计 {{ weightTotal }}；至少保留一项非零。</text></view>
       <button class="primary-button submit" :loading="loading" :disabled="loading" @click="recommend">{{ loading ? '正在匹配…' : '生成推荐' }}</button>
       <view v-if="error" class="error" role="alert">{{ error }}</view>
     </view>
-    <view class="surface-card rules"><text class="label">推荐规则公开可查</text><text>先按科目、预算和授课方式硬过滤。六项评分因子：教学经历（自述月数，上限 36 月）、学业表现（自评 0–100）、教学能力（自评 0–5）、匿名案例数（自述，上限 10）、偏好关键词命中率、价格余量。各项得分 = 四舍五入(100 × 该项权重 ÷ 总权重 × 该项比例)，合计最多 100。缺失证据记 0，不推断；价格默认只占 5/100。选位置后，同分线下片区优先距离近，再按价格、ID 排序。评分只用于演示排序，不是资质认证或教学效果评估。</text></view>
+    <view class="surface-card rules"><text class="label">推荐规则公开可查</text><text>先按科目、预算、方式和所选距离硬过滤。默认学科35、时间30、经验20、费用10、其他5，共100分。经验按自述月数/36封顶；费用按预算余量比例；其他因素是课程成绩/100、能力/5、案例数/10和偏好命中率四项的平均值，缺失资料记0。时间只比较同一条声明内的星期与时段，不确定钟点或复杂限制不加分。调整权重后按最大余数法分配100分，再乘各项比例并取整。同分按距离、价格、ID稳定排序。推荐辅助选择，仍需双方确认教学时间与资质。</text></view>
     <view v-if="result" class="results">
       <text class="label">{{ summary }}</text><text class="hint">{{ result.total }} 位候选，{{ result.eligible }} 位符合条件。排除：科目 {{ result.excluded.subject }}、预算 {{ result.excluded.budget }}、方式 {{ result.excluded.mode }}、距离或位置缺失 {{ result.excluded.distance }}（按首个不满足条件统计）。</text>
       <view v-if="!result.results.length" class="surface-card empty">没有符合条件的家教。可尝试提高预算、调整方式或科目；不会自动放宽你的条件。</view>

@@ -6,6 +6,7 @@ import { parseBriefLocally } from './brief-parser'
 import { learningTopics } from '../data/learning'
 export interface ChatMessage{role:'user'|'assistant';content:string}
 export interface AssistantReply{reply:string;source:'model'|'local';matchBrief?:string}
+export const pendingCompanionAuto=shallowRef(false)
 export const pendingCompanionBrief=shallowRef<string|null>(null)
 export function companionStatus():Promise<{enabled:boolean}>{return apiMode?apiRequest('GET','/api/assistant/status',undefined,false):Promise.resolve({enabled:false})}
 export function remoteChat(messages:ChatMessage[]):Promise<AssistantReply>{return apiRequest('POST','/api/assistant/chat',{messages})}
@@ -13,6 +14,7 @@ export function localChat(text:string):AssistantReply{
  const brief=text.trim()
  if(!brief||brief.length>500)throw new BusinessError('INVALID','请输入1–500字的问题')
  if(/(?:1[3-9]\d{9}|[\w.+-]+@[\w.-]+\.[a-z]{2,}|身份证|微信|住址|姓名|电话|QQ号)/i.test(brief))throw new BusinessError('INVALID','请勿填写姓名、联系方式或地址')
+ if(/使用说明|平台.*使用|怎么.*使用|如何.*使用/.test(brief))return {source:'local',reply:'家长使用流程：①选择科目、年级、预算、上课时间和授课方式；②在智能匹配查看推荐理由，选位置可筛附近老师；③进入老师详情核对资料后发起预约；④在我的预约或订单地图查看进度。也可以直接说“请帮我匹配初中数学，预算100元，线上，周六下午”。只有你确认提交后才会创建预约。'}
  if(/订单|地图|接单|预约/.test(brief))return {source:'local',reply:'我可以带你打开订单地图：登录后，家长查看自己的预约，家教查看收到的预约，管理员查看全部。页面每10秒刷新一次；我无法在对话中直接查询、接单或改动订单。'}
  if(brief.length>=6&&brief.length<=160){
   const s=parseBriefLocally(brief)

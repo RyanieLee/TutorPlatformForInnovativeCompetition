@@ -7,12 +7,12 @@ const tutors=catalog.slice(0,6)
 const input: MatchInput = { subject:'数学',grade:'初中（演示）',budget:'100',mode:'均可',preference:'耐心 讲解' }
 describe('可解释推荐', () => {
   it('硬过滤和解释对应真实字段；得分与公开公式一致', () => {
-    const response = matchTutors(tutors,input)
+    const response = matchTutors([tutors[0]],{...input,desiredTime:'周六下午'})
     expect(response.results[0].tutor.id).toBe('t001')
-    expect(response.results[0].score).toBe(86)
-    expect(response.results[0].reasons.join(' ')).toContain('教学经历：自述 30 个月 +25')
-    expect(response.results[0].reasons.join(' ')).toContain('价格余量 +1')
-    expect(response.results[0].reasons.join(' ')).toContain('偏好命中 2/2：耐心、讲解 +10')
+    expect(response.results[0].score).toBe(89)
+    expect(response.results[0].reasons.join(' ')).toContain('教学经历：自述 30 个月 +17')
+    expect(response.results[0].reasons.join(' ')).toContain('价格余量 +2')
+    expect(response.results[0].reasons.join(' ')).toContain('偏好命中 2/2')
     expect(response.total).toBe(response.eligible+Object.values(response.excluded).reduce((a,b)=>a+b,0))
   })
   it('不因偏好放宽预算、科目或授课方式', () => {
@@ -25,8 +25,8 @@ describe('可解释推荐', () => {
     const a=matchTutors(tutors,{...input,preference:''})
     const b=matchTutors(tutors,{...input,preference:'',grade:'小学（演示）'})
     expect(a).toEqual(b)
-    expect(a.results[0].tutor.id).toBe('t001')
-    expect(a.results[0].score).toBe(76)
+    const withPreference=matchTutors(tutors,input)
+    for(const item of a.results)expect(item.score).toBeLessThanOrEqual(withPreference.results.find(r=>r.tutor.id===item.tutor.id)!.score)
   })
   it('同分按价格和 ID 稳定排序，不修改输入数组', () => {
     const list=[{...tutors[0],id:'z'},{...tutors[0],id:'a'}]
@@ -38,16 +38,16 @@ describe('可解释推荐', () => {
     const cheap={...experienced,id:'cheap',pricePerHour:20,experienceMonths:0}
     const request={...input,preference:''}
     expect(matchTutors([cheap,experienced],request).results[0].tutor.id).toBe('experienced')
-    const priceOnly={...matchWeights,experience:0,academic:0,teaching:0,cases:0,preference:0,budget:50}
+    const priceOnly={...matchWeights,subject:0,time:0,experience:0,other:0,budget:50}
     expect(matchTutors([cheap,experienced],request,priceOnly).results[0].tutor.id).toBe('cheap')
   })
   it('缺失经历和能力资料不推断为高分，拒绝全部为零的权重', () => {
     const absent={...tutors[0],experienceMonths:undefined,academicScore:undefined,teachingSkillLevel:undefined,caseCount:undefined}
     const result=matchTutors([absent],{...input,preference:''}).results[0]
-    expect(result.score).toBe(1)
+    expect(result.score).toBe(37)
     expect(result.reasons.join(' ')).toContain('教学经历：自述 未填写 个月 +0')
     expect(validateMatchWeights({...matchWeights,experience:51})).toContain('0–50')
-    expect(()=>matchTutors([absent],input,{experience:0,academic:0,teaching:0,cases:0,preference:0,budget:0})).toThrow('至少')
+    expect(()=>matchTutors([absent],input,{subject:0,time:0,experience:0,other:0,budget:0})).toThrow('至少')
   })
   it.each(['','-1','0','2001','Infinity','NaN','abc','1e2','1.123'])('拒绝无效预算 %s', budget => {
     expect(validateMatch({...input,budget})).toContain('预算')

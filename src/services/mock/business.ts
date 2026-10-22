@@ -23,6 +23,7 @@ function requireRole(user: User, role: UserRole): void {
 function uid(prefix: string): string { return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}` }
 function now(): string { return new Date().toISOString() }
 function cleanInput(input: TutorApplicationInput): TutorApplicationInput {
+  if(input.introduction.length>1000)throw new BusinessError('INVALID','个人介绍最多1000字')
   const price = Number(input.pricePerHour)
   return {
     displayName: input.displayName.trim(), university: input.university.trim(), major: input.major.trim(),
