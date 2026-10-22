@@ -1,8 +1,8 @@
 # D 演示部署
 
-## 实际状态（2026-10-20）
+## 实际状态（2026-10-22复查）
 
-当前没有可交付的公开 HTTPS 地址。`gh api .../pages` 返回 404；尝试启用 Pages 返回 **403 Resource not accessible by integration**。这是当前 GitHub 集成权限边界，不是网站构建失败。Sites 技能所需 `site-workflow.mjs` 在当前执行环境中不可用，技能资源读取也失败，因此没有创建空站点或声称发布成功。
+当前没有可交付的公开 HTTPS 地址。`gh api .../pages` 返回 404；尝试启用 Pages 返回 **403 Resource not accessible by integration**。2026-10-22本轮再次GET查询和POST启用仍分别返回404/403。这是当前 GitHub 集成权限边界，不是网站构建失败。Sites 技能所需 `site-workflow.mjs` 在当前执行环境中不可用，技能资源读取也失败，因此没有创建空站点或声称发布成功。
 
 ## 已补充的 Vercel 静态部署配置
 

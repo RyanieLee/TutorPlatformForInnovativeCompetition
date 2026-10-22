@@ -30,7 +30,7 @@ function chooseLocation(point:LocationPoint|null){try{saveParentLocation(point);
 function useExample(example:typeof examples[number]){brief.value=example.brief;chooseLocation(xianPlaces[example.place]);editBrief()}
 function setMode(mode:TeachingMode){input.value.mode=mode;if(mode!=='线下')radiusKm.value=undefined;edit()}
 const study=ref<ReturnType<typeof studyMatchContext>>(null)
-onLoad(options=>{const context=studyMatchContext(options?.topicId);if(context){study.value=context;input.value=context.input}})
+onLoad(options=>{if(options?.demoScenario==='math'){input.value={subject:'数学',grade:'初中（演示）',budget:'100',mode:'均可',preference:'耐心',desiredTime:'周六下午'}}const context=studyMatchContext(options?.topicId);if(context){study.value=context;input.value=context.input}})
 function returnToStudy(){if(study.value)uni.navigateTo({url:'/pages/learning/index?topicId='+encodeURIComponent(study.value.topic.id)})}
 const modes: TeachingMode[] = ['均可', '线上', '线下']
 const result = ref<MatchResponse | null>(null)

@@ -8,7 +8,8 @@ export function readToken(): string { try { return String(uni.getStorageSync(TOK
 export function saveToken(token: string) { uni.setStorageSync(TOKEN_KEY, token) }
 export function clearToken() { uni.removeStorageSync(TOKEN_KEY) }
 interface Envelope<T> { data?: T; error?: { code: string; message: string } }
-function unpack<T>(statusCode: number, body: Envelope<T>, authenticated: boolean): T {
+function unpack<T>(statusCode: number, body: Envelope<T>, authenticated: boolean, requestToken: string): T {
+  if (authenticated && readToken() !== requestToken) throw new BusinessError('UNAUTHORIZED', '登录身份已变化，请重新操作')
   if (statusCode >= 200 && statusCode < 300 && body && 'data' in body) return body.data as T
   if (statusCode === 401 && authenticated) { clearToken(); unauthorized?.() }
   const codes = ['UNAUTHORIZED','FORBIDDEN','NOT_FOUND','INVALID','CONFLICT','RATE_LIMIT','MODEL_UNAVAILABLE','MODEL_UPSTREAM'] as const
@@ -21,7 +22,7 @@ export async function apiRequest<T>(method: 'GET'|'POST'|'PUT', path: string, da
   const response = await new Promise<UniApp.RequestSuccessCallbackResult>((resolve, reject) => {
     uni.request({ url: apiBaseUrl + path, method, data: (data ?? (method === 'GET' ? undefined : {})) as AnyObject, header: token ? { Authorization: 'Bearer ' + token } : {}, success: resolve, fail: reject })
   }).catch(() => { throw new BusinessError('STORAGE', '无法连接开发 API，请检查服务地址和网络') })
-  return unpack(response.statusCode, response.data as Envelope<T>, authenticated)
+  return unpack(response.statusCode, response.data as Envelope<T>, authenticated, token)
 }
 export async function apiUploadFile<T>(path: string, filePath: string, name = 'file'): Promise<T> {
   if (!apiBaseUrl) throw new BusinessError('STORAGE', '请配置 VITE_API_BASE_URL')
@@ -33,5 +34,5 @@ export async function apiUploadFile<T>(path: string, filePath: string, name = 'f
   let body: Envelope<T>
   try { body = JSON.parse(response.data) as Envelope<T> }
   catch { throw new BusinessError('STORAGE', '上传服务响应无效') }
-  return unpack(response.statusCode, body, true)
+  return unpack(response.statusCode, body, true, token)
 }

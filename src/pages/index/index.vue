@@ -58,6 +58,8 @@ async function loadTutors(append = false) {
 watch([query, subject, teachingMode], () => { void loadTutors() })
 onShow(() => { void loadTutors() })
 const openLearning = () => uni.navigateTo({ url: '/pages/learning/index' })
+const openAssistant=()=>uni.navigateTo({url:'/pages/assistant/index?starter=match'})
+const openDemo=()=>uni.navigateTo({url:'/pages/demo/index'})
 const openMatch = () => uni.navigateTo({ url: '/pages/match/index' })
 const goTutors = () => uni.pageScrollTo({ selector: '#tutor-results', duration: 260 })
 const openTutor = (id: string) => uni.navigateTo({ url: '/pages/tutors/detail?id=' + id })
@@ -67,7 +69,7 @@ const openProfile = () => uni.switchTab({ url: '/pages/profile/index' })
 
 <template>
   <ParentLayout title="找到适合你的学习伙伴" active="home"><view class="page">
-    <view class="hero"><view class="hero-copy"><text class="eyebrow">领航云学堂 · 陪伴每一步成长</text><text class="headline">让优秀的大学生，<br/>成为孩子的成长伙伴。</text><text class="intro">连接学习需求与大学生家教，按科目、时间和授课方式，找到更合拍的学习节奏。</text><view class="hero-actions"><button class="hero-cta" @click="openMatch">开始智能匹配 →</button><button class="hero-outline" @click="goTutors">浏览家教老师</button></view><view class="links"><text @click="openOrders">查看我的预约 ↗</text><text @click="openProfile">切换演示身份 ↗</text></view></view><view class="hero-art"><image class="hero-mascot" src="/static/linghang-mascot.svg" mode="aspectFit" aria-label="领航云学堂小书灵"/><LessonFlip/></view></view>
+    <view class="hero"><view class="hero-copy"><text class="eyebrow">领航云学堂 · AI辅助学习与家教匹配</text><text class="headline">从一句学习需求，<br/>到一位合拍的家教。</text><text class="intro">和小书灵整理需求，读懂推荐理由，再让大学生家教接力讲解与反馈。</text><view class="hero-actions"><button class="hero-cta" role="button" tabindex="0" @keydown.enter.prevent="openAssistant" @click="openAssistant">和 AI 说说需求 →</button><button class="hero-outline" role="button" tabindex="0" @keydown.enter.prevent="openMatch" @click="openMatch">开始智能匹配 →</button></view><view class="links"><text @click="openDemo">5分钟演示路线 ↗</text><text @click="goTutors">浏览家教老师 ↗</text><text @click="openOrders">查看我的预约 ↗</text><text @click="openProfile">切换演示身份 ↗</text></view></view><view class="hero-art"><image class="hero-mascot" src="/static/linghang-mascot.svg" mode="aspectFit" aria-label="领航云学堂小书灵"/><LessonFlip/></view></view>
     <button class="ai-entry" @click="openMatch"><text class="ai-kicker">AI 家教匹配</text><text class="ai-title">不知道选哪位？</text><text class="ai-note">在西安地图选位置，按科目、预算和授课方式查看匹配理由。</text><text class="ai-arrow" aria-hidden="true">↗</text></button>
     <button class="learning-entry" @click="openLearning"><text class="learning-kicker">AI学习中心 · 各科笔记与智能出卷</text><text class="learning-title">学一个知识点，练一份专属卷</text><text class="learning-note">原创笔记 → 主题练习 → 自测解析 → 找老师讲解 ↗</text></button>
     <input v-model="query" class="search" placeholder="搜索科目、地区或老师姓名"/>

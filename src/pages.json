@@ -8,7 +8,9 @@
     },
     {
       "path": "pages/teaching/loop",
-      "style": { "navigationBarTitleText": "教学计划与反馈" }
+      "style": {
+        "navigationBarTitleText": "教学计划与反馈"
+      }
     },
     {
       "path": "pages/tutors/detail",
@@ -122,6 +124,12 @@
       "path": "pages/assistant/index",
       "style": {
         "navigationBarTitleText": "小书灵 · AI语音问答"
+      }
+    },
+    {
+      "path": "pages/demo/index",
+      "style": {
+        "navigationBarTitleText": "AI演示导航"
       }
     }
   ],

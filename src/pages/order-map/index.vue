@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {computed,ref,watch,onMounted,onBeforeUnmount} from 'vue'
-import {onShow,onHide} from '@dcloudio/uni-app'
+import {onLoad,onShow,onHide} from '@dcloudio/uni-app'
 import ParentLayout from '../../components/ParentLayout.vue'
 import XianLocationPicker from '../../components/XianLocationPicker.vue'
 import {currentSession,restoreSession} from '../../utils/session'
@@ -49,6 +49,7 @@ function chooseMode(value:'account'|'example'){clear();mode.value=value;page.val
 function chooseStatus(value:BookingStatus|undefined){clear();status.value=value;page.value=1;void refresh()}
 function turn(value:number){if(busy.value||value<1||value>pages.value)return;clear();page.value=value;void refresh()}
 function stop(){active=false;initialized=false;clearInterval(timer);timer=undefined;clear()}
+onLoad(options=>{if(options?.example==='1')mode.value='example'})
 onShow(async()=>{
  active=true;initialized=false
  try{await restoreSession()}catch(cause){if(active){error.value=errorMessage(cause);ready.value=true}return}
