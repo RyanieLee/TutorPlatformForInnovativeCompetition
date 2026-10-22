@@ -7,6 +7,8 @@ describe('领航云学堂小书灵平台指南', () => {
     expect(platformGuideSummary).toContain('① 首页筛选老师')
     expect(platformGuideSummary).toContain('④ 「我的预约」')
     expect(platformWelcome).toContain('领航云学堂')
+    expect(platformWelcome).toContain('不只找老师')
+    expect(platformWelcome).toContain('作业图片')
   })
   it('按任务解释匹配、预约和订单，而不是夸大自动操作', () => {
     expect(platformHelpAnswer('怎么匹配老师')).toContain('生成推荐')
@@ -23,6 +25,8 @@ describe('领航云学堂小书灵平台指南', () => {
   })
   it('学习和隐私指引忠于演示能力', () => {
     expect(platformHelpAnswer('学习中心能做什么')).toContain('固定示例题')
+    expect(platformHelpAnswer('这道题不会做，可以分步讲解吗')).toContain('分步讲题')
+    expect(platformHelpAnswer('作文怎么修改')).toContain('作文文字')
     expect(platformHelpAnswer('软件会泄露隐私吗')).toContain('未成年人个人信息')
     expect(platformHelpAnswer('随便说个冷笑话')).toBeNull()
   })
