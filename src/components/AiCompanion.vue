@@ -63,7 +63,9 @@ async function send(){
 function ask(text:string){draft.value=text;void send()}
 function startHomeworkReview(){draft.value='请帮我批改下面的作业，指出错误、解释理由并给修改建议：\n题目：\n我的答案：\n（选填）参考答案：'}
 function selectHomeworkImage(){
+ const version=companionState.version,owner=currentSession.value?.user.id??'guest'
  uni.chooseImage({count:1,sizeType:['compressed'],sourceType:['album','camera'],success:result=>{
+  if(!visible.value||version!==companionState.version||owner!==(currentSession.value?.user.id??'guest'))return
   const path=result.tempFilePaths?.[0]
   if(path){imagePath.value=path;imageConsent.value=false;error.value='';loginNeeded.value=false}
  },fail:result=>{if(!String(result.errMsg??'').toLowerCase().includes('cancel'))error.value='无法选择图片，请检查浏览器或设备的图片权限'}})
@@ -76,14 +78,15 @@ async function reviewSelectedImage(){
  if(!apiMode){error.value='当前为本机演示模式，图片批改需要启动开发 API 并配置支持图片输入的模型。你可以粘贴文字版题目与答案。';return}
  if(homeworkStatus.value==='checking'){error.value='正在检查图片批改服务配置，请稍后再试';return}
  if(!homeworkEnabled.value){error.value='服务端尚未配置支持图片输入的模型。请配置视觉模型，或粘贴文字版题目与答案。';return}
- let session
- try{session=await restoreSession()}catch{error.value='暂时无法读取登录状态，请重新登录';loginNeeded.value=true;return}
- if(!session){error.value='请先登录家长或大学生家教演示账户，再使用图片批改';loginNeeded.value=true;return}
- if(!['parent','tutor'].includes(session.user.role)){error.value='当前身份不能使用图片批改，请切换家长或大学生家教身份';return}
  error.value='';loginNeeded.value=false
- const token=++companionState.version;running=token;busy.value=true
+ const path=imagePath.value,token=++companionState.version;running=token;busy.value=true
  try{
-  const result=await requestHomeworkImage(imagePath.value)
+  const session=await restoreSession()
+  if(token!==companionState.version||!visible.value||imagePath.value!==path||!imageConsent.value)return
+  if(!session){loginNeeded.value=true;throw new BusinessError('UNAUTHORIZED','请先登录家长或大学生家教演示账户，再使用图片批改')}
+  if(session.user.id!==currentSession.value?.user.id)return
+  if(!['parent','tutor'].includes(session.user.role))throw new BusinessError('FORBIDDEN','当前身份不能使用图片批改，请切换家长或大学生家教身份')
+  const result=await requestHomeworkImage(path)
   if(token!==companionState.version)return
   const bubbleId=token*2
   messages.value.push({role:'user',content:'【作业图片】已提交一张经确认脱敏的图片，请求逐题讲解。',source:'guide',id:bubbleId})

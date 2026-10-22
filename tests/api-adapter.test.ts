@@ -119,3 +119,65 @@ it('照片与作业图片共用上传器并保留各自的字段名', async () =
   await apiUploadFile('/api/assistant/homework-review-image','/local/homework.jpg','image')
   expect(uploads.map(x=>x.name)).toEqual(['file','image'])
 })
+
+it.each([200,401])('切换账号后忽略旧请求的 %s 响应，不清空新会话',async(statusCode)=>{
+ vi.stubEnv('VITE_API_BASE_URL','http://127.0.0.1:3001');vi.resetModules()
+ let token='old-token';let respond:(value:unknown)=>void=()=>{}
+ const remove=vi.fn(()=>{token=''}),expired=vi.fn()
+ vi.stubGlobal('uni',{getStorageSync:()=>token,removeStorageSync:remove,request:(o:{success:(v:unknown)=>void})=>{respond=o.success}})
+ const {apiRequest,onUnauthorized}=await import('../src/services/api/client');onUnauthorized(expired)
+ const request=apiRequest('GET','/api/bookings/mine');token='new-token'
+ respond({statusCode,data:statusCode===200?{data:[{id:'old-private-order'}]}:{error:{code:'UNAUTHORIZED'}}})
+ await expect(request).rejects.toMatchObject({code:'UNAUTHORIZED'})
+ expect(token).toBe('new-token');expect(remove).not.toHaveBeenCalled();expect(expired).not.toHaveBeenCalled()
+})
+it('旧上传请求返回401不登出新账户',async()=>{
+ vi.stubEnv('VITE_API_BASE_URL','http://127.0.0.1:3001');vi.resetModules()
+ let token='old-token';let respond:(value:unknown)=>void=()=>{}
+ const expired=vi.fn()
+ vi.stubGlobal('uni',{getStorageSync:()=>token,removeStorageSync:()=>{token=''},uploadFile:(o:{success:(v:unknown)=>void})=>{respond=o.success}})
+ const {apiUploadFile,onUnauthorized}=await import('../src/services/api/client');onUnauthorized(expired)
+ const request=apiUploadFile('/api/tutor-applications/photo','old-photo.png');token='new-token'
+ respond({statusCode:401,data:JSON.stringify({error:{code:'UNAUTHORIZED'}})})
+ await expect(request).rejects.toMatchObject({code:'UNAUTHORIZED'})
+ expect(token).toBe('new-token');expect(expired).not.toHaveBeenCalled()
+})
+
+it('旧退出请求完成后保留新令牌和新会话',async()=>{
+ vi.stubEnv('VITE_API_BASE_URL','http://127.0.0.1:3001');vi.resetModules()
+ let token='old-token';let respond:(v:unknown)=>void=()=>{}
+ vi.stubGlobal('uni',{getStorageSync:()=>token,removeStorageSync:()=>{token=''},request:(o:{success:(v:unknown)=>void})=>{respond=o.success}})
+ const {ApiAuthService}=await import('../src/services/api/auth')
+ const operation=new ApiAuthService().logout();token='new-token'
+ respond({statusCode:200,data:{data:{ok:true}}})
+ await expect(operation).rejects.toMatchObject({code:'UNAUTHORIZED'});expect(token).toBe('new-token')
+ const {currentSession:session,logout:leave}=await import('../src/utils/session')
+ const {authService:auth}=await import('../src/services/auth')
+ let finish:()=>void=()=>{};vi.spyOn(auth,'logout').mockImplementation(()=>new Promise(resolve=>{finish=resolve}))
+ session.value={user:{id:'old',displayName:'旧账户',role:'parent'},mode:'server',issuedAt:'old'}
+ const leaving=leave();session.value={user:{id:'new',displayName:'新账户',role:'tutor'},mode:'server',issuedAt:'new'}
+ finish();await leaving;expect(session.value?.user.id).toBe('new')
+})
+it('较早登录的迟到响应不能覆盖较新的令牌',async()=>{
+ vi.stubEnv('VITE_API_BASE_URL','http://127.0.0.1:3001');vi.resetModules()
+ let token='';const responses:((v:unknown)=>void)[]=[]
+ vi.stubGlobal('uni',{getStorageSync:()=>token,setStorageSync:(_:string,value:string)=>{token=value},request:(o:{success:(v:unknown)=>void})=>responses.push(o.success)})
+ const {ApiAuthService}=await import('../src/services/api/auth');const auth=new ApiAuthService()
+ const old=auth.login({kind:'password',loginId:'old',password:'test'}),latest=auth.login({kind:'password',loginId:'new',password:'test'})
+ responses[1]({statusCode:200,data:{data:{token:'new-token',user:{id:'new',role:'parent'}}}});await latest
+ responses[0]({statusCode:200,data:{data:{token:'old-token',user:{id:'old',role:'parent'}}}})
+ await expect(old).rejects.toMatchObject({code:'UNAUTHORIZED'});expect(token).toBe('new-token')
+})
+
+it('恢复旧会话的迟到结果不覆盖刚登录的身份',async()=>{
+ vi.resetModules()
+ const {authService:auth}=await import('../src/services/auth')
+ const session={user:{id:'new',displayName:'新家教',role:'tutor' as const},mode:'mock' as const,issuedAt:'new'}
+ let finish:(v:any)=>void=()=>{}
+ vi.spyOn(auth,'restoreSession').mockImplementation(()=>new Promise(resolve=>{finish=resolve}))
+ vi.spyOn(auth,'login').mockResolvedValue(session)
+ const {restoreSession:restore,loginDemo:login,currentSession:current}=await import('../src/utils/session')
+ const restoring=restore();await login('tutor')
+ finish({user:{id:'old',displayName:'旧家长',role:'parent'},mode:'mock',issuedAt:'old'})
+ expect((await restoring)?.user.id).toBe('new');expect(current.value?.user.id).toBe('new')
+})
