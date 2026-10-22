@@ -34,3 +34,9 @@
 ## 启动
 
 仓库根目录 `npm ci`；`server/` 执行 `npm ci`、`npm run db:generate`。按 `DEMO_GUIDE.md` 初始化开发数据库和账户，再运行API与H5。纯本机演示可在根目录直接 `npm run dev:h5 -- --host 0.0.0.0`。问答路由为 `/#/pages/assistant/index`。
+
+## 验证与截图
+
+根目录类型检查和81项单元测试、B工作流9项、后端构建与96项测试通过；Mock/API × H5/微信小程序四种构建通过。演示验收涵盖初始化保护、资料重审、预约、权限、重启持久化和备份恢复。浏览器完整回归为48项通过、12项按数据模式跳过，含模拟麦克风/朗读接口与定位权限、1000字资料保存/审核、照片上传、语音直接推荐和订单自动刷新。
+
+可查看 [手机语音问答](screenshots/voice-api-mobile.png)、[家教定位](screenshots/tutor-location-api-mobile.png)、[匹配权重](screenshots/ranking-api-mobile.png) 和 [照片审核](screenshots/tutor-photo-api-mobile.png)。麦克风和定位测试使用浏览器模拟能力，不代表已经验证具体手机设备或语音服务供应商。

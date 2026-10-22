@@ -98,6 +98,7 @@ test('搜索→推荐理由→原详情预约→家教接单→家长查询→�
   await page.context().setGeolocation({latitude:34.158,longitude:108.881})
   await button(page,'定位到附近公共片区').click()
   await expect(field(page,'例如：示例大学城')).toHaveValue('长安区 · 大学城')
+  await page.locator('.b-field').filter({has:page.locator('.location-picker')}).screenshot({path:`docs/screenshots/tutor-location-${info.project.name}.png`})
   await field(page,'填写 1–1000 元').fill('80')
   await field(page,'例如：周末下午').fill('周末下午')
   await field(page,'介绍虚构的教学经历与特点').fill('虚构演示资料'.repeat(166)+'资料介绍')

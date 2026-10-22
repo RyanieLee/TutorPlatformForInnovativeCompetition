@@ -22,6 +22,10 @@ describe('空闲时间与明确匹配指令',()=>{
  })
  it('只执行明确且资料齐全的匹配指令，不执行使用说明或预约',()=>{
   const command=matchingCommand('请帮我匹配初中数学，预算100元，线上，周六下午')!
+  expect(matchingCommand('请帮我匹配高中英语预算200元，线下',['请帮我匹配初中数学预算100元，线上，周六下午'])?.input).toMatchObject({subject:'英语',budget:'200',grade:'高中（演示）',mode:'线下',desiredTime:''})
+  expect(matchingCommand('请帮我匹配数学预算2001元',['初中数学预算100元'])?.error).not.toBe('')
+  expect(matchingCommand('开始匹配',['初中数学预算100元'])?.error).toBe('')
+  expect(matchingCommand('请帮我开始匹配',['初中数学预算100元','线上周六下午'])?.error).toBe('')
   expect(command.error).toBe('');expect(command.input.desiredTime).toBe('周六下午')
   expect(matchingCommand('请帮我匹配数学')?.error).toContain('年级')
   for(const text of ['怎么匹配老师','请不要帮我匹配初中数学预算100元','帮我预约老师','电话13800138000请帮我匹配初中数学预算100元'])expect(matchingCommand(text)).toBeNull()

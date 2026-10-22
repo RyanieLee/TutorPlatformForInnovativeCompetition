@@ -11,7 +11,7 @@ import {matchingCommand} from '../services/assistant-command'
 const props=withDefaults(defineProps<{page?:boolean}>(),{page:false})
 const listening=ref(false),readAloud=ref(false),voiceError=ref('')
 const voice=createVoiceInput({text:text=>{listening.value=false;draft.value=text;void send()},error:message=>{listening.value=false;voiceError.value=message},end:()=>{listening.value=false}})
-function microphone(){voiceError.value='';if(listening.value){voice.stop();listening.value=false;return}listening.value=true;voice.start();if(!voice.supported)listening.value=false}
+function microphone(){voiceError.value='';if(listening.value){voice.stop();listening.value=false;return}stopVoiceOutput();listening.value=true;voice.start();if(!voice.supported)listening.value=false}
 function toggleRead(){readAloud.value=!readAloud.value;if(!readAloud.value)stopVoiceOutput()}
 const {messages,history,draft,mode,busy,error,paused}=toRefs(companionState)
 const open=ref(props.page),visible=ref(true),status=ref<'checking'|'enabled'|'disabled'|'error'>('checking'),loginNeeded=ref(false)
