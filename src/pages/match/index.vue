@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import AiCompanion from '../../components/AiCompanion.vue'
 import {pendingCompanionBrief} from '../../services/assistant'
 import XianLocationPicker from '../../components/XianLocationPicker.vue'
@@ -11,13 +11,17 @@ import { businessService } from '../../services/business'
 import { apiMode } from '../../config/runtime'
 import { BusinessError, errorMessage } from '../../services/errors'
 import { matchAssistantStatus, parseMatchBrief, type MatchSuggestion } from '../../services/api/match-assistant'
-import { demoGrades, loadMatchCandidates, matchSubjects, matchTutors, validateMatch } from '../../services/matching'
-import type { MatchInput, MatchResponse } from '../../services/matching'
+import { demoGrades, loadMatchCandidates, matchSubjects, matchTutors, validateMatch, validateMatchWeights, matchWeights, matchFactors } from '../../services/matching'
+import type { MatchInput, MatchResponse, MatchWeights } from '../../services/matching'
 import type { TeachingMode } from '../../types/tutor'
 import { restoreSession, currentSession } from '../../utils/session'
 const input = ref<MatchInput>({ subject: '', grade: '', budget: '', mode: '均可', preference: '' })
 const parentLocation=ref<LocationPoint|null>(null)
 const radiusKm=ref<number|undefined>()
+const weights=ref<MatchWeights>({...matchWeights})
+const weightTotal=computed(()=>matchFactors.reduce((sum,{key})=>sum+weights.value[key],0))
+function setWeight(key:keyof MatchWeights,event:{detail:{value:number}}){weights.value={...weights.value,[key]:Number(event.detail.value)};edit()}
+function resetWeights(){weights.value={...matchWeights};edit()}
 const locationError=ref('')
 const examples=[{title:'长安 · 数学基础',brief:'初中数学，预算100元，希望线下耐心讲解、复盘错题',place:0},{title:'小寨 · 英语阅读',brief:'初中英语，预算100元，希望线上练习阅读与口语',place:1},{title:'高新 · 物理专题',brief:'高中物理，预算150元，希望线下梳理基础与实验',place:2}]
 function chooseLocation(point:LocationPoint|null){try{saveParentLocation(point);parentLocation.value=point;if(!point)radiusKm.value=undefined;locationError.value='';edit()}catch{locationError.value='位置保存失败，请检查本机存储后重试'}}
@@ -77,14 +81,15 @@ function applySuggestion() {
 async function recommend() {
   if (loading.value) return
   result.value = null
-  error.value = validateMatch({...input.value,parentLocation:parentLocation.value,radiusKm:radiusKm.value})
+  error.value = validateMatch({...input.value,parentLocation:parentLocation.value,radiusKm:radiusKm.value}) || validateMatchWeights(weights.value)
   if (error.value) return
   const request = { ...input.value, parentLocation:parentLocation.value, radiusKm:radiusKm.value }
+  const requestWeights={...weights.value}
   const current=++matchRequest
   activeMatch=current
   summary.value = `${request.subject} · ${request.grade} · ¥${request.budget}/小时以内 · ${request.mode}${request.parentLocation?' · '+request.parentLocation.label:''}`
   loading.value = true
-  try { const candidates=await loadMatchCandidates(businessService);if(current===matchRequest)result.value = matchTutors(candidates, request) }
+  try { const candidates=await loadMatchCandidates(businessService);if(current===matchRequest)result.value = matchTutors(candidates, request, requestWeights) }
   catch (cause) { if(current===matchRequest)error.value = errorMessage(cause) }
   finally { if(activeMatch===current){loading.value = false;activeMatch=0} }
 }
@@ -119,10 +124,11 @@ function openLogin() { uni.navigateTo({ url: '/pages/auth/login' }) }
       <view v-if="parentLocation && input.mode==='线下'" class="nearby"><text class="label">附近筛选（片区参考直线距离）</text><view class="chips"><button :class="{selected:radiusKm===undefined}" @click="radiusKm=undefined;edit()">不限距离</button><button v-for="r in [5,10,20]" :key="r" :class="{selected:radiusKm===r}" @click="radiusKm=r;edit()">{{r}} km 内</button></view></view>
       <text class="label">教学偏好（选填）</text><input v-model="input.preference" :disabled="loading" maxlength="40" placeholder="如 耐心 讲解，以空格分隔" @input="edit"/>
       <text class="hint">只填写教学偏好，不要输入姓名、联系方式、学校班级等个人信息。</text>
+      <view class="weight-panel"><view class="weight-heading"><text class="label">调整量化评分权重</text><button class="secondary-button" @click="resetWeights">恢复默认</button></view><text class="hint">默认偏重教学经历、相关课程成绩与教学能力。价格仍是预算硬条件，评分中仅占 5/100；拖动滑块可调整各因子，相对权重会归一为 100 分。自述资料未经真实核验，不能代表教学效果。</text><view v-for="factor in matchFactors" :key="factor.key" class="weight-row"><text>{{ factor.label }} {{ weights[factor.key] }}</text><slider :value="weights[factor.key]" :min="0" :max="50" :step="1" activeColor="#2868e4" @change="setWeight(factor.key,$event)"/></view><text class="hint">当前权重合计 {{ weightTotal }}；至少保留一项非零。</text></view>
       <button class="primary-button submit" :loading="loading" :disabled="loading" @click="recommend">{{ loading ? '正在匹配…' : '生成推荐' }}</button>
       <view v-if="error" class="error" role="alert">{{ error }}</view>
     </view>
-    <view class="surface-card rules"><text class="label">推荐规则公开可查</text><text>先过滤科目、预算和授课方式。得分 = 科目 50 + 方式 20 + 预算余量 0–20 + 偏好命中 0–10；选位置后，线下同分优先距离近的片区，再按价格、ID 排序；线上不受位置限制。距离不加分，无法识别片区的资料不进入附近筛选。预算余量 = 四舍五入(20 × (1 − 课时费 / 预算))。偏好按资料关键词命中比例评分；空偏好为 0。</text></view>
+    <view class="surface-card rules"><text class="label">推荐规则公开可查</text><text>先按科目、预算和授课方式硬过滤。六项评分因子：教学经历（自述月数，上限 36 月）、学业表现（自评 0–100）、教学能力（自评 0–5）、匿名案例数（自述，上限 10）、偏好关键词命中率、价格余量。各项得分 = 四舍五入(100 × 该项权重 ÷ 总权重 × 该项比例)，合计最多 100。缺失证据记 0，不推断；价格默认只占 5/100。选位置后，同分线下片区优先距离近，再按价格、ID 排序。评分只用于演示排序，不是资质认证或教学效果评估。</text></view>
     <view v-if="result" class="results">
       <text class="label">{{ summary }}</text><text class="hint">{{ result.total }} 位候选，{{ result.eligible }} 位符合条件。排除：科目 {{ result.excluded.subject }}、预算 {{ result.excluded.budget }}、方式 {{ result.excluded.mode }}、距离或位置缺失 {{ result.excluded.distance }}（按首个不满足条件统计）。</text>
       <view v-if="!result.results.length" class="surface-card empty">没有符合条件的家教。可尝试提高预算、调整方式或科目；不会自动放宽你的条件。</view>
@@ -140,5 +146,5 @@ function openLogin() { uni.navigateTo({ url: '/pages/auth/login' }) }
 <style scoped>
 .page{padding:26rpx;max-width:960px;margin:auto}.hero{padding:36rpx 30rpx;background:linear-gradient(130deg,#174fae,#397edb);border-radius:24rpx;color:#fff;display:flex;flex-direction:column;gap:16rpx}.eyebrow{font-size:24rpx;opacity:.85}.title{font-size:38rpx;font-weight:700;line-height:1.4}.intro{font-size:24rpx;line-height:1.6}.surface-card{margin-top:24rpx}.label{display:block;font-size:28rpx;font-weight:700;margin:14rpx 0 18rpx}.chips{display:flex;gap:12rpx;flex-wrap:wrap;margin-bottom:18rpx}.chips button{margin:0;padding:0 20rpx;background:#edf2f9;color:#42546e;border-radius:12rpx;font-size:25rpx}.chips .selected{background:#245fc7;color:#fff}input{background:#f2f5fa;height:84rpx;padding:16rpx;border-radius:12rpx;font-size:25rpx;margin-bottom:16rpx}.hint{display:block;color:#6b7c93;font-size:23rpx;line-height:1.7}.submit{margin-top:26rpx}.error{color:#b22222;margin-top:20rpx;font-size:25rpx}.rules{font-size:23rpx;line-height:1.8;color:#53647c}.row{display:flex;justify-content:space-between;gap:20rpx}.name{font-size:30rpx;font-weight:700}.score{color:#215fc6;font-weight:700;white-space:nowrap}.reason{display:block;font-size:24rpx;line-height:1.8;margin:10rpx 0;color:#415771}.match-card button{margin-top:20rpx}.results{margin-top:32rpx}.empty{font-size:26rpx;line-height:1.8;color:#63738a}.footer{padding:28rpx 10rpx;text-align:center}.assistant textarea{display:block;width:100%;height:170rpx;background:#f2f5fa;border-radius:12rpx;padding:18rpx;font-size:25rpx;margin-top:18rpx}.assist-button{margin:18rpx 0 0}.login-link{color:#245fc7}.suggestion{display:flex;flex-direction:column;gap:10rpx;margin-top:20rpx;font-size:24rpx;color:#415771}
 .ai-steps{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}.ai-steps text{flex:1;min-width:90px;background:#e5f1ed;border-radius:10px;padding:13px 8px;color:#167568;text-align:center;font-size:13px;font-weight:700}.example-briefs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.example-briefs button{margin:0;font-size:12px;line-height:2.7;background:#eaf0fc;color:#315aaf;padding:0 12px}.assistant textarea{box-sizing:border-box}.assistant{overflow:hidden}
-.study-context{display:flex;flex-direction:column;gap:12px;background:#f0f5e9;border:1px solid #b9cbb3;border-radius:16px;padding:20px;margin-top:20px;color:#405c44;font-size:14px;line-height:1.8}.study-tag{font-size:12px;color:#4c754e}.study-title{font-size:20px;font-weight:700}.study-context button{margin:0;align-self:flex-start;font-size:13px;background:#e1ecdd;color:#30563a;line-height:2.8;padding:0 14px}
+.weight-panel{margin-top:24rpx;padding:22rpx;border:1rpx solid #e1e8f2;border-radius:16rpx}.weight-heading{display:flex;justify-content:space-between;align-items:center;gap:12rpx}.weight-heading button{margin:0;font-size:22rpx;padding:0 16rpx}.weight-row{display:grid;grid-template-columns:155rpx minmax(0,1fr);align-items:center;gap:8rpx;font-size:24rpx;color:#40536d;margin-top:14rpx}.weight-row slider{margin:0}.study-context{display:flex;flex-direction:column;gap:12px;background:#f0f5e9;border:1px solid #b9cbb3;border-radius:16px;padding:20px;margin-top:20px;color:#405c44;font-size:14px;line-height:1.8}.study-tag{font-size:12px;color:#4c754e}.study-title{font-size:20px;font-weight:700}.study-context button{margin:0;align-self:flex-start;font-size:13px;background:#e1ecdd;color:#30563a;line-height:2.8;padding:0 14px}
 </style>
