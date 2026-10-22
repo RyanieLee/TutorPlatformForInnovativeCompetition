@@ -210,10 +210,10 @@ button:focus-visible,.chip:focus-visible,.card:focus-visible,.b-chip:focus-visib
  .parent-shell .page .headline{font-size:clamp(30px,7vw,38px)}
  .parent-shell .page .intro{font-size:14px}
  .parent-shell .hero-actions button{font-size:12px;min-height:44px}
- .parent-shell .hero-art{min-height:290px}
+ .parent-shell .hero-art{display:none}
  .parent-shell .hero-mascot{right:0;top:-25px;width:70%;height:295px}
  .parent-shell .hero-art .lesson-stage{left:0;bottom:-10px;width:60%}
- .parent-shell .page .ai-entry{margin:-20px 6px 0 16px;align-self:stretch;min-height:0;padding:19px}
+ .parent-shell .page .ai-entry{margin:0;align-self:stretch;min-height:0;padding:19px}
  .parent-shell .page .learning-entry{margin:0}
  .parent-shell .page .filter-panel{display:block;padding:18px}
  .parent-shell .page .filter-panel>.heading{margin:12px 0 9px}
@@ -405,3 +405,7 @@ button:focus-visible,.chip:focus-visible,.card:focus-visible,.b-chip:focus-visib
 @media(max-width:700px){
  .linghang-auth .banner.banner {padding:85px 24px 30px!important}
 }
+
+/* Keep the first action visible and clear of illustration layers on small screens. */
+@media(max-width:700px){.parent-shell .page .hero{padding:22px 20px;gap:0}.parent-shell .hero-copy{position:relative}.parent-shell .page .headline{font-size:29px;margin-top:12px}.parent-shell .page .intro{margin-top:12px;line-height:1.65}.parent-shell .hero-actions{gap:8px;margin-top:18px}.parent-shell .hero-actions button{padding:0 13px;min-height:44px}.parent-shell .page .links{margin-top:12px;gap:2px 8px}.parent-shell .page .links text{padding:4px 0;min-height:32px;font-size:11px}.parent-shell .parent-caption{margin:12px 0;padding:5px 0}.parent-shell.parent-shell .parent-nav button{min-height:40px;padding:0 9px}.parent-shell .page .eyebrow{font-size:11px;letter-spacing:.03em}}
+.companion-root.motion-off .mascot-img{animation:none!important}

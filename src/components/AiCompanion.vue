@@ -8,10 +8,12 @@ import {companionStatus,localChat,remoteChat,pendingCompanionBrief,pendingCompan
 import {companionState,clearCompanion,ownCompanion} from '../services/companion-state'
 import {createVoiceInput,speakReply,stopVoiceOutput,voiceOutputSupported} from '../services/voice'
 import {matchingCommand} from '../services/assistant-command'
-const props=withDefaults(defineProps<{page?:boolean}>(),{page:false})
+const props=withDefaults(defineProps<{page?:boolean;starter?:'match'|'guide'|''}>(),{page:false,starter:''})
+const advancedOpen=ref(false)
+let starterApplied=false
 const listening=ref(false),readAloud=ref(false),voiceError=ref('')
 const voice=createVoiceInput({text:text=>{listening.value=false;draft.value=text;void send()},error:message=>{listening.value=false;voiceError.value=message},end:()=>{listening.value=false}})
-function microphone(){voiceError.value='';if(listening.value){voice.stop();listening.value=false;return}stopVoiceOutput();listening.value=true;voice.start();if(!voice.supported)listening.value=false}
+function microphone(){if(busy.value||(status.value==='checking'&&mode.value==='auto'))return;voiceError.value='';if(listening.value){voice.stop();listening.value=false;return}stopVoiceOutput();listening.value=true;voice.start();if(!voice.supported)listening.value=false}
 function toggleRead(){readAloud.value=!readAloud.value;if(!readAloud.value)stopVoiceOutput()}
 const {messages,history,draft,mode,busy,error,paused}=toRefs(companionState)
 const open=ref(props.page),visible=ref(true),status=ref<'checking'|'enabled'|'disabled'|'error'>('checking'),loginNeeded=ref(false)
@@ -22,7 +24,7 @@ const useModel=computed(()=>apiMode&&status.value==='enabled'&&mode.value==='aut
 watch(()=>currentSession.value?.user.id,id=>{ownCompanion(id??'guest');loginNeeded.value=false;imagePath.value='';imageConsent.value=false},{immediate:true})
 async function checkStatus(){const v=++statusVersion;status.value='checking';homeworkStatus.value='checking';try{const s=await companionStatus();if(v===statusVersion)status.value=s.enabled?'enabled':'disabled'}catch{if(v===statusVersion)status.value='error'}try{const h=await homeworkImageReviewStatus();if(v===statusVersion){homeworkEnabled.value=h.enabled;homeworkStatus.value=h.enabled?'enabled':'disabled'}}catch{if(v===statusVersion){homeworkEnabled.value=false;homeworkStatus.value='error'}}}
 function stop(){voice.stop();stopVoiceOutput();listening.value=false;visible.value=false;open.value=false;statusVersion++;if(running!==null&&running===companionState.version){companionState.version++;busy.value=false;error.value='上一条答复已中止，可重新发送';if(lastPendingUserId!==null&&messages.value[messages.value.length-1]?.id===lastPendingUserId)messages.value.pop()}lastPendingUserId=null;imagePath.value='';imageConsent.value=false;running=null}
-onShow(()=>{visible.value=true;if(props.page){open.value=true;void checkStatus()}})
+onShow(()=>{visible.value=true;if(props.page){open.value=true;if(props.starter&&!starterApplied){starterApplied=true;if(!draft.value.trim())draft.value=props.starter==='match'?'请帮我匹配初中数学，预算100元，线上，周六下午':'平台怎么使用？'}void checkStatus()}})
 onHide(stop);onBeforeUnmount(stop)
 async function toggle(){if(!props.page){uni.navigateTo({url:'/pages/assistant/index'});return}open.value=!open.value;if(open.value)await checkStatus()}
 async function bottom(){await nextTick();const lastMessage=messages.value[messages.value.length-1];last.value=instance+'-'+lastMessage.id}
@@ -111,12 +113,18 @@ function login(){open.value=false;uni.navigateTo({url:'/pages/auth/login'})}
  <view v-if="visible" class="companion-root" :class="{'motion-off':paused,'companion-fullpage':props.page}" @keydown.esc="!props.page&&(open=false)">
   <view v-if="open" class="companion-panel" role="dialog" aria-label="小书灵 AI 对话">
    <view class="companion-head"><image v-if="props.page" class="mascot-img" src="/static/linghang-mascot.svg" mode="aspectFit" aria-hidden="true"/><view><text class="companion-title">小书灵 · 学习与平台助手</text><text class="companion-source">{{useModel?'服务端模型对话':status==='checking'&&mode==='auto'?'检查模型配置中':'本机演示 · 非大模型'}}</text></view><button v-if="!props.page" aria-label="关闭AI对话" class="companion-close" @click="open=false">×</button></view>
-   <text class="companion-notice">{{useModel?'发送你输入的对话，不自动发送账户、订单或定位。':'本机可介绍平台、引导学生学习和整理需求，但不能批改新题或作文。'}} 可粘贴文字版题目和学生答案咨询批改建议（仅模型已配置时）。请勿输入私人信息；对话不会执行预约或改动订单。</text>
+   <text class="companion-notice">{{useModel?'仅发送你输入的文字，不自动读取账户、订单或定位。':'本机演示支持需求整理、固定笔记与平台指引；新题解答需要配置模型。'}} 请勿填写私人信息；不会自动预约。</text>
    <scroll-view scroll-y class="companion-log" :scroll-into-view="last" role="log" aria-live="polite">
     <view v-for="m in messages" :id="instance+'-'+m.id" :key="m.id" class="companion-message" :class="m.role"><text class="message-label">{{m.role==='user'?'你':m.source==='model'?'模型答复':m.source==='local'?'本机演示答复':'小书灵'}}</text><text class="message-text">{{m.content}}</text><button v-if="m.matchBrief" class="message-action" @click="go('match',m.matchBrief)">带入匹配需求 →</button></view>
     <view v-if="busy" class="thinking" role="status">正在整理答复…</view>
    </scroll-view>
-   <view class="homework-image-tools">
+   <view class="companion-shortcuts"><button :disabled="busy" @click="ask('初中数学，预算100元，线上耐心讲解')">帮我找老师</button><button :disabled="busy" @click="ask('平台怎么用')">使用指南</button><button :disabled="busy" @click="ask('怎么查看订单地图')">怎么看订单</button></view>
+   <view v-if="error" class="companion-error" role="alert">{{error}}<button v-if="loginNeeded" @click="login">登录后继续</button><button v-if="apiMode&&mode!=='local'&&(status==='enabled'||status==='error')" @click="localMode">改用本机演示</button></view>
+   <view class="voice-tools"><button role="button" tabindex="0" :aria-disabled="busy||(status==='checking'&&mode==='auto')" :disabled="busy||(status==='checking'&&mode==='auto')" @keydown.enter.prevent="microphone" @click="microphone">{{listening?'停止收音':'语音提问'}}</button><button :disabled="!voiceOutputSupported()" @click="toggleRead">{{readAloud?'关闭语音朗读':'开启语音朗读'}}</button><text v-if="listening" role="status">正在听，请说话…</text></view>
+   <text class="voice-note">点击语音后请求麦克风权限，识别文字后发送；浏览器语音服务可能联网处理音频，不支持时可打字。</text><text v-if="voiceError" class="companion-error" role="alert">{{voiceError}}</text>
+   <view class="companion-compose"><textarea v-model="draft" :disabled="busy" maxlength="500" placeholder="问知识点、贴文字题目与答案，或咨询平台怎么用…" aria-label="对话内容"/><button :disabled="busy||!draft.trim()||(status==='checking'&&mode==='auto')" :loading="busy" @click="send">发送</button></view>
+   <view class="companion-tools"><button :aria-expanded="advancedOpen" @click="advancedOpen=!advancedOpen">{{advancedOpen?'收起更多工具':'图片与学习工具'}}</button><button v-if="apiMode&&status==='enabled'&&mode==='local'" :disabled="busy" @click="modelMode">使用模型对话</button><button @click="go('learning')">学习中心</button><button @click="go('map')">订单地图</button><button :disabled="busy" @click="reset">清空对话</button><button :aria-pressed="paused" @click="paused=!paused">{{paused?'恢复动作':'暂停动作'}}</button></view>
+   <view v-if="advancedOpen" class="companion-advanced">   <view class="homework-image-tools">
     <view class="homework-image-heading"><text>作业图片批改</text><text class="homework-image-status">{{homeworkStatus==='enabled'?'模型已配置（需支持图片）':homeworkStatus==='checking'?'检查图片服务…':homeworkStatus==='error'?'服务状态暂不可读取':'需要配置视觉模型'}}</text></view>
     <view class="homework-image-row">
      <button :disabled="busy" class="homework-image-pick" @click="selectHomeworkImage">选择图片</button>
@@ -125,23 +133,16 @@ function login(){open.value=false;uni.navigateTo({url:'/pages/auth/login'})}
     </view>
     <button class="homework-image-consent" :disabled="busy" :aria-pressed="imageConsent" @click="imageConsent=!imageConsent">{{imageConsent?'☑':'□'}} 我已遮挡姓名、学校等个人信息，并同意将图片发送给已配置的模型服务处理。</button>
     <text class="homework-image-note">{{!apiMode?'本机演示不支持图片识别；可粘贴文字题目。':homeworkEnabled?'支持 JPG、PNG、WebP，单张不超过3 MiB。图片不会保存到本平台数据库，但会发送给模型服务。':'需要在服务端配置支持图片输入的视觉模型；普通文字模型可能不支持。'}}</text>
-    <button class="homework-image-submit" :disabled="busy||!imagePath||!imageConsent||!homeworkEnabled" :loading="busy" @click="reviewSelectedImage">上传并批改</button>
+    <button class="homework-image-submit" role="button" :aria-disabled="busy||!imagePath||!imageConsent||!homeworkEnabled" :disabled="busy||!imagePath||!imageConsent||!homeworkEnabled" :loading="busy" @click="reviewSelectedImage">上传并批改</button>
    </view>
    <view class="companion-shortcuts">
-    <button :disabled="busy" @click="ask('平台怎么用')">使用指南</button>
     <button :disabled="busy" @click="ask('请解释一元一次方程的解题步骤')">解题答疑</button>
     <button :disabled="busy" @click="ask('学生如何使用平台学习和练习？')">学生学习</button>
     <button :disabled="busy" @click="ask('怎样批改作文、找出错别字？')">作文修改</button>
     <button :disabled="busy" @click="startHomeworkReview">作业批改</button>
-    <button :disabled="busy" @click="ask('初中数学，预算100元，线上耐心讲解')">帮我找老师</button>
-    <button :disabled="busy" @click="ask('怎么查看订单地图')">怎么看订单</button>
     <button :disabled="busy" @click="ask('一元一次方程怎么学习')">学习小问题</button>
    </view>
-   <view v-if="error" class="companion-error" role="alert">{{error}}<button v-if="loginNeeded" @click="login">登录后继续</button><button v-if="apiMode&&mode!=='local'&&(status==='enabled'||status==='error')" @click="localMode">改用本机演示</button></view>
-   <view class="voice-tools"><button :disabled="busy" @click="microphone">{{listening?'停止收音':'语音提问'}}</button><button :disabled="!voiceOutputSupported()" @click="toggleRead">{{readAloud?'关闭语音朗读':'开启语音朗读'}}</button><text v-if="listening" role="status">正在听，请说话…</text></view>
-   <text class="voice-note">点击语音提问后请求麦克风权限，识别文字后发送。浏览器语音服务可能联网处理音频；不支持时请打字。说“请帮我匹配初中数学，预算100元，线上，周六下午”可直接生成推荐。</text><text v-if="voiceError" class="companion-error" role="alert">{{voiceError}}</text>
-   <view class="companion-compose"><textarea v-model="draft" :disabled="busy" maxlength="500" placeholder="问知识点、贴文字题目与答案，或咨询平台怎么用…" aria-label="对话内容"/><button :disabled="busy||!draft.trim()||(status==='checking'&&mode==='auto')" :loading="busy" @click="send">发送</button></view>
-   <view class="companion-tools"><button v-if="apiMode&&status==='enabled'&&mode==='local'" :disabled="busy" @click="modelMode">使用模型对话</button><button @click="go('learning')">学习中心</button><button @click="go('map')">订单地图</button><button :disabled="busy" @click="reset">清空对话</button><button :aria-pressed="paused" @click="paused=!paused">{{paused?'恢复动作':'暂停动作'}}</button></view>
+</view>
    <text class="companion-memory">聊天只保存当前应用内存；作业批改意见仅供参考，需要老师再核对。</text>
   </view>
   <button v-if="!props.page" class="companion-launcher" :aria-expanded="open" aria-label="打开小书灵 AI 对话" @click="toggle">
@@ -165,4 +166,7 @@ function login(){open.value=false;uni.navigateTo({url:'/pages/auth/login'})}
 .homework-image-note{display:block;margin-top:4px;font-size:10px;line-height:1.55;color:#68868d}
 .homework-image-submit{width:100%;margin-top:7px!important;background:linear-gradient(110deg,#59bda9,#14828b)!important;color:#fff!important}
 .homework-image-submit[disabled]{opacity:.45}
+
+.companion-fullpage{padding:8px 12px 20px}.companion-fullpage .companion-head{padding:10px 14px;gap:12px}.companion-fullpage .companion-head .mascot-img{width:46px;height:46px;flex-shrink:0}.companion-fullpage .companion-title{font-size:17px}.companion-fullpage .companion-panel{min-height:0;animation:none}.companion-fullpage .companion-log{height:clamp(120px,23vh,230px);min-height:120px;flex:none}.companion-fullpage .companion-compose textarea{height:72px}.companion-shortcuts button,.companion-tools button,.voice-tools button{min-height:44px;display:flex;align-items:center;line-height:1.4}.companion-notice{color:#506b78}.companion-memory{color:#597078}.companion-advanced{border-top:1px solid #dbe8ed;padding-top:8px}.companion-fullpage .companion-compose button{min-height:44px}
+@media(max-width:700px){.companion-fullpage .companion-message{margin:7px 10px;padding:8px 10px}.companion-fullpage .message-text{font-size:14px}.companion-fullpage .companion-source{font-size:11px}.companion-fullpage .companion-notice{font-size:11px;padding:7px 12px}.companion-fullpage .companion-shortcuts,.companion-fullpage .companion-tools{padding-top:5px;padding-bottom:5px}.companion-fullpage .voice-note{font-size:10px;padding-bottom:4px}.companion-fullpage .companion-tools{gap:4px}.companion-fullpage .companion-tools button{font-size:10px;padding:0 6px}}
 </style>

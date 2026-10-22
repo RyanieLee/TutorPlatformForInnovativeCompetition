@@ -6,7 +6,7 @@ import type { AuthSession, UserRole } from '../types/auth'
 export const currentSession = shallowRef<AuthSession | null>(null)
 let restored = false
 let authEpoch=0
-onUnauthorized(() => { authEpoch++;currentSession.value = null; restored = false })
+onUnauthorized(() => { currentSession.value = null; restored = false })
 let restoring: Promise<AuthSession | null> | null = null
 
 export async function restoreSession(): Promise<AuthSession | null> {
