@@ -22,8 +22,8 @@ export function platformHelpAnswer(question:string):string|null{
  const q=question.trim()
  if(/作文|错别字|写作修改/.test(q))return guidance.essay
  if(/学习计划|复习计划|怎么复习|制定计划|备考安排|每天.*学习/.test(q))return guidance.plan
- if(/学生|讲题|解题|答疑|辅导功课|这道题|这题不会|不会做|怎么计算|分步讲解|讲解.*题|解释.*(?:公式|定理|概念)/.test(q))return guidance.student
  if(/批改|改作业|检查作业|评阅|批阅|作业对错|检查答案/.test(q)) return guidance.homework
+ if(/学生|讲题|解题|答疑|辅导功课|这道题|这题不会|不会做|怎么计算|分步讲解|讲解.*题|解释.*(?:公式|定理|概念)/.test(q))return guidance.student
  if(/安全|隐私|认证|支付|收费|真实|靠谱吗/.test(q))return guidance.safety
  if(/订单|地图|接单|取消预约|预约状态/.test(q))return guidance.orders
  if(/家教工作台|入驻|审核|管理员|切换身份|注册|登录/.test(q))return guidance.account
