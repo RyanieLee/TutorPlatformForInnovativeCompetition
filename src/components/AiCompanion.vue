@@ -93,7 +93,7 @@ function login(){open.value=false;uni.navigateTo({url:'/pages/auth/login'})}
  <view v-if="visible" class="companion-root" :class="{'motion-off':paused}" @keydown.esc="open=false">
   <view v-if="open" class="companion-panel" role="dialog" aria-label="小书灵 AI 对话">
    <view class="companion-head"><view><text class="companion-title">小书灵 · 学习与平台助手</text><text class="companion-source">{{useModel?'服务端模型对话':status==='checking'&&mode==='auto'?'检查模型配置中':'本机演示 · 非大模型'}}</text></view><button aria-label="关闭AI对话" class="companion-close" @click="open=false">×</button></view>
-   <text class="companion-notice">{{useModel?'发送你输入的对话，不自动发送账户、订单或定位。':'本机可介绍平台、引导学生学习和整理需求，但不能批改新题或作文。'}} 可粘贴文字版题目和学生答案咨询批改建议（仅模型已配置时）。请勿输入私人信息；对话不会执行预约或改动订单。</text>
+   <text class="companion-notice">{{useModel?'已连接模型：可咨询平台使用、学科知识、分步讲题、文字作业检查与作文修改。':'本机演示可介绍平台、查找固定知识笔记和整理找老师需求；新题答疑、真实批改与作文评价需要模型配置。'}} 图片批改需在下方单独选择图片并明确同意发送。请勿输入私人信息；我不会自动读取账户或操作预约。</text>
    <scroll-view scroll-y class="companion-log" :scroll-into-view="last" role="log" aria-live="polite">
     <view v-for="m in messages" :id="instance+'-'+m.id" :key="m.id" class="companion-message" :class="m.role"><text class="message-label">{{m.role==='user'?'你':m.source==='model'?'模型答复':m.source==='local'?'本机演示答复':'小书灵'}}</text><text class="message-text">{{m.content}}</text><button v-if="m.matchBrief" class="message-action" @click="go('match',m.matchBrief)">带入匹配需求 →</button></view>
     <view v-if="busy" class="thinking" role="status">正在整理答复…</view>
@@ -113,11 +113,12 @@ function login(){open.value=false;uni.navigateTo({url:'/pages/auth/login'})}
     <button :disabled="busy" @click="ask('平台怎么用')">使用指南</button>
     <button :disabled="busy" @click="ask('请解释一元一次方程的解题步骤')">解题答疑</button>
     <button :disabled="busy" @click="ask('学生如何使用平台学习和练习？')">学生学习</button>
+    <button :disabled="busy" @click="ask('家长怎样查看老师资料、预约和学习进度？')">家长使用</button>
     <button :disabled="busy" @click="ask('怎样批改作文、找出错别字？')">作文修改</button>
     <button :disabled="busy" @click="startHomeworkReview">作业批改</button>
     <button :disabled="busy" @click="ask('初中数学，预算100元，线上耐心讲解')">帮我找老师</button>
     <button :disabled="busy" @click="ask('怎么查看订单地图')">怎么看订单</button>
-    <button :disabled="busy" @click="ask('一元一次方程怎么学习')">学习小问题</button>
+    <button :disabled="busy" @click="ask('请帮我制定一周的复习计划，每天30分钟')">学习规划</button>
    </view>
    <view v-if="error" class="companion-error" role="alert">{{error}}<button v-if="loginNeeded" @click="login">登录后继续</button><button v-if="apiMode&&mode!=='local'&&(status==='enabled'||status==='error')" @click="localMode">改用本机演示</button></view>
    <view class="companion-compose"><textarea v-model="draft" :disabled="busy" maxlength="500" placeholder="问知识点、贴文字题目与答案，或咨询平台怎么用…" aria-label="对话内容"/><button :disabled="busy||!draft.trim()||(status==='checking'&&mode==='auto')" :loading="busy" @click="send">发送</button></view>
@@ -130,18 +131,137 @@ function login(){open.value=false;uni.navigateTo({url:'/pages/auth/login'})}
  </view>
 </template>
 <style scoped>
-.companion-root{position:fixed;right:18px;bottom:calc(76px + env(safe-area-inset-bottom));z-index:2200;font-size:14px;color:#294733;line-height:1.6}.companion-launcher{width:82px;min-height:92px;display:flex;flex-direction:column;align-items:center;padding:0;margin:0;background:transparent;line-height:1.2;border-radius:20px;overflow:visible}.book-pet{position:relative;width:68px;height:64px;animation:pet-float 4s ease-in-out infinite}.pet-body{position:absolute;inset:10px 8px 3px;background:#366449;border:2px solid #244e36;border-radius:21px 21px 14px 14px;box-shadow:0 5px 12px #23492f26}.pet-leaf{position:absolute;width:17px;height:13px;background:#94ba76;border-radius:2px 12px 2px 12px;top:0;left:32px;transform:rotate(-18deg)}.pet-wing{position:absolute;width:13px;height:25px;background:#6a9466;border:2px solid #315a3d;border-radius:12px;top:28px}.pet-wing.left{left:2px;transform:rotate(24deg)}.pet-wing.right{right:2px;transform:rotate(-24deg)}.pet-eyes{display:flex;justify-content:space-between;padding:12px 8px 0}.pet-eyes view{width:12px;height:14px;background:#fff9de;border-radius:50%;position:relative;animation:pet-blink 6s infinite}.pet-eyes view:after{content:'';position:absolute;background:#244e36;inset:4px 3px 3px 5px;border-radius:50%}.pet-mouth{width:9px;height:5px;border-bottom:2px solid #e9ce86;border-radius:50%;margin:0 auto}.pet-pages{height:7px;background:repeating-linear-gradient(#fffae8 0 2px,#a3b28d 2px 3px);border-radius:0 0 6px 6px;position:absolute;bottom:3px;left:7px;right:7px}.pet-ai{position:absolute;right:-3px;top:7px;border-radius:10px;background:#f2d994;color:#365034;padding:2px 5px;font-size:10px;font-weight:800}.pet-label{display:block;font-size:12px;background:#fffdf4;border:1px solid #bdcdb4;padding:4px 10px;border-radius:12px;box-shadow:0 3px 9px #2a4a3422}.companion-panel{position:absolute;right:0;bottom:102px;width:370px;max-width:calc(100vw - 28px);max-height:calc(100vh - 195px);display:flex;flex-direction:column;background:#fffef9;border:1px solid #adc3a8;border-radius:20px;box-shadow:0 14px 50px #263e3440;overflow:hidden}.companion-head{display:flex;justify-content:space-between;align-items:center;background:#eaf1e4;padding:13px 16px}.companion-title{display:block;font-size:17px;font-weight:700}.companion-source{display:block;font-size:11px;color:#657a60}.companion-close{margin:0;background:transparent;font-size:25px;padding:0 9px;line-height:1.6;color:#3b5d43}.companion-notice{font-size:11px;color:#66745e;line-height:1.6;padding:9px 14px;border-bottom:1px solid #e4ebdc}.companion-log{height:235px;min-height:95px;flex:1;overflow:hidden}.companion-message{margin:10px 12px;padding:10px 12px;border-radius:12px;background:#edf3e8;overflow-wrap:anywhere}.companion-message.user{background:#e5eee8;margin-left:44px}.message-label{display:block;font-size:10px;color:#6b7f65;margin-bottom:4px}.message-text{display:block;font-size:13px;white-space:pre-wrap;line-height:1.7}.message-action{margin:9px 0 0;font-size:12px;color:#2b633d;line-height:2.4;background:#fffdf2;border-radius:8px;padding:0 10px}.thinking{font-size:12px;padding:10px 16px;color:#718269}.companion-shortcuts,.companion-tools{display:flex;gap:5px;flex-wrap:wrap;padding:8px 12px}.companion-shortcuts button,.companion-tools button{font-size:11px;line-height:2.5;margin:0;background:#eff3e9;color:#476844;border-radius:8px;padding:0 8px}.companion-compose{display:flex;align-items:flex-end;gap:8px;padding:8px 12px;border-top:1px solid #e1eadc}.companion-compose textarea{height:62px;width:0;flex:1;min-width:0;padding:8px;background:#f3f5ef;border-radius:9px;font-size:13px;box-sizing:border-box}.companion-compose button{margin:0;background:#365f40;color:white;font-size:13px;line-height:2.8;padding:0 12px;border-radius:9px}.companion-compose button[disabled]{opacity:.5}.companion-tools{padding-top:0}.companion-error{font-size:12px;line-height:1.6;color:#964b34;background:#fff0e8;padding:8px 12px}.companion-error button{display:inline-block;font-size:11px;line-height:2.3;margin:4px 5px 0 0;background:#f3dfc8;color:#705130;padding:0 8px}.companion-memory{font-size:10px;color:#78806f;padding:0 12px 9px}.motion-off .book-pet,.motion-off .pet-eyes view{animation:none}@keyframes pet-float{50%{transform:translateY(-5px) rotate(3deg)}}@keyframes pet-blink{0%,44%,48%,100%{transform:scaleY(1)}46%{transform:scaleY(.1)}}@media(max-width:700px){.companion-root{right:10px;bottom:calc(68px + env(safe-area-inset-bottom))}.companion-launcher{width:70px;min-height:84px}.companion-panel{bottom:92px;max-height:calc(100dvh - 180px);width:360px}.companion-log{height:200px}.companion-notice{padding:7px 12px}}@media(prefers-reduced-motion:reduce){.book-pet,.pet-eyes view{animation:none}}
-
-.homework-image-tools{margin:6px 12px 4px;padding:11px 12px;border:1px solid #d9eae7;border-radius:16px;background:rgba(239,250,248,.84)}
-.homework-image-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;color:#285d69;font-size:12px;font-weight:700}
+.companion-root{
+ position:fixed;right:18px;bottom:calc(76px + env(safe-area-inset-bottom));z-index:2200;
+ font-size:14px;color:#20475b;line-height:1.6;overflow:visible;
+}
+.companion-launcher{
+ width:88px;min-height:96px;display:flex;flex-direction:column;align-items:center;
+ padding:0;margin:0;background:transparent;line-height:1.2;border-radius:22px;overflow:visible;
+ cursor:pointer;transition:transform .25s cubic-bezier(.22,1,.36,1),filter .25s ease;
+}
+.mascot-img{display:block;width:86px;height:86px;filter:drop-shadow(0 11px 16px #4a8ca42b);animation:lh-pet-float 4.6s ease-in-out infinite}
+.pet-label{
+ display:block;margin-top:-6px;position:relative;z-index:1;font-size:12px;font-weight:650;
+ color:#276879;background:rgba(255,255,255,.91);border:1px solid #ffffff;
+ padding:5px 13px;border-radius:100px;box-shadow:0 7px 18px #527e9420;
+ backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+}
+.companion-panel{
+ position:absolute;right:0;bottom:104px;width:408px;max-width:calc(100vw - 24px);
+ max-height:calc(100vh - 180px);max-height:calc(100dvh - 180px);
+ display:flex;flex-direction:column;
+ background:rgba(250,254,255,.94);border:1px solid #ffffff;
+ border-radius:27px;box-shadow:0 24px 66px #356e8938;
+ backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);
+ overflow:hidden;transform-origin:bottom right;animation:lh-pet-panel-in .28s cubic-bezier(.22,1,.36,1) both;
+}
+.companion-head{
+ display:flex;justify-content:space-between;align-items:center;gap:12px;
+ background:linear-gradient(112deg,rgba(225,248,242,.97),rgba(228,241,255,.96));
+ padding:16px 18px;border-bottom:1px solid #ffffffc9;
+}
+.companion-title{display:block;font-size:16px;font-weight:800;letter-spacing:.01em;color:#1b4d61}
+.companion-source{display:block;margin-top:3px;font-size:11px;color:#658592}
+.companion-close{flex:0 0 auto;margin:0;background:rgba(255,255,255,.72);border:1px solid #fff;font-size:24px;padding:0 10px;line-height:1.7;color:#3b7080;border-radius:12px}
+.companion-notice{
+ font-size:11px;color:#597d8b;line-height:1.65;padding:10px 14px;
+ background:rgba(246,252,255,.76);border-bottom:1px solid #e3f0f2;
+}
+.companion-log{height:240px;min-height:100px;flex:1;overflow:hidden}
+.companion-message{
+ margin:11px 12px;padding:11px 13px;border-radius:16px;
+ background:rgba(229,248,244,.94);border:1px solid #ffffffd9;overflow-wrap:anywhere;
+ box-shadow:0 5px 14px #5b9b9a0c;
+}
+.companion-message.user{
+ background:rgba(231,241,255,.94);border-color:#ffffffd9;margin-left:40px;
+}
+.message-label{display:block;font-size:10px;font-weight:650;color:#658592;margin-bottom:5px}
+.message-text{display:block;font-size:13px;color:#284e60;white-space:pre-wrap;line-height:1.75}
+.message-action{
+ margin:9px 0 0;font-size:12px;color:#fff;line-height:2.6;background:linear-gradient(110deg,#59bda9,#14858f);
+ border-radius:100px;padding:0 14px;box-shadow:0 5px 14px #398f9226;
+}
+.thinking{font-size:12px;padding:10px 16px;color:#64838d}
+.companion-shortcuts,.companion-tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:9px 12px}
+.companion-shortcuts button,.companion-tools button{
+ min-width:0;white-space:normal;font-size:11px;line-height:1.45;min-height:34px;margin:0;
+ background:rgba(231,247,247,.93);border:1px solid #ffffff;color:#307582;
+ border-radius:100px;padding:7px 8px;transition:transform .2s ease,background .2s ease;
+}
+.companion-compose{
+ display:flex;align-items:flex-end;gap:8px;padding:9px 12px;
+ border-top:1px solid #e0eef1;background:rgba(255,255,255,.58);
+}
+.companion-compose textarea{
+ height:64px;width:0;flex:1;min-width:0;padding:10px 12px;
+ background:rgba(241,249,251,.95);border:1px solid #d9eaef;border-radius:15px;
+ font-size:13px;line-height:1.6;box-sizing:border-box;color:#244b5d;
+}
+.companion-compose button{
+ margin:0;background:linear-gradient(110deg,#5ac3ac,#14858f);color:white;
+ font-size:13px;line-height:2.8;padding:0 15px;border-radius:100px;box-shadow:0 7px 15px #368e922b;
+}
+.companion-compose button[disabled]{opacity:.45;box-shadow:none}
+.companion-tools{padding-top:0}
+.companion-error{
+ font-size:12px;line-height:1.6;color:#8c4b3b;
+ background:rgba(255,241,234,.95);border:1px solid #fff;padding:9px 12px;margin:0 12px;border-radius:14px;
+}
+.companion-error button{
+ display:inline-block;font-size:11px;line-height:2.3;margin:4px 5px 0 0;
+ background:#f7e2d4;color:#784d3c;padding:0 10px;border-radius:100px;
+}
+.companion-memory{display:block;font-size:10px;color:#77909a;padding:0 14px 10px;line-height:1.5}
+.homework-image-tools{
+ margin:6px 12px 4px;padding:12px;border:1px solid #ffffff;
+ border-radius:18px;background:linear-gradient(118deg,rgba(235,250,247,.92),rgba(239,247,255,.92));
+ box-shadow:0 8px 20px #6395a313;
+}
+.homework-image-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;color:#285d69;font-size:12px;font-weight:750}
 .homework-image-status{font-size:10px;font-weight:500;color:#5b8a8b;text-align:right}
 .homework-image-row{display:flex;align-items:center;gap:8px;margin-top:8px}
-.homework-image-pick,.homework-image-remove,.homework-image-submit{margin:0;border-radius:100px;font-size:11px;line-height:2.5;padding:0 12px}
-.homework-image-pick{background:#e1f4f1;color:#246c75}
-.homework-image-remove{background:#fff0e9;color:#945c4a}
-.homework-image-preview{width:64px;height:64px;border:1px solid #fff;border-radius:10px;background:#fff}
-.homework-image-consent{margin:8px 0 0!important;padding:5px 0!important;text-align:left!important;white-space:normal;font-size:10px!important;line-height:1.55!important;background:transparent!important;color:#587b81!important}
-.homework-image-note{display:block;margin-top:4px;font-size:10px;line-height:1.55;color:#68868d}
-.homework-image-submit{width:100%;margin-top:7px!important;background:linear-gradient(110deg,#59bda9,#14828b)!important;color:#fff!important}
-.homework-image-submit[disabled]{opacity:.45}
+.homework-image-pick,.homework-image-remove,.homework-image-submit{margin:0;border-radius:100px;font-size:11px;line-height:2.5;padding:0 13px}
+.homework-image-pick{background:#dff4ef;color:#246c75;border:1px solid #fff}
+.homework-image-remove{background:#fff0e9;color:#945c4a;border:1px solid #fff}
+.homework-image-preview{width:64px;height:64px;border:1px solid #fff;border-radius:12px;background:#fff}
+.homework-image-consent{
+ margin:8px 0 0!important;padding:5px 0!important;text-align:left!important;white-space:normal;
+ font-size:10px!important;line-height:1.6!important;background:transparent!important;color:#587b81!important;
+}
+.homework-image-note{display:block;margin-top:4px;font-size:10px;line-height:1.6;color:#68868d}
+.homework-image-submit{
+ width:100%;margin-top:8px!important;background:linear-gradient(110deg,#59bda9,#14858f)!important;
+ color:#fff!important;border:0!important;box-shadow:0 7px 15px #368e9220;
+}
+.homework-image-submit[disabled]{opacity:.45;box-shadow:none}
+.companion-root button:focus-visible,.companion-root textarea:focus-visible{
+ outline:3px solid #268aaf;outline-offset:2px;
+}
+@media(hover:hover) and (pointer:fine){
+ .companion-launcher:hover{transform:translateY(-3px)}
+ .companion-shortcuts button:hover,.companion-tools button:hover{transform:translateY(-1px);background:#dff3f1}
+}
+@keyframes lh-pet-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes lh-pet-panel-in{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:700px){
+ .companion-root{right:10px;bottom:calc(68px + env(safe-area-inset-bottom))}
+ .companion-launcher{width:72px;min-height:84px}
+ .mascot-img{width:72px;height:72px}
+ .pet-label{font-size:11px;padding:4px 10px}
+ .companion-panel{right:0;bottom:92px;width:calc(100vw - 20px);max-width:420px;max-height:calc(100vh - 150px);max-height:calc(100dvh - 150px);border-radius:23px}
+ .companion-log{height:200px}
+ .companion-notice{padding:8px 12px}
+ .companion-shortcuts,.companion-tools{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:8px 10px}
+ .companion-shortcuts button,.companion-tools button{font-size:11px;min-height:34px}
+ .homework-image-tools{margin:5px 10px;padding:10px}
+}
+@media(prefers-reduced-motion:reduce){
+ .mascot-img,.companion-panel{animation:none!important;transition:none!important;transform:none!important}
+ .companion-launcher,.companion-shortcuts button,.companion-tools button{transition:none!important}
+}
+@media(prefers-reduced-transparency:reduce),(prefers-contrast:more){
+ .companion-panel,.companion-head,.companion-notice,.companion-message,.homework-image-tools{background:#fff!important;backdrop-filter:none!important;border-color:#8db5be!important}
+}
 </style>
