@@ -54,7 +54,7 @@ export function localChat(text:string):AssistantReply{
  if(/(?:批改|检查|评价|改正).{0,8}(?:作业|答案|作文)|(?:作业|作文).{0,8}(?:批改|检查|评价)|判断.{0,6}对错/.test(brief)){
   return {source:'local',reply:platformHelpAnswer('批改作业')!}
  }
- const hasTeacherIntent=/(?:老师|家教|找|匹配|预算|每小时|课时费|授课|线上|线下|辅导老师)/.test(brief)
+ const hasTeacherIntent=/(?:找老师|找家教|匹配|老师|家教|预算|每小时|课时费|授课|线上|线下|辅导老师)/.test(brief)
  // 平台操作指引优先，但带有明确预算的找老师需求应进入需求解析。
  const guide=platformHelpAnswer(brief)
  if(guide&&!hasTeacherIntent)return {source:'local',reply:guide}
