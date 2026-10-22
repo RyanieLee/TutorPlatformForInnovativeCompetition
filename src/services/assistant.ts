@@ -56,9 +56,6 @@ export function localChat(text:string):AssistantReply{
   return {source:'local',reply:platformHelpAnswer('批改作业')!}
  }
  const hasTeacherIntent=/(?:找老师|找家教|匹配|老师|家教|预算|每小时|课时费|授课|线上|线下|辅导老师)/.test(brief)
- // 平台操作指引优先，但明确带预算的找老师需求继续走匹配解析。
- const guide=platformHelpAnswer(brief)
- if(guide&&!hasTeacherIntent)return {source:'local',reply:guide}
  // 先查本平台已有笔记，避免把“方程怎么解”误判成找老师需求。
  const exactTopic=learningTopics.find(t=>brief.includes(t.title))
  const learningIntent=/(?:知识点|题目|怎么解|解题|讲解|公式|语法|错题|为什么|怎么计算|不会做|练习|概念|步骤|求解|方程|配平|单位换算|从句|定义域|受力分析|阅读理解)/i.test(brief)
@@ -68,6 +65,9 @@ export function localChat(text:string):AssistantReply{
   const notes='本站原创笔记 · '+topic.stage+topic.subject+' · '+topic.title+'\n'+topic.points.slice(0,4).join('\n')+'\n例子：'+topic.example+'\n易错提醒：'+topic.pitfalls.slice(0,2).join('；')+'\n这是本机固定笔记检索，并非实时大模型批改。可打开「AI学习中心」查看完整笔记、练习和解析。'
   return {source:'local',reply:notes}
  }
+ // 通用平台指引只在没有命中具体笔记时返回；带匹配条件的需求仍继续解析。
+ const guide=platformHelpAnswer(brief)
+ if(guide&&!hasTeacherIntent)return {source:'local',reply:guide}
  if(brief.length>=6&&brief.length<=160){
   const s=parseBriefLocally(brief)
   if((hasTeacherIntent||(!learningIntent&&(s.budget!==null||s.mode!==null)))&&s.subject&&(s.budget||s.grade||s.mode))return {source:'local',reply:'我先帮你整理：'+s.subject+'，'+(s.grade??'年级待补充')+'，'+(s.budget==null?'预算待补充':'预算'+s.budget+'元/小时')+'，'+(s.mode??'授课方式待补充')+'。点击“带入匹配需求”，再核对表单、选择位置和老师；我不会自动提交预约。',matchBrief:brief}
