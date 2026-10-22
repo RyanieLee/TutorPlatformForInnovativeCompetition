@@ -113,12 +113,19 @@ function login(){open.value=false;uni.navigateTo({url:'/pages/auth/login'})}
  <view v-if="visible" class="companion-root" :class="{'motion-off':paused,'companion-fullpage':props.page}" @keydown.esc="!props.page&&(open=false)">
   <view v-if="open" class="companion-panel" role="dialog" aria-label="小书灵 AI 对话">
    <view class="companion-head"><image v-if="props.page" class="mascot-img" src="/static/linghang-mascot.svg" mode="aspectFit" aria-hidden="true"/><view><text class="companion-title">小书灵 · 学习与平台助手</text><text class="companion-source">{{useModel?'服务端模型对话':status==='checking'&&mode==='auto'?'检查模型配置中':'本机演示 · 非大模型'}}</text></view><button v-if="!props.page" aria-label="关闭AI对话" class="companion-close" @click="open=false">×</button></view>
-   <text class="companion-notice">{{useModel?'仅发送你输入的文字，不自动读取账户、订单或定位。':'本机演示支持需求整理、固定笔记与平台指引；新题解答需要配置模型。'}} 请勿填写私人信息；不会自动预约。</text>
+   <text class="companion-notice">{{useModel?'已连接服务端模型：可问学科知识、分步讲题、检查文字作业和修改作文。':'本机演示可查平台说明、整理找老师需求和检索固定笔记；新题答疑、文字批改与作文修改需要模型配置。'}} 图片批改需单独选择图片、配置视觉模型并同意发送。不会自动读取账户或操作预约。</text>
    <scroll-view scroll-y class="companion-log" :scroll-into-view="last" role="log" aria-live="polite">
     <view v-for="m in messages" :id="instance+'-'+m.id" :key="m.id" class="companion-message" :class="m.role"><text class="message-label">{{m.role==='user'?'你':m.source==='model'?'模型答复':m.source==='local'?'本机演示答复':'小书灵'}}</text><text class="message-text">{{m.content}}</text><button v-if="m.matchBrief" class="message-action" @click="go('match',m.matchBrief)">带入匹配需求 →</button></view>
     <view v-if="busy" class="thinking" role="status">正在整理答复…</view>
    </scroll-view>
-   <view class="companion-shortcuts"><button :disabled="busy" @click="ask('初中数学，预算100元，线上耐心讲解')">帮我找老师</button><button :disabled="busy" @click="ask('平台怎么用')">使用指南</button><button :disabled="busy" @click="ask('怎么查看订单地图')">怎么看订单</button></view>
+   <view class="companion-shortcuts">
+    <button :disabled="busy" @click="ask('平台怎么用')">使用指南</button>
+    <button :disabled="busy" @click="ask('请解释一元一次方程的解题步骤')">解题答疑</button>
+    <button :disabled="busy" @click="startHomeworkReview">作业批改</button>
+    <button :disabled="busy" @click="ask('怎样批改作文、找出错别字？')">作文修改</button>
+    <button :disabled="busy" @click="ask('请帮我匹配初中数学，预算100元，线上，周六下午')">帮我找老师</button>
+    <button :disabled="busy" @click="ask('家长怎样使用平台？')">家长使用</button>
+   </view>
    <view v-if="error" class="companion-error" role="alert">{{error}}<button v-if="loginNeeded" @click="login">登录后继续</button><button v-if="apiMode&&mode!=='local'&&(status==='enabled'||status==='error')" @click="localMode">改用本机演示</button></view>
    <view class="voice-tools"><button role="button" tabindex="0" :aria-disabled="busy||(status==='checking'&&mode==='auto')" :disabled="busy||(status==='checking'&&mode==='auto')" @keydown.enter.prevent="microphone" @click="microphone">{{listening?'停止收音':'语音提问'}}</button><button :disabled="!voiceOutputSupported()" @click="toggleRead">{{readAloud?'关闭语音朗读':'开启语音朗读'}}</button><text v-if="listening" role="status">正在听，请说话…</text></view>
    <text class="voice-note">点击语音后请求麦克风权限，识别文字后发送；浏览器语音服务可能联网处理音频，不支持时可打字。</text><text v-if="voiceError" class="companion-error" role="alert">{{voiceError}}</text>
@@ -136,11 +143,10 @@ function login(){open.value=false;uni.navigateTo({url:'/pages/auth/login'})}
     <button class="homework-image-submit" role="button" :aria-disabled="busy||!imagePath||!imageConsent||!homeworkEnabled" :disabled="busy||!imagePath||!imageConsent||!homeworkEnabled" :loading="busy" @click="reviewSelectedImage">上传并批改</button>
    </view>
    <view class="companion-shortcuts">
-    <button :disabled="busy" @click="ask('请解释一元一次方程的解题步骤')">解题答疑</button>
     <button :disabled="busy" @click="ask('学生如何使用平台学习和练习？')">学生学习</button>
-    <button :disabled="busy" @click="ask('怎样批改作文、找出错别字？')">作文修改</button>
-    <button :disabled="busy" @click="startHomeworkReview">作业批改</button>
     <button :disabled="busy" @click="ask('一元一次方程怎么学习')">学习小问题</button>
+    <button :disabled="busy" @click="ask('请帮我制定一周的复习计划，每天30分钟')">学习规划</button>
+    <button :disabled="busy" @click="ask('语音提问和语音朗读怎么使用？')">语音帮助</button>
    </view>
 </view>
    <text class="companion-memory">聊天只保存当前应用内存；作业批改意见仅供参考，需要老师再核对。</text>
@@ -169,4 +175,101 @@ function login(){open.value=false;uni.navigateTo({url:'/pages/auth/login'})}
 
 .companion-fullpage{padding:8px 12px 20px}.companion-fullpage .companion-head{padding:10px 14px;gap:12px}.companion-fullpage .companion-head .mascot-img{width:46px;height:46px;flex-shrink:0}.companion-fullpage .companion-title{font-size:17px}.companion-fullpage .companion-panel{min-height:0;animation:none}.companion-fullpage .companion-log{height:clamp(120px,23vh,230px);min-height:120px;flex:none}.companion-fullpage .companion-compose textarea{height:72px}.companion-shortcuts button,.companion-tools button,.voice-tools button{min-height:44px;display:flex;align-items:center;line-height:1.4}.companion-notice{color:#506b78}.companion-memory{color:#597078}.companion-advanced{border-top:1px solid #dbe8ed;padding-top:8px}.companion-fullpage .companion-compose button{min-height:44px}
 @media(max-width:700px){.companion-fullpage .companion-message{margin:7px 10px;padding:8px 10px}.companion-fullpage .message-text{font-size:14px}.companion-fullpage .companion-source{font-size:11px}.companion-fullpage .companion-notice{font-size:11px;padding:7px 12px}.companion-fullpage .companion-shortcuts,.companion-fullpage .companion-tools{padding-top:5px;padding-bottom:5px}.companion-fullpage .voice-note{font-size:10px;padding-bottom:4px}.companion-fullpage .companion-tools{gap:4px}.companion-fullpage .companion-tools button{font-size:10px;padding:0 6px}}
+
+/* Glass visual refinements for the current voice-enabled companion; keep all handlers intact. */
+.companion-root .companion-panel{
+ background:rgba(250,254,255,.95);border:1px solid #ffffff;
+ border-radius:26px;box-shadow:0 24px 66px #356e8938;
+ backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);
+}
+.companion-root .companion-head{
+ background:linear-gradient(112deg,rgba(225,248,242,.98),rgba(228,241,255,.97));
+ border-bottom:1px solid #ffffffd9;
+}
+.companion-root .companion-title{color:#1b4d61;font-weight:800;letter-spacing:.01em}
+.companion-root .companion-source{color:#658592}
+.companion-root .companion-close{background:rgba(255,255,255,.78);border:1px solid #fff;color:#3b7080;border-radius:12px}
+.companion-root .companion-notice{
+ color:#597d8b;background:rgba(246,252,255,.82);border-bottom-color:#e3f0f2;
+}
+.companion-root .companion-message{
+ background:rgba(229,248,244,.94);border:1px solid #ffffffd9;border-radius:16px;
+ box-shadow:0 5px 14px #5b9b9a0c;
+}
+.companion-root .companion-message.user{background:rgba(231,241,255,.96);border-color:#ffffffd9}
+.companion-root .message-label{color:#658592;font-weight:650}
+.companion-root .message-text{color:#284e60;line-height:1.75}
+.companion-root .message-action,.companion-root .companion-compose button{
+ background:linear-gradient(110deg,#59bda9,#14858f);color:#fff;border-radius:100px;
+ box-shadow:0 7px 16px #368e9225;
+}
+.companion-root .companion-shortcuts{
+ display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:9px 12px;
+}
+.companion-root .companion-shortcuts button,.companion-root .companion-tools button{
+ min-width:0;white-space:normal;font-size:11px;line-height:1.45;min-height:38px;
+ margin:0;background:rgba(231,247,247,.95);border:1px solid #ffffff;
+ color:#307582;border-radius:100px;padding:7px 8px;transition:transform .2s ease,background .2s ease;
+}
+.companion-root .voice-tools{display:flex;align-items:center;gap:8px;padding:8px 12px}
+.companion-root .voice-tools button{
+ margin:0;min-height:40px;background:rgba(231,247,247,.95);border:1px solid #fff;
+ color:#307582;border-radius:100px;padding:0 13px;font-size:12px;
+}
+.companion-root .voice-tools text,.companion-root .voice-note{color:#688692}
+.companion-root .companion-compose{
+ border-top:1px solid #e0eef1;background:rgba(255,255,255,.64);
+}
+.companion-root .companion-compose textarea{
+ background:rgba(241,249,251,.96);border:1px solid #d9eaef;border-radius:15px;color:#244b5d;
+}
+.companion-root .companion-error{
+ color:#8c4b3b;background:rgba(255,241,234,.95);border:1px solid #fff;border-radius:14px;
+}
+.companion-root .companion-error button{background:#f7e2d4;color:#784d3c;border-radius:100px}
+.companion-root .companion-memory{color:#77909a}
+.companion-root .companion-advanced{
+ border-top:1px solid #e0eef1;padding-top:8px;max-height:38vh;overflow-y:auto;overscroll-behavior:contain;
+}
+.companion-root .homework-image-tools{
+ margin:6px 12px 4px;padding:12px;border:1px solid #ffffff;border-radius:18px;
+ background:linear-gradient(118deg,rgba(235,250,247,.94),rgba(239,247,255,.94));
+ box-shadow:0 8px 20px #6395a313;
+}
+.companion-root .homework-image-heading{color:#285d69}
+.companion-root .homework-image-status,.companion-root .homework-image-note{color:#68868d}
+.companion-root .homework-image-pick,.companion-root .homework-image-remove{
+ border:1px solid #fff;border-radius:100px;padding:0 13px;
+}
+.companion-root .homework-image-pick{background:#dff4ef;color:#246c75}
+.companion-root .homework-image-remove{background:#fff0e9;color:#945c4a}
+.companion-root .homework-image-consent{color:#587b81!important}
+.companion-root .homework-image-submit{
+ background:linear-gradient(110deg,#59bda9,#14858f)!important;color:#fff!important;
+ border:0!important;border-radius:100px;box-shadow:0 7px 15px #368e9220;
+}
+.companion-root .mascot-img{filter:drop-shadow(0 11px 16px #4a8ca42b)}
+.companion-root .pet-label{
+ color:#276879;background:rgba(255,255,255,.92);border:1px solid #fff;border-radius:100px;
+ box-shadow:0 7px 18px #527e9420;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+}
+.companion-root button:focus-visible,.companion-root textarea:focus-visible{outline:3px solid #268aaf;outline-offset:2px}
+@media(hover:hover) and (pointer:fine){
+ .companion-root .companion-shortcuts button:hover,.companion-root .companion-tools button:hover,.companion-root .voice-tools button:hover{transform:translateY(-1px);background:#dff3f1}
+ .companion-root .companion-launcher:hover{transform:translateY(-3px)}
+}
+@media(max-width:700px){
+ .companion-root .companion-shortcuts,.companion-root .companion-tools{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:8px 10px}
+ .companion-root .companion-shortcuts button,.companion-root .companion-tools button{font-size:11px;min-height:40px}
+ .companion-root .companion-advanced{max-height:35dvh}
+ .companion-root .homework-image-tools{margin:5px 10px;padding:10px}
+ .companion-root .voice-tools{flex-wrap:wrap}
+}
+@media(prefers-reduced-motion:reduce){
+ .companion-root .mascot-img,.companion-root .companion-panel{animation:none!important;transition:none!important;transform:none!important}
+ .companion-root .companion-shortcuts button,.companion-root .companion-tools button,.companion-root .companion-launcher{transition:none!important}
+}
+@media(prefers-reduced-transparency:reduce),(prefers-contrast:more){
+ .companion-root .companion-panel,.companion-root .companion-head,.companion-root .companion-notice,.companion-root .companion-message,.companion-root .homework-image-tools{background:#fff!important;backdrop-filter:none!important;border-color:#8db5be!important}
+}
 </style>
