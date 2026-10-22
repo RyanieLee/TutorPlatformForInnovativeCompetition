@@ -6,7 +6,7 @@ describe('小书灵教学与平台能力边界', () => {
  it('明确真实流程、批改依据与权限', () => {
    expect(platformAssistantInstructions).toContain('领航云学堂')
    expect(platformAssistantInstructions).toContain('完整题目 + 学生作答')
-   expect(platformAssistantInstructions).toContain('不只是找老师')
+   expect(platformAssistantInstructions).toContain('不只是在找老师')
    expect(platformAssistantInstructions).toContain('作文修改')
    expect(platformAssistantInstructions).toContain('一道自测题')
    expect(platformAssistantInstructions).toContain('语音识别成文字')
