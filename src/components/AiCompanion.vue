@@ -282,4 +282,22 @@ function login(){open.value=false;uni.navigateTo({url:'/pages/auth/login'})}
  .companion-root.companion-fullpage .companion-compose textarea{height:60px}
  .companion-root.companion-fullpage .voice-note{max-height:30px;overflow:hidden}
 }
+
+@media(max-width:700px){
+ .companion-root:not(.companion-fullpage) .companion-panel{max-height:calc(100dvh - 150px)}
+ .companion-root:not(.companion-fullpage) .companion-head{padding:10px 14px}
+ .companion-root:not(.companion-fullpage) .companion-notice{font-size:10px;line-height:1.45;padding:5px 10px;max-height:36px;overflow:hidden}
+ .companion-root:not(.companion-fullpage) .companion-log{height:90px;min-height:70px;flex:1 1 auto;overflow-y:auto}
+ .companion-root:not(.companion-fullpage) .companion-shortcuts{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:5px 10px}
+ .companion-root:not(.companion-fullpage) .companion-shortcuts button{min-height:32px;font-size:10px;line-height:1.3;padding:5px 4px}
+ .companion-root:not(.companion-fullpage) .voice-tools{padding:5px 10px;gap:6px}
+ .companion-root:not(.companion-fullpage) .voice-tools button{min-height:44px;font-size:11px;padding:0 10px}
+ .companion-root:not(.companion-fullpage) .voice-note{max-height:20px;overflow:hidden;font-size:10px;line-height:1.4}
+ .companion-root:not(.companion-fullpage) .companion-compose{padding:6px 10px;gap:6px}
+ .companion-root:not(.companion-fullpage) .companion-compose textarea{height:52px}
+ .companion-root:not(.companion-fullpage) .companion-compose button{line-height:2.4;padding:0 12px}
+ .companion-root:not(.companion-fullpage) .companion-tools{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:5px 10px}
+ .companion-root:not(.companion-fullpage) .companion-tools button{min-height:30px;font-size:10px;padding:4px}
+ .companion-root:not(.companion-fullpage) .companion-memory{padding:0 10px 6px}
+}
 </style>
