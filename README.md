@@ -2,6 +2,8 @@
 
 本批新增：家教展示照片（入驻草稿上传、审核通过后公开）与可调整权重的量化匹配。默认权重为学科35、时间30、经验20、费用10、其他5。上述数据均为自述或虚构样例，不能当作资质或效果证明；实现与边界见 [照片与评分说明](docs/TUTOR_PHOTOS_RANKING.md)。
 
+本分支新增预约内四课教学大纲、逐题课堂事实、教师确认的课后反馈、第三课修订对比与发布历史。无需模型密钥可用明确标注的预置课程和样例反馈。见[教学演示](docs/TEACHING_LOOP_DEMO.md)、[四课完整内容](docs/TEACHING_DEMO_COURSE.md)、[验收记录](docs/TEACHING_AI_VALIDATION.md)。
+
 已集成家长端响应式展示、价格筛选、服务端分页/状态筛选/全量统计和备份恢复；接口与启动见 [API 契约](docs/API_CONTRACT.md)、[演示后端](docs/SERVER_DEMO.md)。
 
 D 交付：**AI 家教匹配规则演示**（无需密钥）已接入首页和原预约流程。启动、演示身份、数据重置与五分钟脚本见 [DEMO_GUIDE.md](DEMO_GUIDE.md)；部署实况与操作见 [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)，架构与规则见 [docs/MATCHING_DESIGN.md](docs/MATCHING_DESIGN.md)。
@@ -141,6 +143,6 @@ CONTRIBUTING.md      团队协作规范
 
 ## 小书灵与订单地图
 
-右下角“小书灵”提供对话桌宠、需求整理与页面指引；顶部“订单地图”按角色查看预约，每10秒刷新API状态，点击片区查看对应订单。预约可主动选择公共片区；固定虚构示例与账户订单分开。模型未配置时明确提供有限本机演示。详情见 [AI_COMPANION_ORDER_MAP](docs/AI_COMPANION_ORDER_MAP.md)。
+右下角“小书灵”提供对话桌宠、需求整理与页面指引；在 API 模式配置支持视觉输入的模型后，可主动上传一张脱敏 JPG/PNG/WebP 作业图片请求逐题讲解（最多3 MiB，图片发送给模型服务但不保存到平台数据库）；未配置时明确提示粘贴文字题目。顶部“订单地图”按角色查看预约，每10秒刷新API状态，点击片区查看对应订单。预约可主动选择公共片区；固定虚构示例与账户订单分开。模型未配置时明确提供有限本机演示。详情见 [AI_COMPANION_ORDER_MAP](docs/AI_COMPANION_ORDER_MAP.md)。
 
 家教端1000字简介、公共片区定位、审核照片，以及家长端语音问答与35/30/20/10/5匹配权重，见 [使用说明](docs/PARENT_VOICE_PROFILE.md)。

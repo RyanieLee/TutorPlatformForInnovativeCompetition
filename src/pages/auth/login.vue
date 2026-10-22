@@ -35,8 +35,8 @@ function goRegister() { uni.navigateTo({ url: '/pages/auth/register' }) }
 </script>
 
 <template>
-  <view class="page">
-    <view class="banner"><text class="mark">校园家教</text><text class="title">{{ apiMode ? '开发账户登录' : '选择演示身份登录' }}</text><text class="intro">{{ apiMode ? '使用本地初始化的开发账户；不提供微信正式认证。' : '当前仅模拟本机身份，无微信授权或手机号验证。' }}</text></view>
+  <view class="page linghang-auth">
+    <view class="banner"><image class="auth-emblem" src="/static/linghang-logo.svg" mode="aspectFit"/><text class="mark">领航云学堂</text><text class="title">{{ apiMode ? '开发账户登录' : '选择演示身份登录' }}</text><text class="intro">{{ apiMode ? '使用本地初始化的开发账户；不提供微信正式认证。' : '当前仅模拟本机身份，无微信授权或手机号验证。' }}</text></view>
     <view class="surface-card">
       <view v-if="apiMode" class="section-title">本地开发账户</view><view v-if="apiMode" class="credentials"><input v-model="loginId" placeholder="账户 ID" /><input v-model="password" password placeholder="密码" /></view><view v-else class="section-title">体验角色</view>
       <view v-if="!apiMode" class="role" :class="{ selected: role === 'parent' }" @click="choose('parent')"><text>学生 / 家长</text><text class="hint">浏览家教、提交和管理本机演示预约</text></view>

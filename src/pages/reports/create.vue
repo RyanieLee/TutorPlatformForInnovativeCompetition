@@ -32,7 +32,7 @@ const goLogin = () => uni.navigateTo({ url: '/pages/auth/login' })
 const goProfile = () => uni.switchTab({ url: '/pages/profile/index' })
 </script>
 <template>
-  <view class="page"><view class="heading">举报演示资料</view><view class="notice">{{ apiMode ? '开发版数据库记录' : '仅本机模拟' }}举报，不会触发真实平台处理。请勿填写真实学生或未成年人资料。</view>
+  <view class="page linghang-report"><view class="heading">举报演示资料</view><view class="notice">{{ apiMode ? '开发版数据库记录' : '仅本机模拟' }}举报，不会触发真实平台处理。请勿填写真实学生或未成年人资料。</view>
     <view v-if="!ready" class="surface-card empty-state">正在读取演示身份…</view>
     <view v-else-if="!currentSession" class="surface-card empty-state">登录家长演示身份后提交<button class="primary-button action" @click="goLogin">演示登录</button></view>
     <view v-else-if="!canAccess(['parent'])" class="surface-card empty-state">当前身份不能提交举报<button class="secondary-button action" @click="goProfile">前往我的</button></view>

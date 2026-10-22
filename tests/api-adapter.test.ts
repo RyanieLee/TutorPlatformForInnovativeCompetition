@@ -102,3 +102,20 @@ it('模型状态公开可查；解析调用由后端鉴权且保留明确错误'
   expect(requests[1]).toMatchObject({header:{Authorization:'Bearer test-token'},data:{brief:'初中数学预算80元'}})
   expect(JSON.stringify(requests)).not.toContain('MATCH_MODEL_API_KEY')
 })
+
+it('照片与作业图片共用上传器并保留各自的字段名', async () => {
+  vi.stubEnv('VITE_API_BASE_URL', 'http://127.0.0.1:3001')
+  vi.resetModules()
+  const uploads: {name:string;url:string}[] = []
+  vi.stubGlobal('uni', {
+    getStorageSync: () => 'test-token',
+    uploadFile: (options: {name:string;url:string;success:(value:unknown)=>void}) => {
+      uploads.push({name:options.name,url:options.url})
+      options.success({statusCode:200,data:JSON.stringify({data:{ok:true}})})
+    }
+  })
+  const { apiUploadFile } = await import('../src/services/api/client')
+  await apiUploadFile('/api/tutor/photo','/local/photo.jpg')
+  await apiUploadFile('/api/assistant/homework-review-image','/local/homework.jpg','image')
+  expect(uploads.map(x=>x.name)).toEqual(['file','image'])
+})

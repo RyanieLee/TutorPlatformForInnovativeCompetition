@@ -2,9 +2,12 @@ import { beforeAll, afterAll, describe, expect, it, vi } from 'vitest'
 import { PrismaClient } from '@prisma/client'
 import { buildApp } from '../src/app'
 import { hashPassword, tokenHash } from '../src/core'
+import type { HomeworkImageModel, HomeworkImageMime } from '../src/homework-review'
 const db=new PrismaClient()
 const modelParse=vi.fn(async()=>({subject:'数学' as const,grade:'初中（演示）' as const,budget:80,mode:'线上' as const,preference:'耐心'}))
-const app=buildApp(db,{enabled:true,parse:modelParse})
+const imageReview=vi.fn(async(_image:Buffer,_mimeType:HomeworkImageMime)=>'第1题：需要修改。请检查移项时的符号，并核对计算步骤。')
+const homeworkImageModel:HomeworkImageModel={enabled:true,review:imageReview}
+const app=buildApp(db,{enabled:true,parse:modelParse},undefined,undefined,undefined,homeworkImageModel)
 let parent='',otherParent='',tutor='',otherTutor='',admin=''
 let parentId='',tutorId='',otherTutorId='',profileId='',bookingId='',applicationId='',reportId=''
 async function createUser(loginId:string,role:string){return db.user.create({data:{loginId,displayName:loginId,role,passwordHash:await hashPassword('local-test-password')}})}
@@ -13,6 +16,45 @@ const auth=(token:string)=>({authorization:`Bearer ${token}`})
 const input={displayName:'虚构老师',university:'示例大学',major:'数学',subjects:['数学'],teachingMode:'线上',area:'示例地区',pricePerHour:80,introduction:'仅用于自动化测试的虚构资料。',availability:'周末下午'}
 beforeAll(async()=>{await app.ready();const p=await createUser('parent','parent'),o=await createUser('other-parent','parent'),t=await createUser('tutor','tutor'),ot=await createUser('other-tutor','tutor');await createUser('admin','admin');parentId=p.id;tutorId=t.id;otherTutorId=ot.id;parent=await login('parent');otherParent=await login('other-parent');tutor=await login('tutor');otherTutor=await login('other-tutor');admin=await login('admin')})
 afterAll(async()=>{await app.close()})
+
+function multipartImage(bytes:Buffer,mime='image/png',field='image'){
+ const boundary='----linghang-homework-test'
+ const header=Buffer.from('--'+boundary+'\r\nContent-Disposition: form-data; name="'+field+'"; filename="homework.png"\r\nContent-Type: '+mime+'\r\n\r\n')
+ const footer=Buffer.from('\r\n--'+boundary+'--\r\n')
+ return {payload:Buffer.concat([header,bytes,footer]),headers:{'content-type':'multipart/form-data; boundary='+boundary}}
+}
+describe('小书灵作业图片批改',()=>{
+ const png=Buffer.from([0x89,0x50,0x4e,0x47,0x0d,0x0a,0x1a,0x0a,0x00,0x00,0x00,0x00])
+ it('公开报告模型配置，但上传要求家长或家教登录且图片格式需校验',async()=>{
+  expect((await app.inject({method:'GET',url:'/api/assistant/homework-review/status'})).json().data).toMatchObject({enabled:true,maxImageBytes:3145728})
+  const image=multipartImage(png)
+  expect((await app.inject({method:'POST',url:'/api/assistant/homework-review-image',headers:image.headers,payload:image.payload})).statusCode).toBe(401)
+  expect((await app.inject({method:'POST',url:'/api/assistant/homework-review-image',headers:{...auth(admin),...image.headers},payload:image.payload})).statusCode).toBe(403)
+  const invalid=multipartImage(Buffer.from('not a real image'),'image/png')
+  expect((await app.inject({method:'POST',url:'/api/assistant/homework-review-image',headers:{...auth(parent),...invalid.headers},payload:invalid.payload})).statusCode).toBe(400)
+  expect(imageReview).not.toHaveBeenCalled()
+ })
+ it('成功接收有效PNG并只把内存图片交给模型，不在测试响应中返回图片内容',async()=>{
+  const image=multipartImage(png)
+  const response=await app.inject({method:'POST',url:'/api/assistant/homework-review-image',headers:{...auth(parent),...image.headers},payload:image.payload})
+  expect(response.statusCode).toBe(200)
+  expect(response.headers['cache-control']).toBe('no-store')
+  expect(response.headers['x-content-type-options']).toBe('nosniff')
+  expect(response.json().data).toEqual({reply:'第1题：需要修改。请检查移项时的符号，并核对计算步骤。',source:'model'})
+  expect(imageReview).toHaveBeenCalledWith(png,'image/png')
+  expect(response.body).not.toContain(png.toString('base64'))
+ })
+ it('对图片批改按账户每分钟限流',async()=>{
+  const image=multipartImage(png)
+  const statuses:number[]=[]
+  for(let i=0;i<6;i++){
+   const response=await app.inject({method:'POST',url:'/api/assistant/homework-review-image',remoteAddress:'10.20.30.40',headers:{...auth(otherParent),...image.headers},payload:image.payload})
+   statuses.push(response.statusCode)
+  }
+  expect(statuses).toEqual([200,200,200,200,200,429])
+ })
+})
+
 describe('认证和服务端权限',()=>{
  it('无登录与错误密码被拒绝，登出撤销会话',async()=>{
   expect((await app.inject({method:'GET',url:'/api/auth/me'})).statusCode).toBe(401)
