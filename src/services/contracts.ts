@@ -21,6 +21,7 @@ export interface BusinessService {
   getMyApplication(user: User): Promise<TutorApplication | null>
   saveApplicationDraft(user: User, input: TutorApplicationInput): Promise<TutorApplication>
   submitApplication(user: User, input: TutorApplicationInput): Promise<TutorApplication>
+  uploadTutorPhoto(user: User, filePath: string): Promise<TutorApplication>
   listApplications(admin: User): Promise<TutorApplication[]>
   getApplication(admin: User, id: string): Promise<TutorApplication>
   reviewApplication(admin: User, id: string, decision: 'approved' | 'rejected', reason?: string): Promise<TutorApplication>

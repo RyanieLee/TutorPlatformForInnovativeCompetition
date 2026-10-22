@@ -6,17 +6,30 @@ import { xianPlaces, validLocation, type LocationPoint } from '../services/locat
 // #ifdef H5
 import 'leaflet/dist/leaflet.css'
 // #endif
-const props=withDefaults(defineProps<{modelValue:LocationPoint|null;readOnly?:boolean;orders?:OrderMapItem[];selectedArea?:string}>(),{readOnly:false,orders:()=>[]})
+const props=withDefaults(defineProps<{modelValue:LocationPoint|null;serviceArea?:boolean;disabled?:boolean;readOnly?:boolean;orders?:OrderMapItem[];selectedArea?:string}>(),{readOnly:false,orders:()=>[]})
 const emit=defineEmits<{(e:'update:modelValue',value:LocationPoint|null):void;(e:'order-area-select',area:string):void}>()
 const mapId='xian-location-map-'+getCurrentInstance()!.uid
-const mapWarning=ref(''),selectionError=ref('')
+const mapWarning=ref(''),selectionError=ref(''),locating=ref(false)
 let destroyed=false
 let removeMap:(()=>void)|undefined
 let drawOrders:(()=>void)|undefined
 let moveMarker:((p:LocationPoint|null)=>void)|undefined
 function select(point:LocationPoint) {
+ if(props.disabled)return
  if(!validLocation(point)){selectionError.value='请选择西安主城区及近郊范围内的位置';return}
  selectionError.value='';emit('update:modelValue',point)
+}
+function locateServiceArea(){
+ // #ifdef H5
+ if(locating.value||props.disabled)return
+ if(!navigator.geolocation){selectionError.value='当前浏览器不支持定位，请手动选择公共片区';return}
+ locating.value=true;selectionError.value=''
+ navigator.geolocation.getCurrentPosition(position=>{
+  if(destroyed)return
+  locating.value=false
+  select({latitude:position.coords.latitude,longitude:position.coords.longitude,label:'当前位置附近公共片区'})
+ },()=>{if(!destroyed){locating.value=false;selectionError.value='无法获取当前位置，请检查定位权限，或手动选择公共片区。'}},{enableHighAccuracy:false,timeout:10000,maximumAge:60000})
+ // #endif
 }
 watch(()=>props.modelValue,p=>moveMarker?.(p))
 watch(()=>[props.orders,props.selectedArea],()=>drawOrders?.(),{deep:true})
@@ -60,9 +73,11 @@ onBeforeUnmount(()=>{destroyed=true;removeMap?.()})
 </script>
 <template>
  <view class="location-picker">
-  <view class="location-title">{{readOnly?'西安市 · 家长订单分布':'西安市 · 选择家长位置'}}</view>
-  <text v-if="!readOnly" class="location-note">选择附近公共地点即可，不必填写住址。点位只存在本机，不发送给模型；在线底图由 Esri World Street Map 提供。</text>
+  <view class="location-title">{{readOnly?'西安市 · 家长订单分布':serviceArea?'西安市 · 选择家教服务片区':'西安市 · 选择家长位置'}}</view>
+  <text v-if="!readOnly" class="location-note">{{serviceArea?'选择公共教学地点，保存为附近服务片区；随资料提交审核。不填写住址。':'选择附近公共地点即可，不必填写住址。点位只存在本机，不发送给模型。'}} 在线底图由 Esri World Street Map 提供。</text>
   <!-- #ifdef H5 -->
+  <button v-if="serviceArea&&!readOnly" class="service-locate" :disabled="disabled||locating" @click="locateServiceArea">{{locating?'正在定位…':'定位到附近公共片区'}}</button>
+  <text v-if="serviceArea&&!readOnly" class="location-note">点击才请求浏览器定位权限；坐标只用于本机确定附近片区。拒绝权限时仍可手动选点。</text>
   <view :id="mapId" class="xian-map" aria-label="西安市地图，点击选择家长参考位置"/>
   <text class="location-note">{{readOnly?'圆点数字为同片区的本页订单数，点击可筛选对应订单。点位是公共片区参考点，不是家长住址。':'点击地图任意点或绿色片区标记；可拖动、双指缩放，或用 + / − 按钮缩放。'}}</text>
   <!-- #endif -->
@@ -70,12 +85,13 @@ onBeforeUnmount(()=>{destroyed=true;removeMap?.()})
   <text class="location-note">{{readOnly?'当前小程序以片区列表查看订单；H5提供交互底图。':'当前小程序使用公共片区选点；交互底图请在 H5 打开。'}}</text>
   <!-- #endif -->
   <text v-if="mapWarning" class="map-warning">{{mapWarning}}</text>
-  <view v-if="!readOnly" class="place-buttons"><button v-for="p in xianPlaces" :key="p.label" :class="{chosen:modelValue?.label===p.label}" @click="select(p)">{{p.label}}</button></view>
-  <view v-if="modelValue&&!readOnly" class="selected-location"><text>已选：{{modelValue.label}} · {{modelValue.latitude.toFixed(3)}}, {{modelValue.longitude.toFixed(3)}}</text><button @click="emit('update:modelValue',null)">清除位置</button></view>
+  <view v-if="!readOnly" class="place-buttons"><button v-for="p in xianPlaces" :key="p.label" :disabled="disabled" :class="{chosen:modelValue?.label===p.label}" @click="select(p)">{{p.label}}</button></view>
+  <view v-if="modelValue&&!readOnly" class="selected-location"><text>已选：{{modelValue.label}} · {{modelValue.latitude.toFixed(3)}}, {{modelValue.longitude.toFixed(3)}}</text><button :disabled="disabled" @click="emit('update:modelValue',null)">清除位置</button></view>
   <text v-else-if="!readOnly" class="location-note">未选位置时，仍可进行线上与普通规则匹配。</text>
   <text v-if="selectionError" class="map-warning" role="alert">{{selectionError}}</text>
  </view>
 </template>
 <style scoped>
 .location-picker{min-width:0}.location-title{font-size:18px;font-weight:700;color:#173d51}.location-note{display:block;font-size:13px;color:#667a8a;line-height:1.7;margin:10px 0}.xian-map{width:100%;height:330px;border-radius:14px;overflow:hidden;z-index:0;border:1px solid #dbe5ee;background:#edf2ee}.place-buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.place-buttons button{font-size:12px;line-height:2.8;margin:0;padding:0 10px;background:#eff5f3;color:#365f59;border-radius:8px}.place-buttons .chosen{background:#167568;color:white}.selected-location{margin-top:16px;font-size:13px;color:#2248bb;line-height:1.8;display:flex;gap:10px;align-items:center;flex-wrap:wrap}.selected-location button{margin:0;font-size:12px;line-height:2.4;background:#edf1fa}.map-warning{display:block;font-size:13px;color:#9a621b;line-height:1.7}@media(max-width:700px){.xian-map{height:285px}}
+.service-locate{margin:10px 0;background:#e3efe1;color:#305e3e;font-size:13px;line-height:2.8;padding:0 12px;width:fit-content}
 </style>

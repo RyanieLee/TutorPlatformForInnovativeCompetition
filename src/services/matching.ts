@@ -1,3 +1,4 @@
+import { timeCompatibility } from './availability'
 import { BusinessError } from './errors'
 import { areaReference, distanceKm, validLocation, type LocationPoint } from './location'
 import type { Tutor, TeachingMode } from '../types/tutor'
@@ -10,18 +11,31 @@ export interface MatchInput {
   budget: string
   mode: TeachingMode
   preference: string
+  desiredTime?: string
   parentLocation?: LocationPoint | null
   radiusKm?: number
 }
 export interface MatchResult { tutor: Tutor; score: number; reasons: string[]; distanceKm?:number }
 export interface MatchResponse { results: MatchResult[]; total: number; eligible: number; excluded: { subject: number; budget: number; mode: number; distance:number } }
-export const matchWeights = { subject: 50, mode: 20, budget: 20, preference: 10 } as const
+/** Weights can be changed at the matching page; score always uses a 100 point scale. */
+export const matchWeights = { subject:35, time:30, experience:20, budget:10, other:5 }
+export type MatchWeights = typeof matchWeights
+export const matchFactors = [
+ {key:'subject',label:'学科吻合'}, {key:'time',label:'空闲时间吻合'},
+ {key:'experience',label:'教学经历'}, {key:'budget',label:'家教费用'}, {key:'other',label:'其他相关因素'}
+] as const
+export function validateMatchWeights(weights: MatchWeights): string {
+  if (matchFactors.some(({key}) => !Number.isInteger(weights[key]) || weights[key] < 0 || weights[key] > 50)) return '各评分权重应为 0–50 的整数'
+  if (matchFactors.every(({key}) => weights[key] === 0)) return '至少保留一项评分权重'
+  return ''
+}
 
 export function validateMatch(input: MatchInput): string {
   if (!matchSubjects.some(s => s === input.subject)) return '请选择科目'
   if (!demoGrades.some(g => g === input.grade)) return '请选择演示年级'
   if (!/^(?:\d{1,4})(?:\.\d{1,2})?$/.test(input.budget.trim()) || Number(input.budget) <= 0 || Number(input.budget) > 2000) return '预算请输入 0.01–2000 元的数字，最多两位小数'
   if (!['线上', '线下', '均可'].includes(input.mode)) return '请选择授课方式'
+  if ((input.desiredTime?.length??0)>100) return '期望授课时间最多100字'
   if (input.preference.length > 40) return '偏好最多填写 40 个字，请勿输入个人信息'
   if (input.parentLocation && !validLocation(input.parentLocation)) return '请选择有效的西安参考位置'
   if (input.radiusKm!==undefined && (![5,10,20].includes(input.radiusKm)||!input.parentLocation||input.mode!=='线下')) return '附近筛选需选择家长位置与线下授课，距离为 5、10 或 20 公里'
@@ -29,9 +43,12 @@ export function validateMatch(input: MatchInput): string {
 }
 
 /** 规则演示，无模型调用。硬条件绝不为凑结果而放宽。 */
-export function matchTutors(tutors: Tutor[], input: MatchInput): MatchResponse {
+export function matchTutors(tutors: Tutor[], input: MatchInput, weights: MatchWeights = matchWeights): MatchResponse {
   const error = validateMatch(input)
   if (error) throw new Error(error)
+  const weightError = validateMatchWeights(weights)
+  if (weightError) throw new Error(weightError)
+  const totalWeight = matchFactors.reduce((sum, {key}) => sum + weights[key], 0)
   const budget = Number(input.budget)
   const terms = [...new Set(input.preference.trim().toLowerCase().split(/[\s,，、;；]+/).filter(Boolean))]
   const excluded = { subject: 0, budget: 0, mode: 0, distance:0 }
@@ -44,14 +61,31 @@ export function matchTutors(tutors: Tutor[], input: MatchInput): MatchResponse {
     const point=areaReference(tutor.area)
     const distance=input.parentLocation&&tutor.teachingMode!=='线上'&&input.mode!=='线上'&&point?distanceKm(input.parentLocation,point):undefined
     if(input.radiusKm!==undefined&&(distance===undefined||distance>input.radiusKm)){excluded.distance++;continue}
-    const priceScore = Math.round(matchWeights.budget * (1 - tutor.pricePerHour / budget))
     const text = [tutor.introduction, tutor.area, tutor.major, ...tutor.tags].join(' ').toLowerCase()
     const hits = terms.filter(term => text.includes(term))
-    const preferenceScore = terms.length ? Math.round(matchWeights.preference * hits.length / terms.length) : 0
-    const reasons = [`科目匹配：${input.subject} +50`, `方式兼容：${tutor.teachingMode} +20`, `课时费 ¥${tutor.pricePerHour} ≤ 预算 ¥${budget}，预算余量 +${priceScore}`,
-      terms.length ? `偏好命中 ${hits.length}/${terms.length}${hits.length ? '：' + hits.join('、') : ''} +${preferenceScore}` : '未填写偏好，偏好项 +0']
+    const ratio = (value: number | null | undefined, max: number) => typeof value === 'number' && Number.isFinite(value) && value >= 0 ? Math.min(value / max, 1) : 0
+    const time=timeCompatibility(input.desiredTime??'',tutor.availability??'')
+    const factors: Record<keyof MatchWeights, number> = {
+      subject:1,time:time.ratio,experience:ratio(tutor.experienceMonths,36),
+      budget:Math.max(0,1-tutor.pricePerHour/budget),
+      other:(ratio(tutor.academicScore,100)+ratio(tutor.teachingSkillLevel,5)+ratio(tutor.caseCount,10)+(terms.length?hits.length/terms.length:0))/4
+    }
+    // Integer allocations total exactly 100 even for user-adjusted weights.
+    const allocations=Object.fromEntries(matchFactors.map(({key})=>[key,Math.floor(100*weights[key]/totalWeight)])) as Record<keyof MatchWeights,number>
+    const remainder=100-Object.values(allocations).reduce((a,b)=>a+b,0)
+    const order=[...matchFactors].sort((a,b)=>(100*weights[b.key]/totalWeight)%1-(100*weights[a.key]/totalWeight)%1)
+    for(let i=0;i<remainder;i++)allocations[order[i].key]++
+    const points=Object.fromEntries(matchFactors.map(({key})=>[key,Math.round(allocations[key]*factors[key])])) as Record<keyof MatchWeights,number>
+    const reasons = [
+      `学科吻合：${input.subject} +${points.subject}；方式兼容：${tutor.teachingMode}（硬条件）`,
+      `${time.note} +${points.time}`,
+      `教学经历：自述 ${tutor.experienceMonths ?? '未填写'} 个月 +${points.experience}`,
+      `课时费 ¥${tutor.pricePerHour} ≤ 预算 ¥${budget}，价格余量 +${points.budget}`,
+      `其他因素：课程成绩 ${tutor.academicScore??'未填写'}/100、教学能力 ${tutor.teachingSkillLevel??'未填写'}/5、案例 ${tutor.caseCount??'未填写'}/10（封顶）、偏好命中 ${hits.length}/${terms.length}；四项比例平均 +${points.other}`,
+      '经验、成绩、能力和案例均为自述，缺失项记0；评分不代表资质认证。'
+    ]
     if(input.parentLocation)reasons.push(input.mode==='线上'||tutor.teachingMode==='线上'?'线上授课：不受地理距离限制':distance===undefined?'未识别服务片区，无法估算距离':`距所选位置约 ${distance.toFixed(1)} km（片区参考直线距离，不是路线，不加分）`)
-    results.push({ tutor, score: 70 + priceScore + preferenceScore, reasons, distanceKm:distance })
+    results.push({ tutor, score: Math.min(100, matchFactors.reduce((sum, {key}) => sum + points[key], 0)), reasons, distanceKm:distance })
   }
   results.sort((a, b) => b.score - a.score || ((a.distanceKm??Infinity)===(b.distanceKm??Infinity)?0:(a.distanceKm??Infinity)-(b.distanceKm??Infinity)) || a.tutor.pricePerHour - b.tutor.pricePerHour || (a.tutor.id < b.tutor.id ? -1 : a.tutor.id > b.tutor.id ? 1 : 0))
   return { results, total: tutors.length, eligible: results.length, excluded }

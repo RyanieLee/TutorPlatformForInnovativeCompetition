@@ -21,7 +21,7 @@ async function main(){
   const loginId=index===0?'demo.tutor':`demo.catalog.${sample.id}`
   let user=await db.user.findUnique({where:{loginId}})
   if(!user)user=await db.user.create({data:{loginId,displayName:sample.name,role:'tutor',passwordHash:await hashPassword(randomBytes(32).toString('hex'))}})
-  const fake={displayName:sample.name,university:sample.university,major:sample.major,subjectsJson:JSON.stringify(sample.subjects),teachingMode:sample.teachingMode,area:sample.area,pricePerHour:sample.pricePerHour,introduction:sample.introduction,availability:sample.availability}
+  const fake={displayName:sample.name,university:sample.university,major:sample.major,subjectsJson:JSON.stringify(sample.subjects),teachingMode:sample.teachingMode,area:sample.area,pricePerHour:sample.pricePerHour,introduction:sample.introduction,availability:sample.availability,experienceMonths:sample.experienceMonths,academicScore:sample.academicScore,teachingSkillLevel:sample.teachingSkillLevel,caseCount:sample.caseCount,caseSummary:sample.caseSummary}
   const profile=await db.tutorProfile.upsert({where:{userId:user.id},create:{userId:user.id,...fake,published:true},update:{}})
   for(const subject of JSON.parse(profile.subjectsJson) as string[]){
    await db.tutorSubject.upsert({where:{tutorProfileId_subject:{tutorProfileId:profile.id,subject}},create:{tutorProfileId:profile.id,subject},update:{}})

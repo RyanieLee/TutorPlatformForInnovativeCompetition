@@ -12,6 +12,7 @@ import { actor, ApiError, audit, fail, hashPassword, newToken, publicUser, token
 import { applicationSchema, bookingSchema, draftSchema, idParam, parse, reportSchema, bookingListQuery, applicationListQuery, reportListQuery, bookingStatuses, applicationStatuses, reportStatuses } from './validation'
 import { application, booking, report, tutor } from './format'
 import { containsPersonalInfo, createMatchModel, type MatchModel } from './match-model'
+import { registerTutorPhotoRoutes, readTutorPhotoDataUrl } from './tutor-photo'
 
 const include = { tutorProfile: true } as const
 const rules = { accept: { from: ['pending'], to: 'accepted', role: 'tutor' }, reject: { from: ['pending'], to: 'rejected', role: 'tutor' }, cancel: { from: ['pending','accepted'], to: 'cancelled', role: 'parent' }, complete: { from: ['accepted'], to: 'completed', role: 'tutor' } } as const
@@ -23,6 +24,8 @@ export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: Matc
  app.register(async child=>registerTeachingRoutes(child,db,teachingOptions??{uploadRoot:resolve(process.env.TEACHING_UPLOAD_ROOT||'./.teaching-uploads'),now:()=>new Date()}))
  registerOrderMap(app,db)
  registerAssistant(app,db,chatModel)
+ const photoRoot=resolve(process.env.TUTOR_PHOTO_ROOT||'./.tutor-photos')
+ app.register(async child=>registerTutorPhotoRoutes(child,db,photoRoot))
  const attempts=new Map<string,{count:number;resetAt:number}>()
  const ipAttempts=new Map<string,{count:number;resetAt:number}>()
  const modelUserAttempts=new Map<string,{count:number;resetAt:number}>()
@@ -120,7 +123,7 @@ export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: Matc
   return{data:tutor(updated)}
  })
  app.get('/api/tutors/:id',async request=>{const{id}=parse(idParam,request.params);const p=await db.tutorProfile.findFirst({where:{id,published:true,user:{status:'active',application:{status:'approved'}}}});if(!p)return fail('NOT_FOUND',404,'家教不存在');return{data:tutor(p)}})
- app.get('/api/tutor-applications/mine',async request=>{const{user}=await actor(request,db,['tutor']);const a=await db.tutorApplication.findUnique({where:{userId:user.id}});return{data:a?application(a):null}})
+ app.get('/api/tutor-applications/mine',async request=>{const{user}=await actor(request,db,['tutor']);const a=await db.tutorApplication.findUnique({where:{userId:user.id}});return{data:a?application(a,await readTutorPhotoDataUrl(photoRoot,a.photoKey)):null}})
  app.put('/api/tutor-applications/draft',async request=>{
   const{user}=await actor(request,db,['tutor']),input=parse(draftSchema,request.body)
   const current=await db.tutorApplication.findUnique({where:{userId:user.id}})
@@ -136,7 +139,7 @@ export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: Matc
    if(current?.status==='approved')await tx.tutorProfile.update({where:{userId:user.id},data:{published:false}})
    return saved
   })
-  return{data:application(row)}
+  return{data:application(row,await readTutorPhotoDataUrl(photoRoot,row.photoKey))}
  })
  app.post('/api/tutor-applications',async request=>{
   const{user}=await actor(request,db,['tutor']),input=parse(applicationSchema,request.body)
@@ -149,9 +152,9 @@ export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: Matc
     if(changed.count!==1)return fail('CONFLICT',409,'申请正在审核或已通过')
     row=await tx.tutorApplication.findUniqueOrThrow({where:{userId:user.id}})
    } else row=await tx.tutorApplication.create({data:{userId:user.id,...data(input),status:'pending'}})
-   await tx.tutorProfile.upsert({where:{userId:user.id},create:{userId:user.id,...data(input),published:false,subjects:{create:input.subjects.map(subject=>({subject}))}},update:{...data(input),published:false,subjects:{deleteMany:{},create:input.subjects.map(subject=>({subject}))}}})
+   await tx.tutorProfile.upsert({where:{userId:user.id},create:{userId:user.id,...data(input),photoKey:row.photoKey,published:false,subjects:{create:input.subjects.map(subject=>({subject}))}},update:{...data(input),photoKey:row.photoKey,published:false,subjects:{deleteMany:{},create:input.subjects.map(subject=>({subject}))}}})
    await tx.auditLog.create({data:{actorId:user.id,action:'submit',entityType:'TutorApplication',entityId:row.id}});return row
-  });return{data:application(a)}
+  });return{data:application(a,await readTutorPhotoDataUrl(photoRoot,a.photoKey))}
  })
  app.get('/api/admin/tutor-applications',async request=>{
   await actor(request,db,['admin'])
@@ -161,7 +164,7 @@ export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: Matc
    db.tutorApplication.count({where}),
    db.tutorApplication.findMany({where,orderBy:[{updatedAt:'desc'},{id:'desc'}],skip:(q.page-1)*q.pageSize,take:q.pageSize})
   ])
-  return{data:rows.map(application),meta:{total,page:q.page,pageSize:q.pageSize}}
+  return{data:rows.map(row=>application(row)),meta:{total,page:q.page,pageSize:q.pageSize}}
  })
  app.get('/api/admin/overview',async request=>{
   await actor(request,db,['admin'])
@@ -179,7 +182,7 @@ export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: Matc
    return{data:{applications:counts(applicationStatuses,applications),bookings:counts(bookingStatuses,bookings),reports:counts(reportStatuses,reports),tutors:{published}}}
   })
  })
- app.get('/api/admin/tutor-applications/:id',async request=>{await actor(request,db,['admin']);const{id}=parse(idParam,request.params),a=await db.tutorApplication.findUnique({where:{id}});if(!a)return fail('NOT_FOUND',404,'申请不存在');return{data:application(a)}})
+ app.get('/api/admin/tutor-applications/:id',async request=>{await actor(request,db,['admin']);const{id}=parse(idParam,request.params),a=await db.tutorApplication.findUnique({where:{id}});if(!a)return fail('NOT_FOUND',404,'申请不存在');return{data:application(a,await readTutorPhotoDataUrl(photoRoot,a.photoKey))}})
  app.post('/api/admin/tutor-applications/:id/review',async request=>{
   const{user}=await actor(request,db,['admin']),{id}=parse(idParam,request.params)
   const body=parse(z.object({decision:z.enum(['approved','rejected']),reason:z.string().trim().max(500).optional()}).strict(),request.body)

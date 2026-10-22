@@ -16,7 +16,12 @@
       "耐心讲解"
     ],
     "availability": "周六 14:00–17:00，周日 09:00–11:00",
-    "id": "t001"
+    "id": "t001",
+    "experienceMonths": 30,
+    "academicScore": 90,
+    "teachingSkillLevel": 5,
+    "caseCount": 8,
+    "caseSummary": "虚构匿名案例：围绕数学基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小陈老师",
@@ -34,7 +39,12 @@
       "口语练习"
     ],
     "availability": "周二、周四 19:30–21:00",
-    "id": "t002"
+    "id": "t002",
+    "experienceMonths": 11,
+    "academicScore": 76,
+    "teachingSkillLevel": 3,
+    "caseCount": 3,
+    "caseSummary": "虚构匿名案例：围绕英语基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小周老师",
@@ -53,7 +63,12 @@
       "例题精讲"
     ],
     "availability": "周六 09:00–12:00",
-    "id": "t003"
+    "id": "t003",
+    "experienceMonths": 18,
+    "academicScore": 87,
+    "teachingSkillLevel": 4,
+    "caseCount": 6,
+    "caseSummary": "虚构匿名案例：围绕物理基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小许老师",
@@ -71,7 +86,12 @@
       "阅读理解"
     ],
     "availability": "周三 19:00–20:30，周日下午",
-    "id": "t004"
+    "id": "t004",
+    "experienceMonths": 25,
+    "academicScore": 67,
+    "teachingSkillLevel": 5,
+    "caseCount": 9,
+    "caseSummary": "虚构匿名案例：围绕语文基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小吴老师",
@@ -90,7 +110,12 @@
       "考点梳理"
     ],
     "availability": "周五 19:00–21:00",
-    "id": "t005"
+    "id": "t005",
+    "experienceMonths": 32,
+    "academicScore": 78,
+    "teachingSkillLevel": 2,
+    "caseCount": 0,
+    "caseSummary": "虚构匿名案例：围绕化学基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小何老师",
@@ -110,7 +135,12 @@
       "习惯培养"
     ],
     "availability": "周一、周三 18:30–20:00",
-    "id": "t006"
+    "id": "t006",
+    "experienceMonths": 39,
+    "academicScore": 89,
+    "teachingSkillLevel": 3,
+    "caseCount": 3,
+    "caseSummary": "虚构匿名案例：围绕语文基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小唐老师",
@@ -128,7 +158,12 @@
       "错题复盘"
     ],
     "availability": "周六 10:00–12:00",
-    "id": "t007"
+    "id": "t007",
+    "experienceMonths": 6,
+    "academicScore": 69,
+    "teachingSkillLevel": 4,
+    "caseCount": 6,
+    "caseSummary": "虚构匿名案例：围绕数学基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小宋老师",
@@ -146,7 +181,12 @@
       "长难句"
     ],
     "availability": "周日 14:00–17:00",
-    "id": "t008"
+    "id": "t008",
+    "experienceMonths": 13,
+    "academicScore": 80,
+    "teachingSkillLevel": 5,
+    "caseCount": 9,
+    "caseSummary": "虚构匿名案例：围绕英语基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小赵老师",
@@ -164,7 +204,12 @@
       "力学模型"
     ],
     "availability": "周六下午、周日晚间",
-    "id": "t009"
+    "id": "t009",
+    "experienceMonths": 20,
+    "academicScore": 91,
+    "teachingSkillLevel": 2,
+    "caseCount": 0,
+    "caseSummary": "虚构匿名案例：围绕物理基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小孟老师",
@@ -182,7 +227,12 @@
       "作文修改"
     ],
     "availability": "周六 15:00–18:00",
-    "id": "t010"
+    "id": "t010",
+    "experienceMonths": 27,
+    "academicScore": 71,
+    "teachingSkillLevel": 3,
+    "caseCount": 3,
+    "caseSummary": "虚构匿名案例：围绕语文基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小叶老师",
@@ -200,7 +250,12 @@
       "概念辨析"
     ],
     "availability": "周三晚间、周日下午",
-    "id": "t011"
+    "id": "t011",
+    "experienceMonths": 34,
+    "academicScore": 82,
+    "teachingSkillLevel": 4,
+    "caseCount": 6,
+    "caseSummary": "虚构匿名案例：围绕化学基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小顾老师",
@@ -219,7 +274,12 @@
       "思路拓展"
     ],
     "availability": "周日 09:00–12:00",
-    "id": "t012"
+    "id": "t012",
+    "experienceMonths": 41,
+    "academicScore": 93,
+    "teachingSkillLevel": 5,
+    "caseCount": 9,
+    "caseSummary": "虚构匿名案例：围绕数学基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小陆老师",
@@ -237,7 +297,12 @@
       "阅读表达"
     ],
     "availability": "周二、周五 19:00–20:30",
-    "id": "t013"
+    "id": "t013",
+    "experienceMonths": 8,
+    "academicScore": 73,
+    "teachingSkillLevel": 2,
+    "caseCount": 0,
+    "caseSummary": "虚构匿名案例：围绕语文基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小邵老师",
@@ -255,7 +320,12 @@
       "过程检查"
     ],
     "availability": "周六上午、周日下午",
-    "id": "t014"
+    "id": "t014",
+    "experienceMonths": 15,
+    "academicScore": 84,
+    "teachingSkillLevel": 3,
+    "caseCount": 3,
+    "caseSummary": "虚构匿名案例：围绕数学基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小白老师",
@@ -273,7 +343,12 @@
       "词组复习"
     ],
     "availability": "工作日 20:00–21:00",
-    "id": "t015"
+    "id": "t015",
+    "experienceMonths": 22,
+    "academicScore": 95,
+    "teachingSkillLevel": 4,
+    "caseCount": 6,
+    "caseSummary": "虚构匿名案例：围绕英语基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小程老师",
@@ -291,7 +366,12 @@
       "图示教学"
     ],
     "availability": "周日 14:00–16:00",
-    "id": "t016"
+    "id": "t016",
+    "experienceMonths": 29,
+    "academicScore": 75,
+    "teachingSkillLevel": 5,
+    "caseCount": 9,
+    "caseSummary": "虚构匿名案例：围绕物理基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小杜老师",
@@ -309,7 +389,12 @@
       "方程式"
     ],
     "availability": "周六 09:00–11:00",
-    "id": "t017"
+    "id": "t017",
+    "experienceMonths": 36,
+    "academicScore": 86,
+    "teachingSkillLevel": 2,
+    "caseCount": 0,
+    "caseSummary": "虚构匿名案例：围绕化学基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小姚老师",
@@ -327,7 +412,12 @@
       "图像理解"
     ],
     "availability": "周四晚间、周六下午",
-    "id": "t018"
+    "id": "t018",
+    "experienceMonths": 43,
+    "academicScore": 66,
+    "teachingSkillLevel": 3,
+    "caseCount": 3,
+    "caseSummary": "虚构匿名案例：围绕数学基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小贺老师",
@@ -345,7 +435,12 @@
       "语篇结构"
     ],
     "availability": "周日 10:00–12:00",
-    "id": "t019"
+    "id": "t019",
+    "experienceMonths": 10,
+    "academicScore": 77,
+    "teachingSkillLevel": 4,
+    "caseCount": 6,
+    "caseSummary": "虚构匿名案例：围绕英语基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小方老师",
@@ -363,7 +458,12 @@
       "表达训练"
     ],
     "availability": "周二晚间、周六上午",
-    "id": "t020"
+    "id": "t020",
+    "experienceMonths": 17,
+    "academicScore": 88,
+    "teachingSkillLevel": 5,
+    "caseCount": 9,
+    "caseSummary": "虚构匿名案例：围绕语文基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小罗老师",
@@ -382,7 +482,12 @@
       "专题巩固"
     ],
     "availability": "周六 14:00–17:00",
-    "id": "t021"
+    "id": "t021",
+    "experienceMonths": 24,
+    "academicScore": 68,
+    "teachingSkillLevel": 2,
+    "caseCount": 0,
+    "caseSummary": "虚构匿名案例：围绕物理基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小苏老师",
@@ -400,7 +505,12 @@
       "典型例题"
     ],
     "availability": "周一、周四 19:00–20:30",
-    "id": "t022"
+    "id": "t022",
+    "experienceMonths": 31,
+    "academicScore": 79,
+    "teachingSkillLevel": 3,
+    "caseCount": 3,
+    "caseSummary": "虚构匿名案例：围绕化学基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小严老师",
@@ -418,7 +528,12 @@
       "推导训练"
     ],
     "availability": "周日 19:00–21:00",
-    "id": "t023"
+    "id": "t023",
+    "experienceMonths": 38,
+    "academicScore": 90,
+    "teachingSkillLevel": 4,
+    "caseCount": 6,
+    "caseSummary": "虚构匿名案例：围绕数学基础知识进行梳理与错题复盘。"
   },
   {
     "name": "小温老师",
@@ -436,6 +551,11 @@
       "学习复盘"
     ],
     "availability": "周三、周日 19:00–20:30",
-    "id": "t024"
+    "id": "t024",
+    "experienceMonths": 5,
+    "academicScore": 70,
+    "teachingSkillLevel": 5,
+    "caseCount": 9,
+    "caseSummary": "虚构匿名案例：围绕英语基础知识进行梳理与错题复盘。"
   }
 ]

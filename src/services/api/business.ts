@@ -5,7 +5,7 @@ import type { Tutor, BookingInput, BookingOrder } from '../../types/tutor'
 import type { TutorApplication, TutorApplicationInput, ReportReason, TutorReport } from '../../types/business'
 import type { BookingAction } from '../rules'
 import { BusinessError } from '../errors'
-import { apiRequest } from './client'
+import { apiRequest, apiUploadFile } from './client'
 const enc = encodeURIComponent
 export class ApiBusinessService implements BusinessService {
  private pendingBooking: {fingerprint:string; requestId:string}|null = null
@@ -14,6 +14,7 @@ export class ApiBusinessService implements BusinessService {
  getMyApplication(_user:User) { return apiRequest<TutorApplication|null>('GET','/api/tutor-applications/mine') }
  saveApplicationDraft(_user:User,input:TutorApplicationInput) { return apiRequest<TutorApplication>('PUT','/api/tutor-applications/draft',input) }
  submitApplication(_user:User,input:TutorApplicationInput) { return apiRequest<TutorApplication>('POST','/api/tutor-applications',input) }
+ uploadTutorPhoto(_user:User,filePath:string) { return apiUploadFile<TutorApplication>('/api/tutor-applications/photo',filePath) }
  listApplications(_admin:User) { return apiRequest<TutorApplication[]>('GET','/api/admin/tutor-applications') }
  getApplication(_admin:User,id:string) { return apiRequest<TutorApplication>('GET','/api/admin/tutor-applications/'+enc(id)) }
  reviewApplication(_admin:User,id:string,decision:'approved'|'rejected',reason?:string) { return apiRequest<TutorApplication>('POST','/api/admin/tutor-applications/'+enc(id)+'/review',{decision,reason}) }

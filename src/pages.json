@@ -113,6 +113,12 @@
       "style": {
         "navigationBarTitleText": "西安订单地图"
       }
+    },
+    {
+      "path": "pages/assistant/index",
+      "style": {
+        "navigationBarTitleText": "小书灵 · AI语音问答"
+      }
     }
   ],
   "tabBar": {

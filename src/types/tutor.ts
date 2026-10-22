@@ -12,6 +12,14 @@ export interface Tutor {
   introduction: string
   tags: string[]
   availability?: string
+  /** Optional public portrait URL. Published only after the application is approved. */
+  photoUrl?: string
+  /** Self reported demo claims; missing fields never receive evidence points. */
+  experienceMonths?: number | null
+  academicScore?: number | null
+  teachingSkillLevel?: number | null
+  caseCount?: number | null
+  caseSummary?: string
 }
 
 /** 保留原表单字段，便于旧页面和旧本机数据兼容。 */

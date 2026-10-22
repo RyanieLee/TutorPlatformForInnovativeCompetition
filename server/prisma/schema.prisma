@@ -54,6 +54,12 @@ model TutorProfile {
   pricePerHour Int
   introduction String
   availability String
+  photoKey     String?
+  experienceMonths Int?
+  academicScore Int?
+  teachingSkillLevel Int?
+  caseCount    Int?
+  caseSummary  String @default("")
   published    Boolean   @default(false)
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
@@ -86,6 +92,12 @@ model TutorApplication {
   pricePerHour    Int
   introduction    String
   availability    String
+  photoKey        String?
+  experienceMonths Int?
+  academicScore   Int?
+  teachingSkillLevel Int?
+  caseCount       Int?
+  caseSummary     String @default("")
   status          String    @default("draft")
   rejectionReason String?
   reviewedAt      DateTime?

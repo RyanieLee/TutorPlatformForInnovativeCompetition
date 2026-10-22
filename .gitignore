@@ -17,3 +17,4 @@ server/prisma/*.db-journal
 playwright-report/
 test-results/
 server/.teaching-uploads/
+server/.tutor-photos/
