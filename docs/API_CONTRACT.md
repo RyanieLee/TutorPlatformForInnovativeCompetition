@@ -70,7 +70,7 @@ ApplicationInput：以下基础字段必填；POST 提交要求非空。价格�
 | subjects | 1–6 个科目，每项 1–30 字符，不得重复 |
 | teachingMode | `线上/线下/均可` |
 | pricePerHour | integer，1–1000 |
-| introduction | 10–500 字符 |
+| introduction | 10–1000 字符；草稿可为空，最多1000 |
 | availability | 1–100 字符 |
 | experienceMonths / academicScore / teachingSkillLevel / caseCount | 可省略或设为 null（清空），整数范围分别为 0–120 / 0–100 / 0–5 / 0–50 |
 | caseSummary | 可省略，最多 120 字；不得包含常见联系方式或身份字段；只写匿名案例 |
