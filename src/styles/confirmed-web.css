@@ -1,7 +1,7 @@
 /* Approved desktop reference, presentation only. The character layer uses
    the supplied reference pixels, never a generated replacement character.
    Imported for H5 only; routes, events, scripts and native layouts are retained. */
-@media screen and (min-width:1100px) {
+@media screen and (min-width:768px) {
   uni-page-body {
     position:relative !important;isolation:isolate !important;min-height:100vh !important;
     background:#e9f6fc!important;color:#142e4d !important;
@@ -118,9 +118,67 @@
   .companion-root .companion-panel {background:#f9fdfff2 !important}
   .companion-root.motion-off .mascot-img {animation:none!important}
 }
+/* Keep the approved visual language in narrow browser panels as well.
+   These rules adapt spacing; the 1600px approved composition is unchanged. */
+@media screen and (min-width:768px) and (max-width:1099px) {
+  uni-page-body::after {top:105px!important}
+  .parent-shell.parent-shell {padding:0 24px 36px!important}
+  .parent-shell.parent-shell .parent-header.parent-header {flex-direction:column!important;align-items:stretch!important;gap:14px!important;margin:0 -8px 18px!important}
+  .parent-shell.parent-shell .parent-nav {justify-content:flex-start!important}
+  .parent-shell .page .headline {font-size:36px!important}
+  .parent-shell .page .intro {font-size:15px!important}
+  .parent-shell .hero-actions button {padding:0 18px!important;font-size:14px!important;min-height:48px!important}
+  .parent-shell .hero-art .lesson-stage {right:-8px!important;width:125px!important}
+  .parent-shell .page .ai-entry,.parent-shell .page .learning-entry,.parent-shell .page .reference-entry {padding:18px 16px!important;min-height:180px!important}
+  .parent-shell .ai-title,.parent-shell .learning-title,.parent-shell .reference-title {font-size:17px!important}
+  .learning-page.learning-page,.shell.shell .header,.shell.shell>.notice,.shell.shell>.b-toolbar,.shell.shell>.b-grid,.shell.shell>.b-panel,.shell.shell>.b-metrics,.shell.shell>.b-info,.shell.shell>.access {width:100%!important;max-width:none!important}
+  .linghang-profile.linghang-profile {width:90%!important}
+  .linghang-auth.linghang-auth,.linghang-register.linghang-register,.linghang-report.linghang-report {width:82%!important}
+  .learning-page .hero-mark {transform:none!important}
+  .companion-fullpage.companion-fullpage {width:86%!important}
+}
+@media screen and (max-width:767px) and (prefers-contrast:more),screen and (max-width:767px) and (prefers-reduced-transparency:reduce) {
+  uni-page-body::before {display:none!important}
+  .parent-shell .parent-header.parent-header,.parent-shell .page .hero,.parent-shell .page .ai-entry,
+  .parent-shell .page .learning-entry,.parent-shell .page .reference-entry,
+  .learning-page :is(.learning-hero,.selection,.note-card,.paper,.exam-settings,.source-card) {background:#fff!important;backdrop-filter:none!important}
+}
+@media screen and (max-width:767px) {
+  uni-page-body {position:relative!important;isolation:isolate!important;min-height:100vh!important;background:#eaf4f9!important;color:#142e4d!important}
+  uni-page-body::before {content:""!important;position:fixed!important;inset:0!important;z-index:-1!important;pointer-events:none!important;background:linear-gradient(#f4faff96,#f4faff96),url('../static/web/campus.webp') center top/cover no-repeat!important}
+  uni-page-body:not(:has(.tutor-grid))::before {filter:saturate(.48)!important;opacity:.5!important}
+  uni-page:has(.parent-shell) uni-page-head,uni-app:has(.parent-shell) uni-tabbar {display:none!important}
+  uni-app:has(.parent-shell) {--window-top:0px;--window-bottom:0px}
+  .parent-shell .parent-header.parent-header {margin:0 -2px 16px!important;padding:15px!important;gap:14px!important;background:#f1fcffd4!important;border:1px solid #fff!important;box-shadow:0 8px 24px #518ca312!important;border-radius:0 0 24px 24px!important;backdrop-filter:blur(15px)!important}
+  .parent-shell .brand-icon.brand-icon {width:45px!important;height:45px!important;flex-basis:45px!important;background-image:url('../static/web/approved-reference.webp')!important;background-size:1050px auto!important;background-position:-48px -20px!important;border-radius:0!important}
+  .parent-shell .parent-nav {display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:7px!important;width:100%!important}
+  .parent-shell.parent-shell .parent-nav uni-button {display:flex!important;align-items:center!important;justify-content:center!important;min-height:44px!important;padding:4px!important;margin:0!important;border:1px solid #fff!important;border-radius:22px!important;font-size:11px!important;line-height:1.4!important;white-space:normal!important;background:linear-gradient(145deg,#ffffffc9,#edf8ff99)!important;color:#24465f!important;box-shadow:0 4px 12px #4d8ba510!important}
+  .parent-shell.parent-shell .parent-nav uni-button::after {content:none!important}
+  .parent-shell.parent-shell .parent-nav uni-button.current {background:linear-gradient(140deg,#faffffe6,#d6f4ecdd)!important;color:#086e73!important;font-weight:750!important}
+  .parent-shell .page .headline-accent {color:#269b8a!important}
+  .parent-shell .page .hero {background:#f3fcffc7!important;border:1px solid #ffffffdf!important;box-shadow:0 12px 30px #5288a110!important}
+  .parent-shell .page .headline {color:#102e4c!important}
+  .parent-shell .page:has(.tutor-grid) {display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important}
+  .parent-shell .page:has(.tutor-grid)>* {grid-column:1/-1!important;grid-row:auto!important;min-width:0!important}
+  .parent-shell .page .ai-entry {grid-column:1!important;grid-row:2!important}
+  .parent-shell .page .browse-entry {grid-column:2!important;grid-row:2!important}
+  .parent-shell .page .learning-entry {grid-column:1!important;grid-row:3!important}
+  .parent-shell .page .orders-entry {grid-column:2!important;grid-row:3!important}
+  .parent-shell .page .ai-entry,.parent-shell .page .learning-entry,.parent-shell .page .reference-entry {display:flex!important;flex-direction:column!important;align-items:flex-start!important;white-space:normal!important;text-align:left!important;margin:0!important;padding:17px 14px!important;min-height:175px!important;line-height:1.7!important;gap:7px!important;background:#f8fdffed!important;border:1px solid #fff!important;border-radius:22px!important;box-shadow:0 9px 22px #4d8ba512!important}
+  .parent-shell .ai-title,.parent-shell .learning-title,.parent-shell .reference-title {font-size:17px!important;font-weight:750!important;color:#102f4c!important}
+  .parent-shell .ai-kicker,.parent-shell .learning-kicker {font-size:10px!important;letter-spacing:0!important}
+  .parent-shell .ai-note,.parent-shell .learning-note,.parent-shell .reference-note {font-size:11px!important;line-height:1.8!important;color:#526f83!important}
+  .parent-shell .reference-icon,.parent-shell .reference-arrow {color:#359bb3!important;font-size:22px!important}
+  .learning-page .learning-hero {background:#f1fcffdc!important;border:1px solid #fff!important;color:#142e4d!important}
+  .learning-page .learning-hero :is(.title,.intro,.kicker) {color:#24465f!important}
+  .learning-page :is(.selection,.note-card,.exam-settings,.paper,.empty,.source-card),.shell.shell .b-panel {background:#f9fdffed!important;border:1px solid #fff!important;border-radius:22px!important}
+  .companion-root .mascot-img {background:url('../static/web/approved-reference.webp') 64.7% 22% / 620% auto no-repeat!important;border:2px solid #fff!important;border-radius:50%!important;animation:none!important}
+  .companion-root .mascot-img img {opacity:0!important}
+  .companion-root .mascot-img>div {background-image:none!important}
+}
 /* The desktop site already supplies these navigation actions in its header.
    Hide duplicate framework chrome only on pages with that complete header. */
-@media screen and (min-width:1100px) {
+@media screen and (min-width:768px) {
   uni-page:has(.parent-shell) uni-page-head,
   uni-app:has(.parent-shell) uni-tabbar {
     display:none!important;
@@ -131,7 +189,7 @@
   }
 }
 /* Header refinements: each existing navigation action gets its own glass pill. */
-@media screen and (min-width:1100px) {
+@media screen and (min-width:768px) {
   .parent-shell.parent-shell .parent-header.parent-header {
     gap:24px!important;padding:18px 24px!important;
     background:linear-gradient(105deg,#f7fffda8,#e8f8ff99)!important;
@@ -173,27 +231,27 @@
     outline:3px solid #309ba8!important;outline-offset:3px!important;
   }
 }
-@media screen and (min-width:1100px) and (max-width:1390px) {
+@media screen and (min-width:768px) and (max-width:1390px) {
   .parent-shell.parent-shell .parent-header.parent-header {gap:15px!important;padding:16px!important}
   .parent-shell.parent-shell .parent-nav {gap:6px!important}
   .parent-shell.parent-shell .parent-nav uni-button {padding:0 12px!important;font-size:12px!important;min-height:43px!important}
 }
-@media screen and (min-width:1100px) and (hover:hover) and (pointer:fine) {
+@media screen and (min-width:768px) and (hover:hover) and (pointer:fine) {
   .parent-shell.parent-shell .parent-nav uni-button:hover {
     transform:translateY(-2px)!important;background:linear-gradient(135deg,#ffffffed,#e5f7ffc9)!important;
     border-color:#fff!important;box-shadow:0 9px 20px #398ca527,inset 0 1px 0 #fff!important;
   }
   .parent-shell.parent-shell .parent-nav uni-button:active {transform:translateY(0)!important}
 }
-@media screen and (min-width:1100px) and (prefers-reduced-motion:reduce) {
+@media screen and (min-width:768px) and (prefers-reduced-motion:reduce) {
   .parent-shell.parent-shell .parent-nav uni-button {transition:none!important;transform:none!important}
 }
-@media screen and (min-width:1100px) and (prefers-contrast:more), screen and (min-width:1100px) and (prefers-reduced-transparency:reduce) {
+@media screen and (min-width:768px) and (prefers-contrast:more), screen and (min-width:768px) and (prefers-reduced-transparency:reduce) {
   .parent-shell.parent-shell .parent-header.parent-header,
   .parent-shell.parent-shell .parent-nav uni-button {background:#fff!important;backdrop-filter:none!important;border-color:#74aebc!important}
   .parent-shell.parent-shell .parent-nav uni-button.current {background:#dff4ef!important;color:#075f65!important}
 }
-@media screen and (min-width:1100px) and (max-width:1300px) {
+@media screen and (min-width:768px) and (max-width:1300px) {
   .parent-shell .parent-header.parent-header {gap:10px !important;padding:15px 12px !important}
   .parent-shell .brand-name.brand-name {font-size:21px !important}
   .parent-shell.parent-shell .parent-nav button {font-size:12px !important;padding:0 7px !important}
@@ -204,7 +262,7 @@
 @media print {
   uni-page-body::before,uni-page-body::after {display:none!important}
 }
-@media screen and (min-width:1100px) {
+@media screen and (min-width:768px) {
   .parent-shell .parent-nav uni-button::after {border:0!important}
   .parent-shell .brand-icon.brand-icon {background-image:url('../static/web/approved-reference.webp')!important;background-size:1230px auto!important;background-position:-56px -24px!important;border-radius:0!important}
   .parent-shell .page .headline-accent {color:#269b8a!important}
@@ -231,7 +289,7 @@
   .parent-shell .reference-arrow {align-self:flex-end!important;color:#2c7595!important;font-size:20px!important;margin-top:auto!important}
   .learning-page .hero-mark {align-self:flex-start!important;transform:translateX(-30px)!important}
 }
-@media screen and (min-width:1100px) and (prefers-contrast:more), screen and (min-width:1100px) and (prefers-reduced-transparency:reduce) {
+@media screen and (min-width:768px) and (prefers-contrast:more), screen and (min-width:768px) and (prefers-reduced-transparency:reduce) {
   uni-page-body::before,uni-page-body::after {display:none!important}
   .parent-shell .parent-header.parent-header,.parent-shell .page .hero,
   .parent-shell .page .ai-entry,.parent-shell .page .learning-entry,
