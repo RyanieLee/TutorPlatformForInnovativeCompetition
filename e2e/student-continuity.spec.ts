@@ -13,6 +13,25 @@ async function login(p:Page,role:'parent'|'tutor',api:boolean){
  await button(p,api?'登录开发账户':'进入演示模式').click()
  await expect(button(p,api?'退出登录':'退出演示身份')).toBeVisible()
 }
+
+test('预置学生资料与学情报告：四个板块可查看，刷新保留，试课前权限受限',async({page},info)=>{
+ const api=info.project.name.startsWith('api')
+ await login(page,'parent',api);await go(page,'students/index')
+ for(const name of ['林小禾','陈知远','周星然','许安宁'])await expect(page.locator('.archive-toolbar .student-chips')).toContainText(name)
+ await button(page,'林小禾（演示） · 初一').click()
+ await expect(page.locator('.archive-identity')).toContainText('林小禾')
+ await button(page,'作业与训练').filter({hasText:/^作业与训练$/}).click()
+ await expect(page.getByTestId('archive-review')).toContainText('2/5')
+ await expect(page.getByText('【虚构演示学情报告】',{exact:false})).toBeVisible()
+ await button(page,'试课与授权').click();await expect(page.getByText('家长已确认',{exact:false}).first()).toBeVisible()
+ await button(page,'换师交接').click();await expect(page.getByText('【虚构演示学情报告】',{exact:false}).first()).toBeVisible()
+ await page.reload();await expect(page.locator('.archive-toolbar .student-chips')).toContainText('林小禾')
+ await login(page,'tutor',api);await go(page,'students/index')
+ await button(page,'许安宁（演示） · 初一').click();await expect(page.getByText('基础需求可见',{exact:true})).toBeVisible()
+ await button(page,'作业与训练').filter({hasText:/^作业与训练$/}).click();await expect(page.getByTestId('archive-review')).toHaveCount(0)
+ await go(page,'connections/index?bookingId=demo-learning-booking-1')
+ await expect(page.locator('.messages')).toContainText('虚构演示沟通')
+})
 test('云伴学：独立档案→试课授权→作业训练→备课报告→交接撤权，双主题',async({page},info)=>{
  const api=info.project.name.startsWith('api'),student='连续学习-'+info.project.name,errors:string[]=[]
  page.on('pageerror',e=>errors.push(e.message))
@@ -22,9 +41,9 @@ test('云伴学：独立档案→试课授权→作业训练→备课报告→�
  if(!api)await legacyField(page,'11位演示数字').fill('13800000000')
  await legacyField(page,'例如：周六下午2点').fill('周末虚构时间');await button(page,api?'提交开发预约':'保存演示预约').click()
  const order=page.locator('.card').filter({hasText:student});await expect(order).toContainText('待家教确认');await order.locator('uni-button').filter({hasText:'学生档案与授权'}).click()
- await field(page,'学习称呼').fill(student);await field(page,'年级').fill('初一');await field(page,'学习目标').fill('复习分数通分，保留可交接的学习记录')
+ await button(page,'＋ 新建学生').click();await field(page,'学习称呼').fill(student);await field(page,'年级').fill('初一');await field(page,'学习目标').fill('复习分数通分，保留可交接的学习记录')
  await page.getByTestId('create-archive').click();await expect(page.getByRole('status')).toContainText('学生档案已创建')
- await button(page,'试课与授权').click();await page.getByTestId('bind-booking').click();await expect(page.getByRole('status')).toContainText('预约已关联')
+ await button(page,'试课与授权').click();await page.getByTestId('bind-booking').first().click();await expect(page.getByRole('status')).toContainText('预约已关联')
  const archiveUrl=page.url()
  await login(page,'tutor',api);await go(page,'tutor/workbench');await page.locator('.b-card').filter({hasText:student}).locator('uni-button').click()
  await button(page,'接受预约').click();await confirm(page);await expect(page.locator('.b-status')).toContainText('家教已接受')

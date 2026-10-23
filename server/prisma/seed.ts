@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client'
 import { hashPassword } from '../src/core'
 import { randomBytes } from 'node:crypto'
 import demoTutors from './demo-tutors.json'
+import {seedDemoLearning} from './seed-learning'
 const db=new PrismaClient()
 async function main(){
  if(process.env.NODE_ENV==='production')throw new Error('禁止在生产环境生成演示账户')
@@ -28,6 +29,7 @@ async function main(){
   }
   await db.tutorApplication.upsert({where:{userId:user.id},create:{userId:user.id,...fake,status:'approved',reviewedAt:new Date()},update:{}})
  }
+ await seedDemoLearning(db)
  console.log('已补齐 24 份西安合成演示家教；目录账户无公开登录密码。')
  console.log('演示账户已生成：demo.parent / demo.tutor / demo.admin。密码由本地环境变量提供。')
 }
