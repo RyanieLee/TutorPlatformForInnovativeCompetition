@@ -79,5 +79,5 @@ export function commuteReference(fromLabel:string,toLabel:string){
  const from=xianPlaces.find(p=>p.label===fromLabel),to=xianPlaces.find(p=>p.label===toLabel)
  if(!from||!to)return null
  const point=(p:typeof from)=>'latlng:'+p.latitude+','+p.longitude+'|name:'+p.label
- return {from,to,distanceKm:distanceKm(from,to),mapUrl:'https://api.map.baidu.com/direction?origin='+encodeURIComponent(point(from))+'&destination='+encodeURIComponent(point(to))+'&mode=transit&region='+encodeURIComponent('西安')+'&coord_type=wgs84&output=html&src='+encodeURIComponent('领航云学堂')}
+ return {from,to,distanceKm:distanceKm(from,to),mapUrl:'https://api.map.baidu.com/direction?origin='+encodeURIComponent(point(from))+'&destination='+encodeURIComponent(point(to))+'&mode=transit&region='+encodeURIComponent('西安')+'&coord_type=wgs84&output=html&src='+encodeURIComponent('webapp.linghang.tutorplatform')}
 }

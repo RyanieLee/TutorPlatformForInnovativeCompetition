@@ -50,6 +50,7 @@ describe('公共片区通勤参考',()=>{
   expect(result!.distanceKm).toBeGreaterThan(0)
   expect(result!.mapUrl).toContain('https://api.map.baidu.com/direction?')
   expect(result!.mapUrl).toContain('coord_type=wgs84')
+  expect(new URL(result!.mapUrl).searchParams.get('src')).toBe('webapp.linghang.tutorplatform')
   expect(decodeURIComponent(result!.mapUrl)).toContain(xianPlaces[0].label)
   expect(result).not.toHaveProperty('duration')
   expect(commuteReference('任意私人住址',xianPlaces[0].label)).toBeNull()
