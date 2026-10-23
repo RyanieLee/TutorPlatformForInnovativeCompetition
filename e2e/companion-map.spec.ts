@@ -18,6 +18,9 @@ test('小书灵桌宠：本机对话、需求带入、清空和暂停动作',asy
  await expect(page.locator('.companion-log')).toContainText('预算100元')
  await expect(page.locator('.companion-log')).toContainText('本机演示答复')
  await page.locator('.message-action').click()
+ // The incoming page is mounted before UniApp commits the navigation. Wait for
+ // its route before reopening a widget, rather than interacting mid-transition.
+ await expect(page).toHaveURL(/#\/pages\/match\/index$/)
  await expect(page.locator('.assistant textarea')).toHaveValue(/初中数学，预算100元/)
  await page.locator('.companion-launcher').click()
  await expect(page.locator('.companion-log')).toContainText('预算100元')

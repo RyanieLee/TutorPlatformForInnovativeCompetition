@@ -7,7 +7,7 @@ const navigate=(url:string)=>uni.navigateTo({url})
 import {ref,watch} from 'vue'
 import {onHide,onUnload} from '@dcloudio/uni-app'
 import ParentLayout from '../../components/ParentLayout.vue'
-import {apiMode} from '../../config/runtime'
+import {assistantApiMode as apiMode} from '../../config/runtime'
 import {apiRequest} from '../../services/api/client'
 import {currentSession,restoreSession} from '../../utils/session'
 import {errorMessage} from '../../services/errors'

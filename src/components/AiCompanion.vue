@@ -5,7 +5,7 @@ import {syncNativeLabels} from '../utils/native-label'
 const navigate=(url:string)=>uni.navigateTo({url})
 import {computed,ref,toRefs,watch,nextTick,getCurrentInstance,onBeforeUnmount} from 'vue'
 import {onShow,onHide} from '@dcloudio/uni-app'
-import {apiMode} from '../config/runtime'
+import {assistantApiMode as apiMode} from '../config/runtime'
 import {showIllustratedMascot} from '../utils/appearance'
 import AssistantRichText from './AssistantRichText.vue'
 import {currentSession,restoreSession} from '../utils/session'
@@ -191,4 +191,3 @@ function login(){open.value=false;navigate('/pages/auth/login')}
 .companion-fullpage{padding:8px 12px 20px}.companion-fullpage .companion-head{padding:10px 14px;gap:12px}.companion-fullpage .companion-head .mascot-img{width:46px;height:46px;flex-shrink:0}.companion-fullpage .companion-title{font-size:17px}.companion-fullpage .companion-panel{min-height:0;animation:none}.companion-fullpage .companion-log{height:clamp(120px,23vh,230px);min-height:120px;flex:none}.companion-fullpage .companion-compose textarea{height:72px}.companion-shortcuts button,.companion-tools button,.voice-tools button{min-height:44px;display:flex;align-items:center;line-height:1.4}.companion-notice{color:#506b78}.companion-memory{color:#597078}.companion-advanced{border-top:1px solid #dbe8ed;padding-top:8px}.companion-fullpage .companion-compose button{min-height:44px}
 @media(max-width:700px){.companion-fullpage .companion-message{margin:7px 10px;padding:8px 10px}.companion-fullpage .message-text{font-size:14px}.companion-fullpage .companion-source{font-size:11px}.companion-fullpage .companion-notice{font-size:11px;padding:7px 12px}.companion-fullpage .companion-shortcuts,.companion-fullpage .companion-tools{padding-top:5px;padding-bottom:5px}.companion-fullpage .voice-note{font-size:10px;padding-bottom:4px}.companion-fullpage .companion-tools{gap:4px}.companion-fullpage .companion-tools button{font-size:10px;padding:0 6px}}
 </style>
-
