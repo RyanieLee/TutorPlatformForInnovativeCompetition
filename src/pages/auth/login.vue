@@ -38,7 +38,11 @@ function goRegister() { uni.navigateTo({ url: '/pages/auth/register' }) }
   <view class="page linghang-auth">
     <view class="banner"><image class="auth-emblem" src="/static/linghang-logo.svg" mode="aspectFit"/><text class="mark">领航云学堂</text><text class="title">{{ apiMode ? '开发账户登录' : '选择演示身份登录' }}</text><text class="intro">{{ apiMode ? '使用本地初始化的开发账户；不提供微信正式认证。' : '当前仅模拟本机身份，无微信授权或手机号验证。' }}</text></view>
     <view class="surface-card">
-      <view v-if="apiMode" class="section-title">本地开发账户</view><view v-if="apiMode" class="credentials"><input v-model="loginId" placeholder="账户 ID" /><input v-model="password" password placeholder="密码" /></view><view v-else class="section-title">体验角色</view>
+      <view v-if="apiMode" class="section-title">本地开发账户</view>
+      <view v-if="apiMode" class="credentials">
+        <label class="credential-field"><text class="credential-label">账户 ID</text><input class="credential-input" v-model="loginId" placeholder="账户 ID" aria-label="账户 ID" /></label>
+        <label class="credential-field"><text class="credential-label">密码</text><input class="credential-input" v-model="password" password placeholder="密码" aria-label="密码" /></label>
+      </view><view v-else class="section-title">体验角色</view>
       <view v-if="!apiMode" class="role" :class="{ selected: role === 'parent' }" @click="choose('parent')"><text>学生 / 家长</text><text class="hint">浏览家教、提交和管理本机演示预约</text></view>
       <view v-if="!apiMode" class="role" :class="{ selected: role === 'tutor' }" @click="choose('tutor')"><text>大学生家教</text><text class="hint">填写入驻申请、管理收到的演示预约</text></view>
       <view v-if="!apiMode" class="role" :class="{ selected: role === 'admin' }" @click="choose('admin')"><text>管理员演示</text><text class="hint">查看模拟申请与举报；不代表真实审核权限</text></view>
@@ -51,4 +55,13 @@ function goRegister() { uni.navigateTo({ url: '/pages/auth/register' }) }
 
 <style scoped>
 .page{padding:28rpx}.banner{background:linear-gradient(135deg,#1852c8,#3c8be9);border-radius:25rpx;color:#fff;padding:44rpx 32rpx;display:flex;flex-direction:column}.mark{font-size:23rpx;opacity:.85}.title{font-size:39rpx;font-weight:700;margin-top:20rpx}.intro{font-size:24rpx;margin-top:16rpx;line-height:1.6}.surface-card{margin-top:24rpx}.section-title{font-weight:700;font-size:30rpx;margin-bottom:20rpx}.role{border:2rpx solid #e3eaf5;border-radius:17rpx;padding:24rpx;margin-bottom:18rpx;display:flex;flex-direction:column;gap:8rpx;font-weight:600}.selected{border-color:#2868e4;background:#f0f5ff;color:#225fcf}.hint{font-size:23rpx;color:#78879b;font-weight:400}.credentials{display:flex;flex-direction:column;gap:18rpx}.credentials input{background:#f5f7fb;border-radius:12rpx;padding:20rpx}.action{margin-top:32rpx}.register{text-align:center;color:#2868e4;padding:28rpx 0 4rpx;font-size:25rpx}.foot{margin-top:25rpx;text-align:center}
+</style>
+<style scoped>
+.credential-field{display:flex;flex-direction:column;gap:8px;min-width:0}
+.credential-label{font-size:14px;font-weight:600;line-height:22px;color:inherit}
+.linghang-auth .credentials .credential-input{display:block;width:100%;height:56px;min-height:56px;padding:0 16px;border:1px solid #b7c9bd;border-radius:12px;font-size:16px;line-height:24px;box-sizing:border-box}
+.linghang-auth .credentials :deep(.uni-input-wrapper){height:100%;min-height:0;justify-content:center}
+.linghang-auth .credentials :deep(.uni-input-input){height:24px!important;min-height:24px!important;line-height:24px!important;padding:0!important;font-size:16px!important;color:inherit;opacity:1;visibility:visible}
+.linghang-auth .credentials :deep(.uni-input-placeholder){font-size:16px;line-height:24px;color:#63766c}
+.linghang-auth .credentials .credential-input:focus-within{outline:2px solid #477653;outline-offset:2px}
 </style>

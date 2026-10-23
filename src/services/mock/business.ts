@@ -140,6 +140,15 @@ export class MockBusinessService implements BusinessService {
     this.storage.set(APPLICATIONS_KEY, [application, ...records.filter(a => a.userId !== user.id)])
     return application
   }
+  async withdrawApplication(user: User, applicationId: string): Promise<TutorApplication> {
+    requireRole(user,'tutor')
+    const records=this.applications(),current=records.find(a=>a.id===applicationId&&a.userId===user.id)
+    if(!current)throw new BusinessError('NOT_FOUND','未找到自己的申请')
+    if(current.status!=='pending')throw new BusinessError('CONFLICT','申请已处理或已撤回，请刷新审核状态')
+    const draft:TutorApplication={...current,status:'draft',reviewedAt:undefined,rejectionReason:undefined,updatedAt:now()}
+    this.storage.set(APPLICATIONS_KEY,records.map(a=>a.id===draft.id?draft:a))
+    return draft
+  }
   async uploadTutorPhoto(user: User, filePath: string): Promise<TutorApplication> {
     requireRole(user, 'tutor')
     const records = this.applications()

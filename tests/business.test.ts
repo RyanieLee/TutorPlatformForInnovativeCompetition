@@ -120,6 +120,18 @@ describe('预约状态与隔离', () => {
   })
 })
 
+describe('撤回申请', () => {
+  it('家教只撤回自己的待审核申请，内容保留并可再次提交', async () => {
+    const api=service(),pending=await api.submitApplication(tutor,{...input,subjects:['思想政治','地理','历史']})
+    await expect(api.withdrawApplication(otherTutor,pending.id)).rejects.toMatchObject({code:'NOT_FOUND'})
+    const draft=await api.withdrawApplication(tutor,pending.id)
+    expect(draft).toMatchObject({status:'draft',subjects:['思想政治','地理','历史'],introduction:input.introduction})
+    await expect(api.withdrawApplication(tutor,pending.id)).rejects.toMatchObject({code:'CONFLICT'})
+    await api.submitApplication(tutor,input)
+    await api.reviewApplication(admin,pending.id,'approved')
+    await expect(api.withdrawApplication(tutor,pending.id)).rejects.toMatchObject({code:'CONFLICT'})
+  })
+})
 describe('举报', () => {
   it('家长提交后仅管理员可查看和标记处理', async () => {
     const api = service()

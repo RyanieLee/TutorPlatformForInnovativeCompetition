@@ -14,6 +14,7 @@ export class ApiBusinessService implements BusinessService {
  getMyApplication(_user:User) { return apiRequest<TutorApplication|null>('GET','/api/tutor-applications/mine') }
  saveApplicationDraft(_user:User,input:TutorApplicationInput) { return apiRequest<TutorApplication>('PUT','/api/tutor-applications/draft',input) }
  submitApplication(_user:User,input:TutorApplicationInput) { return apiRequest<TutorApplication>('POST','/api/tutor-applications',input) }
+ withdrawApplication(_user:User,applicationId:string) { return apiRequest<TutorApplication>('POST','/api/tutor-applications/withdraw',{applicationId}) }
  uploadTutorPhoto(_user:User,filePath:string) { return apiUploadFile<TutorApplication>('/api/tutor-applications/photo',filePath) }
  listApplications(_admin:User) { return apiRequest<TutorApplication[]>('GET','/api/admin/tutor-applications') }
  getApplication(_admin:User,id:string) { return apiRequest<TutorApplication>('GET','/api/admin/tutor-applications/'+enc(id)) }

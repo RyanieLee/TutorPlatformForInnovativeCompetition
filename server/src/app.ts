@@ -138,6 +138,19 @@ export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: Matc
  })
  app.get('/api/tutors/:id',async request=>{const{id}=parse(idParam,request.params);const p=await db.tutorProfile.findFirst({where:{id,published:true,user:{status:'active',application:{status:'approved'}}}});if(!p)return fail('NOT_FOUND',404,'家教不存在');return{data:tutor(p)}})
  app.get('/api/tutor-applications/mine',async request=>{const{user}=await actor(request,db,['tutor']);const a=await db.tutorApplication.findUnique({where:{userId:user.id}});return{data:a?application(a,await readTutorPhotoDataUrl(photoRoot,a.photoKey)):null}})
+ app.post('/api/tutor-applications/withdraw',async request=>{
+  const{user}=await actor(request,db,['tutor']),body=parse(z.object({applicationId:idParam.shape.id}).strict(),request.body)
+  const row=await db.$transaction(async tx=>{
+   const current=await tx.tutorApplication.findFirst({where:{id:body.applicationId,userId:user.id}})
+   if(!current)return fail('NOT_FOUND',404,'未找到自己的申请')
+   const changed=await tx.tutorApplication.updateMany({where:{id:current.id,userId:user.id,status:'pending'},data:{status:'draft',reviewedAt:null,rejectionReason:null}})
+   if(changed.count!==1)return fail('CONFLICT',409,'申请已处理或已撤回，请刷新审核状态')
+   await tx.tutorProfile.updateMany({where:{userId:user.id},data:{published:false}})
+   await tx.auditLog.create({data:{actorId:user.id,action:'withdraw',entityType:'TutorApplication',entityId:current.id}})
+   return tx.tutorApplication.findUniqueOrThrow({where:{id:current.id}})
+  })
+  return{data:application(row,await readTutorPhotoDataUrl(photoRoot,row.photoKey))}
+ })
  app.put('/api/tutor-applications/draft',async request=>{
   const{user}=await actor(request,db,['tutor']),input=parse(draftSchema,request.body)
   const current=await db.tutorApplication.findUnique({where:{userId:user.id}})

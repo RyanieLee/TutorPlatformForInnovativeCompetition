@@ -739,4 +739,6 @@ html:not([data-campus-theme="green"]) .companion-root .companion-panel{backgroun
 html:not([data-campus-theme="green"]) .companion-root .companion-head{background:#e4f4f5}
 html:not([data-campus-theme="green"]) .companion-root .companion-message{background:#edf7f8;border-color:#c2dfe3}
 html:not([data-campus-theme="green"]) .companion-root .companion-compose button{background:#087c81}
+/* Use the complete brand asset instead of a crop from the old reference screenshot. */
+html:not([data-campus-theme="green"]) .parent-shell .brand-icon.brand-icon{background:#e5f3f8 url('../static/linghang-logo.svg') center/contain no-repeat!important;border-radius:15px!important}
 html:not([data-campus-theme="green"]) .appearance-switch button.selected{background:#087c81!important}

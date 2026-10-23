@@ -4,8 +4,8 @@ import {appearance,setAppearance} from '../utils/appearance'
 <template>
  <!-- #ifdef H5 -->
  <view class="appearance-switch" role="group" aria-label="网页外观">
-  <button role="button" tabindex="0" :aria-pressed="appearance==='green'" :class="{selected:appearance==='green'}" @click="setAppearance('green')" @keydown.enter.prevent="setAppearance('green')" @keydown.space.prevent="setAppearance('green')">绿色玻璃</button>
-  <button role="button" tabindex="0" :aria-pressed="appearance==='jenny'" :class="{selected:appearance==='jenny'}" @click="setAppearance('jenny')" @keydown.enter.prevent="setAppearance('jenny')" @keydown.space.prevent="setAppearance('jenny')">Jenny 浅蓝</button>
+  <button role="button" tabindex="0" :aria-pressed="appearance==='green'" :class="{selected:appearance==='green'}" @click="setAppearance('green')" @keydown.enter.prevent="setAppearance('green')" @keydown.space.prevent="setAppearance('green')">绿色磨砂风</button>
+  <button role="button" tabindex="0" :aria-pressed="appearance==='jenny'" :class="{selected:appearance==='jenny'}" @click="setAppearance('jenny')" @keydown.enter.prevent="setAppearance('jenny')" @keydown.space.prevent="setAppearance('jenny')">浅蓝风</button>
  </view>
  <!-- #endif -->
 </template>
