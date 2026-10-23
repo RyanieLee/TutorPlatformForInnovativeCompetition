@@ -37,7 +37,7 @@ function example(){question.value='解方程：2x + 6 = 14。';answer.value='2x 
  <ParentLayout title="AI 作业批改">
   <view class="ai-review">
    <view class="ai-intro"><text class="ai-kicker">LEARNING / FEEDBACK</text><text class="ai-heading">把错误，变成下一步。</text><text class="ai-description">从题目和你的解法出发，看清错因，再试一次。</text></view>
-   <view class="ai-review-grid">
+   <view class="ai-state"><text>希望把分析、针对训练和备课报告保存到学生的长期学情档案？</text><button class="ai-secondary" @click="navigate('/pages/students/index')">进入学情档案与教学闭环</button></view><view class="ai-review-grid">
     <view class="ai-glass"><view class="ai-card-head"><text>文字作业</text><button role="button" tabindex="0" class="ai-secondary" :disabled="busy" @click="example" @keydown.enter.prevent="example" @keydown.space.prevent="example">填入示例</button></view>
      <label class="ai-field"><text>题目</text><textarea v-model="question" :disabled="busy" maxlength="2500" aria-label="题目" placeholder="粘贴完整题目与必要条件"/></label>
      <label class="ai-field"><text>我的作答</text><textarea v-model="answer" :disabled="busy" maxlength="2500" aria-label="我的作答" placeholder="保留你的解题过程，便于找到具体问题"/></label>

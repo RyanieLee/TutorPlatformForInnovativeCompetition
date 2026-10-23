@@ -12,6 +12,8 @@ dist/
 *.tsbuildinfo
 coverage/
 .vite/
+.superpowers/
+.test-temp/
 server/prisma/*.db
 server/prisma/*.db-*
 server/prisma/*.db-journal

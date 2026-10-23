@@ -2,6 +2,11 @@ import { describe, expect, it } from 'vitest'
 import { platformHelpAnswer, platformGuideSummary, platformWelcome } from '../src/services/platform-guide'
 
 describe('领航云学堂小书灵平台指南', () => {
+  it('引导用户到试课授权与备课报告，并明确沟通和通勤的实际边界',()=>{
+    expect(platformHelpAnswer('学生学情档案怎么授权')).toContain('试课')
+    expect(platformHelpAnswer('换老师交接怎么做')).toContain('家长')
+    expect(platformHelpAnswer('怎么站内沟通和查通勤')).toContain('直线距离')
+  })
   it('提供家长可以直接照做的四步使用说明', () => {
     expect(platformHelpAnswer('平台怎么用')).toBe(platformGuideSummary)
     expect(platformGuideSummary).toContain('① 首页筛选老师')

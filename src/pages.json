@@ -6,6 +6,8 @@
         "navigationBarTitleText": "找家教"
       }
     },
+    {"path":"pages/students/index","style":{"navigationBarTitleText":"云伴学 · 学情档案"}},
+    {"path":"pages/connections/index","style":{"navigationBarTitleText":"预约沟通与通勤"}},
     {
       "path": "pages/teaching/loop",
       "style": {

@@ -76,9 +76,10 @@ export function createModelSettings(options: ModelSettingsOptions = {}) {
   }
   const chat: ChatModel = {
     get enabled() { return !!current?.enabled && !!current.apiKey },
-    async reply(messages) {
+    async reply(messages,purpose) {
       if (!chat.enabled) throw new ApiError('MODEL_UNAVAILABLE', 503, '管理员尚未启用模型，请先完成模型接入')
-      return createChatModel(env(), transport).reply(messages)
+      const model=createChatModel(env(), transport)
+      return purpose?model.reply(messages,purpose):model.reply(messages)
     }
   }
   const image: HomeworkImageModel = {
