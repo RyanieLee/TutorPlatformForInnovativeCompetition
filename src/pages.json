@@ -131,6 +131,18 @@
       "style": {
         "navigationBarTitleText": "AI演示导航"
       }
+    },
+    {
+      "path": "pages/admin/model-settings",
+      "style": {
+        "navigationBarTitleText": "模型接入"
+      }
+    },
+    {
+      "path": "pages/assistant/homework",
+      "style": {
+        "navigationBarTitleText": "AI 作业批改"
+      }
     }
   ],
   "tabBar": {

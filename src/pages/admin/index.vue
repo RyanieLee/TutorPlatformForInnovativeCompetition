@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const navigate=(url:string)=>uni.navigateTo({url})
 import { computed, ref, watch } from 'vue'
 import { onShow, onHide, onUnload } from '@dcloudio/uni-app'
 import RoleShell from '../tutor/shared/RoleShell.vue'
@@ -63,7 +64,7 @@ const open = (id: string) => uni.navigateTo({ url: '/pages/admin/application-det
 <template>
   <RoleShell title="管理员工作台" role="admin">
     <template v-if="authorized">
-      <view class="b-toolbar"><text class="b-muted">申请审核与演示举报处理</text><button class="b-button secondary" :disabled="!!busyId" @click="refresh">刷新全部数据</button></view>
+      <view class="b-toolbar"><text class="b-muted">申请审核与演示举报处理</text><button class="b-button secondary" @click="navigate('/pages/admin/model-settings')">模型接入</button><button class="b-button secondary" :disabled="!!busyId" @click="refresh">刷新全部数据</button></view>
       <view v-if="feedback" class="b-info" role="status">{{ feedback }}</view>
       <view class="b-metrics"><view class="b-metric"><text class="b-muted">待审核申请</text><text class="b-number">{{ appReady && !appError ? groups.pending.length : '—' }}</text></view><view class="b-metric"><text class="b-muted">已通过申请</text><text class="b-number">{{ appReady && !appError ? groups.approved.length : '—' }}</text></view><view class="b-metric"><text class="b-muted">已拒绝申请</text><text class="b-number">{{ appReady && !appError ? groups.rejected.length : '—' }}</text></view><view class="b-metric"><text class="b-muted">待处理举报</text><text class="b-number">{{ reportReady && !reportError ? reports.filter(r => r.status === 'open').length : '—' }}</text></view><view class="b-metric"><text class="b-muted">已处理举报</text><text class="b-number">{{ reportReady && !reportError ? reports.filter(r => r.status === 'resolved').length : '—' }}</text></view></view>
       <view class="b-info">统计仅为本次加载记录，非全平台总量。开发服务最多返回 50 条申请、100 条举报。<text v-if="applications.length >= 50 || reports.length >= 100">当前已达到返回上限，记录可能不完整。</text></view>

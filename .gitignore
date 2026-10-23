@@ -1,4 +1,7 @@
 node_modules/
+.ai-config/
+*.enc
+*.enc.key
 dist/
 .unpackage/
 .env
