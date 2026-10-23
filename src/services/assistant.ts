@@ -1,7 +1,7 @@
 import { BusinessError } from './errors'
 import { shallowRef } from 'vue'
 import { apiRequest, apiUploadFile } from './api/client'
-import { apiMode } from '../config/runtime'
+import {assistantApiMode as apiMode} from '../config/runtime'
 import { parseBriefLocally } from './brief-parser'
 import { learningTopics } from '../data/learning'
 import { platformHelpAnswer } from './platform-guide'

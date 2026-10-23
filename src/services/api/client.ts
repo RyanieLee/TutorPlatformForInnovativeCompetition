@@ -1,4 +1,4 @@
-import { apiBaseUrl } from '../../config/runtime'
+import { apiBaseUrl, hostedAssistant } from '../../config/runtime'
 import { BusinessError } from '../errors'
 
 const TOKEN_KEY = 'tutor-platform:api-token:v1'
@@ -27,7 +27,7 @@ export async function apiRequest<T>(method: 'GET'|'POST'|'PUT', path: string, da
 export async function apiUploadFile<T>(path: string, filePath: string, name = 'file'): Promise<T> {
   if (!apiBaseUrl) throw new BusinessError('STORAGE', '请配置 VITE_API_BASE_URL')
   const token = readToken()
-  if (!token) throw new BusinessError('UNAUTHORIZED', '请先登录开发账户')
+  if (!token && !hostedAssistant) throw new BusinessError('UNAUTHORIZED', '请先登录开发账户')
   const response = await new Promise<UniApp.UploadFileSuccessCallbackResult>((resolve, reject) => {
     uni.uploadFile({url:apiBaseUrl+path,filePath,name,header:{Authorization:'Bearer '+token},success:resolve,fail:reject})
   }).catch(() => { throw new BusinessError('STORAGE', '文件上传失败，请检查网络') })
