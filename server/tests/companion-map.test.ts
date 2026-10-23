@@ -86,7 +86,7 @@ describe('对话供应商适配器',()=>{
  })
  it('流式响应即使没有Content-Length也限制大小并取消读取',async()=>{
   let cancelled=false
-  const transport:typeof fetch=async()=>new Response(new ReadableStream({start(c){c.enqueue(new Uint8Array(40000))},cancel(){cancelled=true}}))
+  const transport:typeof fetch=async()=>new Response(new ReadableStream({start(c){c.enqueue(new Uint8Array(70000))},cancel(){cancelled=true}}))
   await expect(createChatModel(env,transport).reply([])).rejects.toMatchObject({status:502})
   expect(cancelled).toBe(true)
  })

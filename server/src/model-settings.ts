@@ -72,7 +72,7 @@ export function createModelSettings(options: ModelSettingsOptions = {}) {
     } catch { throw new ApiError('CONFIG_STORAGE', 503, '模型配置无法保存，请检查服务端配置目录或加密密钥') }
   }
   function env() {
-    return { MATCH_MODEL_BASE_URL: current?.baseUrl, MATCH_MODEL_NAME: current?.model, MATCH_MODEL_API_KEY: current?.apiKey }
+    return { MATCH_MODEL_BASE_URL: current?.baseUrl, MATCH_MODEL_NAME: current?.model, MATCH_MODEL_API_KEY: current?.apiKey, CHAT_MODEL_TIMEOUT_MS: process.env.CHAT_MODEL_TIMEOUT_MS, HOMEWORK_MODEL_TIMEOUT_MS: process.env.HOMEWORK_MODEL_TIMEOUT_MS }
   }
   const chat: ChatModel = {
     get enabled() { return !!current?.enabled && !!current.apiKey },

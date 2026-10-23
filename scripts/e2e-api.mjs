@@ -4,7 +4,7 @@ import { join } from 'node:path'
 import { spawn, spawnSync } from 'node:child_process'
 if (!process.env.E2E_PASSWORD) throw new Error('请使用 npm run test:e2e 启动临时测试服务')
 const directory=mkdtempSync(join(tmpdir(),'tutor-e2e-'))
-const env={...process.env,NODE_ENV:'development',DATABASE_URL:'file:'+join(directory,'test.db'),TUTOR_PHOTO_ROOT:join(directory,'photos'),PORT:process.env.PORT||'3001',CORS_ORIGINS:process.env.CORS_ORIGINS||'http://127.0.0.1:5174',SEED_PARENT_PASSWORD:process.env.E2E_PASSWORD,SEED_TUTOR_PASSWORD:process.env.E2E_PASSWORD,SEED_ADMIN_PASSWORD:process.env.E2E_PASSWORD}
+const env={...process.env,NODE_ENV:'development',AI_CONFIG_FILE:join(directory,'provider.enc'),AI_CONFIG_ENCRYPTION_KEY:'',MATCH_MODEL_BASE_URL:'',MATCH_MODEL_NAME:'',MATCH_MODEL_API_KEY:'',HOMEWORK_MODEL_BASE_URL:'',HOMEWORK_MODEL_NAME:'',HOMEWORK_MODEL_API_KEY:'',DATABASE_URL:'file:'+join(directory,'test.db'),TUTOR_PHOTO_ROOT:join(directory,'photos'),PORT:process.env.PORT||'3001',CORS_ORIGINS:process.env.CORS_ORIGINS||'http://127.0.0.1:5174',SEED_PARENT_PASSWORD:process.env.E2E_PASSWORD,SEED_TUTOR_PASSWORD:process.env.E2E_PASSWORD,SEED_ADMIN_PASSWORD:process.env.E2E_PASSWORD}
 for(const args of [['scripts/migrate.mjs'],['--import','tsx','prisma/seed.ts']]) {
   const result=spawnSync(process.execPath,args,{cwd:'server',env,stdio:'inherit'})
   if(result.error)throw result.error

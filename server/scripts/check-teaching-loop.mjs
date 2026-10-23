@@ -7,7 +7,7 @@ import {spawn,spawnSync} from 'node:child_process'
 import {createRequire} from 'node:module'
 import assert from 'node:assert/strict'
 const require=createRequire(import.meta.url),directory=mkdtempSync(join(tmpdir(),'teaching-loop-http-'))
-const env={...process.env,NODE_ENV:'development',DATABASE_URL:'file:'+join(directory,'demo.db'),SEED_PARENT_PASSWORD:randomBytes(24).toString('hex'),SEED_TUTOR_PASSWORD:randomBytes(24).toString('hex'),SEED_ADMIN_PASSWORD:randomBytes(24).toString('hex')}
+const env={...process.env,AI_CONFIG_FILE:join(directory,'provider.enc'),AI_CONFIG_ENCRYPTION_KEY:'',MATCH_MODEL_BASE_URL:'',MATCH_MODEL_NAME:'',MATCH_MODEL_API_KEY:'',HOMEWORK_MODEL_BASE_URL:'',HOMEWORK_MODEL_NAME:'',HOMEWORK_MODEL_API_KEY:'',NODE_ENV:'development',DATABASE_URL:'file:'+join(directory,'demo.db'),SEED_PARENT_PASSWORD:randomBytes(24).toString('hex'),SEED_TUTOR_PASSWORD:randomBytes(24).toString('hex'),SEED_ADMIN_PASSWORD:randomBytes(24).toString('hex')}
 let server,origin
 function run(task){const result=spawnSync(process.execPath,[process.env.npm_execpath,'run',task],{env,encoding:'utf8'});if(result.error)throw result.error;if(result.status!==0)throw new Error(task+' failed: '+result.stderr.slice(-1500))}
 async function stop(){if(!server||server.exitCode!==null)return;const child=server;await new Promise(resolve=>{const timeout=setTimeout(()=>child.kill('SIGKILL'),5000);child.once('exit',()=>{clearTimeout(timeout);resolve()});child.kill('SIGTERM')});server=undefined}

@@ -14,6 +14,7 @@ const env = { ...process.env, PRISMA_HIDE_UPDATE_MESSAGE: '1' }
 const npm = join(dirname(process.execPath), 'node_modules/npm/bin/npm-cli.js')
 const webUrl = 'http://127.0.0.1:5173'
 const apiUrl = 'http://127.0.0.1:3001'
+const frontDependenciesReady=()=>['@dcloudio/vite-plugin-uni','markdown-it','katex','dompurify'].every(name=>existsSync(join(root,'node_modules',name)))
 
 function stop(code = 0) {
   if (stopping) return
@@ -71,7 +72,7 @@ try {
   if (!existsSync(npm)) throw new Error('找不到 npm，请安装完整版 Node.js 后再启动。')
   if (process.argv.includes('--check')) {
     console.log('启动器检查通过：Node.js / npm / 项目路径有效。')
-    console.log(`前端依赖：${existsSync(join(root, 'node_modules/@dcloudio/vite-plugin-uni')) ? '已安装' : '启动时安装'}`)
+    console.log(`前端依赖：${frontDependenciesReady() ? '已安装' : '启动时安装'}`)
     console.log(`后端依赖：${existsSync(join(server, 'node_modules/dotenv')) ? '已安装' : '启动时安装'}`)
     console.log(`后端配置：${existsSync(join(server, '.env')) ? '将保留' : '首次启动时生成'}`)
     process.exit(0)
@@ -79,7 +80,7 @@ try {
   console.log('领航云学堂 · 真实 AI 测试一键启动（仅本机）')
   await freePort(3001)
   await freePort(5173)
-  if (!existsSync(join(root, 'node_modules/@dcloudio/vite-plugin-uni'))) await run([npm, 'ci', '--no-audit', '--no-fund'], root)
+  if (!frontDependenciesReady()) await run([npm, 'ci', '--no-audit', '--no-fund'], root)
   if (!existsSync(join(server, 'node_modules/dotenv')) || !existsSync(join(server, 'node_modules/prisma'))) await run([npm, 'ci', '--no-audit', '--no-fund'], server)
   for (const [name, binary] of [['PRISMA_QUERY_ENGINE_LIBRARY', 'query_engine-windows.dll.node'], ['PRISMA_SCHEMA_ENGINE_BINARY', 'schema-engine-windows.exe']]) {
     const path = join(server, 'node_modules/@prisma/engines', binary)
