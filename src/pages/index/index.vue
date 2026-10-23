@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { apiMode } from '../../config/runtime'
+import { showIllustratedMascot } from '../../utils/appearance'
 import { onShow } from '@dcloudio/uni-app'
 import { ref, watch } from 'vue'
 import ParentLayout from '../../components/ParentLayout.vue'
@@ -76,7 +77,7 @@ const openProfile = () => uni.switchTab({ url: '/pages/profile/index' })
 <!-- #ifndef H5 -->
 <text class="headline">从一句学习需求，<br/>到一位合拍的家教。</text><text class="intro">和小书灵整理需求，读懂推荐理由，再让大学生家教接力讲解与反馈。</text>
 <!-- #endif -->
-<view class="hero-actions"><button class="hero-cta" role="button" tabindex="0" @keydown.enter.prevent="openAssistant" @click="openAssistant">和 AI 说说需求 →</button><button class="hero-outline" role="button" tabindex="0" @keydown.enter.prevent="openMatch" @click="openMatch">开始智能匹配 →</button></view><view class="links"><text @click="openDemo">5分钟演示路线 ↗</text><text @click="goTutors">浏览家教老师 ↗</text><text @click="openOrders">查看我的预约 ↗</text><text @click="openProfile">切换演示身份 ↗</text></view></view><view class="hero-art"><image class="hero-mascot" src="/static/linghang-mascot.svg" mode="aspectFit" aria-label="领航云学堂小书灵"/><LessonFlip/></view></view>
+<view class="hero-actions"><button class="hero-cta" role="button" tabindex="0" @keydown.enter.prevent="openAssistant" @click="openAssistant">和 AI 说说需求 →</button><button class="hero-outline" role="button" tabindex="0" @keydown.enter.prevent="openMatch" @click="openMatch">开始智能匹配 →</button></view><view class="links"><text @click="openDemo">5分钟演示路线 ↗</text><text @click="goTutors">浏览家教老师 ↗</text><text @click="openOrders">查看我的预约 ↗</text><text @click="openProfile">切换演示身份 ↗</text></view></view><view class="hero-art"><image v-if="showIllustratedMascot" class="hero-mascot" src="/static/linghang-mascot.svg" mode="aspectFit" aria-label="领航云学堂小书灵"/><LessonFlip/></view></view>
     <button class="ai-entry" @click="openMatch"><text class="ai-kicker">AI 家教匹配</text>
 <!-- #ifdef H5 -->
 <text class="ai-title">智能匹配</text>

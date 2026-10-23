@@ -1,4 +1,5 @@
 import { createExamModel, examRequestSchema, type ExamModel } from './learning-model'
+import { createModelSettings, registerModelSettings, type ModelSettings } from './model-settings'
 import { registerOrderMap } from './order-map'
 import { registerAssistant, createChatModel, type ChatModel } from './assistant'
 import { createHomeworkImageModel, registerHomeworkImageReview, type HomeworkImageModel } from './homework-review'
@@ -21,16 +22,20 @@ const include = { tutorProfile: true } as const
 const rules = { accept: { from: ['pending'], to: 'accepted', role: 'tutor' }, reject: { from: ['pending'], to: 'rejected', role: 'tutor' }, cancel: { from: ['pending','accepted'], to: 'cancelled', role: 'parent' }, complete: { from: ['accepted'], to: 'completed', role: 'tutor' } } as const
 const data = (input: z.infer<typeof applicationSchema>) => { const {subjects,...fields}=input;return {...fields,subjectsJson:JSON.stringify(subjects)} }
 
-export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: MatchModel = createMatchModel(), teachingOptions?: TeachingOptions, examModel: ExamModel = createExamModel(), chatModel: ChatModel = createChatModel(), homeworkImageModel: HomeworkImageModel = createHomeworkImageModel(), teachingModel:TeachingModel=createTeachingModel()) {
- const app=Fastify({logger:process.env.NODE_ENV==='test'?false:{redact:['req.headers.authorization','req.body.password']},bodyLimit:32768})
+export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: MatchModel = createMatchModel(), teachingOptions?: TeachingOptions, examModel: ExamModel = createExamModel(), chatModel: ChatModel = createChatModel(), homeworkImageModel: HomeworkImageModel = createHomeworkImageModel(), teachingModel:TeachingModel=createTeachingModel(), modelSettings?: ModelSettings) {
+ const app=Fastify({logger:process.env.NODE_ENV==='test'?false:{redact:['req.headers.authorization','req.body.password','req.body.apiKey']},bodyLimit:32768})
  app.register(cors,{methods:['GET','HEAD','POST','PUT','DELETE','OPTIONS'],origin:(process.env.CORS_ORIGINS||'http://localhost:5173,http://127.0.0.1:5173').split(',').map(s=>s.trim())})
  app.register(async child=>registerLoopRoutes(child,db,teachingModel))
  app.register(async child=>registerTeachingRoutes(child,db,teachingOptions??{uploadRoot:resolve(process.env.TEACHING_UPLOAD_ROOT||'./.teaching-uploads'),now:()=>new Date()}))
  registerOrderMap(app,db)
- registerAssistant(app,db,chatModel)
+ const settings=modelSettings??createModelSettings()
+ registerModelSettings(app,db,settings)
+ const managedChat:ChatModel={get enabled(){return settings.configured?settings.chat.enabled:chatModel.enabled},reply:messages=>(settings.configured?settings.chat:chatModel).reply(messages)}
+ const managedImage:HomeworkImageModel={get enabled(){return settings.configured?settings.image.enabled:homeworkImageModel.enabled},review:(buffer,mime)=>(settings.configured?settings.image:homeworkImageModel).review(buffer,mime)}
+ registerAssistant(app,db,managedChat)
  const photoRoot=resolve(process.env.TUTOR_PHOTO_ROOT||'./.tutor-photos')
  app.register(async child=>registerTutorPhotoRoutes(child,db,photoRoot))
- app.register(async child=>registerHomeworkImageReview(child,db,homeworkImageModel))
+ app.register(async child=>registerHomeworkImageReview(child,db,managedImage))
  const attempts=new Map<string,{count:number;resetAt:number}>()
  const ipAttempts=new Map<string,{count:number;resetAt:number}>()
  const modelUserAttempts=new Map<string,{count:number;resetAt:number}>()

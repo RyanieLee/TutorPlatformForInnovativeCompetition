@@ -22,7 +22,7 @@ const flipped = ref(false)
         <view class="lesson-answer">答：顶点（0，0），对称轴 x = 0，开口向上；x = ±2 时，y = 4。</view>
       </view>
     </view>
-    <button class="lesson-flip" :aria-pressed="flipped" @click="flipped = !flipped">{{ flipped ? '返回完整题干与图像' : '查看完整解题思路' }} <text aria-hidden="true">↻</text></button>
+    <button class="lesson-flip" role="button" tabindex="0" :aria-pressed="flipped" @click="flipped = !flipped" @keydown.enter.prevent="flipped = !flipped" @keydown.space.prevent="flipped = !flipped">{{ flipped ? '返回完整题干与图像' : '查看完整解题思路' }} <text aria-hidden="true">↻</text></button>
   </view>
 </template>
 <style scoped>

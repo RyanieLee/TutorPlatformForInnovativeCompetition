@@ -1,0 +1,53 @@
+{
+  "mode": "API browser responses intercepted; real HTTP protocol tested separately by server tests; no vendor API used",
+  "checks": [
+    {
+      "width": 390,
+      "theme": "green",
+      "configSave": true,
+      "keyCleared": true,
+      "connectionTest": true,
+      "themeRestored": true,
+      "homework": true,
+      "chat": true,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "theme": "jenny",
+      "configSave": true,
+      "keyCleared": true,
+      "connectionTest": true,
+      "themeRestored": true,
+      "homework": true,
+      "chat": true,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "theme": "green",
+      "configSave": true,
+      "keyCleared": true,
+      "connectionTest": true,
+      "themeRestored": true,
+      "homework": true,
+      "chat": true,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "theme": "jenny",
+      "configSave": true,
+      "keyCleared": true,
+      "connectionTest": true,
+      "themeRestored": true,
+      "homework": true,
+      "chat": true,
+      "overflow": false,
+      "errors": []
+    }
+  ]
+}

@@ -1,21 +1,23 @@
 <script setup lang="ts">
+import ThemeSwitch from "./ThemeSwitch.vue"
+const navigate=(url:string)=>uni.navigateTo({url})
 import AiCompanion from './AiCompanion.vue'
 import { apiMode } from '../config/runtime'
 defineProps<{ title: string; active?: 'home' | 'orders' | 'profile' | 'learning' | 'order-map' | 'demo' }>()
-const assistant=()=>uni.navigateTo({url:'/pages/assistant/index'})
-const demo=()=>uni.navigateTo({url:'/pages/demo/index'})
+const assistant=()=>navigate('/pages/assistant/index')
+const demo=()=>navigate('/pages/demo/index')
 const home = () => uni.switchTab({url:'/pages/index/index'})
 const orders = () => uni.switchTab({url:'/pages/orders/index'})
 const profile = () => uni.switchTab({url:'/pages/profile/index'})
-const orderMap=()=>uni.navigateTo({url:'/pages/order-map/index'})
-const learning = () => uni.navigateTo({url:'/pages/learning/index'})
-const match = () => uni.navigateTo({url:'/pages/match/index'})
+const orderMap=()=>navigate('/pages/order-map/index')
+const learning = () => navigate('/pages/learning/index')
+const match = () => navigate('/pages/match/index')
 </script>
 <template>
   <view class="parent-shell">
     <view class="parent-header">
       <view class="brand" @click="home"><text class="brand-icon" aria-hidden="true"></text><view><text class="brand-name">领航云学堂</text><text class="brand-note">让优质教育更容易遇见</text></view></view>
-      <view class="parent-nav"><button :class="{current:active==='home'}" @click="home">找家教</button><button @click="assistant">AI问答</button><button @click="match">智能匹配</button><button :class="{current:active==='learning'}" @click="learning">AI学习中心</button><button :class="{current:active==='order-map'}" @click="orderMap">订单地图</button><button :class="{current:active==='orders'}" @click="orders">我的预约</button><button :class="{current:active==='demo'}" @click="demo">演示导航</button><button :class="{current:active==='profile'}" @click="profile">我的 / 切换角色</button></view>
+      <ThemeSwitch/><view class="parent-nav"><button :class="{current:active==='home'}" @click="home">找家教</button><button @click="assistant">AI问答</button><button @click="navigate('/pages/assistant/homework')">AI批改</button><button @click="match">智能匹配</button><button :class="{current:active==='learning'}" @click="learning">AI学习中心</button><button :class="{current:active==='order-map'}" @click="orderMap">订单地图</button><button :class="{current:active==='orders'}" @click="orders">我的预约</button><button :class="{current:active==='demo'}" @click="demo">演示导航</button><button :class="{current:active==='profile'}" @click="profile">我的 / 切换角色</button></view>
     </view>
     <view class="parent-caption"><text>{{ title }}</text><text class="mode">{{ apiMode ? '开发 API · 虚构资料' : '本机 Mock · 演示数据' }}</text></view>
     <slot/>
