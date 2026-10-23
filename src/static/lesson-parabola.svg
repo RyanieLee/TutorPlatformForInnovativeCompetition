@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="160" viewBox="0 0 240 160" role="img" aria-label="y=x²，顶点(0,0)，经过(-2,4)与(2,4)">
+  <defs><marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="none" stroke="#6d94a7" stroke-width="1"/></marker></defs>
+  <rect width="240" height="160" rx="12" fill="#fbfeff"/>
+  <g stroke="#e7f0f5" stroke-width=".8"><path d="M30 16V136M60 16V136M90 16V136M150 16V136M180 16V136M210 16V136M20 112H220M20 88H220M20 64H220M20 40H220"/></g>
+  <g fill="none" stroke="#6d94a7" stroke-width="1.1" marker-end="url(#arrow)"><path d="M18 136H226"/><path d="M120 146V12"/></g>
+  <path d="M30 28Q120 244 210 28" fill="none" stroke="#229e98" stroke-width="2.4" stroke-linecap="round"/>
+  <g fill="none" stroke="#77c6be" stroke-width=".9" stroke-dasharray="3 3"><path d="M60 136V88H180V136"/></g>
+  <g stroke="#6d94a7" stroke-width=".9"><path d="M30 134V138M60 134V138M90 134V138M150 134V138M180 134V138M210 134V138M118 112H122M118 88H122M118 64H122M118 40H122"/></g>
+  <g fill="#438096" font-family="Arial,sans-serif" font-size="8.5"><text x="226" y="149">x</text><text x="128" y="16">y</text><text x="109" y="148">O</text><text x="25" y="149">−3</text><text x="54" y="149">−2</text><text x="84" y="149">−1</text><text x="148" y="149">1</text><text x="177" y="149">2</text><text x="207" y="149">3</text><text x="108" y="115">2</text><text x="108" y="91">4</text><text x="108" y="67">6</text><text x="108" y="43">8</text><text x="146" y="27" font-size="11" fill="#197e82">y = x²</text></g>
+  <g fill="#168d88" stroke="#fff" stroke-width="1.2"><circle cx="60" cy="88" r="3.4"/><circle cx="180" cy="88" r="3.4"/><circle cx="120" cy="136" r="2.6"/></g>
+  <g fill="#236878" font-family="Arial,sans-serif" font-size="8"><text x="26" y="79">(−2, 4)</text><text x="185" y="79">(2, 4)</text></g>
+</svg>

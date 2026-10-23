@@ -69,9 +69,34 @@ const openProfile = () => uni.switchTab({ url: '/pages/profile/index' })
 
 <template>
   <ParentLayout title="找到适合你的学习伙伴" active="home"><view class="page">
-    <view class="hero"><view class="hero-copy"><text class="eyebrow">领航云学堂 · AI辅助学习与家教匹配</text><text class="headline">从一句学习需求，<br/>到一位合拍的家教。</text><text class="intro">和小书灵整理需求，读懂推荐理由，再让大学生家教接力讲解与反馈。</text><view class="hero-actions"><button class="hero-cta" role="button" tabindex="0" @keydown.enter.prevent="openAssistant" @click="openAssistant">和 AI 说说需求 →</button><button class="hero-outline" role="button" tabindex="0" @keydown.enter.prevent="openMatch" @click="openMatch">开始智能匹配 →</button></view><view class="links"><text @click="openDemo">5分钟演示路线 ↗</text><text @click="goTutors">浏览家教老师 ↗</text><text @click="openOrders">查看我的预约 ↗</text><text @click="openProfile">切换演示身份 ↗</text></view></view><view class="hero-art"><image class="hero-mascot" src="/static/linghang-mascot.svg" mode="aspectFit" aria-label="领航云学堂小书灵"/><LessonFlip/></view></view>
-    <button class="ai-entry" @click="openMatch"><text class="ai-kicker">AI 家教匹配</text><text class="ai-title">不知道选哪位？</text><text class="ai-note">在西安地图选位置，按科目、预算和授课方式查看匹配理由。</text><text class="ai-arrow" aria-hidden="true">↗</text></button>
-    <button class="learning-entry" @click="openLearning"><text class="learning-kicker">AI学习中心 · 各科笔记与智能出卷</text><text class="learning-title">学一个知识点，练一份专属卷</text><text class="learning-note">原创笔记 → 主题练习 → 自测解析 → 找老师讲解 ↗</text></button>
+    <view class="hero"><view class="hero-copy"><text class="eyebrow">领航云学堂 · AI辅助学习与家教匹配</text>
+<!-- #ifdef H5 -->
+<text class="headline">让优秀的大学生，<br/>成为孩子的<text class="headline-accent">成长伙伴</text></text><text class="intro">按学科、预算、上课方式，快速连接合适的大学生家教。</text>
+<!-- #endif -->
+<!-- #ifndef H5 -->
+<text class="headline">从一句学习需求，<br/>到一位合拍的家教。</text><text class="intro">和小书灵整理需求，读懂推荐理由，再让大学生家教接力讲解与反馈。</text>
+<!-- #endif -->
+<view class="hero-actions"><button class="hero-cta" role="button" tabindex="0" @keydown.enter.prevent="openAssistant" @click="openAssistant">和 AI 说说需求 →</button><button class="hero-outline" role="button" tabindex="0" @keydown.enter.prevent="openMatch" @click="openMatch">开始智能匹配 →</button></view><view class="links"><text @click="openDemo">5分钟演示路线 ↗</text><text @click="goTutors">浏览家教老师 ↗</text><text @click="openOrders">查看我的预约 ↗</text><text @click="openProfile">切换演示身份 ↗</text></view></view><view class="hero-art"><image class="hero-mascot" src="/static/linghang-mascot.svg" mode="aspectFit" aria-label="领航云学堂小书灵"/><LessonFlip/></view></view>
+    <button class="ai-entry" @click="openMatch"><text class="ai-kicker">AI 家教匹配</text>
+<!-- #ifdef H5 -->
+<text class="ai-title">智能匹配</text>
+<!-- #endif -->
+<!-- #ifndef H5 -->
+<text class="ai-title">不知道选哪位？</text>
+<!-- #endif -->
+<text class="ai-note">在西安地图选位置，按科目、预算和授课方式查看匹配理由。</text><text class="ai-arrow" aria-hidden="true">↗</text></button>
+    <button class="learning-entry" @click="openLearning"><text class="learning-kicker">AI学习中心 · 各科笔记与智能出卷</text>
+<!-- #ifdef H5 -->
+<text class="learning-title">AI学习中心</text>
+<!-- #endif -->
+<!-- #ifndef H5 -->
+<text class="learning-title">学一个知识点，练一份专属卷</text>
+<!-- #endif -->
+<text class="learning-note">原创笔记 → 主题练习 → 自测解析 → 找老师讲解 ↗</text></button>
+    <!-- #ifdef H5 -->
+    <button class="reference-entry browse-entry" @click="goTutors"><text class="reference-icon" aria-hidden="true">▤</text><text class="reference-title">家教详情与预约</text><text class="reference-note">浏览学校、专业与教学介绍<br/>从家教详情进入原有预约流程</text><text class="reference-arrow" aria-hidden="true">→</text></button>
+    <button class="reference-entry orders-entry" @click="openOrders"><text class="reference-icon" aria-hidden="true">▣</text><text class="reference-title">课次与作业</text><text class="reference-note">从我的预约进入关联课次<br/>查看已有教学安排与学习反馈</text><text class="reference-arrow" aria-hidden="true">→</text></button>
+    <!-- #endif -->
     <input v-model="query" class="search" placeholder="搜索科目、地区或老师姓名"/>
     <view class="filter-panel"><view class="heading">按科目查找</view>
     <scroll-view scroll-x><view class="filters"><text v-for="s in subjects" :key="s" class="chip" :class="{ active: subject === s }" @click="subject = s">{{ s }}</text></view></scroll-view>
@@ -92,3 +117,8 @@ const openProfile = () => uni.switchTab({ url: '/pages/profile/index' })
 .tutor-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.filter-panel{background:#fff;border:1px solid #e3eaf3;border-radius:18px;padding:4px 24px 24px;margin-top:22px}.price-filter{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-top:22px}.filter-label{font-size:14px;color:#60748e}.price-inputs{display:flex;align-items:center;gap:12px;margin-top:10px}.price-inputs input{background:#f2f5fa;padding:10px 12px;border-radius:9px;width:170px;height:42px;font-size:14px}.filter-actions{display:flex;gap:10px}.filter-actions button{margin:0;font-size:14px;background:#edf2fa;color:#486184;border-radius:10px;padding:0 18px;line-height:3}.filter-actions .apply-price{background:#245fc7;color:white}.price-error{color:#b22c36;font-size:14px;margin-top:16px}@media(min-width:1000px){.hero{padding:52px 42px}.headline{font-size:40px;line-height:1.4}.intro{font-size:16px}.ai-entry{font-size:17px}.search{height:58px;font-size:16px}}@media(max-width:1050px){.tutor-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:700px){.tutor-grid{grid-template-columns:minmax(0,1fr);gap:14px}.filter-panel{padding:2px 14px 18px}.price-filter{align-items:stretch;flex-direction:column}.price-inputs input{width:0;flex:1;min-width:0}.filter-actions button{flex:1}.hero{padding:32rpx 25rpx}.headline{font-size:39rpx}.heading{line-height:1.6}}
 .parent-shell .page .learning-entry{grid-column:1/-1;display:flex;flex-direction:column;align-items:flex-start;gap:8px;background:#f1f5ea;color:#2b573d;border:1px solid #bacab6;border-radius:18px;padding:22px;text-align:left;margin:18px 0;line-height:1.6}.learning-kicker{font-size:12px;font-weight:700}.learning-title{font-size:21px;font-weight:700}.learning-note{font-size:13px;color:#5c715e}
 </style>
+
+<style scoped>
+.reference-entry{display:none}
+</style>
+
