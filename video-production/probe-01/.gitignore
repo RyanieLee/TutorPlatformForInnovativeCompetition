@@ -1,0 +1,8 @@
+assets/raw/
+assets/validation-frames/
+preflight.json
+screenshots/preflight-*.png
+
+scripts/preflight.mjs
+screenshots/browser-*.png
+

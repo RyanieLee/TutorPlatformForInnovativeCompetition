@@ -1,0 +1,178 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "fps": "30",
+  "duration": 40,
+  "codec": "H.264",
+  "pixelFormat": "yuv420p",
+  "audio": "silent AAC stereo 48kHz; reserved for voiceover",
+  "bytes": 16771697,
+  "rawDuration": 41.8,
+  "rawTrimStart": 0.597,
+  "decodeExit": 0,
+  "sampledFrames": [
+    {
+      "second": 0,
+      "meanRGB": 208.56
+    },
+    {
+      "second": 1,
+      "meanRGB": 223.36
+    },
+    {
+      "second": 2,
+      "meanRGB": 223.92
+    },
+    {
+      "second": 3,
+      "meanRGB": 224.52
+    },
+    {
+      "second": 4,
+      "meanRGB": 225.09
+    },
+    {
+      "second": 5,
+      "meanRGB": 217.24
+    },
+    {
+      "second": 6,
+      "meanRGB": 218.14
+    },
+    {
+      "second": 7,
+      "meanRGB": 217.85
+    },
+    {
+      "second": 8,
+      "meanRGB": 217.87
+    },
+    {
+      "second": 9,
+      "meanRGB": 215.81
+    },
+    {
+      "second": 10,
+      "meanRGB": 215.66
+    },
+    {
+      "second": 11,
+      "meanRGB": 216.55
+    },
+    {
+      "second": 12,
+      "meanRGB": 221.98
+    },
+    {
+      "second": 13,
+      "meanRGB": 221.33
+    },
+    {
+      "second": 14,
+      "meanRGB": 221.38
+    },
+    {
+      "second": 15,
+      "meanRGB": 221.33
+    },
+    {
+      "second": 16,
+      "meanRGB": 221.33
+    },
+    {
+      "second": 17,
+      "meanRGB": 218.89
+    },
+    {
+      "second": 18,
+      "meanRGB": 218.73
+    },
+    {
+      "second": 19,
+      "meanRGB": 218.19
+    },
+    {
+      "second": 20,
+      "meanRGB": 225.5
+    },
+    {
+      "second": 21,
+      "meanRGB": 217.38
+    },
+    {
+      "second": 22,
+      "meanRGB": 216.6
+    },
+    {
+      "second": 23,
+      "meanRGB": 216.81
+    },
+    {
+      "second": 24,
+      "meanRGB": 216.9
+    },
+    {
+      "second": 25,
+      "meanRGB": 217.04
+    },
+    {
+      "second": 26,
+      "meanRGB": 217.13
+    },
+    {
+      "second": 27,
+      "meanRGB": 217.3
+    },
+    {
+      "second": 28,
+      "meanRGB": 217.36
+    },
+    {
+      "second": 29,
+      "meanRGB": 217.67
+    },
+    {
+      "second": 30,
+      "meanRGB": 217.61
+    },
+    {
+      "second": 31,
+      "meanRGB": 215.92
+    },
+    {
+      "second": 32,
+      "meanRGB": 215.44
+    },
+    {
+      "second": 33,
+      "meanRGB": 215.06
+    },
+    {
+      "second": 34,
+      "meanRGB": 221.12
+    },
+    {
+      "second": 35,
+      "meanRGB": 220.42
+    },
+    {
+      "second": 36,
+      "meanRGB": 228.7
+    },
+    {
+      "second": 37,
+      "meanRGB": 228.67
+    },
+    {
+      "second": 38,
+      "meanRGB": 228.68
+    },
+    {
+      "second": 39,
+      "meanRGB": 156.55
+    }
+  ],
+  "decodedFrameCount": 1200,
+  "fullDecodeExit": 0,
+  "sha256": "d8486f7751d215df9027ddb158f60e91c5d33da918d72e82eeba084ddea94015"
+}

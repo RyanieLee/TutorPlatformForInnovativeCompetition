@@ -1,0 +1,153 @@
+{
+  "sourceCommit": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "baseURL": "http://127.0.0.1:5175/",
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "fpsRaw": 25,
+  "logicalDuration": 40.6,
+  "browser": "155.0.8059.85",
+  "errors": [],
+  "actions": [
+    {
+      "type": "ready",
+      "seconds": 0.003,
+      "url": "http://127.0.0.1:5175/#/pages/demo/index",
+      "initialContextStorageEmpty": true,
+      "appCreatedStorageKeys": [
+        "UNI_STAT_DATA:__UNI__TUTOR_DEMO:session:seq",
+        "UNI_STAT_DATA:__UNI__TUTOR_DEMO:session:bgTs",
+        "UNI_STAT_DATA:__UNI__TUTOR_DEMO:session:lastScene",
+        "UNI_STAT_DATA:__UNI__TUTOR_DEMO:session:lastActive",
+        "UNI_STAT_DATA:__UNI__TUTOR_DEMO:visit:tvc",
+        "UNI_STAT_DATA:__UNI__TUTOR_DEMO:session:sct",
+        "UNI_STAT_DATA:__UNI__TUTOR_DEMO:visit:fvts",
+        "__DC_STAT_UUID",
+        "UNI_STAT_DATA:__UNI__TUTOR_DEMO:session:entryRoute",
+        "UNI_STAT_DATA:__UNI__TUTOR_DEMO:session:start",
+        "UNI_STAT_DATA:__UNI__TUTOR_DEMO:session:id",
+        "UNI_STAT_DATA:__UNI__TUTOR_DEMO:migration:done",
+        "UNI_STAT_DATA:__UNI__TUTOR_DEMO:visit:lvts"
+      ]
+    },
+    {
+      "type": "real-click",
+      "seconds": 6.997,
+      "url": "http://127.0.0.1:5175/#/pages/match/index?demoScenario=math",
+      "name": "带入匹配示例",
+      "x": 1371.3046875,
+      "y": 768.75,
+      "cursor": {
+        "x": 1371.3046875,
+        "y": 768.75
+      }
+    },
+    {
+      "type": "match-route-confirmed",
+      "seconds": 7.163,
+      "url": "http://127.0.0.1:5175/#/pages/match/index?demoScenario=math"
+    },
+    {
+      "type": "conditions",
+      "seconds": 12.227,
+      "url": "http://127.0.0.1:5175/#/pages/match/index?demoScenario=math",
+      "conditions": {
+        "selected": [
+          "数学",
+          "初中（演示）",
+          "均可"
+        ],
+        "inputs": [
+          "100",
+          "周六下午",
+          "耐心"
+        ]
+      }
+    },
+    {
+      "type": "real-click",
+      "seconds": 19.192,
+      "url": "http://127.0.0.1:5175/#/pages/match/index?demoScenario=math",
+      "name": "生成推荐",
+      "x": 960,
+      "y": 837.3125,
+      "cursor": {
+        "x": 960,
+        "y": 837.3125
+      }
+    },
+    {
+      "type": "results-confirmed",
+      "seconds": 19.202,
+      "url": "http://127.0.0.1:5175/#/pages/match/index?demoScenario=math",
+      "summary": "数学 · 初中（演示） · ¥100/小时以内 · 均可",
+      "candidates": "24 位候选，4 位符合条件。排除：科目 14、预算 6、方式 0、距离或位置缺失 0（按首个不满足条件统计）。",
+      "results": [
+        "1. 小林老师89 分长安区 · 大学城 · 周六 14:00–17:00，周日 09:00–11:00西安交通大学（场景） · 均可 · ¥80/小时学科吻合：数学 +35；方式兼容：均可（硬条件）空闲时间兼容：所选时段与老师时间有交集（需双方最终确认） +30教学经历：自述 30 个月 +17课时费 ¥80 ≤ 预算 ¥100，价格余量 +2其他因素：课程成绩 90/100、教学能力 5/5、案例 8/10（封顶）、偏好命中 1/1；四项比例平均 +5经验、成绩、能力和案例均为自述，缺失项记0；评分不代表资质认证。查看详情与预约",
+        "2. 小何老师61 分未央区 · 市图书馆 · 周一、周三 18:30–20:00陕西师范大学（场景） · 线上 · ¥65/小时学科吻合：数学 +35；方式兼容：线上（硬条件）老师未声明吻合的空闲时间，需双方确认 +0教学经历：自述 39 个月 +20课时费 ¥65 ≤ 预算 ¥100，价格余量 +4其他因素：课程成绩 89/100、教学能力 3/5、案例 3/10（封顶）、偏好命中 0/1；四项比例平均 +2经验、成绩、能力和案例均为自述，缺失项记0；评分不代表资质认证。查看详情与预约",
+        "3. 小吴老师56 分雁塔区 · 大雁塔 · 周五 19:00–21:00西北工业大学（场景） · 均可 · ¥85/小时学科吻合：数学 +35；方式兼容：均可（硬条件）老师未声明吻合的空闲时间，需双方确认 +0教学经历：自述 32 个月 +18课时费 ¥85 ≤ 预算 ¥100，价格余量 +2其他因素：课程成绩 78/100、教学能力 2/5、案例 0/10（封顶）、偏好命中 0/1；四项比例平均 +1经验、成绩、能力和案例均为自述，缺失项记0；评分不代表资质认证。查看详情与预约",
+        "4. 小周老师49 分高新区 · 科技路 · 周六 09:00–12:00西安电子科技大学（场景） · 线下 · ¥90/小时学科吻合：数学 +35；方式兼容：线下（硬条件）老师未声明吻合的空闲时间，需双方确认 +0教学经历：自述 18 个月 +10课时费 ¥90 ≤ 预算 ¥100，价格余量 +1其他因素：课程成绩 87/100、教学能力 4/5、案例 6/10（封顶）、偏好命中 0/1；四项比例平均 +3经验、成绩、能力和案例均为自述，缺失项记0；评分不代表资质认证。查看详情与预约"
+      ]
+    },
+    {
+      "type": "highlight-real-reason",
+      "seconds": 21.376,
+      "url": "http://127.0.0.1:5175/#/pages/match/index?demoScenario=math",
+      "index": 0,
+      "text": "学科吻合：数学 +35；方式兼容：均可（硬条件）"
+    },
+    {
+      "type": "highlight-real-reason",
+      "seconds": 22.818,
+      "url": "http://127.0.0.1:5175/#/pages/match/index?demoScenario=math",
+      "index": 1,
+      "text": "空闲时间兼容：所选时段与老师时间有交集（需双方最终确认） +30"
+    },
+    {
+      "type": "highlight-real-reason",
+      "seconds": 24.615,
+      "url": "http://127.0.0.1:5175/#/pages/match/index?demoScenario=math",
+      "index": 2,
+      "text": "教学经历：自述 30 个月 +17"
+    },
+    {
+      "type": "highlight-real-reason",
+      "seconds": 26.418,
+      "url": "http://127.0.0.1:5175/#/pages/match/index?demoScenario=math",
+      "index": 3,
+      "text": "课时费 ¥80 ≤ 预算 ¥100，价格余量 +2"
+    },
+    {
+      "type": "highlight-real-reason",
+      "seconds": 28.221,
+      "url": "http://127.0.0.1:5175/#/pages/match/index?demoScenario=math",
+      "index": 4,
+      "text": "其他因素：课程成绩 90/100、教学能力 5/5、案例 8/10（封顶）、偏好命中 1/1；四项比例平均 +5"
+    },
+    {
+      "type": "real-click",
+      "seconds": 33.282,
+      "url": "http://127.0.0.1:5175/#/pages/match/index?demoScenario=math",
+      "name": "查看详情与预约",
+      "x": 960,
+      "y": 654.6484375,
+      "cursor": {
+        "x": 960,
+        "y": 654.6484375
+      }
+    },
+    {
+      "type": "detail-confirmed",
+      "seconds": 33.94,
+      "url": "http://127.0.0.1:5175/#/pages/tutors/detail?id=t001",
+      "name": "小林老师",
+      "teaching": "示例头像\n小林老师\n西安交通大学（场景） · 数学与应用数学\n数学思维\n耐心讲解\n教学信息\n擅长科目\n数学、物理\n授课地区\n长安区 · 大学城\n授课方式\n均可\n参考课时费\n¥80/小时\n可授课时间\n周六 14:00–17:00，周日 09:00–11:00\n教学经历与能力（自述，未核验）\n教学经历\n30 个月\n相关课程成绩自述\n90/100\n教学能力自评\n5/5\n匿名案例数量\n8 个\n虚构匿名案例：围绕数学基础知识进行梳理与错题复盘。\n自我介绍\n先用小题定位薄弱环节，再做错题复盘；讲解耐心，适合希望把基础打扎实的同学。\n虚构演示资料，未进行真实身份、资质或价格验证。\n发起演示预约\n举报演示资料"
+    },
+    {
+      "type": "end",
+      "seconds": 40.602,
+      "url": "http://127.0.0.1:5175/#/pages/tutors/detail?id=t001"
+    }
+  ]
+}
