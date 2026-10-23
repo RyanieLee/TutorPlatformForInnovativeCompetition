@@ -2,6 +2,8 @@
    the supplied reference pixels, never a generated replacement character.
    Imported for H5 only; routes, events, scripts and native layouts are retained. */
 @media screen and (min-width:768px) {
+  .parent-shell.parent-shell .page:has(.tutor-grid) .hero {min-height:500px!important}
+  .parent-shell.parent-shell .hero-art {min-height:450px!important}
   uni-page-body {
     position:relative !important;isolation:isolate !important;min-height:100vh !important;
     background:#e9f6fc!important;color:#142e4d !important;
@@ -117,6 +119,34 @@
   .companion-root .mascot-img>div {background-image:none!important}
   .companion-root .companion-panel {background:#f9fdfff2 !important}
   .companion-root.motion-off .mascot-img {animation:none!important}
+}
+/* Complete, readable teaching card and consistent personal photo slots. */
+@media screen and (min-width:768px) {
+  .parent-shell.parent-shell .hero-art .lesson-stage {width:clamp(218px,16vw,252px)!important;right:-4px!important;bottom:8px!important;left:auto!important;transform:none!important}
+  .parent-shell.parent-shell .hero-art .lesson-face {min-height:365px!important;padding:17px!important;background:#f7fdfff0!important;gap:10px!important;overflow:visible!important}
+  .parent-shell.parent-shell .hero-art .lesson-title {font-family:inherit!important;font-size:15px!important;margin:0!important;line-height:1.5!important}
+  .parent-shell.parent-shell .hero-art .lesson-step {font-size:10px!important;margin:0!important}
+  .parent-shell.parent-shell .hero-art .lesson-flip {font-size:11px!important;height:44px!important;min-height:44px!important;line-height:1.5!important;padding:10px 14px!important;box-sizing:border-box!important;background:#f6fdfff2!important}
+  .parent-shell .tutor-grid .top {align-items:flex-start!important;gap:15px!important;flex-wrap:wrap!important}
+  .parent-shell .tutor-grid .top .identity {min-width:105px!important;flex:1!important}
+  .parent-shell .tutor-grid .top .price {margin-left:auto!important;font-size:14px!important;white-space:nowrap!important}
+  .parent-shell .tutor-grid .name {font-size:19px!important}
+  .parent-shell .tutor-grid .sub {line-height:1.7!important}
+  .linghang-detail .profile .tutor-photo-frame {width:112px!important;height:112px!important;border-radius:18px!important}
+}
+@media screen and (min-width:768px) and (max-width:1099px) {
+  .parent-shell.parent-shell .hero-art .lesson-stage {width:200px!important;bottom:0!important;right:0!important}
+  .parent-shell.parent-shell .hero-art .lesson-face {min-height:385px!important;padding:14px!important}
+}
+@media screen and (max-width:767px) {
+  .parent-shell .hero-art {display:block!important;width:100%!important;min-height:420px!important;margin-top:20px!important}
+  .parent-shell .hero-mascot {display:none!important}
+  .parent-shell.parent-shell .hero-art .lesson-stage {position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;width:100%!important;max-width:340px!important;margin:0 auto!important;transform:none!important}
+  .parent-shell.parent-shell .hero-art .lesson-face {min-height:365px!important;padding:17px!important;background:#f7fdfff0!important;gap:10px!important}
+  .parent-shell.parent-shell .hero-art .lesson-title {font-size:15px!important;margin:0!important}
+  .parent-shell .tutor-grid .top {flex-wrap:wrap!important;align-items:flex-start!important}
+  .parent-shell .tutor-grid .identity {min-width:120px!important}
+  .parent-shell .tutor-grid .price {margin-left:auto!important}
 }
 /* Keep the approved visual language in narrow browser panels as well.
    These rules adapt spacing; the 1600px approved composition is unchanged. */
@@ -298,4 +328,3 @@
     background:#fff!important;backdrop-filter:none!important;color:#142e4d!important;
   }
 }
-
