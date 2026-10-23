@@ -7,6 +7,7 @@
     "dev:h5": "uni",
     "typecheck": "vue-tsc --noEmit",
     "test": "vitest run",
+    "test:launcher": "node --test scripts/npm-runtime.test.mjs",
     "build:h5": "uni build",
     "dev:mp-weixin": "uni -p mp-weixin",
     "build:mp-weixin": "uni build -p mp-weixin",

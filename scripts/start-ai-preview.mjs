@@ -1,9 +1,10 @@
 import { spawn, spawnSync } from 'node:child_process'
 import { existsSync, readFileSync, mkdirSync, writeFileSync } from 'node:fs'
-import { dirname, resolve, join } from 'node:path'
+import { dirname, resolve, join, delimiter } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createRequire } from 'node:module'
 import net from 'node:net'
+import {resolveNpmCli} from './npm-runtime.mjs'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const server = join(root, 'server')
@@ -11,7 +12,8 @@ const require = createRequire(join(server, 'package.json'))
 const children = new Set()
 let stopping = false
 const env = { ...process.env, PRISMA_HIDE_UPDATE_MESSAGE: '1' }
-const npm = join(dirname(process.execPath), 'node_modules/npm/bin/npm-cli.js')
+env.PATH=dirname(process.execPath)+delimiter+(process.env.PATH||'')
+let npm
 const webUrl = 'http://127.0.0.1:5173'
 const apiUrl = 'http://127.0.0.1:3001'
 const frontDependenciesReady=()=>['@dcloudio/vite-plugin-uni','markdown-it','katex','dompurify'].every(name=>existsSync(join(root,'node_modules',name)))
@@ -69,7 +71,7 @@ function openProgram(program, args) {
 
 try {
   if (Number(process.versions.node.split('.')[0]) < 20) throw new Error('请安装 Node.js 20 或更新版本。')
-  if (!existsSync(npm)) throw new Error('找不到 npm，请安装完整版 Node.js 后再启动。')
+  npm=resolveNpmCli({root})
   if (process.argv.includes('--check')) {
     console.log('启动器检查通过：Node.js / npm / 项目路径有效。')
     console.log(`前端依赖：${frontDependenciesReady() ? '已安装' : '启动时安装'}`)

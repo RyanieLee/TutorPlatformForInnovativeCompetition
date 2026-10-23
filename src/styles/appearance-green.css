@@ -147,9 +147,27 @@ html[data-campus-theme="green"] .parent-shell .lesson-answer{font-size:13px;line
 html[data-campus-theme="green"] .parent-shell .lesson-flip{min-height:44px;padding:11px 15px;font-size:13px;background:#fffef8e6;color:#315b40;border:1px solid #a9bda8;border-radius:12px}
 html[data-campus-theme="green"] .parent-shell .lesson-flip:hover{background:#e9f0e1;box-shadow:0 5px 14px #284b3410}
 html[data-campus-theme="green"] .parent-shell .hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-html[data-campus-theme="green"] .parent-shell .hero-actions button{margin:0;min-height:46px;padding:12px 18px;font-size:14px;line-height:1.5;border-radius:12px}
+html[data-campus-theme="green"] .parent-shell .hero-actions button{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;margin:0;min-height:44px;padding:10px 14px;font-size:15px;line-height:1.4;border-radius:12px}
 html[data-campus-theme="green"] .parent-shell .hero-cta{background:#2b573d;color:#fff;border:1px solid #2b573d}
 html[data-campus-theme="green"] .parent-shell .hero-outline{background:#fffef8b3;color:#2b573d;border:1px solid #a9bda8}
 html[data-campus-theme="green"] .companion-fullpage .companion-head{padding:18px 22px;background:#e9f0e1b8;border-bottom:1px solid #b7c9b7}
 html[data-campus-theme="green"] .companion-fullpage .companion-title{font-family:var(--campus-serif);letter-spacing:.025em;color:#263b2d}
-@media(max-width:700px){html[data-campus-theme="green"] .parent-shell .hero-art .lesson-stage{max-width:none}html[data-campus-theme="green"] .parent-shell .hero-art .lesson-face{min-height:410px;padding:18px}html[data-campus-theme="green"] .parent-shell .hero-actions button{padding:11px 13px;font-size:14px}}
+@media(max-width:700px){html[data-campus-theme="green"] .parent-shell .hero-art .lesson-stage{max-width:none}html[data-campus-theme="green"] .parent-shell .hero-art .lesson-face{min-height:410px;padding:18px}html[data-campus-theme="green"] .parent-shell .hero-actions button{padding:10px 13px;font-size:14px}}
+
+/* Login follows the same frosted paper palette; native text remains fully visible. */
+html[data-campus-theme="green"] .page.linghang-auth{max-width:600px;margin:0 auto;padding:36px 24px}
+html[data-campus-theme="green"] .page.linghang-auth .banner{position:relative;background:linear-gradient(125deg,#e3eee3e8,#f4f1e5e8);color:var(--campus-ink);border:1px solid var(--campus-border);padding:28px 24px 28px 92px;border-radius:22px;backdrop-filter:blur(14px);box-shadow:0 8px 24px #3652440a}
+html[data-campus-theme="green"] .linghang-auth .auth-emblem{position:absolute;width:48px;height:48px;left:24px;top:28px}
+html[data-campus-theme="green"] .linghang-auth .mark{font-size:12px;font-weight:600;color:var(--campus-muted);opacity:1;line-height:20px}
+html[data-campus-theme="green"] .linghang-auth .title{font-size:26px;line-height:1.4;margin-top:10px}
+html[data-campus-theme="green"] .linghang-auth .intro{font-size:14px;line-height:1.7;margin-top:12px;color:var(--campus-muted)}
+html[data-campus-theme="green"] .linghang-auth .surface-card{padding:24px;margin-top:20px}
+html[data-campus-theme="green"] .linghang-auth .credential-input{background:#fffef8;color:var(--campus-ink)}
+html[data-campus-theme="green"] .linghang-auth .role.selected{background:var(--campus-wash);color:var(--campus-primary);border-color:var(--campus-primary)}
+html[data-campus-theme="green"] .linghang-auth .register{color:var(--campus-primary)}
+html[data-campus-theme="green"] .parent-shell .page .filter-actions button{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;min-height:44px;padding:10px 14px;font-size:14px;line-height:1.4}
+@media(max-width:700px){html[data-campus-theme="green"] .page.linghang-auth{padding:20px 16px}html[data-campus-theme="green"] .page.linghang-auth .banner{padding:24px 20px 24px 76px}html[data-campus-theme="green"] .linghang-auth .auth-emblem{width:40px;height:40px;left:20px;top:24px}html[data-campus-theme="green"] .linghang-auth .surface-card{padding:22px 18px}}
+/* Compact vertical spacing on the home actions while retaining readable labels. */
+html[data-campus-theme="green"] .parent-shell .page .hero-actions button,
+html[data-campus-theme="green"] .parent-shell .page .filter-actions button{min-height:36px;height:auto;padding-top:6px;padding-bottom:6px;line-height:20px}
+@media(max-width:700px){html[data-campus-theme="green"] .parent-shell .page .hero-actions button,html[data-campus-theme="green"] .parent-shell .page .filter-actions button{min-height:40px;padding-top:8px;padding-bottom:8px}}

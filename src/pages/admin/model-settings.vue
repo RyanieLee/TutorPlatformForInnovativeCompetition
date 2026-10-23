@@ -7,7 +7,7 @@ import { restoreSession } from '../../utils/session'
 import { onShow, onHide, onUnload } from '@dcloudio/uni-app'
 import RoleShell from '../tutor/shared/RoleShell.vue'
 import { useRolePage, identityKey } from '../tutor/shared/page'
-import { apiMode } from '../../config/runtime'
+import {assistantApiMode as apiMode} from '../../config/runtime'
 import { loadModelSettings, saveModelSettings, testModelSettings, type ModelSettingsView } from '../../services/model-settings'
 import { errorMessage } from '../../services/errors'
 const baseUrl=ref('https://api.deepseek.com'), model=ref('deepseek-flash'), apiKey=ref('')

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {tutorSubjects} from '../../data/tutor-subjects'
 import { computed, reactive, ref } from 'vue'
 import TutorPhoto from '../../components/TutorPhoto.vue'
 import { onShow } from '@dcloudio/uni-app'
@@ -33,7 +34,7 @@ function toggleTime(slot:string){
 const evidence = reactive({experienceMonths:'',academicScore:'',teachingSkillLevel:'',caseCount:''})
 const price = ref(''), application = ref<TutorApplication | null>(null), busy = ref(false), feedback = ref('')
 const uncertain = ref(false)
-const subjects = ['数学','英语','语文','物理','化学','生物']
+const subjects = tutorSubjects
 const modes: TeachingMode[] = ['线上','线下','均可']
 const { ready, error, authorized, load, scope } = useRolePage('tutor', () => { application.value = null; Object.assign(form, emptyForm()); Object.assign(evidence,{experienceMonths:'',academicScore:'',teachingSkillLevel:'',caseCount:''}); price.value = ''; feedback.value = ''; uncertain.value = false })
 const modeIndex = computed(() => modes.indexOf(form.teachingMode))
@@ -67,6 +68,23 @@ async function uploadPhoto() {
     feedback.value='照片已保存到草稿。提交申请并通过演示审核后才会公开。'
   } catch(cause) { feedback.value=errorMessage(cause) }
   finally { busy.value=false }
+}
+async function withdraw(){
+ const user=currentSession.value?.user,target=application.value,owner=identityKey()
+ if(busy.value||!user||target?.status!=='pending')return
+ const operation=scope.begin();busy.value=true;feedback.value=''
+ try{
+  if(!await confirmAction('撤回申请并修改','撤回后退出待审核队列，保留已填写资料和照片。修改后需要重新提交审核，是否继续？'))return
+  assertIdentity(owner);if(!operation.isCurrent())return
+  const draft=await businessService.withdrawApplication(user,target.id)
+  if(operation.isCurrent()){fill(draft);feedback.value='申请已撤回为草稿，资料已保留，可修改后重新提交审核。'}
+ }catch(cause){
+  if(operation.isCurrent()){
+   feedback.value=errorMessage(cause)
+   try{const latest=await businessService.getMyApplication(user);if(operation.isCurrent()){fill(latest);if(latest?.status==='draft')feedback.value='申请已撤回为草稿，资料已保留。';else feedback.value+='；已刷新审核状态。'}}
+   catch{if(operation.isCurrent()){uncertain.value=true;feedback.value+='；结果待确认，请刷新审核状态。'}}
+  }
+ }finally{busy.value=false}
 }
 async function save(submit: boolean) {
   const user = currentSession.value?.user, owner = identityKey()
@@ -108,7 +126,7 @@ async function save(submit: boolean) {
 }
 </script>
 <template>
-  <RoleShell title="家教入驻资料" role="tutor">
+  <RoleShell class="application-page" title="家教入驻资料" role="tutor">
     <template v-if="authorized">
       <AsyncState v-if="!ready" state="loading" message="正在读取入驻资料…" />
       <AsyncState v-else-if="error" state="error" :message="error" @retry="refresh" />
@@ -116,8 +134,10 @@ async function save(submit: boolean) {
         <view class="b-toolbar"><text v-if="uncertain" class="b-status">状态待确认</text><text v-else class="b-status">审核状态：{{ application ? reviewStatusLabels[application.status] : '未申请' }}</text><button class="b-button secondary" :disabled="busy" @click="refresh">刷新审核状态</button></view>
         <view v-if="application?.rejectionReason" class="b-reason">拒绝原因：{{ application.rejectionReason }}。请补充后重新提交。</view>
         <view v-if="feedback" class="b-info" role="status">{{ feedback }}</view>
-        <view v-if="application?.status === 'pending'" class="b-panel"><view class="b-section">申请已提交</view><TutorPhoto class="tutor-photo" :src="application?.photoUrl" :name="application?.displayName" size="resume" private-photo/><text class="b-muted">管理员审核前，资料暂时不能修改。你可以返回工作台处理预约。</text><view class="b-row"><text>提交称呼</text><text>{{ application?.displayName }}</text></view><view class="b-row"><text>学校 / 专业</text><text>{{ application?.university }} · {{ application?.major }}</text></view><view class="b-row"><text>科目与方式</text><text>{{ application?.subjects.join('、') }} · {{ application?.teachingMode }}</text></view><view class="b-row"><text>地区与价格</text><text>{{ application?.area }} · {{ application?.pricePerHour }} 元 / 小时</text></view><view class="b-row"><text>授课时间</text><text>{{ application?.availability }}</text></view><view class="b-row"><text>教学经历 / 课程成绩</text><text>{{ application?.experienceMonths ?? '未填写' }} 月 · {{ application?.academicScore ?? '未填写' }}/100（自述）</text></view><view class="b-row"><text>教学能力 / 匿名案例</text><text>{{ application?.teachingSkillLevel ?? '未填写' }}/5 · {{ application?.caseCount ?? '未填写' }} 个（自述）</text></view><view class="b-text">{{ application?.introduction }}</view></view>
-        <view v-if="application?.status !== 'pending'" class="b-grid">
+        <view v-if="application?.status === 'pending'" class="b-panel"><view class="b-section">申请已提交</view><TutorPhoto class="tutor-photo" :src="application?.photoUrl" :name="application?.displayName" size="resume" private-photo/><text class="b-muted">待审核期间可撤回申请并修改，修改后需要重新提交审核。也可返回工作台处理预约。</text><view class="b-row"><text>提交称呼</text><text>{{ application?.displayName }}</text></view><view class="b-row"><text>学校 / 专业</text><text>{{ application?.university }} · {{ application?.major }}</text></view><view class="b-row"><text>科目与方式</text><text>{{ application?.subjects.join('、') }} · {{ application?.teachingMode }}</text></view><view class="b-row"><text>地区与价格</text><text>{{ application?.area }} · {{ application?.pricePerHour }} 元 / 小时</text></view><view class="b-row"><text>授课时间</text><text>{{ application?.availability }}</text></view><view class="b-row"><text>教学经历 / 课程成绩</text><text>{{ application?.experienceMonths ?? '未填写' }} 月 · {{ application?.academicScore ?? '未填写' }}/100（自述）</text></view><view class="b-row"><text>教学能力 / 匿名案例</text><text>{{ application?.teachingSkillLevel ?? '未填写' }}/5 · {{ application?.caseCount ?? '未填写' }} 个（自述）</text></view><view class="b-text">{{ application?.introduction }}</view></view>
+        <view v-if="application?.status === 'pending'" class="b-actions recall-actions"><button class="b-button secondary" :disabled="busy || uncertain" :loading="busy" @click="withdraw">撤回申请并修改</button><text class="b-muted">仅待审核申请可撤回；已完成审核的结果不会被覆盖。</text></view>
+        <scroll-view v-if="application?.status !== 'pending'" scroll-y class="application-scroll" aria-label="入驻资料表单">
+        <view class="b-grid">
           <view class="b-panel">
             <view class="b-section">{{ application?.status === 'approved' ? '修改资料 / 重新送审' : '填写演示资料' }}</view>
             <view v-if="application?.status === 'approved'" class="b-info">资料目前已通过审核。保存修改会撤销公开展示，重新审核通过后才会恢复。</view>
@@ -143,13 +163,25 @@ async function save(submit: boolean) {
             <text class="b-muted">上述数据是个人自述；当前审核不核验成绩或教学结果。留空不会被填上虚构评分。</text>
             <view class="b-field"><text class="b-label">个人介绍 *（10–1000 字）</text><textarea class="b-textarea" v-model="form.introduction" :disabled="busy || uncertain" maxlength="1000" placeholder="介绍虚构的教学经历与特点"/><text class="b-muted">{{form.introduction.length}} / 1000 字</text></view>
             <text class="b-muted">草稿可暂不完整；提交审核前需填写所有必填项。请勿填写真实身份信息或上传证件。</text>
-            <view class="b-actions"><button class="b-button secondary" :disabled="busy || uncertain" @click="save(false)">保存草稿</button><button class="b-button" :disabled="busy || uncertain" :loading="busy" @click="save(true)">{{ application?.status === 'approved' ? '修改并重新送审' : '提交审核' }}</button></view>
           </view>
         </view>
+        </scroll-view>
+        <view v-if="application?.status !== 'pending'" class="application-footer b-panel"><text class="b-muted">在表单内滚动填写；每份申请最多选择6个擅长科目。</text><view class="b-actions"><button class="b-button secondary" :disabled="busy || uncertain" @click="save(false)">保存草稿</button><button class="b-button" :disabled="busy || uncertain" :loading="busy" @click="save(true)">{{ application?.status === 'approved' ? '修改并重新送审' : '提交审核' }}</button></view></view>
       </view>
     </template>
   </RoleShell>
 </template>
 <style scoped src="./shared/workflow.css"></style>
 <style scoped>.tutor-photo{display:block;width:112px;height:112px;border-radius:14px;object-fit:cover;margin:8px 0 12px}</style>
+<style scoped>
+.application-scroll{display:block;height:clamp(280px,60vh,680px);min-height:0;border-radius:16px;overflow:hidden}
+.application-scroll :deep(.uni-scroll-view){height:100%;min-height:0;overscroll-behavior-y:contain}
+.application-scroll .b-panel{margin-bottom:0}
+.application-footer{position:sticky;bottom:12px;z-index:20;margin:12px 0 0;padding:16px 20px;box-shadow:0 -4px 18px #29473312}
+.application-footer .b-actions{margin-top:10px}
+.recall-actions{align-items:center;margin-bottom:22px}
+@media(max-width:700px){.application-scroll{height:56vh}.application-footer{padding:14px}.application-scroll .b-grid{gap:16px}.application-footer .b-button{padding:10px 12px}}
+/* Keep the floating assistant clear of the fixed form actions on phones. */
+@media(max-width:700px){.application-page :deep(.companion-root){bottom:calc(190px + env(safe-area-inset-bottom))}.application-page :deep(.companion-panel){max-height:calc(100vh - 310px);max-height:calc(100dvh - 310px)}}
+</style>
 

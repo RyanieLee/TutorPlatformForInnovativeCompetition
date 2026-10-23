@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {tutorSubjects} from '../../data/tutor-subjects'
 import { apiMode } from '../../config/runtime'
 import { showIllustratedMascot } from '../../utils/appearance'
 import { onShow } from '@dcloudio/uni-app'
@@ -15,7 +16,7 @@ const query = ref('')
 const subject = ref('全部')
 const teachingMode = ref<'全部' | '线上' | '线下'>('全部')
 const teachingModes = ['全部', '线上', '线下'] as const
-const subjects = ['全部', '数学', '英语', '语文', '物理', '化学']
+const subjects = ['全部', ...tutorSubjects]
 const tutors = ref<Tutor[]>([])
 const loading = ref(false)
 const minPriceText=ref(''),maxPriceText=ref(''),priceError=ref('')
@@ -113,6 +114,7 @@ const openProfile = () => uni.switchTab({ url: '/pages/profile/index' })
   </view></ParentLayout>
 </template>
 <style scoped>
+.ai-entry .ai-arrow{display:flex;align-items:center;justify-content:center;line-height:1;flex-shrink:0}
 .ai-entry{margin-top:24rpx;text-align:left;background:#e8f0ff;color:#1b56b4;border-radius:18rpx;font-size:27rpx;padding:12rpx 24rpx}.parent-shell .page .learning-entry{grid-column:1/-1;background:#e5f2ed;color:#176a62}.page{padding:0}.hero{background:linear-gradient(135deg,#1852c8,#3c8be9);border-radius:26rpx;padding:40rpx 30rpx;color:#fff;display:flex;flex-direction:column}.eyebrow{font-size:23rpx;opacity:.85}.headline{font-size:48rpx;font-weight:800;margin-top:20rpx}.intro{font-size:24rpx;line-height:1.6;opacity:.9;margin-top:15rpx}.links{display:flex;gap:22rpx;margin-top:26rpx;font-size:25rpx}.links text{background:#ffffff33;padding:13rpx 18rpx;border-radius:50rpx}.search{background:#fff;border-radius:16rpx;padding:20rpx 24rpx;height:90rpx;margin-top:25rpx;font-size:26rpx}.heading{font-size:31rpx;font-weight:700;margin:35rpx 0 20rpx}.count{font-size:22rpx;color:#8590a4;font-weight:400;margin-left:20rpx}.filters{display:flex;gap:12rpx;padding-bottom:8rpx}.chip{flex-shrink:0;background:#fff;color:#54637b;border-radius:60rpx;padding:16rpx 27rpx;font-size:24rpx}.active{background:#2868e4;color:#fff}.notice,.empty{text-align:center;color:#929aab;font-size:22rpx;line-height:1.7;margin:30rpx 0}.retry{color:#2868e4;margin-left:10rpx}
 .load-more{background:#fff;border-radius:16rpx;color:#2868e4;text-align:center;padding:22rpx;margin:24rpx 0;font-size:25rpx}
 .tutor-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.filter-panel{background:#fff;border:1px solid #e3eaf3;border-radius:18px;padding:4px 24px 24px;margin-top:22px}.price-filter{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-top:22px}.filter-label{font-size:14px;color:#60748e}.price-inputs{display:flex;align-items:center;gap:12px;margin-top:10px}.price-inputs input{background:#f2f5fa;padding:10px 12px;border-radius:9px;width:170px;height:42px;font-size:14px}.filter-actions{display:flex;gap:10px}.filter-actions button{margin:0;font-size:14px;background:#edf2fa;color:#486184;border-radius:10px;padding:0 18px;line-height:3}.filter-actions .apply-price{background:#245fc7;color:white}.price-error{color:#b22c36;font-size:14px;margin-top:16px}@media(min-width:1000px){.hero{padding:52px 42px}.headline{font-size:40px;line-height:1.4}.intro{font-size:16px}.ai-entry{font-size:17px}.search{height:58px;font-size:16px}}@media(max-width:1050px){.tutor-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:700px){.tutor-grid{grid-template-columns:minmax(0,1fr);gap:14px}.filter-panel{padding:2px 14px 18px}.price-filter{align-items:stretch;flex-direction:column}.price-inputs input{width:0;flex:1;min-width:0}.filter-actions button{flex:1}.hero{padding:32rpx 25rpx}.headline{font-size:39rpx}.heading{line-height:1.6}}

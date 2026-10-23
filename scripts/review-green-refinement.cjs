@@ -26,9 +26,9 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
    await page.locator('.companion-compose textarea').waitFor();await page.waitForTimeout(400);
    assert.equal(await page.locator('.mascot-img').count(),theme==='green'?0:1);
    await page.screenshot({path:path.join(out,`assistant-${theme}-${width}.jpg`),fullPage:true});
-   await page.getByRole('button',{name:theme==='green'?'Jenny 浅蓝':'绿色玻璃',exact:true}).click();
+   await page.getByRole('button',{name:theme==='green'?'浅蓝风':'绿色磨砂风',exact:true}).click();
    assert.equal(await page.locator('.mascot-img').count(),theme==='green'?1:0);
-   await page.getByRole('button',{name:theme==='green'?'绿色玻璃':'Jenny 浅蓝',exact:true}).click();
+   await page.getByRole('button',{name:theme==='green'?'绿色磨砂风':'浅蓝风',exact:true}).click();
    if(width===390){await page.setViewportSize({width:375,height:667});assert(await page.locator('.companion-compose').evaluate(el=>{const r=el.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight}));}
    await page.emulateMedia({reducedMotion:'reduce'});
    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));assert.deepEqual(errors,[]);
