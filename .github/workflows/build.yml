@@ -14,6 +14,7 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - run: npm run typecheck
       - run: npm test
+      - run: npm run test:launcher
       - run: npm run test:workflows
       - run: npm run typecheck:workflows
       - run: npm run build:h5
