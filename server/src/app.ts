@@ -1,6 +1,8 @@
 import { createExamModel, examRequestSchema, type ExamModel } from './learning-model'
 import { createModelSettings, registerModelSettings, type ModelSettings } from './model-settings'
 import { registerOrderMap } from './order-map'
+import {registerBookingConnections} from './booking-connection'
+import {registerStudentArchives} from './student-archive/routes'
 import { registerAssistant, createChatModel, type ChatModel } from './assistant'
 import { createHomeworkImageModel, registerHomeworkImageReview, type HomeworkImageModel } from './homework-review'
 import Fastify from 'fastify'
@@ -30,9 +32,11 @@ export function buildApp(db: PrismaClient = new PrismaClient(), matchModel: Matc
  registerOrderMap(app,db)
  const settings=modelSettings??createModelSettings()
  registerModelSettings(app,db,settings)
- const managedChat:ChatModel={get enabled(){return settings.configured?settings.chat.enabled:chatModel.enabled},reply:messages=>(settings.configured?settings.chat:chatModel).reply(messages)}
+ const managedChat:ChatModel={get enabled(){return settings.configured?settings.chat.enabled:chatModel.enabled},reply:(messages,purpose)=>{const model=settings.configured?settings.chat:chatModel;return purpose?model.reply(messages,purpose):model.reply(messages)}}
  const managedImage:HomeworkImageModel={get enabled(){return settings.configured?settings.image.enabled:homeworkImageModel.enabled},review:(buffer,mime)=>(settings.configured?settings.image:homeworkImageModel).review(buffer,mime)}
  registerAssistant(app,db,managedChat)
+ registerBookingConnections(app,db)
+ registerStudentArchives(app,db,managedChat)
  const photoRoot=resolve(process.env.TUTOR_PHOTO_ROOT||'./.tutor-photos')
  app.register(async child=>registerTutorPhotoRoutes(child,db,photoRoot))
  app.register(async child=>registerHomeworkImageReview(child,db,managedImage))

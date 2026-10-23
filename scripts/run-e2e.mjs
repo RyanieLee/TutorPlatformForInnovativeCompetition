@@ -8,7 +8,7 @@ if(generated.error)throw generated.error
 if (generated.status !== 0) process.exit(generated.status ?? 1)
 // Only the ephemeral local test database receives this password; never print it.
 const args=process.argv.slice(2)
-const suites=args.includes('--config')?[args]:[args,[...args,'--config','playwright.teaching.config.ts']]
+const suites=args.includes('--config')?[args]:[args,[...args,'--config','playwright.teaching.config.ts'],[...args,'--config','playwright.continuity.config.ts']]
 function next(){
  const suite=suites.shift();if(!suite)return
  const filtered=args.some(a=>a==='--grep'||a==='-g'||a==='--grep-invert')

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const navigate=(url:string)=>uni.navigateTo({url})
 import {ref,computed} from 'vue'
 import {onLoad,onShow} from '@dcloudio/uni-app'
 import TeachingShell from './shared/TeachingShell.vue'
@@ -21,7 +22,7 @@ const preview=computed(()=>lesson.value?.attachments.filter(a=>a.purpose==='prev
 const reference=computed(()=>lesson.value?.attachments.filter(a=>a.purpose==='homework')||[])
 async function submit(){if(status.value.busy||!status.value.allReady||!attachments.value.length)return;await page.act(()=>teachingService.submitHomework(lessonId.value,{note:note.value,attachmentIds:attachments.value.map(a=>a.id)}),data=>{const existed=history.value.some(s=>s.id===data.id);history.value=[data,...history.value.filter(s=>s.id!==data.id)];if(!existed)total.value++;attachments.value=[];note.value='';round.value++;feedback.value='作业已提交，老师可以查看本次文件。'})}
 async function more(){await page.act(()=>teachingService.listSubmissions(lessonId.value,historyPage.value+1),list=>{history.value.push(...list.data);total.value=list.meta.total;historyPage.value=list.meta.page})}
-const back=()=>uni.navigateTo({url:'/pages/teaching/index?bookingId='+encodeURIComponent(lesson.value?.bookingId||'')})
+const back=()=>navigate('/pages/teaching/index?bookingId='+encodeURIComponent(lesson.value?.bookingId||''))
 </script>
 <template>
  <TeachingShell title="课次详情与作业" :role="role">
@@ -37,7 +38,7 @@ const back=()=>uni.navigateTo({url:'/pages/teaching/index?bookingId='+encodeURIC
     <view class="t-grid">
      <view>
       <view class="t-card"><view class="t-section-title">课前预习</view><view class="t-content">{{lesson.previewText||'老师暂未填写预习说明。'}}</view><AttachmentList :files="preview"/></view>
-      <view class="t-card"><view class="t-section-title">本节课作业</view><view class="t-content">{{lesson.homeworkText}}</view><AttachmentList :files="reference"/></view>
+      <view class="t-card"><view class="t-section-title">本节课作业</view><button class="t-btn secondary" @click="navigate('/pages/students/index?bookingId='+encodeURIComponent(lesson.bookingId)+(history[0]?'&submissionId='+encodeURIComponent(history[0].id):'') )">进入学生学情 · 分析作业与针对训练</button><view class="t-content">{{lesson.homeworkText}}</view><AttachmentList :files="reference"/></view>
       <view v-if="canSubmit" class="t-card">
        <view class="t-section-title">{{total?'重新提交作业':'提交本节课作业'}}</view><text class="t-muted">上传完成后，请点击提交。重新提交会保留历史版本；本次需包含你希望提交的全部文件。</text>
        <UploadPicker :key="lessonId+':'+round" v-model="attachments" :lesson-id="lessonId" purpose="submission" label="作业文件" :disabled="busy" @status="status=$event"/>

@@ -5,18 +5,26 @@ import TeachingShell from './shared/TeachingShell.vue'
 import UploadPicker from './shared/UploadPicker.vue'
 import {useTeachingPage,inputTime,localTime} from './shared/page'
 import {teachingService} from '../../services/teaching'
+import {archiveService} from '../../services/student-archive'
+import {reportLessonDraft} from '../../services/archive-report-draft'
+import {currentSession} from '../../utils/session'
 import {confirmAction} from '../tutor/shared/page'
 import {BusinessError} from '../../services/errors'
 import type {LessonDto,LessonInput,AttachmentDto} from '../../types/teaching'
 const bookingId=ref(''),lessonId=ref(''),lesson=ref<LessonDto|null>(null),preview=ref<AttachmentDto[]>([]),reference=ref<AttachmentDto[]>([])
+const archiveId=ref(''),reportId=ref(''),reportImported=ref(false)
 const initial={title:'',scheduledAt:'',previewText:'',homeworkText:'',dueAt:''},form=reactive({...initial})
 const previewStatus=ref({busy:false,allReady:true,count:0}),referenceStatus=ref({busy:false,allReady:true,count:0})
 const page=useTeachingPage(()=>{lesson.value=null;Object.assign(form,initial);preview.value=[];reference.value=[]})
 const {ready,error,busy,feedback,failed,authorized,role}=page
 const uploading=computed(()=>previewStatus.value.busy||referenceStatus.value.busy)
-onLoad(o=>{bookingId.value=String(o?.bookingId||'');lessonId.value=String(o?.lessonId||'')})
+onLoad(o=>{bookingId.value=String(o?.bookingId||'');lessonId.value=String(o?.lessonId||'');archiveId.value=String(o?.archiveId||'');reportId.value=String(o?.reportId||'')})
 function fill(data:LessonDto){lesson.value=data;lessonId.value=data.id;bookingId.value=data.bookingId;Object.assign(form,{title:data.title,scheduledAt:localTime(data.scheduledAt),previewText:data.previewText,homeworkText:data.homeworkText,dueAt:data.dueAt?localTime(data.dueAt):''});preview.value=(data.pendingAttachments||[]).filter(a=>a.purpose==='preview');reference.value=(data.pendingAttachments||[]).filter(a=>a.purpose==='homework')}
-const refresh=()=>page.load(()=>lessonId.value?teachingService.getLesson(lessonId.value):Promise.resolve(null),data=>{if(data)fill(data)})
+const refresh=()=>page.load(async()=>{
+ const data=lessonId.value?await teachingService.getLesson(lessonId.value):null
+ const draft=!data&&archiveId.value&&reportId.value&&!reportImported.value?reportLessonDraft(await archiveService.read(archiveId.value),reportId.value,bookingId.value,currentSession.value?.user.id||''):null
+ return{data,draft}
+},({data,draft})=>{if(data)fill(data);else if(draft){Object.assign(form,draft);reportImported.value=true;feedback.value='已导入教师确认的学情报告。请填写上课时间、核对内容后保存，本次不会自动发布。'}})
 onShow(refresh)
 function input():LessonInput{if(!form.title.trim()||!form.homeworkText.trim())throw new BusinessError('INVALID','请填写课次标题和作业要求');return{title:form.title,scheduledAt:inputTime(form.scheduledAt)!,previewText:form.previewText,homeworkText:form.homeworkText,dueAt:inputTime(form.dueAt,true)}}
 async function saveCourse(){const value=input();return lessonId.value?teachingService.saveLesson(lessonId.value,value,lesson.value!.version):teachingService.createLesson(bookingId.value,value)}

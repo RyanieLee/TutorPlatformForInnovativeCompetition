@@ -108,6 +108,8 @@ model TutorApplication {
 }
 
 model Booking {
+  archiveBinding ArchiveBooking?
+  messages BookingMessage[]
   teachingLoop   TeachingLoop?
   lessons        Lesson[]
   id             String       @id @default(cuid())
@@ -250,4 +252,37 @@ model UploadQuota {
   usedBytes Int @default(0)
   reservedBytes Int @default(0)
   @@id([userId,day])
+}
+
+model StudentArchive {
+  id String @id @default(cuid())
+  parentId String
+  revision Int @default(0)
+  requestId String
+  requestFingerprint String
+  stateJson String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  bookings ArchiveBooking[]
+  @@unique([parentId,requestId])
+  @@index([parentId,createdAt])
+}
+model ArchiveBooking {
+  bookingId String @id
+  booking Booking @relation(fields:[bookingId],references:[id],onDelete:Restrict)
+  archiveId String
+  archive StudentArchive @relation(fields:[archiveId],references:[id],onDelete:Restrict)
+  @@index([archiveId])
+}
+model BookingMessage {
+  id String @id @default(cuid())
+  bookingId String
+  booking Booking @relation(fields:[bookingId],references:[id],onDelete:Restrict)
+  senderId String
+  senderRole String
+  requestId String
+  text String
+  createdAt DateTime @default(now())
+  @@unique([bookingId,senderId,requestId])
+  @@index([bookingId,createdAt,id])
 }

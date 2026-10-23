@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test'
 const node=JSON.stringify(process.execPath)
 const h5=node+' node_modules/@dcloudio/vite-plugin-uni/bin/uni.js'
 export default defineConfig({
-  testDir:'./e2e', testIgnore:['**/teaching-loop.spec.ts'], timeout:90000, expect:{timeout:10000}, workers:1, retries:0,
+  testDir:'./e2e', testIgnore:['**/teaching-loop.spec.ts','**/student-continuity.spec.ts'], timeout:90000, expect:{timeout:10000}, workers:1, retries:0,
   reporter:[['list'],['html',{open:'never'}]],
   use:{actionTimeout:10000,trace:'retain-on-failure',screenshot:'only-on-failure',launchOptions:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH?{executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH}:{}},
   webServer:[
