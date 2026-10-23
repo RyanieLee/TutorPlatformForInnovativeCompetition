@@ -1,0 +1,42 @@
+[
+  {
+    "theme": "green",
+    "width": 390,
+    "noCharacter": true,
+    "themeSwitch": true,
+    "keyboardFlip": true,
+    "shortPhoneComposer": true,
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "theme": "jenny",
+    "width": 390,
+    "noCharacter": false,
+    "themeSwitch": true,
+    "keyboardFlip": true,
+    "shortPhoneComposer": true,
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "theme": "green",
+    "width": 1440,
+    "noCharacter": true,
+    "themeSwitch": true,
+    "keyboardFlip": true,
+    "shortPhoneComposer": true,
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "theme": "jenny",
+    "width": 1440,
+    "noCharacter": false,
+    "themeSwitch": true,
+    "keyboardFlip": true,
+    "shortPhoneComposer": true,
+    "overflow": false,
+    "errors": []
+  }
+]

@@ -1,4 +1,5 @@
 /* Preserved green glass appearance; scoped so Jenny can coexist. */
+/* Green refinement: the worked lesson, typography and translucent paper carry the visual. */
 /* Campus Tutoring: one visual language across parent, tutor and admin roles. */
 html[data-campus-theme="green"] page{--campus-primary:#2b573d;--campus-accent:#477653;--campus-ink:#263b2d;--campus-muted:#596d5d;--campus-paper:#fffef8;--campus-field:#f4f6ef;--campus-wash:#e9f0e3;--campus-border:#b7c9b7;--campus-serif:"Noto Serif SC","Songti SC","SimSun",serif;--campus-sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif}
 html[data-campus-theme="green"] page{background:#edf2ee!important;color:#263b2d!important;background-image:radial-gradient(ellipse at 4% 5%,#dcebe0,transparent 37%),radial-gradient(ellipse at 95% 37%,#ece7d9,transparent 42%),radial-gradient(ellipse at 50% 96%,#f4e8d3,transparent 45%)!important;background-repeat:no-repeat!important;font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif!important;overflow-x:clip}
@@ -128,3 +129,27 @@ html[data-campus-theme="green"] .parent-shell .page:not(.home-page) .name{font-s
 html[data-campus-theme="green"] .parent-shell .page:not(.home-page) .title{font-size:27px;line-height:1.5}
 html[data-campus-theme="green"] .parent-shell .page:not(.home-page) .line,html[data-campus-theme="green"] .parent-shell .page:not(.home-page) .row,html[data-campus-theme="green"] .parent-shell .page:not(.home-page) .item,html[data-campus-theme="green"] .parent-shell .page:not(.home-page) .description,html[data-campus-theme="green"] .parent-shell .page:not(.home-page) .field{font-size:15px;line-height:1.8}
 html[data-campus-theme="green"] .parent-shell .page:not(.home-page) .muted,html[data-campus-theme="green"] .parent-shell .page:not(.home-page) .notice,html[data-campus-theme="green"] .parent-shell .page:not(.home-page) .muted-note{font-size:13px;line-height:1.8}
+
+/* Green uses a worked lesson rather than a character as its visual anchor. */
+html[data-campus-theme="green"] .parent-shell .hero-art{position:relative;min-width:0;display:flex;align-items:center;justify-content:center}
+html[data-campus-theme="green"] .parent-shell .hero-art .lesson-stage{position:relative;inset:auto;width:100%;max-width:350px;margin:0;transform:none;filter:none}
+html[data-campus-theme="green"] .parent-shell .hero-art .lesson-card{border-radius:20px;box-shadow:0 12px 28px #284b3414}
+html[data-campus-theme="green"] .parent-shell .hero-art .lesson-face{min-height:410px;padding:20px;background:#fffef8ed;border:1px solid #a9bda8;border-top:3px solid #385846;border-radius:20px;gap:12px}
+html[data-campus-theme="green"] .parent-shell .lesson-kicker{font-size:12px;line-height:1.5;color:#45664c;letter-spacing:.06em}
+html[data-campus-theme="green"] .parent-shell .lesson-title{font-family:var(--campus-serif);font-size:19px;line-height:1.5;color:var(--campus-ink);font-weight:700}
+html[data-campus-theme="green"] .parent-shell .lesson-problem,html[data-campus-theme="green"] .parent-shell .lesson-step .step-copy{font-size:13px;line-height:1.8;color:#4c6452}
+html[data-campus-theme="green"] .parent-shell .lesson-chart{height:160px;background:#fcfdf7;border-color:#d2decb;border-radius:12px}
+html[data-campus-theme="green"] .parent-shell .lesson-facts{font-size:12px;color:#365d3f}
+html[data-campus-theme="green"] .parent-shell .lesson-facts text,html[data-campus-theme="green"] .parent-shell .step-number{background:#e9f0e1;color:#365d3f}
+html[data-campus-theme="green"] .parent-shell .lesson-caption{font-size:12px;color:#586e5c}
+html[data-campus-theme="green"] .parent-shell .lesson-step .step-title{font-size:14px;color:#2b513b}
+html[data-campus-theme="green"] .parent-shell .lesson-answer{font-size:13px;line-height:1.8;background:#e9f0e1;color:#365d3f}
+html[data-campus-theme="green"] .parent-shell .lesson-flip{min-height:44px;padding:11px 15px;font-size:13px;background:#fffef8e6;color:#315b40;border:1px solid #a9bda8;border-radius:12px}
+html[data-campus-theme="green"] .parent-shell .lesson-flip:hover{background:#e9f0e1;box-shadow:0 5px 14px #284b3410}
+html[data-campus-theme="green"] .parent-shell .hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+html[data-campus-theme="green"] .parent-shell .hero-actions button{margin:0;min-height:46px;padding:12px 18px;font-size:14px;line-height:1.5;border-radius:12px}
+html[data-campus-theme="green"] .parent-shell .hero-cta{background:#2b573d;color:#fff;border:1px solid #2b573d}
+html[data-campus-theme="green"] .parent-shell .hero-outline{background:#fffef8b3;color:#2b573d;border:1px solid #a9bda8}
+html[data-campus-theme="green"] .companion-fullpage .companion-head{padding:18px 22px;background:#e9f0e1b8;border-bottom:1px solid #b7c9b7}
+html[data-campus-theme="green"] .companion-fullpage .companion-title{font-family:var(--campus-serif);letter-spacing:.025em;color:#263b2d}
+@media(max-width:700px){html[data-campus-theme="green"] .parent-shell .hero-art .lesson-stage{max-width:none}html[data-campus-theme="green"] .parent-shell .hero-art .lesson-face{min-height:410px;padding:18px}html[data-campus-theme="green"] .parent-shell .hero-actions button{padding:11px 13px;font-size:14px}}

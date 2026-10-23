@@ -6,6 +6,7 @@ const navigate=(url:string)=>uni.navigateTo({url})
 import {computed,ref,toRefs,watch,nextTick,getCurrentInstance,onBeforeUnmount} from 'vue'
 import {onShow,onHide} from '@dcloudio/uni-app'
 import {apiMode} from '../config/runtime'
+import {showIllustratedMascot} from '../utils/appearance'
 import {currentSession,restoreSession} from '../utils/session'
 import {errorMessage,BusinessError} from '../services/errors'
 import {companionStatus,localChat,remoteChat,pendingCompanionBrief,pendingCompanionAuto,homeworkImageReviewStatus,reviewHomeworkImage as requestHomeworkImage} from '../services/assistant'
@@ -125,7 +126,7 @@ function login(){open.value=false;navigate('/pages/auth/login')}
 <template>
  <view v-if="visible" :id="instance" class="companion-root" :class="{'motion-off':paused,'companion-fullpage':props.page}" @keydown.esc="!props.page&&(open=false)">
   <view v-if="open" class="companion-panel" role="dialog" aria-label="小书灵 AI 对话">
-   <view class="companion-head"><image v-if="props.page" class="mascot-img" src="/static/linghang-mascot.svg" mode="aspectFit" aria-hidden="true"/><view><text class="companion-title">小书灵 · 学习与平台助手</text><text class="companion-source">{{useModel?'服务端模型对话':status==='checking'&&mode==='auto'?'检查模型配置中':'本机演示 · 非大模型'}}</text></view><button role="button" tabindex="0" v-if="!props.page" aria-label="关闭AI对话" class="companion-close" @click="open=false" @keydown.enter.prevent="open=false" @keydown.space.prevent="open=false">×</button></view>
+   <view class="companion-head"><image v-if="props.page&&showIllustratedMascot" class="mascot-img" src="/static/linghang-mascot.svg" mode="aspectFit" aria-hidden="true"/><view><text class="companion-title">小书灵 · 学习与平台助手</text><text class="companion-source">{{useModel?'服务端模型对话':status==='checking'&&mode==='auto'?'检查模型配置中':'本机演示 · 非大模型'}}</text></view><button role="button" tabindex="0" v-if="!props.page" aria-label="关闭AI对话" class="companion-close" @click="open=false" @keydown.enter.prevent="open=false" @keydown.space.prevent="open=false">×</button></view>
    <text class="companion-notice">{{useModel?'仅发送你输入的文字，不自动读取账户、订单或定位。':'本机演示支持需求整理、固定笔记与平台指引；新题解答需要配置模型。'}} 请勿填写私人信息；不会自动预约。</text>
    <scroll-view scroll-y class="companion-log" :scroll-into-view="last" role="log" aria-live="polite">
     <view v-for="m in messages" :id="instance+'-'+m.id" :key="m.id" class="companion-message" :class="m.role"><text class="message-label">{{m.role==='user'?'你':m.source==='model'?'模型答复':m.source==='local'?'本机演示答复':'小书灵'}}</text><text class="message-text">{{m.content}}</text><button role="button" tabindex="0" v-if="m.matchBrief" class="message-action" @click="go('match',m.matchBrief)" @keydown.enter.prevent="go('match',m.matchBrief)" @keydown.space.prevent="go('match',m.matchBrief)">带入匹配需求 →</button></view>
