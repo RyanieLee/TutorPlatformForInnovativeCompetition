@@ -1,0 +1,46 @@
+[
+  {
+    "width": 390,
+    "theme": "green",
+    "markdown": true,
+    "math": true,
+    "fullHistory": true,
+    "clearError": true,
+    "homework": true,
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "theme": "jenny",
+    "markdown": true,
+    "math": true,
+    "fullHistory": true,
+    "clearError": true,
+    "homework": true,
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "theme": "green",
+    "markdown": true,
+    "math": true,
+    "fullHistory": true,
+    "clearError": true,
+    "homework": true,
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "theme": "jenny",
+    "markdown": true,
+    "math": true,
+    "fullHistory": true,
+    "clearError": true,
+    "homework": true,
+    "overflow": false,
+    "errors": []
+  }
+]

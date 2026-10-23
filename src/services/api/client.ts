@@ -20,7 +20,7 @@ export async function apiRequest<T>(method: 'GET'|'POST'|'PUT', path: string, da
   if (!apiBaseUrl) throw new BusinessError('STORAGE', '请配置 VITE_API_BASE_URL')
   const token = authenticated ? readToken() : ''
   const response = await new Promise<UniApp.RequestSuccessCallbackResult>((resolve, reject) => {
-    uni.request({ url: apiBaseUrl + path, method, data: (data ?? (method === 'GET' ? undefined : {})) as AnyObject, header: token ? { Authorization: 'Bearer ' + token } : {}, success: resolve, fail: reject })
+    uni.request({ url: apiBaseUrl + path, method, ...(path.startsWith('/api/assistant/')||path==='/api/admin/model-settings/test'?{timeout:150000}:{}), data: (data ?? (method === 'GET' ? undefined : {})) as AnyObject, header: token ? { Authorization: 'Bearer ' + token } : {}, success: resolve, fail: reject })
   }).catch(() => { throw new BusinessError('STORAGE', '无法连接开发 API，请检查服务地址和网络') })
   return unpack(response.statusCode, response.data as Envelope<T>, authenticated, token)
 }

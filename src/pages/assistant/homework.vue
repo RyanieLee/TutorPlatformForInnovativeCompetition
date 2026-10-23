@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AssistantRichText from '../../components/AssistantRichText.vue'
 onMounted(syncNativeLabels);onUpdated(syncNativeLabels)
 import {onMounted,onUpdated} from 'vue'
 import {syncNativeLabels} from '../../utils/native-label'
@@ -45,7 +46,7 @@ function example(){question.value='解方程：2x + 6 = 14。';answer.value='2x 
      <view class="ai-actions"><button role="button" tabindex="0" class="ai-primary" :disabled="busy||!question.trim()||!answer.trim()||!consent" :loading="busy" @click="review" @keydown.enter.prevent="review" @keydown.space.prevent="review">{{busy?'正在批改…':'开始批改'}}</button><button role="button" tabindex="0" class="ai-secondary" :disabled="busy" @click="navigate('/pages/assistant/index')" @keydown.enter.prevent="navigate('/pages/assistant/index')" @keydown.space.prevent="navigate('/pages/assistant/index')">图片批改与对话</button></view>
      <text v-if="error" class="ai-error" role="alert">{{error}}</text>
     </view>
-    <view class="ai-glass"><view class="ai-card-head"><text>批改反馈</text><text class="ai-pill">{{reply?'模型生成':'等待提交'}}</text></view><text v-if="busy" class="ai-empty" role="status">正在核对思路与关键步骤，请稍候…</text><text v-else-if="!reply" class="ai-empty">提交后，这里将展示逐题判断、错因、修改建议和复习知识点。示例填入后也需要真实模型批改。</text><text v-if="reply" class="ai-output">{{reply}}</text><view class="ai-note-rule"/><text class="ai-hint">AI 意见供学习参考，重要结论请与家教核对。页面离开后不会继续展示迟到结果，退出或切换账户会清空内容。</text></view>
+    <view class="ai-glass"><view class="ai-card-head"><text>批改反馈</text><text class="ai-pill">{{reply?'模型生成':'等待提交'}}</text></view><text v-if="busy" class="ai-empty" role="status">正在核对思路与关键步骤，请稍候…</text><text v-else-if="!reply" class="ai-empty">提交后，这里将展示逐题判断、错因、修改建议和复习知识点。示例填入后也需要真实模型批改。</text><AssistantRichText v-if="reply" class="ai-output" :content="reply"/><view class="ai-note-rule"/><text class="ai-hint">AI 意见供学习参考，重要结论请与家教核对。页面离开后不会继续展示迟到结果，退出或切换账户会清空内容。</text></view>
    </view>
   </view>
  </ParentLayout>

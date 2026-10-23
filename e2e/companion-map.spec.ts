@@ -18,6 +18,10 @@ test('小书灵桌宠：本机对话、需求带入、清空和暂停动作',asy
  await expect(page.locator('.companion-log')).toContainText('预算100元')
  await expect(page.locator('.companion-log')).toContainText('本机演示答复')
  await page.locator('.message-action').click()
+ // Bringing a brief opens the matching page; wait for that page before
+ // reopening its companion instead of clicking the departing page's widget.
+ await expect(page).toHaveURL(/\/pages\/match\/index/)
+ await expect(page.locator('.companion-panel')).toHaveCount(0)
  await expect(page.locator('.assistant textarea')).toHaveValue(/初中数学，预算100元/)
  await page.locator('.companion-launcher').click()
  await expect(page.locator('.companion-log')).toContainText('预算100元')

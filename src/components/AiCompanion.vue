@@ -6,6 +6,8 @@ const navigate=(url:string)=>uni.navigateTo({url})
 import {computed,ref,toRefs,watch,nextTick,getCurrentInstance,onBeforeUnmount} from 'vue'
 import {onShow,onHide} from '@dcloudio/uni-app'
 import {apiMode} from '../config/runtime'
+import {showIllustratedMascot} from '../utils/appearance'
+import AssistantRichText from './AssistantRichText.vue'
 import {currentSession,restoreSession} from '../utils/session'
 import {errorMessage,BusinessError} from '../services/errors'
 import {companionStatus,localChat,remoteChat,pendingCompanionBrief,pendingCompanionAuto,homeworkImageReviewStatus,reviewHomeworkImage as requestHomeworkImage} from '../services/assistant'
@@ -68,7 +70,7 @@ async function send(){
   }else result=localChat(text)
   if(token!==companionState.version)return
   messages.value.push({role:'assistant',content:result.reply,source:result.source,matchBrief:result.matchBrief,id:bubbleId+1})
-  history.value=[...history.value.slice(-6),{role:'user',content:text},{role:'assistant',content:result.reply.slice(0,500)}]
+  history.value=[...history.value.slice(-6),{role:'user',content:text},{role:'assistant',content:result.reply}]
   if(messages.value.length>30)messages.value=messages.value.slice(-30)
   draft.value='';if(readAloud.value)speakReply(result.reply);void bottom()
   if(command&&!command.error)navigate('/pages/match/index')
@@ -125,10 +127,10 @@ function login(){open.value=false;navigate('/pages/auth/login')}
 <template>
  <view v-if="visible" :id="instance" class="companion-root" :class="{'motion-off':paused,'companion-fullpage':props.page}" @keydown.esc="!props.page&&(open=false)">
   <view v-if="open" class="companion-panel" role="dialog" aria-label="小书灵 AI 对话">
-   <view class="companion-head"><image v-if="props.page" class="mascot-img" src="/static/linghang-mascot.svg" mode="aspectFit" aria-hidden="true"/><view><text class="companion-title">小书灵 · 学习与平台助手</text><text class="companion-source">{{useModel?'服务端模型对话':status==='checking'&&mode==='auto'?'检查模型配置中':'本机演示 · 非大模型'}}</text></view><button role="button" tabindex="0" v-if="!props.page" aria-label="关闭AI对话" class="companion-close" @click="open=false" @keydown.enter.prevent="open=false" @keydown.space.prevent="open=false">×</button></view>
+   <view class="companion-head"><image v-if="props.page&&showIllustratedMascot" class="mascot-img" src="/static/linghang-mascot.svg" mode="aspectFit" aria-hidden="true"/><view><text class="companion-title">小书灵 · 学习与平台助手</text><text class="companion-source">{{useModel?'服务端模型对话':status==='checking'&&mode==='auto'?'检查模型配置中':'本机演示 · 非大模型'}}</text></view><button role="button" tabindex="0" v-if="!props.page" aria-label="关闭AI对话" class="companion-close" @click="open=false" @keydown.enter.prevent="open=false" @keydown.space.prevent="open=false">×</button></view>
    <text class="companion-notice">{{useModel?'仅发送你输入的文字，不自动读取账户、订单或定位。':'本机演示支持需求整理、固定笔记与平台指引；新题解答需要配置模型。'}} 请勿填写私人信息；不会自动预约。</text>
    <scroll-view scroll-y class="companion-log" :scroll-into-view="last" role="log" aria-live="polite">
-    <view v-for="m in messages" :id="instance+'-'+m.id" :key="m.id" class="companion-message" :class="m.role"><text class="message-label">{{m.role==='user'?'你':m.source==='model'?'模型答复':m.source==='local'?'本机演示答复':'小书灵'}}</text><text class="message-text">{{m.content}}</text><button role="button" tabindex="0" v-if="m.matchBrief" class="message-action" @click="go('match',m.matchBrief)" @keydown.enter.prevent="go('match',m.matchBrief)" @keydown.space.prevent="go('match',m.matchBrief)">带入匹配需求 →</button></view>
+    <view v-for="m in messages" :id="instance+'-'+m.id" :key="m.id" class="companion-message" :class="m.role"><text class="message-label">{{m.role==='user'?'你':m.source==='model'?'模型答复':m.source==='local'?'本机演示答复':'小书灵'}}</text><AssistantRichText v-if="m.role==='assistant'" class="message-text" :content="m.content"/><text v-else class="message-text">{{m.content}}</text><button role="button" tabindex="0" v-if="m.matchBrief" class="message-action" @click="go('match',m.matchBrief)" @keydown.enter.prevent="go('match',m.matchBrief)" @keydown.space.prevent="go('match',m.matchBrief)">带入匹配需求 →</button></view>
     <view v-if="busy" class="thinking" role="status">正在整理答复…</view>
    </scroll-view>
    <view class="companion-shortcuts"><button :disabled="busy" @click="ask(currentSession?.user.role==='tutor'?'家教如何备课和管理课次？':'学生如何使用平台学习和练习？')" @keydown.enter.prevent="ask(currentSession?.user.role==='tutor'?'家教如何备课和管理课次？':'学生如何使用平台学习和练习？')" @keydown.space.prevent="ask(currentSession?.user.role==='tutor'?'家教如何备课和管理课次？':'学生如何使用平台学习和练习？')">{{currentSession?.user.role==='tutor'?'备课帮助':'学习帮助'}}</button><button role="button" tabindex="0" :disabled="busy" @click="ask('初中数学，预算100元，线上耐心讲解')" @keydown.enter.prevent="ask('初中数学，预算100元，线上耐心讲解')" @keydown.space.prevent="ask('初中数学，预算100元，线上耐心讲解')">帮我找老师</button><button role="button" tabindex="0" :disabled="busy" @click="ask('平台怎么用')" @keydown.enter.prevent="ask('平台怎么用')" @keydown.space.prevent="ask('平台怎么用')">使用指南</button><button role="button" tabindex="0" :disabled="busy" @click="ask('怎么查看订单地图')" @keydown.enter.prevent="ask('怎么查看订单地图')" @keydown.space.prevent="ask('怎么查看订单地图')">怎么看订单</button></view>

@@ -7,7 +7,7 @@ import { createServer } from 'node:net'
 import assert from 'node:assert/strict'
 const directory=mkdtempSync(join(tmpdir(),'tutor-demo-check-'))
 const database=join(directory,'demo.db')
-const env={...process.env,NODE_ENV:'development',DATABASE_URL:'file:'+database,SEED_PARENT_PASSWORD:randomBytes(24).toString('hex'),SEED_TUTOR_PASSWORD:randomBytes(24).toString('hex'),SEED_ADMIN_PASSWORD:randomBytes(24).toString('hex')}
+const env={...process.env,AI_CONFIG_FILE:join(directory,'provider.enc'),AI_CONFIG_ENCRYPTION_KEY:'',MATCH_MODEL_BASE_URL:'',MATCH_MODEL_NAME:'',MATCH_MODEL_API_KEY:'',HOMEWORK_MODEL_BASE_URL:'',HOMEWORK_MODEL_NAME:'',HOMEWORK_MODEL_API_KEY:'',NODE_ENV:'development',DATABASE_URL:'file:'+database,SEED_PARENT_PASSWORD:randomBytes(24).toString('hex'),SEED_TUTOR_PASSWORD:randomBytes(24).toString('hex'),SEED_ADMIN_PASSWORD:randomBytes(24).toString('hex')}
 const npm=process.env.npm_execpath
 let server
 const run=(task,environment=env,args=[])=>spawnSync(process.execPath,[npm,'run',task,...(args.length?['--',...args]:[])],{env:environment,encoding:'utf8'})
