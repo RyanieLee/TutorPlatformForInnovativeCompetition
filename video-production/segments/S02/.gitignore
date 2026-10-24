@@ -1,0 +1,9 @@
+raw/
+exports/*
+!exports/.gitkeep
+evidence/browser_*.png
+evidence/blackdetect.log
+__pycache__/
+evidence/sourceframes/*.png
+evidence/failure-*.png
+!evidence/selected-capture.log

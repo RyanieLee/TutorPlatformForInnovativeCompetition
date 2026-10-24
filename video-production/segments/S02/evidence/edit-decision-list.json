@@ -1,0 +1,43 @@
+{
+  "duration": 35,
+  "frames": 1050,
+  "rawTrimStartSec": 1.1000179869999993,
+  "footageFrame": {
+    "x": 128,
+    "y": 72,
+    "width": 1664,
+    "height": 936
+  },
+  "opening": "0-8 actual blurred home with question",
+  "painPoints": [
+    {
+      "id": "01",
+      "text": "渠道分散",
+      "note": "入口多，信息不在一处",
+      "start": 8,
+      "end": 18
+    },
+    {
+      "id": "02",
+      "text": "能力难比较",
+      "note": "同样的介绍，难直接判断",
+      "start": 11.3,
+      "end": 18
+    },
+    {
+      "id": "03",
+      "text": "时间反复确认",
+      "note": "是否有空，仍需逐项核对",
+      "start": 14.6,
+      "end": 18
+    }
+  ],
+  "live": "18-28 true list navigation/scroll and t001 detail; availability only on actual detail",
+  "freeze": {
+    "start": 28,
+    "end": 35,
+    "source": "last actual frame before 28s; tpad clone, fixed final camera; editorial blur and question"
+  },
+  "zoomExpression": "if(lt(on,240),1.04+0.025*((on/240)*(on/240)*(3-2*(on/240))),if(lt(on,540),1.065,if(lt(on,720),1+0.2*(((on-540)/180)*((on-540)/180)*(3-2*((on-540)/180))),if(lt(on,810),1.2+0.4*(((on-720)/90)*((on-720)/90)*(3-2*((on-720)/90))),1.6))))",
+  "visualEdits": "Actual native screen recording; abstract editorial graphics only; no reconstructed business UI, fabricated interview or model call."
+}

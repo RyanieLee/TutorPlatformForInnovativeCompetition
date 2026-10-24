@@ -1,0 +1,336 @@
+{
+  "status": "passed",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "videoSha256": "8dbf77a102f6b687c64dd178f93f633759b17570827c063a6d2de096c5316bd7",
+  "fileSizeBytes": 6328500,
+  "checks": {
+    "exact35Seconds": {
+      "passed": true,
+      "actual": "35.000000"
+    },
+    "1050Frames": {
+      "passed": true,
+      "actual": "1050"
+    },
+    "resolution": {
+      "passed": true,
+      "actual": [
+        1920,
+        1080
+      ]
+    },
+    "frameRate": {
+      "passed": true,
+      "actual": [
+        "30/1",
+        "30/1"
+      ]
+    },
+    "H264yuv420p": {
+      "passed": true,
+      "actual": [
+        "h264",
+        "yuv420p"
+      ]
+    },
+    "AAC48kHz": {
+      "passed": true,
+      "actual": [
+        "aac",
+        "48000"
+      ]
+    },
+    "faststart": {
+      "passed": true,
+      "actual": [
+        {
+          "type": "ftyp",
+          "offset": 0,
+          "size": 32
+        },
+        {
+          "type": "moov",
+          "offset": 32,
+          "size": 39953
+        },
+        {
+          "type": "free",
+          "offset": 39985,
+          "size": 8
+        },
+        {
+          "type": "mdat",
+          "offset": 39993,
+          "size": 6288507
+        }
+      ]
+    },
+    "monotonic30fpsPTS": {
+      "passed": true,
+      "actual": {
+        "count": 1050,
+        "maxDeltaError": 6.666666701946045e-7
+      }
+    },
+    "completeDecode": {
+      "passed": true,
+      "actual": "Entire MP4 decoded without FFmpeg errors"
+    },
+    "silentAAC": {
+      "passed": true,
+      "actual": {
+        "maxSample": 0,
+        "samples": 3360768
+      }
+    },
+    "noBlackIntervals": {
+      "passed": true,
+      "actual": "No black-screen interval in the actual footage area (10ms detector minimum)"
+    },
+    "noBlankFootageFrames": {
+      "passed": true,
+      "actual": {
+        "uniformFrames": 0,
+        "minStd": 5.107735890668417,
+        "frames": 1050
+      }
+    },
+    "actualListFields": {
+      "passed": true,
+      "actual": [
+        {
+          "text": "示例头像\n小林老师\n西安交通大学（场景） · 数学与应用数学\n¥80/小时\n擅长：数学 / 物理\n先用小题定位薄弱环节，再做错题复盘；讲解耐心，适合希望把基础打扎实的同学。\n数学思维\n耐心讲解\n长安区 · 大学城 · 均可",
+          "box": {
+            "x": 138.890625,
+            "y": 65.984375,
+            "width": 530.40625,
+            "height": 262.78125
+          }
+        },
+        {
+          "text": "示例头像\n小陈老师\n陕西师范大学（场景） · 英语教育\n¥75/小时\n擅长：英语\n每次围绕一篇阅读训练定位信息，课后整理词汇卡；可安排晚间口语练习。\n英语阅读\n口语练习\n雁塔区 · 小寨 · 线上",
+          "box": {
+            "x": 687.296875,
+            "y": 65.984375,
+            "width": 530.40625,
+            "height": 262.78125
+          }
+        },
+        {
+          "text": "示例头像\n小周老师\n西安电子科技大学（场景） · 应用物理\n¥90/小时\n擅长：物理 / 数学\n从受力图和生活现象入手建立物理模型；每节课留出独立解题和口头复述时间。\n物理建模\n例题精讲\n高新区 · 科技路 · 线下",
+          "box": {
+            "x": 1235.703125,
+            "y": 65.984375,
+            "width": 530.40625,
+            "height": 262.78125
+          }
+        }
+      ]
+    },
+    "actualAvailabilityOnDetail": {
+      "passed": true,
+      "actual": {
+        "id": "t001",
+        "name": "小林老师",
+        "url": "http://127.0.0.1:40473/#/pages/tutors/detail?id=t001",
+        "actualText": "示例头像\n小林老师\n西安交通大学（场景） · 数学与应用数学\n数学思维\n耐心讲解\n教学信息\n擅长科目\n数学、物理\n授课地区\n长安区 · 大学城\n授课方式\n均可\n参考课时费\n¥80/小时\n可授课时间\n周六 14:00–17:00，周日 09:00–11:00\n教学经历与能力（自述，未核验）\n教学经历\n30 个月\n相关课程成绩自述\n90/100\n教学能力自评\n5/5\n匿名案例数量\n8 个\n虚构匿名案例：围绕数学基础知识进行梳理与错题复盘。\n自我介绍\n先用小题定位薄弱环节，再做错题复盘；讲解耐心，适合希望把基础打扎实的同学。\n虚构演示资料，未进行真实身份、资质或价格验证。\n发起演示预约\n举报演示资料",
+        "timeText": "可授课时间\n周六 14:00–17:00，周日 09:00–11:00",
+        "timeBox": {
+          "x": 558.5,
+          "y": 609.5,
+          "width": 788,
+          "height": 36
+        },
+        "teachingBox": {
+          "x": 542.5,
+          "y": 418.5,
+          "width": 820,
+          "height": 243
+        }
+      }
+    },
+    "availabilityInsideResultCamera": {
+      "passed": true,
+      "actual": {
+        "camera": {
+          "x": 352,
+          "y": 112.5,
+          "width": 1200,
+          "height": 675
+        },
+        "timeRect": {
+          "x": 558.5,
+          "y": 609.5,
+          "width": 788,
+          "height": 36
+        }
+      }
+    },
+    "threeEditorialPainPoints": {
+      "passed": true,
+      "actual": [
+        "渠道分散",
+        "能力难比较",
+        "时间反复确认"
+      ]
+    },
+    "endingRealFrameFrozen": {
+      "passed": true,
+      "actual": {
+        "frames": 5,
+        "maxFreezeMae": 0,
+        "description": "Actual footage frozen 28-35 seconds; compare stable title hold 29-34 seconds"
+      }
+    },
+    "SRT35SecondsUTF8": {
+      "passed": true,
+      "actual": [
+        [
+          0,
+          8
+        ],
+        [
+          8,
+          11.3
+        ],
+        [
+          11.3,
+          14.6
+        ],
+        [
+          14.6,
+          18
+        ],
+        [
+          18,
+          24
+        ],
+        [
+          24,
+          28
+        ],
+        [
+          28,
+          35
+        ]
+      ]
+    },
+    "twoActualClicks": {
+      "passed": true,
+      "actual": [
+        {
+          "timeSec": 18.409,
+          "kind": "real-mouse-click",
+          "name": "浏览家教老师",
+          "box": {
+            "x": 318.921875,
+            "y": 588.171875,
+            "width": 95.265625,
+            "height": 19
+          },
+          "point": {
+            "x": 366.5546875,
+            "y": 597.671875
+          },
+          "hitTest": true
+        },
+        {
+          "timeSec": 25.718,
+          "kind": "real-mouse-click",
+          "name": "小林老师真实列表卡片",
+          "box": {
+            "x": 138.890625,
+            "y": 245.984375,
+            "width": 530.40625,
+            "height": 262.78125
+          },
+          "point": {
+            "x": 404.09375,
+            "y": 377.375
+          },
+          "hitTest": true
+        }
+      ]
+    },
+    "clicksInShotWindows": {
+      "passed": true,
+      "actual": [
+        18.409,
+        25.718
+      ]
+    },
+    "noModelCall": {
+      "passed": true,
+      "actual": []
+    },
+    "freshBrowserContext": {
+      "passed": true,
+      "actual": {
+        "cookies": [],
+        "origins": []
+      }
+    },
+    "nativeViewportAlignment": {
+      "passed": true,
+      "actual": {
+        "x": 0,
+        "y": 87,
+        "error": 0,
+        "topRightMaeAfter": 0,
+        "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+      }
+    },
+    "captureNoPacingCorrectionInUsedInterval": {
+      "passed": true,
+      "actual": {
+        "logSha256": "1e791325fbe23e7a24144db19424c44c88f1ca885643ab6c3ffda672c6ce7e7d",
+        "rawTrimStartSec": 1.1000179869999993,
+        "usedRawEndSec": 29.100017987,
+        "rawDuplicateFrames": 1,
+        "rawDroppedFrames": 0,
+        "transitions": [
+          {
+            "rawLowerSec": 0.9,
+            "rawUpperSec": 1,
+            "duplicateDelta": 1,
+            "dropDelta": 0,
+            "outsideUsedInterval": true
+          }
+        ],
+        "noPacingCorrectionInUsedInterval": true,
+        "note": "Final seconds 28-35 intentionally freeze the last real frame. This audit covers the actual moving footage 0-28 seconds; no correction is concealed inside that interval."
+      }
+    }
+  },
+  "keyframes": [
+    {
+      "file": "keyframes/01_start.png",
+      "timeSec": 2
+    },
+    {
+      "file": "keyframes/02_pain_points.png",
+      "timeSec": 16.5
+    },
+    {
+      "file": "keyframes/03_click_list.png",
+      "timeSec": 18.343999999999998
+    },
+    {
+      "file": "keyframes/04_list.png",
+      "timeSec": 21.7
+    },
+    {
+      "file": "keyframes/05_click_detail.png",
+      "timeSec": 25.653
+    },
+    {
+      "file": "keyframes/06_result.png",
+      "timeSec": 27
+    },
+    {
+      "file": "keyframes/07_end.png",
+      "timeSec": 32
+    }
+  ],
+  "manualVisualReview": "Required separately: compare keyframes and contact sheet with actual browser screenshots and DOM evidence. This script does not claim an OCR or human visual review."
+}

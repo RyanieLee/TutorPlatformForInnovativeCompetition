@@ -1,0 +1,62 @@
+{
+  "id": "S02",
+  "title": "传统找家教的盲目性｜开场问题",
+  "durationSec": 35,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "role": "概述",
+  "sourceMode": "actual Mock H5 browser capture + editorial abstract pain-point graphics; no model call",
+  "timelineInFullFilm": {
+    "start": "00:00",
+    "end": "00:35"
+  },
+  "prerequisites": [
+    "Node >=20; npm ci",
+    "npm run demo (script starts a private instance and parses actual log URL)",
+    "Playwright Chromium, FFmpeg/ffprobe, Python3, Xvfb, Noto Sans CJK",
+    "Fresh empty browser context; no account, backend or model key required"
+  ],
+  "case": {
+    "synthetic": true,
+    "student": "小航",
+    "grade": "初一",
+    "subject": "初中数学",
+    "budgetMaxPerHour": 100,
+    "preferredTime": "周六下午",
+    "tutorId": "t001",
+    "tutorName": "小林老师",
+    "laterFilmOnly": "一元一次方程；第二课Q1-Q3对、Q4/Q5错，3/5=60%为本次正确率；第三课增加10分钟符号专项，教师确认v2。S02不制造这些后续状态。"
+  },
+  "shots": [
+    {
+      "start": 0,
+      "end": 8,
+      "content": "Actual home blurred/cropped; opening title"
+    },
+    {
+      "start": 8,
+      "end": 18,
+      "content": "Actual home background; three abstract editorial pain-point cards/path"
+    },
+    {
+      "start": 18,
+      "end": 28,
+      "content": "Actual click to list, smooth scroll, actual t001 detail click to show availability (not present on list)"
+    },
+    {
+      "start": 28,
+      "end": 35,
+      "content": "Freeze actual detail at 28s, overlay closing question"
+    }
+  ],
+  "artifacts": {
+    "video": "exports/clip_S02.mp4",
+    "captions": "captions_S02.srt",
+    "voiceover": "voiceover.md",
+    "validation": "validation-report.md"
+  }
+}
