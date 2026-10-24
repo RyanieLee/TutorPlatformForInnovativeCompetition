@@ -1,0 +1,76 @@
+{
+  "duration": 35,
+  "frames": 1050,
+  "rawTrimStartSec": 1.1000413319999989,
+  "footageFrame": {
+    "x": 128,
+    "y": 72,
+    "width": 1664,
+    "height": 936
+  },
+  "chain": [
+    {
+      "id": "01",
+      "label": "找老师",
+      "note": "先把需求说清楚",
+      "x": 220,
+      "start": 10
+    },
+    {
+      "id": "02",
+      "label": "备课",
+      "note": "明确目标与安排",
+      "x": 535,
+      "start": 11.6
+    },
+    {
+      "id": "03",
+      "label": "课堂记录",
+      "note": "留下逐题事实",
+      "x": 850,
+      "start": 13.2
+    },
+    {
+      "id": "04",
+      "label": "反馈",
+      "note": "由教师核对确认",
+      "x": 1165,
+      "start": 14.8
+    },
+    {
+      "id": "05",
+      "label": "下一课",
+      "note": "依据记录再调整",
+      "x": 1480,
+      "start": 16.4
+    }
+  ],
+  "shots": [
+    {
+      "start": 0,
+      "end": 10,
+      "source": "actual accepted-booking preset course draft",
+      "overlay": "讲完了 ≠ 家长知道学会了"
+    },
+    {
+      "start": 10,
+      "end": 19,
+      "source": "actual course/home return under blur",
+      "overlay": "five editorial chain labels, arrows; not business UI"
+    },
+    {
+      "start": 19,
+      "end": 27,
+      "source": "actual home route click, five-step demo navigation and teaching card scroll"
+    },
+    {
+      "start": 27,
+      "end": 35,
+      "source": "actual demo navigation background",
+      "overlay": "领航云学堂; 家长; 大学生家教; lead to Xiaohang story"
+    }
+  ],
+  "zoomExpression": "if(lt(on,300),1.04+0.03*((on/300)*(on/300)*(3-2*(on/300))),if(lt(on,570),1.04,if(lt(on,720),1,if(lt(on,810),1+0.18*(((on-720)/90)*((on-720)/90)*(3-2*((on-720)/90))),1.18))))",
+  "focusXExpression": "if(lt(on,720),960,if(lt(on,810),960-160*(((on-720)/90)*((on-720)/90)*(3-2*((on-720)/90))),800))",
+  "visualEdits": "Native screen recording only for business imagery. Warm-white/dark-green titles, abstract chain, smooth cursor/camera and fades. No fake UI, score claims, interviews or new external media."
+}

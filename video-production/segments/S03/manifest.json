@@ -1,0 +1,65 @@
+{
+  "id": "S03",
+  "title": "家长与教师的沟通断层｜产品引入",
+  "durationSec": 35,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "role": "概述",
+  "sourceMode": "Actual native recording of real Mock H5 teaching course, home and demo navigation + editorial abstract chain and dual-role titles. Preset, no model call.",
+  "timelineInFullFilm": {
+    "start": "00:35",
+    "end": "01:10"
+  },
+  "prerequisites": [
+    "Node >=20; npm ci",
+    "Playwright Chromium; FFmpeg/ffprobe; Python3; Xvfb; libX11/libXtst; Noto CJK",
+    "npm run demo started by capture on a free port; URL parsed from real log",
+    "Initially empty browser context; script prepares parent booking, tutor acceptance and preset course only through actual UI"
+  ],
+  "case": {
+    "synthetic": true,
+    "student": "小航",
+    "grade": "初一",
+    "subject": "初中数学",
+    "budgetMaxPerHour": 100,
+    "preferredTime": "周六下午",
+    "tutorId": "t001",
+    "tutorName": "小林老师",
+    "teachingMode": "均可 (existing actual tutor option)",
+    "unit": "一元一次方程",
+    "courseTemplateStudentId": "DEMO-STUDENT-01 (existing anonymized preset identifier)",
+    "laterFilmOnly": "第二课Q1-Q3对、Q4/Q5错；移项符号问题；3/5=60%为本次正确率；第三课10分钟符号专项，教师确认v2。S03只使用课程预置草稿作为背景，不制造后续课堂/成绩状态。"
+  },
+  "shots": [
+    {
+      "start": 0,
+      "end": 10,
+      "content": "Real course-module footage with editorial opening question"
+    },
+    {
+      "start": 10,
+      "end": 19,
+      "content": "Abstract find tutor -> prepare -> class record -> feedback -> next lesson; true return-home click under the graphic"
+    },
+    {
+      "start": 19,
+      "end": 27,
+      "content": "Real home 5-minute-route click and verified five-step service navigation; real scroll to teaching card"
+    },
+    {
+      "start": 27,
+      "end": 35,
+      "content": "Actual navigation background, brand and parent/tutor concepts, lead into Xiaohang story"
+    }
+  ],
+  "artifacts": {
+    "video": "exports/clip_S03.mp4",
+    "captions": "captions_S03.srt",
+    "voiceover": "voiceover.md",
+    "validation": "validation-report.md"
+  }
+}
