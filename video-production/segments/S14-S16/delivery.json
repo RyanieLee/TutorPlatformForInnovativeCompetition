@@ -1,0 +1,30 @@
+{
+  "id": "S14-S16",
+  "durationSec": 110,
+  "videoSha256": "f756dd956924927123328f589732aa724dbbc33af29e14ca1ac6e05f0b8d81b8",
+  "fileSizeBytes": 5194433,
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "productionBranch": "video/segments-S14-S16",
+  "segmentBranches": [
+    "video/segment-S14",
+    "video/segment-S15",
+    "video/segment-S16"
+  ],
+  "video": "/workspace/shared/downloads/S14-S16/clip_S14-S16.mp4",
+  "bundle": "/workspace/shared/downloads/S14-S16/S14-S16_delivery.zip",
+  "pullRequest": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/pull/48",
+  "remoteVideoUrl": null,
+  "releasePublished": false,
+  "mainMerged": false,
+  "usesModel": false,
+  "fullFilmComplete": false,
+  "missingFullFilmSegments": [
+    "S08",
+    "S09",
+    "S10",
+    "S11",
+    "S12",
+    "S13"
+  ],
+  "uploadFailure": "GitHub release asset upload returned HTTP 401 Bad credentials on uploads.github.com; git/PR succeeded, no remote video published."
+}

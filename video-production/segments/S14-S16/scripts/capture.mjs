@@ -1,0 +1,1 @@
+import {execFileSync} from 'node:child_process';import {resolve,dirname} from 'node:path';import {fileURLToPath} from 'node:url';const root=resolve(dirname(fileURLToPath(import.meta.url)),'../..');for(const id of ['S14','S15','S16'])execFileSync('node',[resolve(root,id,'scripts/capture.mjs')],{stdio:'inherit',env:process.env});

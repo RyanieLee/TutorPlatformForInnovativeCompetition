@@ -1,0 +1,115 @@
+{
+  "id": "S14-S16",
+  "status": "passed",
+  "durationSec": 110,
+  "videoSha256": "f756dd956924927123328f589732aa724dbbc33af29e14ca1ac6e05f0b8d81b8",
+  "fileSizeBytes": 5194433,
+  "checks": {
+    "S14Validated": {
+      "passed": true,
+      "actual": "53c3fe95840530852a2ab5f0cf2cb472efd936d03f79ffc61977d966f2f3e013"
+    },
+    "S14Independent": {
+      "passed": true,
+      "actual": "2026-10-24T09-19-40-121Z"
+    },
+    "S15Validated": {
+      "passed": true,
+      "actual": "d5c37f8bbfb7a0a7a6eb067a23f51a4738c681f9c94c2180638d887e52128496"
+    },
+    "S15Independent": {
+      "passed": true,
+      "actual": "2026-10-24T09-21-33-812Z"
+    },
+    "S16Validated": {
+      "passed": true,
+      "actual": "4e78f8967c4ec13b545d5a4f825b3c13a1274ec84cc5ae2259af0187e620cff2"
+    },
+    "S16Independent": {
+      "passed": true,
+      "actual": "2026-10-24T09-25-09-689Z"
+    },
+    "exact110Seconds": {
+      "passed": true,
+      "actual": "110.000000"
+    },
+    "3300Frames": {
+      "passed": true,
+      "actual": "3300"
+    },
+    "1080p30H264": {
+      "passed": true,
+      "actual": [
+        1920,
+        1080,
+        "30/1",
+        "h264",
+        "yuv420p"
+      ]
+    },
+    "AAC48kHz": {
+      "passed": true,
+      "actual": [
+        "aac",
+        "48000"
+      ]
+    },
+    "startAtZero": {
+      "passed": true,
+      "actual": [
+        "0.000000",
+        "0.000000"
+      ]
+    },
+    "faststart": {
+      "passed": true,
+      "actual": "moov first"
+    },
+    "completeDecode": {
+      "passed": true,
+      "actual": "all frames"
+    },
+    "silentAudio": {
+      "passed": true,
+      "actual": "all decoded samples zero"
+    },
+    "ExactJoinFrame1049": {
+      "passed": true,
+      "actual": {
+        "segment": "S14",
+        "frame": 1049
+      }
+    },
+    "ExactJoinFrame1050": {
+      "passed": true,
+      "actual": {
+        "segment": "S15",
+        "frame": 0
+      }
+    },
+    "ExactJoinFrame2099": {
+      "passed": true,
+      "actual": {
+        "segment": "S15",
+        "frame": 1049
+      }
+    },
+    "ExactJoinFrame2100": {
+      "passed": true,
+      "actual": {
+        "segment": "S16",
+        "frame": 0
+      }
+    },
+    "ExactJoinFrame3299": {
+      "passed": true,
+      "actual": {
+        "segment": "S16",
+        "frame": 1199
+      }
+    }
+  },
+  "sourcePixelVerification": true,
+  "summaryLimit": "110 <= 120 seconds",
+  "notFullFilm": "S08-S13 unavailable; this is a summary-only export"
+}

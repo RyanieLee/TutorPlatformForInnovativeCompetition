@@ -1,0 +1,62 @@
+{
+  "id": "S14",
+  "title": "回扣双角色核心痛点",
+  "durationSec": 35,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "role": "总结",
+  "sourceMode": "New genuine independently initialized Mock H5 recordings; explicit preset teaching content, no model call. Real GitHub Actions page for S15.",
+  "prerequisites": [
+    "Node>=20, npm ci, npm run demo; Playwright Chromium, FFmpeg/ffprobe, Python3, Xvfb, Noto CJK",
+    "Independent empty browser context; actual UI creates fictional booking, tutor accepts, preset v1, Q1–Q3 correct/Q4–Q5 incorrect, confirmed feedback and v2"
+  ],
+  "timelineInFullFilm": {
+    "start": "07:10",
+    "end": "07:45"
+  },
+  "contributor": "Codex / A responsibility",
+  "camera": {
+    "fixed": true,
+    "animatedZoom": false
+  },
+  "case": {
+    "student": "小航",
+    "tutor": "小林",
+    "tutorId": "t001",
+    "grade": "初一",
+    "subject": "数学",
+    "budget": 100,
+    "time": "周六下午",
+    "unit": "一元一次方程",
+    "correct": "3/5=60% current exercise accuracy only",
+    "revision": "第三课增加10分钟符号专项，教师确认v2",
+    "anonymousTeachingAlias": "DEMO-STUDENT-01 (real preset alias in the independently created 小航 booking)"
+  },
+  "captureRunId": "2026-10-24T09-19-40-121Z",
+  "verifiedSourceScenes": [
+    {
+      "name": "match",
+      "seconds": 10,
+      "url": "http://127.0.0.1:42391/#/pages/match/index?demoScenario=math"
+    },
+    {
+      "name": "teacher-feedback",
+      "seconds": 10,
+      "url": "http://127.0.0.1:42391/#/pages/teaching/loop?bookingId=booking-1792833588151-6xs3h5"
+    },
+    {
+      "name": "teacher-review",
+      "seconds": 9,
+      "url": "http://127.0.0.1:42391/#/pages/teaching/loop?bookingId=booking-1792833588151-6xs3h5"
+    },
+    {
+      "name": "parent-feedback",
+      "seconds": 15,
+      "url": "http://127.0.0.1:42391/#/pages/teaching/loop?bookingId=booking-1792833588151-6xs3h5"
+    }
+  ]
+}

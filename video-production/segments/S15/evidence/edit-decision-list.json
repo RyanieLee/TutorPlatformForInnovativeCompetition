@@ -1,0 +1,70 @@
+{
+  "id": "S15",
+  "durationSec": 35,
+  "sources": [
+    {
+      "name": "architecture",
+      "durationSec": 9,
+      "mode": "abstract graphic, not business UI"
+    },
+    {
+      "name": "governance",
+      "durationSec": 9,
+      "mode": "abstract graphic, not business UI"
+    },
+    {
+      "name": "github-actions",
+      "durationSec": 10,
+      "trim": 0.43337010599999487,
+      "source": "raw/2026-10-24T09-21-33-812Z/github-actions.mkv",
+      "mode": "full"
+    },
+    {
+      "name": "parent-role",
+      "durationSec": 3.5,
+      "trim": 0.500019218999998,
+      "source": "raw/2026-10-24T09-21-33-812Z/parent-role.mkv",
+      "mode": "full"
+    },
+    {
+      "name": "teacher-role",
+      "durationSec": 3.5,
+      "trim": 0.5000200900000055,
+      "source": "raw/2026-10-24T09-21-33-812Z/teacher-role.mkv",
+      "mode": "full"
+    }
+  ],
+  "order": [
+    "scene0",
+    "scene1",
+    "scene2",
+    "scene3",
+    "scene4"
+  ],
+  "captions": [
+    {
+      "start": 0,
+      "end": 9,
+      "text": "共享业务代码；Mock 与开发 API 分开"
+    },
+    {
+      "start": 9,
+      "end": 18,
+      "text": "辅助提议、规则校验、教师核验、历史版本"
+    },
+    {
+      "start": 18,
+      "end": 28,
+      "text": "真实 main CI：构建、后端与 E2E 通过"
+    },
+    {
+      "start": 28,
+      "end": 35,
+      "text": "权限隔离、可追溯、可复验"
+    }
+  ],
+  "fixedCamera": true,
+  "animatedZoom": false,
+  "heldRealFrame": null,
+  "endingWhiteHoldSec": 0
+}

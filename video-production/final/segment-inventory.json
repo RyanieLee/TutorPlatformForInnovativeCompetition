@@ -1,0 +1,194 @@
+{
+  "fixedSequence": [
+    "S02",
+    "S03",
+    "S01",
+    "S04",
+    "S05",
+    "S06",
+    "S07",
+    "S08",
+    "S09",
+    "S10",
+    "S11",
+    "S12",
+    "S13",
+    "S14",
+    "S15",
+    "S16"
+  ],
+  "expectedDurationSec": 540,
+  "expectedSectionsSec": {
+    "overview": 70,
+    "core": 360,
+    "summary": 110
+  },
+  "missingOrInvalid": [
+    "S08",
+    "S09",
+    "S10",
+    "S11",
+    "S12",
+    "S13"
+  ],
+  "segments": [
+    {
+      "id": "S02",
+      "startSec": 0,
+      "durationSec": 35,
+      "contributor": "概述",
+      "status": "verified artifact present",
+      "sha256": "8dbf77a102f6b687c64dd178f93f633759b17570827c063a6d2de096c5316bd7",
+      "bytes": 6328500,
+      "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+      "actualDurationSec": 35.0
+    },
+    {
+      "id": "S03",
+      "startSec": 35,
+      "durationSec": 35,
+      "contributor": "概述",
+      "status": "verified artifact present",
+      "sha256": "10897b44992ac4e80046d27c9652f9e808a2a31b01e8e73fe4d65e7c7fcc2e50",
+      "bytes": 3410068,
+      "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+      "actualDurationSec": 35.0
+    },
+    {
+      "id": "S01",
+      "startSec": 70,
+      "durationSec": 40,
+      "contributor": "核心·家长",
+      "status": "verified artifact present",
+      "sha256": "b21aba8648e9ab5e1458b2f969dfc7b8f3e6c9519b899b117452b6667cb080ef",
+      "bytes": 10499621,
+      "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+      "actualDurationSec": 40.0
+    },
+    {
+      "id": "S04",
+      "startSec": 110,
+      "durationSec": 30,
+      "contributor": "核心·家长",
+      "status": "verified artifact present",
+      "sha256": "4d3ee0cfe6a7ff882cb90e35157ecde61375ddd9a325f7c472ce4b1296ac613e",
+      "bytes": 6073453,
+      "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+      "actualDurationSec": 30.0
+    },
+    {
+      "id": "S05",
+      "startSec": 140,
+      "durationSec": 30,
+      "contributor": "核心·家长",
+      "status": "verified artifact present",
+      "sha256": "361c93d690a718fdc48076535a0dd9efa389624854ab9ab4788090659dccd4a6",
+      "bytes": 1891378,
+      "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+      "actualDurationSec": 30.0
+    },
+    {
+      "id": "S06",
+      "startSec": 170,
+      "durationSec": 25,
+      "contributor": "核心·家长",
+      "status": "verified artifact present",
+      "sha256": "d973180db19d047b7e4b4483573604aa9fa7c107c8a08ba2850f47e4f6a2fac6",
+      "bytes": 1618195,
+      "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+      "actualDurationSec": 25.0
+    },
+    {
+      "id": "S07",
+      "startSec": 195,
+      "durationSec": 25,
+      "contributor": "核心·家长",
+      "status": "verified artifact present",
+      "sha256": "26a3d67a7b552ede7a22a460fc3131e1c699bee5d7682da54ef8b659993a08a6",
+      "bytes": 1319953,
+      "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+      "actualDurationSec": 25.0
+    },
+    {
+      "id": "S08",
+      "startSec": 220,
+      "durationSec": 25,
+      "contributor": null,
+      "status": "missing",
+      "reason": "[Errno 2] No such file or directory: '/workspace/tutor/video-production/segments/S08/manifest.json'"
+    },
+    {
+      "id": "S09",
+      "startSec": 245,
+      "durationSec": 40,
+      "contributor": null,
+      "status": "missing",
+      "reason": "[Errno 2] No such file or directory: '/workspace/tutor/video-production/segments/S09/manifest.json'"
+    },
+    {
+      "id": "S10",
+      "startSec": 285,
+      "durationSec": 30,
+      "contributor": null,
+      "status": "missing",
+      "reason": "[Errno 2] No such file or directory: '/workspace/tutor/video-production/segments/S10/manifest.json'"
+    },
+    {
+      "id": "S11",
+      "startSec": 315,
+      "durationSec": 35,
+      "contributor": null,
+      "status": "missing",
+      "reason": "[Errno 2] No such file or directory: '/workspace/tutor/video-production/segments/S11/manifest.json'"
+    },
+    {
+      "id": "S12",
+      "startSec": 350,
+      "durationSec": 40,
+      "contributor": null,
+      "status": "missing",
+      "reason": "[Errno 2] No such file or directory: '/workspace/tutor/video-production/segments/S12/manifest.json'"
+    },
+    {
+      "id": "S13",
+      "startSec": 390,
+      "durationSec": 40,
+      "contributor": null,
+      "status": "missing",
+      "reason": "[Errno 2] No such file or directory: '/workspace/tutor/video-production/segments/S13/manifest.json'"
+    },
+    {
+      "id": "S14",
+      "startSec": 430,
+      "durationSec": 35,
+      "contributor": "Codex / A responsibility",
+      "status": "verified artifact present",
+      "sha256": "53c3fe95840530852a2ab5f0cf2cb472efd936d03f79ffc61977d966f2f3e013",
+      "bytes": 2526672,
+      "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+      "actualDurationSec": 35.0
+    },
+    {
+      "id": "S15",
+      "startSec": 465,
+      "durationSec": 35,
+      "contributor": "Codex / D responsibility",
+      "status": "verified artifact present",
+      "sha256": "d5c37f8bbfb7a0a7a6eb067a23f51a4738c681f9c94c2180638d887e52128496",
+      "bytes": 1190733,
+      "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+      "actualDurationSec": 35.0
+    },
+    {
+      "id": "S16",
+      "startSec": 500,
+      "durationSec": 40,
+      "contributor": "Codex / A responsibility",
+      "status": "verified artifact present",
+      "sha256": "4e78f8967c4ec13b545d5a4f825b3c13a1274ec84cc5ae2259af0187e620cff2",
+      "bytes": 1479153,
+      "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+      "actualDurationSec": 40.0
+    }
+  ]
+}

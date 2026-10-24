@@ -1,0 +1,86 @@
+{
+  "id": "S16",
+  "durationSec": 40,
+  "sources": [
+    {
+      "name": "four-lessons",
+      "durationSec": 4,
+      "trim": 0.5000173959999993,
+      "source": "raw/2026-10-24T09-25-09-689Z/four-lessons.mkv",
+      "mode": "full"
+    },
+    {
+      "name": "match",
+      "durationSec": 4,
+      "trim": 0.5000188589999962,
+      "source": "raw/2026-10-24T09-25-09-689Z/match.mkv",
+      "mode": "full"
+    },
+    {
+      "name": "feedback",
+      "durationSec": 4,
+      "trim": 0.500021142000005,
+      "source": "raw/2026-10-24T09-25-09-689Z/feedback.mkv",
+      "mode": "full"
+    },
+    {
+      "name": "completed",
+      "durationSec": 12,
+      "mode": "abstract graphic, not business UI"
+    },
+    {
+      "name": "next",
+      "durationSec": 9,
+      "mode": "abstract graphic, not business UI"
+    },
+    {
+      "name": "brand",
+      "durationSec": 7,
+      "mode": "abstract graphic, not business UI"
+    }
+  ],
+  "order": [
+    "scene0",
+    "scene1",
+    "scene2",
+    "scene3",
+    "scene4",
+    "scene5"
+  ],
+  "captions": [
+    {
+      "start": 0,
+      "end": 4,
+      "text": "四节课程：预置大纲，教师确认"
+    },
+    {
+      "start": 4,
+      "end": 8,
+      "text": "推荐结果：公开匹配依据"
+    },
+    {
+      "start": 8,
+      "end": 12,
+      "text": "课后反馈：本次3/5，不是提分率"
+    },
+    {
+      "start": 12,
+      "end": 24,
+      "text": "当前已完成：可运行演示与可复现流程"
+    },
+    {
+      "start": 24,
+      "end": 33,
+      "text": "下一阶段：真实试点、质量评测与治理"
+    },
+    {
+      "start": 33,
+      "end": 38,
+      "text": "领航云学堂 · 两个角色，同一条教学服务链"
+    }
+  ],
+  "fixedCamera": true,
+  "animatedZoom": false,
+  "heldRealFrame": null,
+  "endingWhiteHoldSec": 2
+}

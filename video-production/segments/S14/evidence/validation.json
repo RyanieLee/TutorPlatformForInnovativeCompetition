@@ -1,0 +1,260 @@
+{
+  "status": "passed",
+  "id": "S14",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "durationSec": 35,
+  "videoSha256": "53c3fe95840530852a2ab5f0cf2cb472efd936d03f79ffc61977d966f2f3e013",
+  "fileSizeBytes": 2526672,
+  "checks": {
+    "realCapturePassed": {
+      "passed": true,
+      "actual": 34
+    },
+    "independentEmptyContext": {
+      "passed": true,
+      "actual": {
+        "cookies": [],
+        "origins": []
+      }
+    },
+    "noModelCall": {
+      "passed": true,
+      "actual": []
+    },
+    "noBrowserErrors": {
+      "passed": true,
+      "actual": []
+    },
+    "sourceBaseline": {
+      "passed": true,
+      "actual": "5d04c4f789780d551b785c542e9946cf9453dd18"
+    },
+    "exactDuration": {
+      "passed": true,
+      "actual": "35.000000"
+    },
+    "frames": {
+      "passed": true,
+      "actual": "1050"
+    },
+    "format": {
+      "passed": true,
+      "actual": "h264 yuv420p 1920x1080 30/1"
+    },
+    "audio": {
+      "passed": true,
+      "actual": "aac 48000"
+    },
+    "streamStartZero": {
+      "passed": true,
+      "actual": [
+        "0.000000",
+        "0.000000"
+      ]
+    },
+    "faststart": {
+      "passed": true,
+      "actual": "moov before mdat"
+    },
+    "completeDecode": {
+      "passed": true,
+      "actual": "All frames decoded"
+    },
+    "regular30fpsPTS": {
+      "passed": true,
+      "actual": 6.666666701946045e-7
+    },
+    "silentAAC": {
+      "passed": true,
+      "actual": "All decoded samples zero"
+    },
+    "noBlackFrames": {
+      "passed": true,
+      "actual": 0
+    },
+    "noUnexpectedUniformFrames": {
+      "passed": true,
+      "actual": {
+        "count": 0,
+        "allowed": "S16 final warm-white ending only"
+      }
+    },
+    "fixedCamera": {
+      "passed": true,
+      "actual": true
+    },
+    "matchActualViewport": {
+      "passed": true,
+      "actual": {
+        "x": 0,
+        "y": 131,
+        "error": 0.00021786492374727668,
+        "topRightMaeAfter": 0,
+        "businessMae": 0.0044674504768401485,
+        "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+      }
+    },
+    "matchNoInputDrops": {
+      "passed": true,
+      "actual": {
+        "dropped": 0,
+        "duplicated": 0
+      }
+    },
+    "teacher-feedbackActualViewport": {
+      "passed": true,
+      "actual": {
+        "x": 0,
+        "y": 131,
+        "error": 0,
+        "topRightMaeAfter": 0,
+        "businessMae": 0,
+        "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+      }
+    },
+    "teacher-feedbackNoInputDrops": {
+      "passed": true,
+      "actual": {
+        "dropped": 0,
+        "duplicated": 0
+      }
+    },
+    "teacher-reviewActualViewport": {
+      "passed": true,
+      "actual": {
+        "x": 0,
+        "y": 131,
+        "error": 0,
+        "topRightMaeAfter": 0,
+        "businessMae": 0,
+        "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+      }
+    },
+    "teacher-reviewNoInputDrops": {
+      "passed": true,
+      "actual": {
+        "dropped": 0,
+        "duplicated": 0
+      }
+    },
+    "parent-feedbackActualViewport": {
+      "passed": true,
+      "actual": {
+        "x": 0,
+        "y": 131,
+        "error": 0,
+        "topRightMaeAfter": 0,
+        "businessMae": 0,
+        "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+      }
+    },
+    "parent-feedbackNoInputDrops": {
+      "passed": true,
+      "actual": {
+        "dropped": 0,
+        "duplicated": 0
+      }
+    },
+    "teacherConfirmedV2": {
+      "passed": true,
+      "actual": {
+        "hasPublishControl": false,
+        "version": 2,
+        "feedback": "课后反馈 · 3/5（60%）\n预置演示样例（非实时生成） · 教师已确认发布 · 2026/10/24 09:19:58 · teaching-evidence-v1\n有限证据下的已观察优势\n上述正确题目显示本次相应步骤能够完成；证据仅限本次练习。\n依据：L2-Q1、L2-Q2、L2-Q3\n待巩固知识点\n结合教师观察，需巩固：带负号移项与负系数变形\n依据：L2-Q4、L2-Q5、教师观察\n下一课建议\n建议先安排10分钟针对性复习，再由教师决定后续进度。\n依据：L2-Q4、L2-Q5、教师观察\n家长版短报告\n本节已记录3/5题正确（60%）。完成内容：完成合并同类项与移项；完成5道分层练习和订正。需要继续巩固：带负号移项与负系数变形。这是基于本次课堂记录的样例建议，需教师审核，不代表长期能力或提分效果。"
+      }
+    },
+    "fact3of5": {
+      "passed": true,
+      "actual": "current exercise accuracy; no improvement rate"
+    },
+    "tenMinuteRevision": {
+      "passed": true,
+      "actual": "Third lesson symbol drill"
+    },
+    "fourLessons": {
+      "passed": true,
+      "actual": "preset course"
+    },
+    "visibleRealV2Publication": {
+      "passed": true,
+      "actual": [
+        {
+          "timeSec": 1.484,
+          "kind": "real-mouse-click",
+          "name": "教师核验v2课程",
+          "box": {
+            "x": 88.66667175292969,
+            "y": 346.32293701171875,
+            "width": 28.333328247070312,
+            "height": 27
+          },
+          "point": {
+            "x": 102.83333587646484,
+            "y": 359.82293701171875
+          },
+          "hitTest": true
+        },
+        {
+          "timeSec": 3.486,
+          "kind": "real-mouse-click",
+          "name": "确认发布v2",
+          "box": {
+            "x": 88.66667175292969,
+            "y": 395.32293701171875,
+            "width": 122.41667175292969,
+            "height": 44
+          },
+          "point": {
+            "x": 149.87500762939453,
+            "y": 417.32293701171875
+          },
+          "hitTest": true
+        },
+        {
+          "timeSec": 4.532,
+          "kind": "real-mouse-click",
+          "name": "真实确认弹窗",
+          "box": {
+            "x": 632.3333740234375,
+            "y": 410.3958435058594,
+            "width": 150,
+            "height": 48
+          },
+          "point": {
+            "x": 707.3333740234375,
+            "y": 434.3958435058594
+          },
+          "hitTest": true
+        },
+        {
+          "timeSec": 4.538,
+          "kind": "v2-published",
+          "actualText": "教学计划已确认发布，家长现在可以查看。"
+        }
+      ]
+    }
+  },
+  "rawFootageCounters": [
+    {
+      "scene": "match",
+      "dropped": 0,
+      "duplicated": 0
+    },
+    {
+      "scene": "teacher-feedback",
+      "dropped": 0,
+      "duplicated": 0
+    },
+    {
+      "scene": "teacher-review",
+      "dropped": 0,
+      "duplicated": 0
+    },
+    {
+      "scene": "parent-feedback",
+      "dropped": 0,
+      "duplicated": 0
+    }
+  ],
+  "manualVisualReview": "Separate keyframe/contact-sheet review required; see validation-report.md"
+}

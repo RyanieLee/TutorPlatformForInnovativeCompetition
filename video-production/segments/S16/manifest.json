@@ -1,0 +1,57 @@
+{
+  "id": "S16",
+  "title": "应用边界、推广前景与片尾",
+  "durationSec": 40,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "role": "总结",
+  "sourceMode": "New genuine independently initialized Mock H5 recordings; explicit preset teaching content, no model call. Real GitHub Actions page for S15.",
+  "prerequisites": [
+    "Node>=20, npm ci, npm run demo; Playwright Chromium, FFmpeg/ffprobe, Python3, Xvfb, Noto CJK",
+    "Independent empty browser context; actual UI creates fictional booking, tutor accepts, preset v1, Q1–Q3 correct/Q4–Q5 incorrect, confirmed feedback and v2"
+  ],
+  "timelineInFullFilm": {
+    "start": "08:20",
+    "end": "09:00"
+  },
+  "contributor": "Codex / A responsibility",
+  "camera": {
+    "fixed": true,
+    "animatedZoom": false
+  },
+  "case": {
+    "student": "小航",
+    "tutor": "小林",
+    "tutorId": "t001",
+    "grade": "初一",
+    "subject": "数学",
+    "budget": 100,
+    "time": "周六下午",
+    "unit": "一元一次方程",
+    "correct": "3/5=60% current exercise accuracy only",
+    "revision": "第三课增加10分钟符号专项，教师确认v2",
+    "anonymousTeachingAlias": "DEMO-STUDENT-01 (real preset alias in the independently created 小航 booking)"
+  },
+  "captureRunId": "2026-10-24T09-25-09-689Z",
+  "verifiedSourceScenes": [
+    {
+      "name": "four-lessons",
+      "seconds": 4,
+      "url": "http://127.0.0.1:44429/#/pages/teaching/loop?bookingId=booking-1792833918036-g6kvob"
+    },
+    {
+      "name": "match",
+      "seconds": 4,
+      "url": "http://127.0.0.1:44429/#/pages/match/index?demoScenario=math"
+    },
+    {
+      "name": "feedback",
+      "seconds": 4,
+      "url": "http://127.0.0.1:44429/#/pages/teaching/loop?bookingId=booking-1792833918036-g6kvob"
+    }
+  ]
+}
