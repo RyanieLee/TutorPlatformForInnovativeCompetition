@@ -1,0 +1,330 @@
+{
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "sourceFiles": [
+    {
+      "path": "src/services/business.ts",
+      "sha256": "53e33ca4bda8e5d644af51302feaa12328f75aae84168501d58c59b64f32f151"
+    },
+    {
+      "path": "src/services/teaching-loop.ts",
+      "sha256": "622b3dedf225d4d244e867ed3a5e0609eb950900690585ae297322b3c68530a9"
+    },
+    {
+      "path": "src/services/mock/teaching-loop.ts",
+      "sha256": "a27b8f2c2096ded8af252dcbd01d6832c4b4d67923fa1d6315fb10765bc7c6ad"
+    },
+    {
+      "path": "server/src/teaching/access.ts",
+      "sha256": "63a4aaf3c7e8a009af4b7b371b5325435e9048be4769d0c7aa7c90e96e19155a"
+    },
+    {
+      "path": "server/src/teaching-loop/routes.ts",
+      "sha256": "2a397def28b9ac9944c821e06be739f2a8d79d868e67e51acfacd61e94300520"
+    },
+    {
+      "path": "server/src/teaching-loop/engine.ts",
+      "sha256": "25ef66e5ca2798cb16b84a72c3613904500d27f006f1288902f11dd5c8fa474c"
+    },
+    {
+      "path": "server/src/teaching-loop/model.ts",
+      "sha256": "baeae822403f292bba4d436794e7425270f37ffa071df324dc988fc958884d23"
+    },
+    {
+      "path": "server/prisma/schema.prisma",
+      "sha256": "3cea5b098347624079a553f56f11589f4c681d0573bc1005b2acdb9ad87bd9ab"
+    },
+    {
+      "path": ".github/workflows/build.yml",
+      "sha256": "d8ea88a17a3af73e39de372f63b0ff9cc7f3c90b3c3b9ca43dcec19dd271f77f"
+    },
+    {
+      "path": "e2e/teaching-loop.spec.ts",
+      "sha256": "0a9c51c19c4b2668acddfa45d1d0371756bd138e126201c70ac0d6245d5ffe47"
+    },
+    {
+      "path": "src/pages/teaching/loop.vue",
+      "sha256": "dc57ddd2309832a863e756c7ad81cda87a3037d47bf083429cba6b637c79ffef"
+    }
+  ],
+  "verifiedClaims": [
+    "Shared uni-app/Vue/TypeScript service contracts and separate Mock/API adapters",
+    "Optional Fastify/Prisma/SQLite development API; this capture uses browser Mock",
+    "Booking ownership access checks and parent projection of published content",
+    "Rule validation of duration/structure/evidence, teacher publication, immutable version snapshots",
+    "Optional model path exists but is not configured or called in this recording"
+  ],
+  "ci": {
+    "conclusion": "success",
+    "headSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+    "jobs": [
+      {
+        "completedAt": "2026-10-23T11:28:58Z",
+        "conclusion": "success",
+        "databaseId": 120389448582,
+        "name": "server",
+        "startedAt": "2026-10-23T11:27:44Z",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v4",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm ci --no-audit --no-fund",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run db:generate",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run build",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm test",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run test:demo",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run test:teaching-demo",
+            "number": 9,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@v4",
+            "number": 17,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 18,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 19,
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/actions/runs/39946226822/job/120389448582"
+      },
+      {
+        "completedAt": "2026-10-23T11:28:58Z",
+        "conclusion": "success",
+        "databaseId": 120389448838,
+        "name": "build",
+        "startedAt": "2026-10-23T11:27:44Z",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v4",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm ci --no-audit --no-fund",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run typecheck",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm test",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run test:workflows",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run typecheck:workflows",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run build:h5",
+            "number": 9,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 10,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run build:mp-weixin",
+            "number": 11,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run build:h5",
+            "number": 12,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run build:mp-weixin",
+            "number": 13,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@v4",
+            "number": 25,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 26,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 27,
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/actions/runs/39946226822/job/120389448838"
+      },
+      {
+        "completedAt": "2026-10-23T11:32:53Z",
+        "conclusion": "success",
+        "databaseId": 120389448909,
+        "name": "e2e",
+        "startedAt": "2026-10-23T11:27:44Z",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v4",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm ci --no-audit --no-fund",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm ci --no-audit --no-fund",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npx playwright install --with-deps chromium",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run test:e2e",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@v4",
+            "number": 15,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 16,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 17,
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/actions/runs/39946226822/job/120389448909"
+      }
+    ],
+    "url": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/actions/runs/39946226822"
+  }
+}

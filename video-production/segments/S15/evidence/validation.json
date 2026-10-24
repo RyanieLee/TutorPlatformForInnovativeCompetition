@@ -1,0 +1,187 @@
+{
+  "status": "passed",
+  "id": "S15",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "durationSec": 35,
+  "videoSha256": "d5c37f8bbfb7a0a7a6eb067a23f51a4738c681f9c94c2180638d887e52128496",
+  "fileSizeBytes": 1190733,
+  "checks": {
+    "realCapturePassed": {
+      "passed": true,
+      "actual": 37
+    },
+    "independentEmptyContext": {
+      "passed": true,
+      "actual": {
+        "cookies": [],
+        "origins": []
+      }
+    },
+    "noModelCall": {
+      "passed": true,
+      "actual": []
+    },
+    "noBrowserErrors": {
+      "passed": true,
+      "actual": []
+    },
+    "sourceBaseline": {
+      "passed": true,
+      "actual": "5d04c4f789780d551b785c542e9946cf9453dd18"
+    },
+    "exactDuration": {
+      "passed": true,
+      "actual": "35.000000"
+    },
+    "frames": {
+      "passed": true,
+      "actual": "1050"
+    },
+    "format": {
+      "passed": true,
+      "actual": "h264 yuv420p 1920x1080 30/1"
+    },
+    "audio": {
+      "passed": true,
+      "actual": "aac 48000"
+    },
+    "streamStartZero": {
+      "passed": true,
+      "actual": [
+        "0.000000",
+        "0.000000"
+      ]
+    },
+    "faststart": {
+      "passed": true,
+      "actual": "moov before mdat"
+    },
+    "completeDecode": {
+      "passed": true,
+      "actual": "All frames decoded"
+    },
+    "regular30fpsPTS": {
+      "passed": true,
+      "actual": 6.666666701946045e-7
+    },
+    "silentAAC": {
+      "passed": true,
+      "actual": "All decoded samples zero"
+    },
+    "noBlackFrames": {
+      "passed": true,
+      "actual": 0
+    },
+    "noUnexpectedUniformFrames": {
+      "passed": true,
+      "actual": {
+        "count": 0,
+        "allowed": "S16 final warm-white ending only"
+      }
+    },
+    "fixedCamera": {
+      "passed": true,
+      "actual": true
+    },
+    "parent-roleActualViewport": {
+      "passed": true,
+      "actual": {
+        "x": 0,
+        "y": 131,
+        "error": 0,
+        "topRightMaeAfter": 0.5886324786324786,
+        "businessMae": 0.0013375600230060324,
+        "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+      }
+    },
+    "parent-roleNoInputDrops": {
+      "passed": true,
+      "actual": {
+        "dropped": 0,
+        "duplicated": 0
+      }
+    },
+    "teacher-roleActualViewport": {
+      "passed": true,
+      "actual": {
+        "x": 0,
+        "y": 131,
+        "error": 0,
+        "topRightMaeAfter": 0.5941025641025641,
+        "businessMae": 0.045236279978064016,
+        "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+      }
+    },
+    "teacher-roleNoInputDrops": {
+      "passed": true,
+      "actual": {
+        "dropped": 0,
+        "duplicated": 0
+      }
+    },
+    "github-actionsActualViewport": {
+      "passed": true,
+      "actual": {
+        "x": 0,
+        "y": 131,
+        "error": 0,
+        "topRightMaeAfter": 0,
+        "businessMae": 0,
+        "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+      }
+    },
+    "github-actionsNoInputDrops": {
+      "passed": true,
+      "actual": {
+        "dropped": 0,
+        "duplicated": 0
+      }
+    },
+    "teacherConfirmedV2": {
+      "passed": true,
+      "actual": {
+        "hasPublishControl": false,
+        "version": 2,
+        "feedback": "课后反馈 · 3/5（60%）\n预置演示样例（非实时生成） · 教师已确认发布 · 2026/10/24 09:21:51 · teaching-evidence-v1\n有限证据下的已观察优势\n上述正确题目显示本次相应步骤能够完成；证据仅限本次练习。\n依据：L2-Q1、L2-Q2、L2-Q3\n待巩固知识点\n结合教师观察，需巩固：带负号移项与负系数变形\n依据：L2-Q4、L2-Q5、教师观察\n下一课建议\n建议先安排10分钟针对性复习，再由教师决定后续进度。\n依据：L2-Q4、L2-Q5、教师观察\n家长版短报告\n本节已记录3/5题正确（60%）。完成内容：完成合并同类项与移项；完成5道分层练习和订正。需要继续巩固：带负号移项与负系数变形。这是基于本次课堂记录的样例建议，需教师审核，不代表长期能力或提分效果。"
+      }
+    },
+    "fact3of5": {
+      "passed": true,
+      "actual": "current exercise accuracy; no improvement rate"
+    },
+    "tenMinuteRevision": {
+      "passed": true,
+      "actual": "Third lesson symbol drill"
+    },
+    "fourLessons": {
+      "passed": true,
+      "actual": "preset course"
+    },
+    "realSuccessfulMainCI": {
+      "passed": true,
+      "actual": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/actions/runs/39946226822"
+    },
+    "realCIPage": {
+      "passed": true,
+      "actual": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/actions/runs/39946226822"
+    }
+  },
+  "rawFootageCounters": [
+    {
+      "scene": "parent-role",
+      "dropped": 0,
+      "duplicated": 0
+    },
+    {
+      "scene": "teacher-role",
+      "dropped": 0,
+      "duplicated": 0
+    },
+    {
+      "scene": "github-actions",
+      "dropped": 0,
+      "duplicated": 0
+    }
+  ],
+  "manualVisualReview": "Separate keyframe/contact-sheet review required; see validation-report.md"
+}

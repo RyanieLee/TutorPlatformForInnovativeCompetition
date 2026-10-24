@@ -1,0 +1,1029 @@
+{
+  "id": "2026-10-24T09-21-33-812Z",
+  "status": "running",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "captureHead": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "browserViewport": [
+    1280,
+    720
+  ],
+  "deviceScaleFactor": 1.5,
+  "nativeCaptureResolution": [
+    1920,
+    1080
+  ],
+  "freshContext": true,
+  "events": [
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "演示登录",
+      "box": {
+        "x": 72.26042175292969,
+        "y": 620,
+        "width": 809.7812652587891,
+        "height": 44
+      },
+      "point": {
+        "x": 477.1510543823242,
+        "y": 642
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "选择parent",
+      "box": {
+        "x": 131.2604217529297,
+        "y": 379,
+        "width": 676.6667022705078,
+        "height": 78
+      },
+      "point": {
+        "x": 469.5937728881836,
+        "y": 418
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "进入演示模式",
+      "box": {
+        "x": 131.2604217529297,
+        "y": 647,
+        "width": 676.6667022705078,
+        "height": 44
+      },
+      "point": {
+        "x": 469.5937728881836,
+        "y": 669
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "role-verified",
+      "role": "parent",
+      "text": "学生/家长 · 本机模拟登录"
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "公开选择小林",
+      "box": {
+        "x": 57.59375,
+        "y": 228.64584350585938,
+        "width": 371.15625,
+        "height": 262.4583435058594
+      },
+      "point": {
+        "x": 243.171875,
+        "y": 359.87501525878906
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "发起演示预约",
+      "box": {
+        "x": 222.33334350585938,
+        "y": 505.5,
+        "width": 820.0000305175781,
+        "height": 44
+      },
+      "point": {
+        "x": 632.3333587646484,
+        "y": 527.5
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "保存演示预约",
+      "box": {
+        "x": 222.33334350585938,
+        "y": 535.9583740234375,
+        "width": 820.0000305175781,
+        "height": 44
+      },
+      "point": {
+        "x": 632.3333587646484,
+        "y": 557.9583740234375
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "退出演示身份",
+      "box": {
+        "x": 72.26042175292969,
+        "y": 683.6666870117188,
+        "width": 809.7812652587891,
+        "height": 37.10418701171875
+      },
+      "point": {
+        "x": 477.1510543823242,
+        "y": 702.2187805175781
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "演示登录",
+      "box": {
+        "x": 72.26042175292969,
+        "y": 597.3333740234375,
+        "width": 809.7812652587891,
+        "height": 44
+      },
+      "point": {
+        "x": 477.1510543823242,
+        "y": 619.3333740234375
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "选择tutor",
+      "box": {
+        "x": 131.2604217529297,
+        "y": 466,
+        "width": 676.6667022705078,
+        "height": 78
+      },
+      "point": {
+        "x": 469.5937728881836,
+        "y": 505
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "进入演示模式",
+      "box": {
+        "x": 131.2604217529297,
+        "y": 647,
+        "width": 676.6667022705078,
+        "height": 44
+      },
+      "point": {
+        "x": 469.5937728881836,
+        "y": 669
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "role-verified",
+      "role": "tutor",
+      "text": "大学生家教 · 本机模拟登录"
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "家教工作台",
+      "box": {
+        "x": 72.26042175292969,
+        "y": 406.10418701171875,
+        "width": 809.7812652587891,
+        "height": 38.666656494140625
+      },
+      "point": {
+        "x": 477.1510543823242,
+        "y": 425.43751525878906
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "小航预约详情",
+      "box": {
+        "x": 107.33333587646484,
+        "y": 545.9896240234375,
+        "width": 777.1979141235352,
+        "height": 44
+      },
+      "point": {
+        "x": 495.9322929382324,
+        "y": 567.9896240234375
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "接受预约",
+      "box": {
+        "x": 530.59375,
+        "y": 483.41668701171875,
+        "width": 100.72918701171875,
+        "height": 44
+      },
+      "point": {
+        "x": 580.9583435058594,
+        "y": 505.41668701171875
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "真实确认弹窗",
+      "box": {
+        "x": 632.3333740234375,
+        "y": 399.8958435058594,
+        "width": 150,
+        "height": 48
+      },
+      "point": {
+        "x": 707.3333740234375,
+        "y": 423.8958435058594
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "教学计划与课后反馈",
+      "box": {
+        "x": 88.66667175292969,
+        "y": 551.0104370117188,
+        "width": 372.59376525878906,
+        "height": 44
+      },
+      "point": {
+        "x": 274.9635543823242,
+        "y": 573.0104370117188
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "加载预置演示课程",
+      "box": {
+        "x": 88.66667175292969,
+        "y": 676.5416870117188,
+        "width": 150.78125,
+        "height": 44
+      },
+      "point": {
+        "x": 164.0572967529297,
+        "y": 698.5416870117188
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "核验课程与答案",
+      "box": {
+        "x": 88.66667175292969,
+        "y": 346.32293701171875,
+        "width": 28.333328247070312,
+        "height": 27
+      },
+      "point": {
+        "x": 102.83333587646484,
+        "y": 359.82293701171875
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "确认发布v1",
+      "box": {
+        "x": 88.66667175292969,
+        "y": 395.32293701171875,
+        "width": 122.41667175292969,
+        "height": 44
+      },
+      "point": {
+        "x": 149.87500762939453,
+        "y": 417.32293701171875
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "真实确认弹窗",
+      "box": {
+        "x": 632.3333740234375,
+        "y": 410.3958435058594,
+        "width": 150,
+        "height": 48
+      },
+      "point": {
+        "x": 707.3333740234375,
+        "y": 434.3958435058594
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "填入虚构3/5记录",
+      "box": {
+        "x": 88.66667175292969,
+        "y": 337.96875,
+        "width": 201.6145782470703,
+        "height": 44
+      },
+      "point": {
+        "x": 189.47396087646484,
+        "y": 359.96875
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "保存课堂事实",
+      "box": {
+        "x": 88.66667175292969,
+        "y": 338.10418701171875,
+        "width": 122.41667175292969,
+        "height": 44
+      },
+      "point": {
+        "x": 149.87500762939453,
+        "y": 360.10418701171875
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "生成样例反馈（非实时AI）",
+      "box": {
+        "x": 88.66667175292969,
+        "y": 595.5625,
+        "width": 207.2708282470703,
+        "height": 44
+      },
+      "point": {
+        "x": 192.30208587646484,
+        "y": 617.5625
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "确认发布课后反馈",
+      "box": {
+        "x": 223.08334350585938,
+        "y": 338.0625,
+        "width": 150.78125,
+        "height": 44
+      },
+      "point": {
+        "x": 298.4739685058594,
+        "y": 360.0625
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "真实确认弹窗",
+      "box": {
+        "x": 632.3333740234375,
+        "y": 399.8958435058594,
+        "width": 150,
+        "height": 48
+      },
+      "point": {
+        "x": 707.3333740234375,
+        "y": 423.8958435058594
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "生成第三课样例调整建议",
+      "box": {
+        "x": 88.66667175292969,
+        "y": 305.85418701171875,
+        "width": 193.3229217529297,
+        "height": 44
+      },
+      "point": {
+        "x": 185.32813262939453,
+        "y": 327.85418701171875
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "确认采纳，生成新草稿",
+      "box": {
+        "x": 88.66667175292969,
+        "y": 338.1458435058594,
+        "width": 179.1354217529297,
+        "height": 44
+      },
+      "point": {
+        "x": 178.23438262939453,
+        "y": 360.1458435058594
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "核验v2",
+      "box": {
+        "x": 88.66667175292969,
+        "y": 346.32293701171875,
+        "width": 28.333328247070312,
+        "height": 27
+      },
+      "point": {
+        "x": 102.83333587646484,
+        "y": 359.82293701171875
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "确认发布v2",
+      "box": {
+        "x": 88.66667175292969,
+        "y": 395.32293701171875,
+        "width": 122.41667175292969,
+        "height": 44
+      },
+      "point": {
+        "x": 149.87500762939453,
+        "y": 417.32293701171875
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "真实确认弹窗",
+      "box": {
+        "x": 632.3333740234375,
+        "y": 410.3958435058594,
+        "width": 150,
+        "height": 48
+      },
+      "point": {
+        "x": 707.3333740234375,
+        "y": 434.3958435058594
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "退出演示身份",
+      "box": {
+        "x": 72.26042175292969,
+        "y": 683.6666870117188,
+        "width": 809.7812652587891,
+        "height": 37.10418701171875
+      },
+      "point": {
+        "x": 477.1510543823242,
+        "y": 702.2187805175781
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "演示登录",
+      "box": {
+        "x": 72.26042175292969,
+        "y": 597.3333740234375,
+        "width": 809.7812652587891,
+        "height": 44
+      },
+      "point": {
+        "x": 477.1510543823242,
+        "y": 619.3333740234375
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "选择parent",
+      "box": {
+        "x": 131.2604217529297,
+        "y": 379,
+        "width": 676.6667022705078,
+        "height": 78
+      },
+      "point": {
+        "x": 469.5937728881836,
+        "y": 418
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "进入演示模式",
+      "box": {
+        "x": 131.2604217529297,
+        "y": 647,
+        "width": 676.6667022705078,
+        "height": 44
+      },
+      "point": {
+        "x": 469.5937728881836,
+        "y": 669
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "role-verified",
+      "role": "parent",
+      "text": "学生/家长 · 本机模拟登录"
+    },
+    {
+      "timeSec": -0.4,
+      "kind": "scene-start",
+      "name": "parent-role",
+      "seconds": 3.5
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "退出演示身份",
+      "box": {
+        "x": 72.26042175292969,
+        "y": 683.6666870117188,
+        "width": 809.7812652587891,
+        "height": 37.10418701171875
+      },
+      "point": {
+        "x": 477.1510543823242,
+        "y": 702.2187805175781
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "演示登录",
+      "box": {
+        "x": 72.26042175292969,
+        "y": 597.3333740234375,
+        "width": 809.7812652587891,
+        "height": 44
+      },
+      "point": {
+        "x": 477.1510543823242,
+        "y": 619.3333740234375
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "选择tutor",
+      "box": {
+        "x": 131.2604217529297,
+        "y": 466,
+        "width": 676.6667022705078,
+        "height": 78
+      },
+      "point": {
+        "x": 469.5937728881836,
+        "y": 505
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "real-mouse-click",
+      "name": "进入演示模式",
+      "box": {
+        "x": 131.2604217529297,
+        "y": 647,
+        "width": 676.6667022705078,
+        "height": 44
+      },
+      "point": {
+        "x": 469.5937728881836,
+        "y": 669
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": null,
+      "kind": "role-verified",
+      "role": "tutor",
+      "text": "大学生家教 · 本机模拟登录"
+    },
+    {
+      "timeSec": -0.4,
+      "kind": "scene-start",
+      "name": "teacher-role",
+      "seconds": 3.5
+    },
+    {
+      "timeSec": -0.4,
+      "kind": "scene-start",
+      "name": "github-actions",
+      "seconds": 10
+    }
+  ],
+  "errors": [],
+  "modelRequests": [],
+  "nativePreparation": [
+    {
+      "action": "dismiss native translation bubble",
+      "beforeMae": 34.48307692307692
+    }
+  ],
+  "scenes": [
+    {
+      "name": "parent-role",
+      "durationSec": 3.5,
+      "rawVideo": "raw/2026-10-24T09-21-33-812Z/parent-role.mkv",
+      "rawTrimStartSec": 0.500019218999998,
+      "url": "http://127.0.0.1:46529/#/pages/profile/index",
+      "actualText": "领航云学堂\n让优质教育更容易遇见\n找家教\nAI问答\n智能匹配\nAI学习中心\n订单地图\n我的预约\n演示导航\n我的 / 切换角色\n个人中心\n本机 Mock · 演示数据\n演\n演示家长\n学生/家长 · 本机模拟登录\n当前身份\n角色\n学生/家长\n状态\n本机演示会话\n退出演示身份\n我的预约\n→\n浏览家教\n→\n本版本没有真实身份认证、支付或老师通知。请勿填写真实私人信息。\n小书灵\n领航云学堂 · 创新创业演示项目。所有资料仅供测试，请勿填写真实个人信息。",
+      "events": [],
+      "rawCounters": {
+        "dropped": 0,
+        "duplicated": 0
+      },
+      "alignment": {
+        "x": 0,
+        "y": 131,
+        "error": 0,
+        "topRightMaeAfter": 0.5886324786324786,
+        "businessMae": 0.0013375600230060324,
+        "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+      }
+    },
+    {
+      "name": "teacher-role",
+      "durationSec": 3.5,
+      "rawVideo": "raw/2026-10-24T09-21-33-812Z/teacher-role.mkv",
+      "rawTrimStartSec": 0.5000200900000055,
+      "url": "http://127.0.0.1:46529/#/pages/profile/index",
+      "actualText": "领航云学堂\n让优质教育更容易遇见\n找家教\nAI问答\n智能匹配\nAI学习中心\n订单地图\n我的预约\n演示导航\n我的 / 切换角色\n个人中心\n本机 Mock · 演示数据\n演\n演示家教\n大学生家教 · 本机模拟登录\n当前身份\n角色\n大学生家教\n状态\n本机演示会话\n退出演示身份\n家教工作台\n→\n浏览家教\n→\n本版本没有真实身份认证、支付或老师通知。请勿填写真实私人信息。\n小书灵\n领航云学堂 · 创新创业演示项目。所有资料仅供测试，请勿填写真实个人信息。",
+      "events": [],
+      "rawCounters": {
+        "dropped": 0,
+        "duplicated": 0
+      },
+      "alignment": {
+        "x": 0,
+        "y": 131,
+        "error": 0,
+        "topRightMaeAfter": 0.5941025641025641,
+        "businessMae": 0.045236279978064016,
+        "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+      }
+    },
+    {
+      "name": "github-actions",
+      "durationSec": 10,
+      "rawVideo": "raw/2026-10-24T09-21-33-812Z/github-actions.mkv",
+      "rawTrimStartSec": 0.43337010599999487,
+      "url": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/actions/runs/39946226822",
+      "actualText": "Skip to content\nNavigation Menu\nPlatform\nSolutions\nResources\nOpen Source\nEnterprise\nPricing\nSign in\nSign up\nRyanieLee\nTutorPlatformForInnovativeCompetition\nRepository navigation\nCode\nIssues\n5\n (5)\nPull requests\n10\n (10)\nActions\nProjects\nSecurity and quality\nInsights\nFrontend Build\nMerge pull request #37 from RyanieLee/style/confirmed-web-visual #125\nSign in to view logs\nSummary\nAll jobs\nbuild\nserver\ne2e\nRun details\nUsage\nWorkflow file\nLockfile\nTriggered via push \nJenny11817\npushed\n 5d04c4f\nmain\nStatus\nSuccess\nTotal duration\n5m 12s\nArtifacts\n2\nbuild.yml\non: push\nbuild\n1m 14s\nserver\n1m 14s\ne2e\n5m 9s\n\nOh hello! Nice to see you.\n\nMade with ❤️ by humans.txt\n\nAnnotations\n3 warnings and 3 notices\nserver\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\n\n\nbuild\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\n\n\ne2e\nNode.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\nShow more\n\n\nserver\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\"\nShow more\n\n\nbuild\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\"\nShow more\n\n\ne2e\n\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\"\nShow more\nArtifacts\nProduced during runtime\nName\tSize\tDigest\t\n\nbrowser-e2e-report\n\t30.3 MB\t\nsha256:2e1a61222e63fe7554557a078c82efd26815e786a475d35efbcd9abfcede26f3\n\t\n\n\nmock-h5-dist\n\t3.98 MB\t\nsha256:66a30b1551dfc9f52708a3cbee1fedce7dc851b26dcd1a5cfaf9d4cd222d9afe\n\t",
+      "events": [],
+      "rawCounters": {
+        "dropped": 0,
+        "duplicated": 0
+      },
+      "alignment": {
+        "x": 0,
+        "y": 131,
+        "error": 0,
+        "topRightMaeAfter": 0,
+        "businessMae": 0,
+        "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+      }
+    }
+  ],
+  "baseUrl": "http://127.0.0.1:46529/",
+  "initialStorage": {
+    "cookies": [],
+    "origins": []
+  },
+  "loopUrl": "http://127.0.0.1:46529/#/pages/teaching/loop?bookingId=booking-1792833701483-61e8vu",
+  "courseText": "初中七年级（初一） · 一元一次方程\nDEMO-STUDENT-01 · 4节 × 45分钟。适配示例，教材版本与进度请教师核对。\n课程总体目标\n理解等式性质，规范求解和检验一元一次方程，将简单生活问题转化为方程，并分步骤解释思路。\n先备条件：已学有理数及基本代数表达式；教材版本和实际进度由教师核对。\n先备预诊断（5题）\n计算 -3 + 8\n参考答案：5；先比较绝对值，结果为正。\n计算 -2 × 4\n参考答案：-8；异号相乘得负。\n化简 3x + 2x\n参考答案：5x；同类项系数相加。\nx = 2 是否为 3x + 1 = 7 的解？\n参考答案：是；代入得 3×2+1=7。\nx + 4 = 9，求 x\n参考答案：x = 5；等式两边同时减4。\n第1课\n第2课\n第3课\n第4课\n第1课 · 认识一元一次方程与等式基本性质\n教学资源：本页例题、练习与标准答案；草稿纸或白板：标注每一步等价变形；教师逐题观察记录表\n可检验学习目标\n· 分辨等式与方程，识别一元一次方程\n· 用等式性质解简单方程并代入检验\n知识点与重点难点\n未知数和方程的解；等式两边执行相同操作；除数不能为0\n45分钟教学安排（当前合计45分钟）\n环节1\n5\n分钟\n教师活动\n用一个数加7等于15引入未知数。\n学生活动\n尝试用字母表示未知数。\n环节2\n7\n分钟\n教师活动\n讲解只含一个未知数且未知数次数为1的方程及解的含义。\n学生活动\n比较等式、方程与一元一次方程。\n环节3\n10\n分钟\n教师活动\n演示 x+7=15，两边同时减7，x=8并检验。\n学生活动\n逐步说明两边的相同操作。\n环节4\n8\n分钟\n教师活动\n演示3x=21，两边同除3得x=7；除数不得为0。\n学生活动\n代入检验并解释为什么不能除0。\n环节5\n10\n分钟\n教师活动\n观察学生独立练习过程并记录错误。\n学生活动\n独立完成3题并验算。\n环节6\n5\n分钟\n教师活动\n回顾等式性质，针对记录订正。\n学生活动\n复述操作原则。\n例题与分步讲解\nL1-E1\nx + 7 = 15\n标准答案：x = 8；两边减7，x=8；8+7=15。\nL1-E2\n3x = 21\n标准答案：x = 7；两边同除3；3×7=21。\n独立练习与标准答案\nL1-Q1\nx + 9 = 17\n标准答案：x = 8；两边减9。\nL1-Q2\n5x = 30\n标准答案：x = 6；两边同除5。\nL1-Q3\nx − 6 = 11\n标准答案：x = 17；两边加6。\n课后作业\n各写2道加减类、乘除类方程，完成求解与代入检验。\n观察指标\n两边是否执行同样操作；能否代入验算",
+  "revisionText": "第三课修订对比\n预置演示建议（非实时生成） · 待教师确认\n调整理由：基于第二课Q4/Q5错误与已确认反馈，先复盘符号，再推进新内容；建议待教师确认。\n证据：L2-Q4、L2-Q5、教师观察\n原版 v1\n5分钟 · 复习移项和符号。\n10分钟 · 讲解2(x+3)=18，去括号或两边除2得x=6。\n12分钟 · 讲解(x−1)/3=(x+2)/6，两边乘6得2x−2=x+2，x=4。\n13分钟 · 观察分层练习并记录分配律、分母错误。\n5分钟 · 订正并总结等价变形。\n建议安排 · 仍为45分钟\n5分钟 · 复习移项和符号。\n10分钟 · 依据第二课Q4/Q5进行移项符号专项复盘；引导用两边同时加2x、加4x解释变形。\n10分钟 · 讲解2(x+3)=18，去括号或两边除2得x=6。\n15分钟 · 先完成去括号和移项分层练习，逐步核对负号；去分母专项推迟至后续补充课，经教师再确认。\n5分钟 · 订正并总结等价变形。\n原安排：教师：讲解(x−1)/3=(x+2)/6，两边乘6得2x−2=x+2，x=4。；学生：解释为何要对两边每项乘6。\n建议：本课无此环节（新增或移至后续课）\n时长变化：-12分钟；第二课Q4/Q5与教师记录提示需先巩固符号；去分母移至后续补充课，总时长保持45分钟。\n依据：L2-Q4、L2-Q5、教师观察\n原安排：教师：观察分层练习并记录分配律、分母错误。；学生：完成3题并逐步解释。\n建议：教师：先完成去括号和移项分层练习，逐步核对负号；去分母专项推迟至后续补充课，经教师再确认。；学生：完成3题并逐步解释。\n时长变化：+2分钟；第二课Q4/Q5与教师记录提示需先巩固符号；去分母移至后续补充课，总时长保持45分钟。\n依据：L2-Q4、L2-Q5、教师观察\n原安排：本课无此环节（新增或移至后续课）\n建议：教师：依据第二课Q4/Q5进行移项符号专项复盘；引导用两边同时加2x、加4x解释变形。；学生：完成7−2x=x+1与9−4x=2x−3的迁移讲解，标出每步符号。\n时长变化：+10分钟；第二课Q4/Q5与教师记录提示需先巩固符号；去分母移至后续补充课，总时长保持45分钟。\n依据：L2-Q4、L2-Q5、教师观察\n确认采纳，生成新草稿\n拒绝建议，保留原版",
+  "parentReadOnly": {
+    "hasPublishControl": false,
+    "version": 2,
+    "feedback": "课后反馈 · 3/5（60%）\n预置演示样例（非实时生成） · 教师已确认发布 · 2026/10/24 09:21:51 · teaching-evidence-v1\n有限证据下的已观察优势\n上述正确题目显示本次相应步骤能够完成；证据仅限本次练习。\n依据：L2-Q1、L2-Q2、L2-Q3\n待巩固知识点\n结合教师观察，需巩固：带负号移项与负系数变形\n依据：L2-Q4、L2-Q5、教师观察\n下一课建议\n建议先安排10分钟针对性复习，再由教师决定后续进度。\n依据：L2-Q4、L2-Q5、教师观察\n家长版短报告\n本节已记录3/5题正确（60%）。完成内容：完成合并同类项与移项；完成5道分层练习和订正。需要继续巩固：带负号移项与负系数变形。这是基于本次课堂记录的样例建议，需教师审核，不代表长期能力或提分效果。"
+  },
+  "nativeWindowBefore": {
+    "left": 0,
+    "top": 0,
+    "width": 1304,
+    "height": 822,
+    "windowState": "normal"
+  },
+  "viewportAlignment": {
+    "x": 0,
+    "y": 131,
+    "error": 0,
+    "topRightMaeAfter": 0,
+    "businessMae": 0,
+    "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+  },
+  "rawTrimStartSec": 0.43337010599999487,
+  "recorder": "FFmpeg native X11 screen grab at 30fps; not a sequence of website screenshots",
+  "ci": {
+    "conclusion": "success",
+    "headSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+    "jobs": [
+      {
+        "completedAt": "2026-10-23T11:28:58Z",
+        "conclusion": "success",
+        "databaseId": 120389448582,
+        "name": "server",
+        "startedAt": "2026-10-23T11:27:44Z",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v4",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm ci --no-audit --no-fund",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run db:generate",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run build",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm test",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run test:demo",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run test:teaching-demo",
+            "number": 9,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@v4",
+            "number": 17,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 18,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 19,
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/actions/runs/39946226822/job/120389448582"
+      },
+      {
+        "completedAt": "2026-10-23T11:28:58Z",
+        "conclusion": "success",
+        "databaseId": 120389448838,
+        "name": "build",
+        "startedAt": "2026-10-23T11:27:44Z",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v4",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm ci --no-audit --no-fund",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run typecheck",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm test",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run test:workflows",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run typecheck:workflows",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run build:h5",
+            "number": 9,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 10,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run build:mp-weixin",
+            "number": 11,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run build:h5",
+            "number": 12,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run build:mp-weixin",
+            "number": 13,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@v4",
+            "number": 25,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 26,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 27,
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/actions/runs/39946226822/job/120389448838"
+      },
+      {
+        "completedAt": "2026-10-23T11:32:53Z",
+        "conclusion": "success",
+        "databaseId": 120389448909,
+        "name": "e2e",
+        "startedAt": "2026-10-23T11:27:44Z",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v4",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm ci --no-audit --no-fund",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm ci --no-audit --no-fund",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npx playwright install --with-deps chromium",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run npm run test:e2e",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@v4",
+            "number": 15,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 16,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 17,
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/actions/runs/39946226822/job/120389448909"
+      }
+    ],
+    "url": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/actions/runs/39946226822"
+  }
+}

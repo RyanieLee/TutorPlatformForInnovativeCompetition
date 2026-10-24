@@ -1,0 +1,41 @@
+{
+  "id": "S14-S16",
+  "durationSec": 110,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "role": "总结",
+  "sourceMode": "Concatenation of independently captured S14, S15, S16; genuine Mock H5 and actual successful main GitHub Actions page plus explicitly abstract graphics",
+  "prerequisites": [
+    "Validated S14 (35s), S15 (35s), S16 (40s)",
+    "Node>=20, Python3, Playwright Chromium, FFmpeg/ffprobe, Xvfb, Noto CJK"
+  ],
+  "timelineInFullFilm": {
+    "start": "07:10",
+    "end": "09:00"
+  },
+  "segments": [
+    {
+      "id": "S14",
+      "startSec": 0,
+      "durationSec": 35
+    },
+    {
+      "id": "S15",
+      "startSec": 35,
+      "durationSec": 35
+    },
+    {
+      "id": "S16",
+      "startSec": 70,
+      "durationSec": 40
+    }
+  ],
+  "camera": {
+    "fixed": true,
+    "animatedZoom": false
+  }
+}

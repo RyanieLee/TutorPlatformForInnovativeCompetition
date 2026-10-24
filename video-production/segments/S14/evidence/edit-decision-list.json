@@ -1,0 +1,65 @@
+{
+  "id": "S14",
+  "durationSec": 35,
+  "sources": [
+    {
+      "name": "match",
+      "durationSec": 10,
+      "trim": 0.500023545,
+      "source": "raw/2026-10-24T09-19-40-121Z/match.mkv",
+      "mode": "full"
+    },
+    {
+      "name": "teacher-feedback",
+      "durationSec": 10,
+      "trim": 0.5001543810000003,
+      "source": "raw/2026-10-24T09-19-40-121Z/teacher-feedback.mkv",
+      "mode": "full"
+    },
+    {
+      "name": "parent-feedback",
+      "durationSec": 15,
+      "trim": 0.5000214330000017,
+      "source": "raw/2026-10-24T09-19-40-121Z/parent-feedback.mkv",
+      "mode": "half"
+    },
+    {
+      "name": "teacher-review",
+      "durationSec": 9,
+      "trim": 0.5000273719999968,
+      "source": "raw/2026-10-24T09-19-40-121Z/teacher-review.mkv",
+      "mode": "half"
+    }
+  ],
+  "order": [
+    "scene0",
+    "scene1",
+    "dual"
+  ],
+  "captions": [
+    {
+      "start": 0,
+      "end": 10,
+      "text": "家长：从无从比较，到推荐依据公开"
+    },
+    {
+      "start": 10,
+      "end": 20,
+      "text": "老师：从零散记录，到课后建议与课程修订"
+    },
+    {
+      "start": 20,
+      "end": 29,
+      "text": "家长查看反馈，教师审定课程"
+    },
+    {
+      "start": 29,
+      "end": 35,
+      "text": "两个角色，同一条教学服务链"
+    }
+  ],
+  "fixedCamera": true,
+  "animatedZoom": false,
+  "heldRealFrame": "Teacher review result held for final 6 seconds while parent footage continues",
+  "endingWhiteHoldSec": 0
+}
