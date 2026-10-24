@@ -72,3 +72,5 @@
 两次早期自动化尝试未用于成片：一次uni-app的占位符渲染与原生placeholder定位不一致，改用仓库已有自动化的字段定位方法；一次返回首页实际为`#/`，修正过严URL断言并核对真实首页DOM。保留失败JSON，未把失败录像包装为成功，业务功能实际可用。
 
 未修改业务规则，未调用模型、未自动发布课程、未声称提高成绩，未强制合并main。真实下载文件、独立PR及远程附件上传结果见delivery.json。MP4、ZIP和原始录屏不加入普通Git。
+
+交付实测：[PR #45](https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/pull/45)已创建且OPEN；视频附件上传HTTP401 Bad credentials，CLI回滚release后API查询releases为空，未发布成片。按任务允许的方式提供实际工作区下载路径，未把PR或本机文件宣称为已上传视频。

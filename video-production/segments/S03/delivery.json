@@ -1,0 +1,31 @@
+{
+  "id": "S03",
+  "durationSec": 35,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "sourceBranch": "video/segment-S03",
+  "sourceCommit": "c38113f",
+  "pullRequest": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/pull/45",
+  "mergedMain": false,
+  "localVideo": "/workspace/tutor/video-production/segments/S03/exports/clip_S03.mp4",
+  "localBundle": "/workspace/tutor/video-production/segments/S03/exports/S03_delivery.zip",
+  "downloadVideo": "/workspace/shared/downloads/S03/clip_S03.mp4",
+  "downloadBundle": "/workspace/shared/downloads/S03/S03_delivery.zip",
+  "videoSha256": "10897b44992ac4e80046d27c9652f9e808a2a31b01e8e73fe4d65e7c7fcc2e50",
+  "validationChecksPassed": 25,
+  "remoteVideoUrl": null,
+  "releasePublished": false,
+  "remoteUpload": {
+    "attempted": true,
+    "destination": "GitHub release asset at uploads.github.com",
+    "status": "failed",
+    "httpStatus": 401,
+    "reason": "Bad credentials for binary-asset host; git push and PR API succeeded. CLI rolled back release; releases API confirmed empty list."
+  },
+  "downloadMethod": "Open actual workspace file links. MP4 and ZIP exist locally; not tracked in ordinary Git.",
+  "sourceMode": "real independent Mock UI; real booking/acceptance/preset course preparation; no model call or improvement claim"
+}

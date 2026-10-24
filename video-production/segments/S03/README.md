@@ -69,3 +69,7 @@ XVFB_BIN=/tmp/S03-x11/usr/bin/Xvfb node video-production/segments/S03/scripts/ca
 验证包含ffprobe、帧数/PTS、全片解码、音轨静音、实际业务画面区域黑屏/空白检查、课程来源和真实预约、点击窗口/坐标/页面状态、五步导航和双角色文字。原始录制计数的变化区间由`pacing.mjs`审计，实际使用片段内出现掉帧/补帧会拒绝。关键帧和接触表还需单独视觉检查，不把脚本退出码当作全部证据。
 
 失败尝试保留JSON，未用于最终成片；详情及远程交付状态见验证报告和delivery.json。
+
+## 远程提交与下载状态
+
+脚本/证据已推送[PR #45](https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/pull/45)，保持OPEN，未合并main。GitHub release视频附件上传实际返回HTTP401 Bad credentials（uploads.github.com），CLI回滚release，查询releases为空，无远程成片链接。未更换凭据或交互登录。请使用上方实际工作区MP4/ZIP文件下载，完整回执见`delivery.json`。
