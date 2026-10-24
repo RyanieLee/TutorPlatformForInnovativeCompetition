@@ -65,3 +65,5 @@ MP4字节数：6328500。SHA256：`8dbf77a102f6b687c64dd178f93f633759b17570827c0
 前两次因滚动后目标卡片未完整可见被拒绝，调整滚动方向后真实命中。后续复录的一次补帧出现在使用区间，仍被拒绝。未使用这些失败录像，失败JSON保留；没有伪装业务成功。
 
 视频在`exports/clip_S02.mp4`，完整包`exports/S02_delivery.zip`。普通Git不提交MP4/ZIP/原始录像；脚本、字幕、清单、关键帧、报告与证据提交独立PR。远程大附件状态和实际下载路径见`delivery.json`；不把PR或本机文件说成公网部署，也不强制合并main。
+
+远程交付实测：分支已推送，[PR #44](https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/pull/44)已创建并保持OPEN。release附件上传HTTP401 Bad credentials，随后查询releases为空，未发布视频；按任务允许的回退方式提供实际工作区MP4/ZIP下载路径。没有把本机文件或PR宣称为已上传成片。

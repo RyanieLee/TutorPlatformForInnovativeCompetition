@@ -1,0 +1,30 @@
+{
+  "id": "S02",
+  "durationSec": 35,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "sourceBranch": "video/segment-S02",
+  "sourceCommit": "d951ca3",
+  "pullRequest": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/pull/44",
+  "mergedMain": false,
+  "localVideo": "/workspace/tutor/video-production/segments/S02/exports/clip_S02.mp4",
+  "localBundle": "/workspace/tutor/video-production/segments/S02/exports/S02_delivery.zip",
+  "downloadVideo": "/workspace/shared/downloads/S02/clip_S02.mp4",
+  "downloadBundle": "/workspace/shared/downloads/S02/S02_delivery.zip",
+  "videoSha256": "8dbf77a102f6b687c64dd178f93f633759b17570827c063a6d2de096c5316bd7",
+  "validationChecksPassed": 24,
+  "remoteVideoUrl": null,
+  "releasePublished": false,
+  "remoteUpload": {
+    "attempted": true,
+    "destination": "GitHub release asset at uploads.github.com",
+    "status": "failed",
+    "httpStatus": 401,
+    "reason": "Bad credentials for binary asset host; repository git push and PR API succeeded. CLI rolled back release; releases API confirms no published release."
+  },
+  "downloadMethod": "Open the actual workspace file links; video and ZIP are real local files. MP4/raw/ZIP excluded from ordinary Git."
+}

@@ -62,3 +62,7 @@ Playwright读取真实元素坐标，实际mouse.move/mouse.click，光标和点
 `evidence/capture.json`记录两次真实点击的坐标/命中检查/时间、列表实际文字、t001详情/时间字段、空初始存储与模型请求数。`evidence/validation.json`和`ffprobe.json`记录时长、帧数、编解码、静音、PTS、全片解码、实际画面区域黑屏/空帧和结尾冻结检查。关键帧与35秒逐秒接触表须另行视觉核对，不能把退出码当作全部证据。
 
 初次两次录制因滚动导致目标卡片不完整可见，被脚本拒绝；失败JSON保留在evidence，未用于成片。一次原始录制检测到1次CFR补帧，初审拒绝后继续核对原始日志，定位在原始0.90–1.00秒，早于裁切起点1.100秒；这次素材在实际使用区间没有丢帧/补帧。另一次重录在实际使用区间出现补帧，仍拒绝。`pacing-audit.json`及原始日志摘存提供依据，不把原始全长的补帧计数说成0。具体最终结果和人工复核见`validation-report.md`。
+
+## 远程提交与附件限制
+
+脚本/清单已提交[PR #44](https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/pull/44)，保持OPEN，未合并main。GitHub release二进制上传实际返回401 Bad credentials（uploads.github.com）；发布被回滚，查询releases为空，无远程成片链接。未更换凭据或交互登录。请使用开头的工作区文件下载；完整状态见`delivery.json`。
