@@ -1,0 +1,20 @@
+{
+  "status": "local-artifacts-ready; remote-binary-upload-blocked",
+  "sourcePullRequest": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/pull/43",
+  "branch": "video/segment-S01",
+  "sourceGitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "mp4Path": "/workspace/tutor/video-production/segments/S01/exports/clip_S01.mp4",
+  "downloadCopy": "/workspace/shared/downloads/S01/clip_S01.mp4",
+  "bundleDownloadCopy": "/workspace/shared/downloads/S01/S01_delivery.zip",
+  "videoSha256": "b21aba8648e9ab5e1458b2f969dfc7b8f3e6c9519b899b117452b6667cb080ef",
+  "videoSizeBytes": 10499621,
+  "remoteVideoUrl": null,
+  "releasePublished": false,
+  "uploadFailure": {
+    "status": 401,
+    "host": "uploads.github.com",
+    "message": "Bad credentials; no usable binary upload credential in this environment"
+  },
+  "downloadMethod": "Use the current workspace file browser Download action or the absolute file links in the final response. Source and reproduction scripts are in PR 43. No video is in ordinary Git.",
+  "mergedMain": false
+}

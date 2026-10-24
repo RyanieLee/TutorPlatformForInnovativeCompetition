@@ -45,7 +45,7 @@
 
 业务文件与基线SHA一致；新增内容只在video-production/segments/S01，未强制合并main。初次捕获脚本因日志文件创建时序错误在录制前失败，failure JSON已保留；修复后新建独立上下文完成本次录制。最终status=passed不是对所有尝试的笼统声明。
 
-MP4不提交普通Git；产物路径与复现见README，下载附件/权限信息以PR正文及交付回执为准。
+MP4不提交普通Git。源脚本、字幕、清单、报告和关键帧已上传PR #43；尝试发布大文件附件时uploads.github.com返回401 Bad credentials，已确认没有成功发布Release/标签。真实MP4与完整ZIP位于exports/，另复制到 `/workspace/shared/downloads/S01/`，通过当前工作区文件浏览器Download或最终回复的实际文件链接获取。交付回执为delivery.json；未修改业务或合并main。
 
 ## 机器检查
 

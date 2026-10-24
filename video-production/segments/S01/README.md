@@ -7,14 +7,14 @@
 
 ## 观看与下载
 
-MP4及交付ZIP在本地exports目录真实存在，均被本目录.gitignore排除，不塞入普通Git。持续下载入口以本段PR正文及附件交付记录为准。关键帧、源脚本、清单、配音文稿和验证报告可以直接在分支中查看。
+MP4及交付ZIP在本地exports目录真实存在，均被本目录.gitignore排除，不塞入普通Git。本次GitHub附件上传在uploads.github.com返回401 Bad credentials，未发布成功，不存在可冒充成功的远程MP4链接。源代码和证据已上传PR #43，成片请用本轮工作区文件浏览器的Download操作或最终回复中的实际文件链接下载。详见delivery.json。关键帧、源脚本、清单、配音文稿和验证报告可以直接在分支中查看。
 
 实际本地产物：
 
 - `/workspace/tutor/video-production/segments/S01/exports/clip_S01.mp4`
 - `/workspace/tutor/video-production/segments/S01/exports/S01_delivery.zip`
 
-请下载MP4或本段交付ZIP；不要把GitHub默认Source code ZIP当作包含MP4的交付包。附加发布如为草稿，需有仓库访问权限；这不依赖平台公网部署或模型密钥。
+请下载MP4或本段交付ZIP；不要把GitHub默认Source code ZIP当作包含MP4的交付包。这不依赖平台公网部署或模型密钥。工作区下载副本在 `/workspace/shared/downloads/S01/`；若工作区随后回收，可检出PR #43并按下列脚本独立复现，不能假称仓库普通Git里有MP4。
 
 ## 复现
 
@@ -28,6 +28,7 @@ npx playwright install chromium
 node video-production/segments/S01/scripts/capture.mjs
 node video-production/segments/S01/scripts/render.mjs
 node video-production/segments/S01/scripts/validate.mjs
+python3 video-production/segments/S01/scripts/package.py
 ```
 
 capture会自动选择空闲端口，执行实际 `npm run demo -- --port <空闲端口> --strictPort`，从启动日志获取地址，创建独立X11显示与全新浏览器上下文，最后关闭自有进程。不会依赖组员的localStorage、已有账户、前一片段或预先启动的服务器。失败会保留本次日志/失败JSON和截图，不允许render伪造成功。
