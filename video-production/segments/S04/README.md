@@ -72,3 +72,7 @@ XVFB_BIN=/tmp/S04-x11/usr/bin/Xvfb node video-production/segments/S04/scripts/ca
 输出H.264/yuv420p、1920×1080、30fps、30.000秒、静音AAC48kHz、MP4 faststart。简体SRT为短句，配音文稿另存。
 
 验证包括ffprobe/900帧/PTS、全片解码、静音、实际画面区域黑屏/空白、真实预生成点击与结果、分项理由、动态权重来源、高亮时间窗、结尾卡片裁切及原始掉帧/补帧审计。另行检查关键帧与逐秒接触表，不以退出码代替视觉核验。最终数据和远程附件状态见验证报告与delivery.json。
+
+## 远程交付状态
+
+脚本/清单/证据已提交[PR #46](https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/pull/46)，保持OPEN，未合并main。GitHub release视频附件实际上传返回HTTP401 Bad credentials（uploads.github.com），CLI回滚release，查询releases为空，没有远程成片链接。未更换凭据或交互登录。按本任务允许方式提供上述实际工作区MP4/ZIP下载，完整回执见`delivery.json`。

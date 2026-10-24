@@ -78,3 +78,5 @@
 sourceframes从选定的原生连续录屏提取，provenance.json记录来源；点击帧单独注明片前阶段。原始视频是FFmpeg原生X11录屏，非截图轮播。本次完整录制通过，未发生需回退为伪成功的业务故障；若复现失败，capture会保留失败JSON/截图并拒绝后续渲染。
 
 MP4/ZIP/原始录像不进入普通Git；脚本、SRT、清单、报告、最终关键帧和轻量证据提交独立PR。下载与远程附件上传状态见delivery.json，未把PR或本机文件宣称为公网视频发布。
+
+远程实测：[PR #46](https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/pull/46)已创建且OPEN；视频附件上传HTTP401 Bad credentials，CLI回滚release，查询releases为空，未发布成片。工作区MP4/ZIP已实际生成，按任务允许方式提供下载，未把PR或本机文件说成已上传视频。
