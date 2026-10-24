@@ -1,0 +1,48 @@
+{
+  "captureId": "2026-10-24T04-43-10-705Z",
+  "rawVideo": "raw/2026-10-24T04-43-10-705Z/input.mkv",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "description": "Full viewport frames extracted from the selected actual native screen recording before post-production; no graphics or reconstruction. The scored card and rules are unchanged actual UI; rectangle and cursor overlays only emphasize measured source text.",
+  "frames": [
+    {
+      "file": "01_start.png",
+      "segmentTimeSec": 2,
+      "rawTimeSec": 11.100018208000002
+    },
+    {
+      "file": "02_subject.png",
+      "segmentTimeSec": 8.5,
+      "rawTimeSec": 17.600018208
+    },
+    {
+      "file": "03_time.png",
+      "segmentTimeSec": 12.5,
+      "rawTimeSec": 21.600018208
+    },
+    {
+      "file": "04_experience.png",
+      "segmentTimeSec": 16.4,
+      "rawTimeSec": 25.500018208
+    },
+    {
+      "file": "05_price.png",
+      "segmentTimeSec": 18.8,
+      "rawTimeSec": 27.900018208000002
+    },
+    {
+      "file": "06_preference.png",
+      "segmentTimeSec": 20.6,
+      "rawTimeSec": 29.700018208000003
+    },
+    {
+      "file": "07_weights.png",
+      "segmentTimeSec": 22.3,
+      "rawTimeSec": 31.400018208000002
+    },
+    {
+      "file": "08_end.png",
+      "segmentTimeSec": 28,
+      "rawTimeSec": 37.100018208
+    }
+  ]
+}
