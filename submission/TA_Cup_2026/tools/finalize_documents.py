@@ -16,7 +16,8 @@ from PIL import Image
 BASE=Path(__file__).resolve().parents[1]
 SHORT='领航云学堂'
 TITLE='领航云学堂——AI赋能的校园家教智能匹配与个性化学习服务平台'
-SUMMARY='“领航云学堂”由四人学生团队开发，面向学生、家长和大学生家教，以“小书灵”AI学习助手串联需求整理、可解释匹配、预约教学与课后反馈。平台综合学科、时间、经验和费用展示推荐依据，支持教师资料展示、预约接单、西安片区地图、知识笔记与练习自测，并提供按配置启用的文字、图片辅导和练习生成接口。教师可发布四节数学示范课程、记录逐题表现，核验反馈后修订下一课，保留历史版本供家长查看。系统采用H5与微信小程序共享代码、Mock与开发API双模式，形成可运行、可复现的教育服务创业原型，体现小团队运用AI工具与模块化工作流快速完成应用验证的实践能力。'
+SUMMARY='领航云学堂面向学生家长与大学生家教，解决选师信息分散、教学记录与课后反馈脱节的问题。平台以“小书灵”为交互入口，将需求整理、可解释推荐、预约、逐题记录与课程修订连接起来。家长可核对学科、时间、经历与费用等推荐依据；教师依据课堂事实确认反馈、修订下一课，保留历史版本。作品已形成三角色流程及四节数学示范课程，兼具学习资源和西安片区辅助选择。系统采用规则约束、可选模型与人工确认协作，模型接口已实现，真实供应商效果尚未验证。四人团队通过AI辅助开发形成可运行、可复现的教育服务创业原型。'
+
 assert len(SUMMARY)<=300
 
 def font(run,size=None,bold=None,color=None):
@@ -33,7 +34,7 @@ def init(title):
   st=d.styles[key];st.font.name='Noto Sans CJK SC';st._element.get_or_add_rPr().rFonts.set(qn('w:eastAsia'),'Noto Sans CJK SC');st.font.size=Pt(size);st.font.color.rgb=RGBColor.from_string('000000')
  for border in d.styles['Title']._element.xpath('./w:pPr/w:pBdr'):
   border.getparent().remove(border)
- d.core_properties.title=title;d.core_properties.author='领航云学堂项目组';d.core_properties.comments='原始签名图片未改写；身份与官方模板待核对时仅作排版预览。';d.core_properties.modified=datetime.now(timezone.utc)
+ d.core_properties.title=title;d.core_properties.author='领航云学堂项目组';d.core_properties.comments='按团队确认的信息编制；签名原始图片保持不变。';d.core_properties.modified=datetime.now(timezone.utc)
  return d
 
 def paragraph(d,text,style=None,size=None,bold=None,align=None):
@@ -46,7 +47,7 @@ def set_repeat_header(row):
  pr=row._tr.get_or_add_trPr();e=OxmlElement('w:tblHeader');pr.append(e)
 def table_text(d,headers,rows):
  t=d.add_table(rows=1,cols=len(headers));t.style='Table Grid';t.autofit=False
- widths=([3.5,13.3] if headers[0]=='项目' else [5.0,11.8]) if len(headers)==2 else ([3.5,5.5,7.8] if headers[0]=='能力' else [16.8/len(headers)]*len(headers))
+ widths=([3.5,13.3] if headers[0]=='项目' else [5.0,11.8]) if len(headers)==2 else ([3.0,2.0,11.8] if headers[0]=='匹配维度' else [6.0,4.5,6.3] if headers[0]=='第三课环节' else [3.2,8.6,5.0] if headers[0]=='验证任务' else [2.0,5.4,9.4] if headers[0]=='课次' else [16.8/len(headers)]*len(headers))
  for col,w in zip(t.columns,widths):col.width=Cm(w)
  for cell,text in zip(t.rows[0].cells,headers):cell.text=text
  set_repeat_header(t.rows[0])
@@ -76,7 +77,6 @@ def intro(info,out):
  paragraph(d,'联系人：'+value(info,'contact')+'　　电话：'+value(info,'phone'),size=10)
  paragraph(d,'电子邮箱：'+value(info,'email'),size=10)
  paragraph(d,'案例介绍（300字以内）','Heading 2');paragraph(d,SUMMARY,size=11)
- paragraph(d,'报名字段按已确认内容填写；正式提交时请与官网附件1模板核对。',size=8)
  d.save(out/'01a_参赛作品简介.docx')
  (out/'01a_案例介绍正文.txt').write_text(SUMMARY+'\n',encoding='utf-8')
  return {'summaryCharactersIncludingPunctuation':len(SUMMARY),'missingIdentityFields':[k for k in ['workTitle','track','team','school','leader','contact','phone','email','signatureNames'] if not info.get(k)]}
@@ -137,23 +137,34 @@ def brochure(info,out):
   if field=='NUMPAGES':font(footer.add_run(' / '),8,color='607268')
   el=OxmlElement('w:fldSimple');el.set(qn('w:instr'),field);footer._p.append(el)
  normal=d.styles['Normal'];normal.font.size=Pt(10.5);normal.paragraph_format.line_spacing=1.2;normal.paragraph_format.space_after=Pt(5)
- lines=md.splitlines();i=0
+ lines=md.splitlines();i=0;pending_break=False
  while i<len(lines):
   line=lines[i].strip();i+=1
   if not line:continue
-  if line=='<!-- PAGE -->':d.add_page_break();continue
+  if line=='<!-- PAGE -->':pending_break=True;continue
   if line.startswith('<!-- KEY:'):
    key=line[len('<!-- KEY:'):].split('-->')[0].strip().replace('|','：',1);p=paragraph(d,key,size=11,bold=True);p.paragraph_format.keep_with_next=True;continue
   if line.startswith('<!-- FLOW:'):
-   labels=line[len('<!-- FLOW:'):].split('-->')[0].strip().split('|');t=d.add_table(rows=1,cols=len(labels))
-   for cell,lab in zip(t.rows[0].cells,labels):
-    cell.text=lab
-    for p in cell.paragraphs:
-     p.alignment=WD_ALIGN_PARAGRAPH.CENTER
-     for r in p.runs:font(r,9,True,'246E70')
-   d.add_paragraph();continue
+   labels=line[len('<!-- FLOW:'):].split('-->')[0].strip().split('|')
+   p=paragraph(d,' → '.join(str(n+1)+'. '+lab for n,lab in enumerate(labels)),size=9,bold=True,align=WD_ALIGN_PARAGRAPH.CENTER)
+   continue
+  if line.startswith('<!-- FIGURE:'):
+   caption,src,coords,display=line[len('<!-- FIGURE:'):].split('-->')[0].strip().split('|')
+   path=BASE/src;l,t,r,b=map(int,coords.split(','))
+   with Image.open(path) as im:w,h=im.size
+   width=float(display);height=width*(b-t)/(r-l)
+   p=d.add_paragraph();p.alignment=WD_ALIGN_PARAGRAPH.CENTER;p.paragraph_format.keep_with_next=True
+   shape=p.add_run().add_picture(str(path),width=Cm(width),height=Cm(height))
+   fill=shape._inline.graphic.graphicData.pic.blipFill;rect=OxmlElement('a:srcRect')
+   for key,n in [('l',l/w),('t',t/h),('r',(w-r)/w),('b',(h-b)/h)]:rect.set(key,str(round(n*100000)))
+   fill.insert(1,rect)
+   paragraph(d,caption,size=8,align=WD_ALIGN_PARAGRAPH.CENTER)
+   continue
   if line=='<!-- ARCH -->':
-   table_text(d,['共享双端','统一服务层','开发后端'],[['H5／微信小程序','角色／预约归属校验\nMock／API双模式','Fastify\nPrisma／SQLite'],['本次为演示原型','模型适配器（按配置启用）','服务端保管密钥']]);continue
+   paragraph(d,'H5／小程序共享页面 → 统一业务服务',size=10,bold=True,align=WD_ALIGN_PARAGRAPH.CENTER)
+   table_text(d,['本机演示路径','开发API路径'],[['Mock适配器 → 浏览器本机状态','API适配器 → Fastify权限与业务校验 → Prisma／SQLite'],['本地规则、固定内容与预置案例','服务端模型适配器 → 可选模型服务（按配置启用）']])
+   paragraph(d,'需求确认：家长　｜　课程／反馈发布：教师　｜　资料审核：管理员',size=9,align=WD_ALIGN_PARAGRAPH.CENTER)
+   continue
   if line.startswith('<!-- NOTE:'):
    txt=line[len('<!-- NOTE:'):].split('-->')[0].strip().replace('|','：',1);p=paragraph(d,txt,size=9);p.paragraph_format.space_before=Pt(3);continue
   if line.startswith('!['):
@@ -167,7 +178,11 @@ def brochure(info,out):
    while i<len(lines) and lines[i].strip().startswith('|'):rows.append(lines[i].strip());i+=1
    cells=[[x.strip() for x in row.strip('|').split('|')] for row in rows];table_text(d,cells[0],[row for row in cells[1:] if not all(re.fullmatch(r'[-: ]+',x or '-') for x in row)]);continue
   if line.startswith('#'):
-   level=len(line)-len(line.lstrip('#'));text=line[level:].strip();paragraph(d,text,'Title' if level==1 else 'Heading '+str(min(level-1,3)),align=WD_ALIGN_PARAGRAPH.CENTER if level==1 else None);continue
+   level=len(line)-len(line.lstrip('#'));text=line[level:].strip()
+   p=paragraph(d,text,'Title' if level==1 else 'Heading '+str(min(level-1,3)),align=WD_ALIGN_PARAGRAPH.CENTER if level==1 else None)
+   if pending_break:p.paragraph_format.page_break_before=True;pending_break=False
+   continue
+
   link=re.match(r'^(代码仓库|主线验证)：(https://\S+)$',line)
   if link:
    p=d.add_paragraph();rid=d.part.relate_to(link[2],RT.HYPERLINK,is_external=True);h=OxmlElement('w:hyperlink');h.set(qn('r:id'),rid)
@@ -176,7 +191,7 @@ def brochure(info,out):
   if is_keywords and info.get('school') and info.get('leader'):
    paragraph(d,'学校：'+info['school']+'　负责人：'+info['leader']+'　团队：'+info.get('team','【待补】'),size=10)
    paragraph(d,'所属赛道：'+info.get('track','【待补】')+'　选题方向：'+info.get('direction','【待补】'),size=10)
- d.core_properties.comments='整合同伴3903f32正文，按负责人确定的赛道二与正式作品名称修订；PDF由当前Word实际导出。'
+ d.core_properties.comments='基于同伴原稿与实际实现修订；补充规则、模型和人工边界及真实验收画面。'
  d.save(out/'02_作品介绍文档.docx')
  # The original teammate PDF remains available via Git commit 3903f32; no duplicate old-title PDF in the current bundle.
  shutil.copy2(BASE/'02_作品介绍文档.md',out/'02_作品介绍文档.md')
