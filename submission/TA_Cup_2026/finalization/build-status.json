@@ -1,0 +1,20 @@
+{
+  "summary": {
+    "summaryCharactersIncludingPunctuation": 264,
+    "missingIdentityFields": [
+      "leader",
+      "contact",
+      "phone",
+      "email",
+      "signatureNames"
+    ]
+  },
+  "identityComplete": false,
+  "officialTemplatesVerified": false,
+  "teacherRequirementConfirmed": false,
+  "otherDocumentsAssumption": "参赛作品简介 + 作品介绍文档；等待用户确认",
+  "teammateSource": "3903f325b07c3bc27a3974deddee1c7178a3dbf1",
+  "teammatePR": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/pull/40",
+  "signaturesEmbedded": false,
+  "status": "已确认报名字段已填；教师成员与官方模板待核对"
+}

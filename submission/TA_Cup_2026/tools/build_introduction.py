@@ -192,7 +192,7 @@ def build(font, bold_font, output):
                 line, style = line[3:], 'h1'
             elif line.startswith('# '):
                 line, style = line[2:], 'title'
-            elif line == '云伴学驱动的一站式个性化学习服务平台':
+            elif line in {'云伴学驱动的一站式个性化学习服务平台','AI赋能的校园家教智能匹配与个性化学习服务平台'}:
                 style = 'subtitle'
             elif line.startswith('作品介绍文档'):
                 style = 'meta'
@@ -211,7 +211,7 @@ def build(font, bold_font, output):
     pdf = SimpleDocTemplate(str(output), pagesize=A4,
         leftMargin=52, rightMargin=52, topMargin=49, bottomMargin=47,
         title='领航云学堂作品介绍', author='领航云学堂项目组',
-        subject='云伴学驱动的一站式个性化学习服务平台')
+        subject='AI赋能的校园家教智能匹配与个性化学习服务平台')
     pdf.build(story, onFirstPage=page_chrome, onLaterPages=page_chrome)
     print('Created', output)
 
