@@ -51,3 +51,7 @@ XVFB_BIN=/tmp/S05-S07-x11/usr/bin/Xvfb node video-production/segments/S05-S07/sc
 原始录屏/截图/日志各自在子片raw目录。普通Git不提交MP4/ZIP/原始录像。完整包包括成片、子片和必要源码/关键帧/验证证据。
 
 最终1920×1080、30fps、H.264/yuv420p、AAC48kHz静音、faststart。检查时长、PTS、解码、黑屏/空帧、独立上下文、真实待确认状态和固定镜头；如实列出原始CFR重复计数。详细实测见validation-report.md，远程附件和下载见delivery.json。
+
+## 上传与交付
+
+脚本/证据已提交 [PR #47](https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/pull/47)。GitHub Release MP4附件上传返回 HTTP 401 Bad credentials，未成功发布远程视频；不尝试绕过凭据。实际成片与完整包提供在 /workspace/shared/downloads/S05-S07/。合片MP4 SHA256为 `f9768d2712a5726392b3f70e114b1229f1267236cdd515f7440c3b8cb9c1863d`。没有合并main；交付信息见delivery.json。

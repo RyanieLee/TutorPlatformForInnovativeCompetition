@@ -52,3 +52,7 @@ SHA256：`f9768d2712a5726392b3f70e114b1229f1267236cdd515f7440c3b8cb9c1863d`；�
 均为统一虚构人物与本机 Mock 记录，不表示真实服务器预约、跨设备同步、老师已接单或真实通知；状态始终“待家教确认”。必要联系字段使用非个人电话的演示数字10000000000。没有伪装调用大模型，不承诺提分或资质认证。只使用现有项目网页素材与自产字幕/图形，无新增外部音乐/真人访谈素材。
 
 原生翻译提示框/取景准备失败、早期CFR严格阈值和页面入口定位失败等记录保留于 evidence/failure-*.json 或 capture-*.json；最终 evidence/capture.json 与选中日志、录像哈希绑定。原始录像保留本机 raw/，不进入普通Git；下载包提供最终视频与必要证据、脚本。
+
+## 上传与交付
+
+脚本/证据已提交 [PR #47](https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/pull/47)。GitHub Release MP4附件上传返回 HTTP 401 Bad credentials，未成功发布远程视频；不尝试绕过凭据。实际成片与完整包提供在 /workspace/shared/downloads/S05-S07/。合片MP4 SHA256为 `f9768d2712a5726392b3f70e114b1229f1267236cdd515f7440c3b8cb9c1863d`。没有合并main；交付信息见delivery.json。

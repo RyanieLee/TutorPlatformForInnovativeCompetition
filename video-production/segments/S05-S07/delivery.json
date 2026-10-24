@@ -1,0 +1,25 @@
+{
+  "id": "S05-S07",
+  "durationSec": 80,
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "productionBranch": "video/segments-S05-S07",
+  "segmentBranches": [
+    "video/segment-S05",
+    "video/segment-S06",
+    "video/segment-S07"
+  ],
+  "pullRequest": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/pull/47",
+  "videoSha256": "f9768d2712a5726392b3f70e114b1229f1267236cdd515f7440c3b8cb9c1863d",
+  "fileSizeBytes": 4826739,
+  "video": "/workspace/shared/downloads/S05-S07/clip_S05-S07.mp4",
+  "bundle": "/workspace/shared/downloads/S05-S07/S05-S07_delivery.zip",
+  "remoteVideoUrl": null,
+  "releasePublished": false,
+  "uploadFailure": "GitHub release asset upload: HTTP 401 Bad credentials on uploads.github.com. Git and PR succeeded. No authentication workarounds attempted.",
+  "mainMerged": false,
+  "businessChanges": false,
+  "usesModel": false,
+  "realTeacherNotification": false,
+  "independentBrowserContexts": true,
+  "usesS06StorageInS07": false
+}
