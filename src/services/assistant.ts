@@ -1,7 +1,7 @@
 import { BusinessError } from './errors'
 import { shallowRef } from 'vue'
 import { apiRequest, apiUploadFile } from './api/client'
-import {assistantApiMode as apiMode} from '../config/runtime'
+import {assistantApiMode as apiMode,demoAiGateway} from '../config/runtime'
 import { parseBriefLocally } from './brief-parser'
 import { learningTopics } from '../data/learning'
 import { platformHelpAnswer } from './platform-guide'
@@ -10,7 +10,7 @@ export interface AssistantReply{reply:string;source:'model'|'local';matchBrief?:
 export const pendingCompanionAuto=shallowRef(false)
 export const pendingCompanionBrief=shallowRef<string|null>(null)
 export function companionStatus():Promise<{enabled:boolean}>{return apiMode?apiRequest('GET','/api/assistant/status',undefined,false):Promise.resolve({enabled:false})}
-export function remoteChat(messages:ChatMessage[]):Promise<AssistantReply>{return apiRequest('POST','/api/assistant/chat',{messages})}
+export function remoteChat(messages:ChatMessage[]):Promise<AssistantReply>{return apiRequest('POST','/api/assistant/chat',{messages:demoAiGateway?messages.map(m=>m.role==='assistant'&&m.content.length>1500?{...m,content:m.content.slice(0,1480)+'\n（历史答复节选）'}:m):messages})}
 
 export interface HomeworkImageReviewStatus { enabled: boolean; maxImageBytes: number; acceptedTypes: string[] }
 export async function homeworkImageReviewStatus(): Promise<HomeworkImageReviewStatus> {
