@@ -1,4 +1,5 @@
-import { apiBaseUrl, hostedAssistant } from '../../config/runtime'
+import { apiBaseUrl, hostedAssistant, demoAiGateway } from '../../config/runtime'
+import {requestDemoAiAccess,clearDemoAiAccess} from '../demo-ai-access'
 import { BusinessError } from '../errors'
 
 const TOKEN_KEY = 'tutor-platform:api-token:v1'
@@ -11,16 +12,20 @@ interface Envelope<T> { data?: T; error?: { code: string; message: string } }
 function unpack<T>(statusCode: number, body: Envelope<T>, authenticated: boolean, requestToken: string): T {
   if (authenticated && readToken() !== requestToken) throw new BusinessError('UNAUTHORIZED', '登录身份已变化，请重新操作')
   if (statusCode >= 200 && statusCode < 300 && body && 'data' in body) return body.data as T
-  if (statusCode === 401 && authenticated) { clearToken(); unauthorized?.() }
+  if (statusCode === 401 && authenticated) { if(demoAiGateway)clearDemoAiAccess();else{clearToken(); unauthorized?.()} }
   const codes = ['UNAUTHORIZED','FORBIDDEN','NOT_FOUND','INVALID','CONFLICT','RATE_LIMIT','MODEL_UNAVAILABLE','MODEL_UPSTREAM'] as const
   const code = codes.find(c => c === body?.error?.code) || 'STORAGE'
   throw new BusinessError(code, body?.error?.message || `请求失败（${statusCode}）`)
 }
 export async function apiRequest<T>(method: 'GET'|'POST'|'PUT', path: string, data?: unknown, authenticated = true): Promise<T> {
   if (!apiBaseUrl) throw new BusinessError('STORAGE', '请配置 VITE_API_BASE_URL')
+  if(demoAiGateway&&!path.startsWith('/api/assistant/'))throw new BusinessError('FORBIDDEN','在线演示仅开放AI接口；其他业务使用浏览器演示数据')
   const token = authenticated ? readToken() : ''
+  const sourceUrl=typeof location==='undefined'?'':location.href
+  const demoCode=demoAiGateway&&authenticated&&method==='POST'?await requestDemoAiAccess():''
+  if(demoCode&&((typeof location!=='undefined'&&location.href!==sourceUrl)||readToken()!==token))throw new BusinessError('UNAUTHORIZED','页面或身份已变化，未发送AI请求')
   const response = await new Promise<UniApp.RequestSuccessCallbackResult>((resolve, reject) => {
-    uni.request({ url: apiBaseUrl + path, method, ...(path.startsWith('/api/assistant/')||path==='/api/admin/model-settings/test'?{timeout:150000}:{}), data: (data ?? (method === 'GET' ? undefined : {})) as AnyObject, header: token ? { Authorization: 'Bearer ' + token } : {}, success: resolve, fail: reject })
+    uni.request({ url: apiBaseUrl + path, method, ...(path.startsWith('/api/assistant/')||path==='/api/admin/model-settings/test'?{timeout:150000}:{}), data: (data ?? (method === 'GET' ? undefined : {})) as AnyObject, header: {...(token ? { Authorization: 'Bearer ' + token } : {}),...(demoCode?{'X-Demo-Access':demoCode}:{})}, success: resolve, fail: reject })
   }).catch(() => { throw new BusinessError('STORAGE', '无法连接开发 API，请检查服务地址和网络') })
   return unpack(response.statusCode, response.data as Envelope<T>, authenticated, token)
 }

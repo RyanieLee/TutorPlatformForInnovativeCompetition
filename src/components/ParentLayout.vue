@@ -2,7 +2,7 @@
 import ThemeSwitch from "./ThemeSwitch.vue"
 const navigate=(url:string)=>uni.navigateTo({url})
 import AiCompanion from './AiCompanion.vue'
-import { apiMode } from '../config/runtime'
+import { apiMode, demoAiGateway } from '../config/runtime'
 defineProps<{ title: string; active?: 'home' | 'orders' | 'profile' | 'learning' | 'order-map' | 'demo' }>()
 const assistant=()=>navigate('/pages/assistant/index')
 const demo=()=>navigate('/pages/demo/index')
@@ -19,7 +19,7 @@ const match = () => navigate('/pages/match/index')
       <view class="brand" @click="home"><text class="brand-icon" aria-hidden="true"></text><view><text class="brand-name">领航云学堂</text><text class="brand-note">让优质教育更容易遇见</text></view></view>
       <ThemeSwitch/><view class="parent-nav"><button :class="{current:active==='home'}" @click="home">找家教</button><button @click="assistant">AI问答</button><button @click="navigate('/pages/assistant/homework')">AI批改</button><button @click="navigate('/pages/students/index')">学情档案</button><button @click="match">智能匹配</button><button :class="{current:active==='learning'}" @click="learning">AI学习中心</button><button :class="{current:active==='order-map'}" @click="orderMap">订单地图</button><button :class="{current:active==='orders'}" @click="orders">我的预约</button><button :class="{current:active==='demo'}" @click="demo">演示导航</button><button :class="{current:active==='profile'}" @click="profile">我的 / 切换角色</button></view>
     </view>
-    <view class="parent-caption"><text>{{ title }}</text><text class="mode">{{ apiMode ? '开发 API · 虚构资料' : '本机 Mock · 演示数据' }}</text></view>
+    <view class="parent-caption"><text>{{ title }}</text><text class="mode">{{ demoAiGateway ? '在线演示 · AI由云端配置，业务数据保存在此浏览器' : apiMode ? '开发 API · 虚构资料' : '本机 Mock · 演示数据' }}</text></view>
     <slot/>
     <AiCompanion/>
     <view class="parent-footer">领航云学堂 · 创新创业演示项目。所有资料仅供测试，请勿填写真实个人信息。</view>
