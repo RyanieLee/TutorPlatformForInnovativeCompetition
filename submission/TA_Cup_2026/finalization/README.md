@@ -1,20 +1,11 @@
-# 三份材料的公开校对版
+# 三份材料｜公开版本
 
-作品名称已按用户2026-10-24最新指示统一。这里仅保存不含实际签名/联系方式的版本；带签名及报名身份信息的DOCX/PDF只在本机会话下载目录导出。
+采用黑色字体、加粗标题与淡灰表头。正式作品名称、赛道二与智教未来队已统一；个人姓名/联系方式在公共版本中保留占位，不含签名原图。私有交付已按用户确认填齐并使用最新粗笔签名。
 
-- 01a：264字简介正文及可编辑基本信息表。
-- 01b：仓库原承诺声明的未签名校对版，官方模板仍待核对。
-- 02：保留同伴3903f32主体内容，统一新名称与核查日期，提供8页PDF和可编辑Word。
+- 01a_参赛作品简介.docx／PDF：269字简介与基本信息表。
+- 01b_参赛承诺书_未签名校对版.docx／PDF：公开无签名版本；私有版为四人签名承诺书。
+- 02_作品介绍文档.docx／PDF：5页，只保留已实现功能、工程证据和创业应用特点。
 
-修改者与PR状态、未知报名字段、条款和视频旧稿问题见../FINALIZATION_REVIEW.md。新版介绍来源PR #40未在核查时合入main，本分支已保留其作者信息整合，无需再从旧Word覆盖新版。
+history/下的8页PDF是同伴历史版本，不是本次定稿。原稿作者和本次修复见../FINALIZATION_REVIEW.md。
 
-## 复现
-
-```bash
-python3 submission/TA_Cup_2026/tools/finalize_documents.py --output /tmp/submission-review
-soffice --headless --convert-to pdf --outdir /tmp/submission-review /tmp/submission-review/*.docx
-```
-
-工具：Python3、python-docx、Pillow、LibreOffice及Noto CJK字体。带身份版本另加--identity指向本机JSON（workTitle/track/team/school/leader/contact/phone/email/signatureNames/signingDate）；带签名版本另加--signature-dir指向四张本机原图，文件名1-照片-1.jpg至4-照片-4.jpg。不要将私人JSON、签名原图或带电话的输出放进公共Git。
-
-原ReportLab生成器保留为同伴历史方案；本轮使用Word→PDF流程，解决本机无微软雅黑字体路径的问题。
+复现：运行../tools/finalize_documents.py，再用LibreOffice转换PDF。带身份版本用--identity读取本机JSON，带签名版本用--signature-dir读取本机图片；第一张替换图可通过私有JSON的signatureOverrides指定原路径、裁切框和Word旋转角度。不得把私人JSON或带联系方式/签名的产物提交公共仓库。

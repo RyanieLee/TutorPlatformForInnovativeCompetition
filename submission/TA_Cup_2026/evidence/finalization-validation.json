@@ -1,21 +1,22 @@
 {
   "date": "2026-10-24",
-  "mainSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
-  "brochureTeammateCommit": "3903f325b07c3bc27a3974deddee1c7178a3dbf1",
-  "originalDocxTrackedChanges": 0,
-  "originalDocxComments": 0,
-  "sourceJpegsByteIdentical": 4,
+  "status": "内容、报名字段、签名与排版定稿；官方附件原模板尚未逐字核对",
+  "track": "赛道二：AI+大学生创新创业",
+  "direction": "大学生OPC创新创业AI agent",
+  "summaryCharactersIncludingPunctuation": 269,
+  "textRGB": "#000000",
+  "tableHeaderRGB": "#F2F2F2",
+  "teacherRuleFromTrackOneRemoved": true,
+  "unimplementedPlansRemoved": true,
+  "fourOriginalSignatureJpegsUnchanged": true,
+  "leaderSignatureReplaced": true,
+  "leaderDisplayRotationClockwiseDeg": 270,
+  "visualReview": "已逐页查看最终7页PDF：简介1页、承诺书1页、作品介绍5页；文字、签名、表格、页脚和图片均无可见截断或遮挡。",
+  "privateArtifactsCommitted": false,
   "privatePdfPages": {
     "01a": 1,
     "01b": 1,
-    "02": 8
+    "02": 5
   },
-  "summaryCharacters": 264,
-  "pdfTextBoundsChecked": true,
-  "noReplacementGlyphs": true,
-  "officialTrack": "赛道一：AI+高等教育",
-  "direction": "AI+教学",
-  "teacherRequirementConfirmed": false,
-  "officialTemplatesVerified": false,
-  "privateArtifactsCommitted": false
+  "officialTemplatesVerified": false
 }
