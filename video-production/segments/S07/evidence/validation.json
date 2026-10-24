@@ -1,0 +1,299 @@
+{
+  "status": "passed",
+  "id": "S07",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "videoSha256": "26a3d67a7b552ede7a22a460fc3131e1c699bee5d7682da54ef8b659993a08a6",
+  "fileSizeBytes": 1319953,
+  "checks": {
+    "exactDuration": {
+      "passed": true,
+      "actual": "25.000000"
+    },
+    "exactFrameCount": {
+      "passed": true,
+      "actual": "750"
+    },
+    "resolution": {
+      "passed": true,
+      "actual": [
+        1920,
+        1080
+      ]
+    },
+    "frameRate": {
+      "passed": true,
+      "actual": [
+        "30/1",
+        "30/1"
+      ]
+    },
+    "H264yuv420p": {
+      "passed": true,
+      "actual": [
+        "h264",
+        "yuv420p"
+      ]
+    },
+    "AAC48kHz": {
+      "passed": true,
+      "actual": [
+        "aac",
+        "48000"
+      ]
+    },
+    "faststart": {
+      "passed": true,
+      "actual": [
+        {
+          "type": "ftyp",
+          "offset": 0,
+          "size": 32
+        },
+        {
+          "type": "moov",
+          "offset": 32,
+          "size": 28854
+        },
+        {
+          "type": "free",
+          "offset": 28886,
+          "size": 8
+        },
+        {
+          "type": "mdat",
+          "offset": 28894,
+          "size": 1291059
+        }
+      ]
+    },
+    "monotonic30fpsPTS": {
+      "passed": true,
+      "actual": {
+        "count": 750,
+        "maxDeltaError": 6.666666701946045e-7
+      }
+    },
+    "completeDecode": {
+      "passed": true,
+      "actual": "Entire MP4 decoded without FFmpeg errors"
+    },
+    "silentAAC": {
+      "passed": true,
+      "actual": {
+        "maxSample": 0,
+        "samples": 2400256
+      }
+    },
+    "noBlackIntervals": {
+      "passed": true,
+      "actual": "No black-screen interval in the actual footage area (10ms detector minimum)"
+    },
+    "noBlankFootageFrames": {
+      "passed": true,
+      "actual": {
+        "uniformFrames": 0,
+        "minStd": 23.722549501710628,
+        "frames": 750
+      }
+    },
+    "realVisibleClicks": {
+      "passed": true,
+      "actual": [
+        {
+          "timeSec": 2.313,
+          "kind": "real-mouse-click",
+          "name": "我的预约",
+          "box": {
+            "x": 72.26042175292969,
+            "y": 406.10418701171875,
+            "width": 809.7812652587891,
+            "height": 38.666656494140625
+          },
+          "point": {
+            "x": 477.1510543823242,
+            "y": 425.43751525878906
+          },
+          "hitTest": true
+        }
+      ]
+    },
+    "fixedCameraNoAnimatedZoom": {
+      "passed": true,
+      "actual": {
+        "fixed": true,
+        "pan": false,
+        "animatedZoom": false,
+        "source": [
+          1920,
+          1080
+        ],
+        "sourceCrop": [
+          0,
+          0,
+          1920,
+          1080
+        ],
+        "footageFrame": [
+          128,
+          72,
+          1664,
+          936
+        ],
+        "browserCssViewport": [
+          1280,
+          720
+        ],
+        "deviceScaleFactor": 1.5
+      }
+    },
+    "parentDemoRole": {
+      "passed": true,
+      "actual": "学生/家长 · 本机模拟登录"
+    },
+    "realPublicSelectionT001": {
+      "passed": true,
+      "actual": {
+        "method": "real public UI search/name selection",
+        "id": "t001",
+        "url": "http://127.0.0.1:35365/#/pages/tutors/detail?id=t001"
+      }
+    },
+    "realPendingOrder": {
+      "passed": true,
+      "actual": {
+        "card": {
+          "x": 222.33334350585938,
+          "y": 266.54168701171875,
+          "width": 820,
+          "height": 190,
+          "text": "小林老师\n待家教确认\n辅导科目：数学\n期望时间：周六下午\n预约称呼：小航\n创建时间：2026-10-24T05:26:52.629Z\n取消预约"
+        },
+        "actualText": "小林老师\n待家教确认\n辅导科目：数学\n期望时间：周六下午\n预约称呼：小航\n创建时间：2026-10-24T05:26:52.629Z\n取消预约",
+        "status": "待家教确认",
+        "url": "http://127.0.0.1:35365/#/pages/orders/index",
+        "notice": "本机模拟记录，不跨设备同步，不会真实通知老师，也不代表真实订单。"
+      }
+    },
+    "noFakeAcceptanceOrNotification": {
+      "passed": true,
+      "actual": "本机模拟记录，不跨设备同步，不会真实通知老师，也不代表真实订单。"
+    },
+    "pendingSurvivesActualReload": {
+      "passed": true,
+      "actual": {
+        "status": "待家教确认",
+        "actualText": "小林老师\n待家教确认\n辅导科目：数学\n期望时间：周六下午\n预约称呼：小航\n创建时间：2026-10-24T05:26:52.629Z\n取消预约",
+        "verifiedAfterRecording": true
+      }
+    },
+    "independentS07Booking": {
+      "passed": true,
+      "actual": {
+        "independentUiBooking": true,
+        "usesS06Storage": false,
+        "contact": "10000000000",
+        "status": "待家教确认"
+      }
+    },
+    "ordersEntryWithinSevenSeconds": {
+      "passed": true,
+      "actual": [
+        {
+          "timeSec": 2.313,
+          "kind": "real-mouse-click",
+          "name": "我的预约",
+          "box": {
+            "x": 72.26042175292969,
+            "y": 406.10418701171875,
+            "width": 809.7812652587891,
+            "height": 38.666656494140625
+          },
+          "point": {
+            "x": 477.1510543823242,
+            "y": 425.43751525878906
+          },
+          "hitTest": true
+        }
+      ]
+    },
+    "SRTExactDurationUTF8": {
+      "passed": true,
+      "actual": [
+        [
+          0,
+          7
+        ],
+        [
+          7,
+          14
+        ],
+        [
+          14,
+          20
+        ],
+        [
+          20,
+          25
+        ]
+      ]
+    },
+    "noModelCall": {
+      "passed": true,
+      "actual": []
+    },
+    "freshBrowserContext": {
+      "passed": true,
+      "actual": {
+        "cookies": [],
+        "origins": []
+      }
+    },
+    "nativeViewportAlignment": {
+      "passed": true,
+      "actual": {
+        "x": 0,
+        "y": 131,
+        "error": 0,
+        "topRightMaeAfter": 0,
+        "businessMae": 0.0013108088225459117,
+        "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+      }
+    },
+    "nativePacingAudited": {
+      "passed": true,
+      "actual": {
+        "logSha256": "6617263fd02dca713a445969ad8b5d796840861fb2d3cd762351caeb84a6f557",
+        "rawTrimStartSec": 1.1000206510000008,
+        "usedRawEndSec": 26.100020651,
+        "rawDuplicateFrames": 0,
+        "rawDroppedFrames": 0,
+        "transitions": [],
+        "noPacingCorrectionInUsedInterval": true,
+        "note": "Audit covers the actual selected segment footage; fixed crop, no animated zoom, cursor/outline emphasis only."
+      }
+    }
+  },
+  "keyframes": [
+    {
+      "file": "keyframes/01_start.jpg",
+      "timeSec": 0.8
+    },
+    {
+      "file": "keyframes/02_click.jpg",
+      "timeSec": 2.248
+    },
+    {
+      "file": "keyframes/03_record.jpg",
+      "timeSec": 9
+    },
+    {
+      "file": "keyframes/04_status.jpg",
+      "timeSec": 17
+    },
+    {
+      "file": "keyframes/05_end.jpg",
+      "timeSec": 23
+    }
+  ],
+  "manualVisualReview": "Required separately: compare all keyframes/contact sheet with original webpage frames and DOM state evidence. Script success alone is not a visual review."
+}

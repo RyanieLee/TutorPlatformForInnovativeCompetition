@@ -1,0 +1,27 @@
+{
+  "durationSec": 80,
+  "frames": 2400,
+  "segments": [
+    {
+      "id": "S05",
+      "durationSec": 30,
+      "startSec": 0,
+      "endSec": 30
+    },
+    {
+      "id": "S06",
+      "durationSec": 25,
+      "startSec": 30,
+      "endSec": 55
+    },
+    {
+      "id": "S07",
+      "durationSec": 25,
+      "startSec": 55,
+      "endSec": 80
+    }
+  ],
+  "transition": "Exact source-frame cuts at 30s and 55s; no moving camera, zoom, dissolves, fake UI or time compression.",
+  "audio": "One silent stereo AAC 48kHz track",
+  "independence": "S07 recreates its own pending case through real UI. IDs/created timestamps differ between independent contexts; this is scenario continuity, not cross-context persistence."
+}

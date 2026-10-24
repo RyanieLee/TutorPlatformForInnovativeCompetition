@@ -1,0 +1,70 @@
+{
+  "id": "S07",
+  "title": "家长查看预约与状态",
+  "durationSec": 25,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "role": "核心·家长",
+  "sourceMode": "Actual independent Mock H5 UI and real clicks/typing; no model or fabricated records",
+  "timelineInFullFilm": {
+    "start": "03:15",
+    "end": "03:40"
+  },
+  "combinedTimeline": {
+    "start": 55,
+    "end": 80
+  },
+  "prerequisites": [
+    "Node>=20; npm ci; npm run demo auto-starts independently on a free port with actual log URL",
+    "Playwright Chromium, FFmpeg/ffprobe, Python3, Xvfb, libX11/libXtst, Noto CJK",
+    "New initially empty context per segment, actual public tutor selection; parent login for S06/S07; S07 creates its own pending booking through UI"
+  ],
+  "case": {
+    "synthetic": true,
+    "student": "小航",
+    "grade": "初一",
+    "subject": "初中数学",
+    "budgetMaxPerHour": 100,
+    "preferredTime": "周六下午",
+    "tutorId": "t001",
+    "tutorName": "小林老师",
+    "teachingMode": "均可 (existing actual tutor option)",
+    "mockContact": "10000000000 (required demo digits, not a personal telephone)",
+    "laterFilmOnly": "一元一次方程；第二课Q1-Q3对、Q4/Q5错，移项符号问题；3/5=60%仅指本次正确率；第三课10分钟符号专项，教师确认v2。此三段不生成后续教学或提分状态。"
+  },
+  "camera": {
+    "mode": "fixed native full-viewport capture; no pan/zoom animation",
+    "browserCssViewport": [
+      1280,
+      720
+    ],
+    "deviceScaleFactor": 1.5,
+    "nativeResolution": [
+      1920,
+      1080
+    ],
+    "sourceCrop": {
+      "x": 0,
+      "y": 0,
+      "width": 1920,
+      "height": 1080
+    },
+    "footageFrame": {
+      "x": 128,
+      "y": 72,
+      "width": 1664,
+      "height": 936
+    },
+    "userSteering": "Faster real UI actions, purposeful smooth page scrolling; no shakes or meaningless zoom."
+  },
+  "artifacts": {
+    "video": "exports/clip_S07.mp4",
+    "captions": "captions_S07.srt",
+    "voiceover": "voiceover.md",
+    "validation": "validation-report.md"
+  }
+}

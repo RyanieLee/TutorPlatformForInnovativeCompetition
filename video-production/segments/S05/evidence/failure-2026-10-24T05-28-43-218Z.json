@@ -1,0 +1,26 @@
+{
+  "id": "2026-10-24T05-28-43-218Z",
+  "status": "failed",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "captureHead": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "browserViewport": [
+    1280,
+    720
+  ],
+  "deviceScaleFactor": 1.5,
+  "nativeCaptureResolution": [
+    1920,
+    1080
+  ],
+  "freshContext": true,
+  "events": [],
+  "errors": [
+    "spawn /tmp/S05-S07-x11/usr/bin/Xvfb ENOENT"
+  ],
+  "modelRequests": [],
+  "nativePreparation": [],
+  "rawVideo": "raw/2026-10-24T05-28-43-218Z/input.mkv",
+  "baseUrl": "http://127.0.0.1:39473/",
+  "startCommand": "npm run demo -- --port 39473 --strictPort",
+  "failure": "Error: Timed out waiting for actual state\n    at until (file:///workspace/tutor/video-production/segments/S05/scripts/capture.mjs:20:183)\n    at async file:///workspace/tutor/video-production/segments/S05/scripts/capture.mjs:81:2"
+}

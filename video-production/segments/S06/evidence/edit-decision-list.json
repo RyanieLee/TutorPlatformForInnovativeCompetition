@@ -1,0 +1,55 @@
+{
+  "id": "S06",
+  "durationSec": 25,
+  "frames": 750,
+  "rawTrimStartSec": 1.100044987000001,
+  "camera": {
+    "fixed": true,
+    "pan": false,
+    "animatedZoom": false,
+    "source": [
+      1920,
+      1080
+    ],
+    "sourceCrop": [
+      0,
+      0,
+      1920,
+      1080
+    ],
+    "footageFrame": [
+      128,
+      72,
+      1664,
+      936
+    ],
+    "browserCssViewport": [
+      1280,
+      720
+    ],
+    "deviceScaleFactor": 1.5
+  },
+  "captions": [
+    {
+      "start": 0,
+      "end": 5,
+      "text": "从小林的详情进入预约"
+    },
+    {
+      "start": 5,
+      "end": 14,
+      "text": "仅填虚构案例与必填演示数字"
+    },
+    {
+      "start": 14,
+      "end": 20,
+      "text": "真实提交，等待页面确认"
+    },
+    {
+      "start": 20,
+      "end": 25,
+      "text": "从选择进入服务"
+    }
+  ],
+  "userSteering": "Faster actual actions; necessary smooth page scroll only. No shakes, dynamic zoom or artificial progress UI."
+}
