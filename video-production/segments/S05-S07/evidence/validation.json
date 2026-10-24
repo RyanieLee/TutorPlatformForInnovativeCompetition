@@ -1,0 +1,409 @@
+{
+  "status": "passed",
+  "id": "S05-S07",
+  "durationSec": 80,
+  "videoSha256": "f9768d2712a5726392b3f70e114b1229f1267236cdd515f7440c3b8cb9c1863d",
+  "fileSizeBytes": 4826739,
+  "checks": {
+    "S05ValidatedHash": {
+      "passed": true,
+      "actual": {
+        "hash": "361c93d690a718fdc48076535a0dd9efa389624854ab9ab4788090659dccd4a6",
+        "checks": 25
+      }
+    },
+    "S05FreshContext": {
+      "passed": true,
+      "actual": {
+        "cookies": [],
+        "origins": []
+      }
+    },
+    "S06ValidatedHash": {
+      "passed": true,
+      "actual": {
+        "hash": "d973180db19d047b7e4b4483573604aa9fa7c107c8a08ba2850f47e4f6a2fac6",
+        "checks": 27
+      }
+    },
+    "S06FreshContext": {
+      "passed": true,
+      "actual": {
+        "cookies": [],
+        "origins": []
+      }
+    },
+    "S07ValidatedHash": {
+      "passed": true,
+      "actual": {
+        "hash": "26a3d67a7b552ede7a22a460fc3131e1c699bee5d7682da54ef8b659993a08a6",
+        "checks": 26
+      }
+    },
+    "S07FreshContext": {
+      "passed": true,
+      "actual": {
+        "cookies": [],
+        "origins": []
+      }
+    },
+    "threeIndependentCaptures": {
+      "passed": true,
+      "actual": [
+        "2026-10-24T05-34-12-592Z",
+        "2026-10-24T05-25-11-393Z",
+        "2026-10-24T05-26-45-911Z"
+      ]
+    },
+    "onlyPendingOrdersNoNotification": {
+      "passed": true,
+      "actual": [
+        {
+          "id": "S06",
+          "order": {
+            "card": {
+              "x": 222.33334350585938,
+              "y": 266.54168701171875,
+              "width": 820,
+              "height": 190,
+              "text": "小林老师\n待家教确认\n辅导科目：数学\n期望时间：周六下午\n预约称呼：小航\n创建时间：2026-10-24T05:25:38.407Z\n取消预约"
+            },
+            "actualText": "小林老师\n待家教确认\n辅导科目：数学\n期望时间：周六下午\n预约称呼：小航\n创建时间：2026-10-24T05:25:38.407Z\n取消预约",
+            "status": "待家教确认",
+            "url": "http://127.0.0.1:40151/#/pages/orders/index",
+            "notice": "本机模拟记录，不跨设备同步，不会真实通知老师，也不代表真实订单。"
+          },
+          "reload": {
+            "status": "待家教确认",
+            "actualText": "小林老师\n待家教确认\n辅导科目：数学\n期望时间：周六下午\n预约称呼：小航\n创建时间：2026-10-24T05:25:38.407Z\n取消预约",
+            "verifiedAfterRecording": true
+          }
+        },
+        {
+          "id": "S07",
+          "order": {
+            "card": {
+              "x": 222.33334350585938,
+              "y": 266.54168701171875,
+              "width": 820,
+              "height": 190,
+              "text": "小林老师\n待家教确认\n辅导科目：数学\n期望时间：周六下午\n预约称呼：小航\n创建时间：2026-10-24T05:26:52.629Z\n取消预约"
+            },
+            "actualText": "小林老师\n待家教确认\n辅导科目：数学\n期望时间：周六下午\n预约称呼：小航\n创建时间：2026-10-24T05:26:52.629Z\n取消预约",
+            "status": "待家教确认",
+            "url": "http://127.0.0.1:35365/#/pages/orders/index",
+            "notice": "本机模拟记录，不跨设备同步，不会真实通知老师，也不代表真实订单。"
+          },
+          "reload": {
+            "status": "待家教确认",
+            "actualText": "小林老师\n待家教确认\n辅导科目：数学\n期望时间：周六下午\n预约称呼：小航\n创建时间：2026-10-24T05:26:52.629Z\n取消预约",
+            "verifiedAfterRecording": true
+          }
+        }
+      ]
+    },
+    "oneFixedCameraAcrossCuts": {
+      "passed": true,
+      "actual": [
+        {
+          "fixed": true,
+          "pan": false,
+          "animatedZoom": false,
+          "source": [
+            1920,
+            1080
+          ],
+          "sourceCrop": [
+            0,
+            0,
+            1920,
+            1080
+          ],
+          "footageFrame": [
+            128,
+            72,
+            1664,
+            936
+          ],
+          "browserCssViewport": [
+            1280,
+            720
+          ],
+          "deviceScaleFactor": 1.5
+        },
+        {
+          "fixed": true,
+          "pan": false,
+          "animatedZoom": false,
+          "source": [
+            1920,
+            1080
+          ],
+          "sourceCrop": [
+            0,
+            0,
+            1920,
+            1080
+          ],
+          "footageFrame": [
+            128,
+            72,
+            1664,
+            936
+          ],
+          "browserCssViewport": [
+            1280,
+            720
+          ],
+          "deviceScaleFactor": 1.5
+        },
+        {
+          "fixed": true,
+          "pan": false,
+          "animatedZoom": false,
+          "source": [
+            1920,
+            1080
+          ],
+          "sourceCrop": [
+            0,
+            0,
+            1920,
+            1080
+          ],
+          "footageFrame": [
+            128,
+            72,
+            1664,
+            936
+          ],
+          "browserCssViewport": [
+            1280,
+            720
+          ],
+          "deviceScaleFactor": 1.5
+        }
+      ]
+    },
+    "exact80Seconds": {
+      "passed": true,
+      "actual": "80.000000"
+    },
+    "2400Frames": {
+      "passed": true,
+      "actual": "2400"
+    },
+    "1920x1080": {
+      "passed": true,
+      "actual": [
+        1920,
+        1080
+      ]
+    },
+    "30fps": {
+      "passed": true,
+      "actual": [
+        "30/1",
+        "30/1"
+      ]
+    },
+    "H264yuv420p": {
+      "passed": true,
+      "actual": [
+        "h264",
+        "yuv420p"
+      ]
+    },
+    "AAC48kHz": {
+      "passed": true,
+      "actual": [
+        "aac",
+        "48000"
+      ]
+    },
+    "faststart": {
+      "passed": true,
+      "actual": [
+        {
+          "type": "ftyp",
+          "offset": 0,
+          "size": 32
+        },
+        {
+          "type": "moov",
+          "offset": 32,
+          "size": 89279
+        },
+        {
+          "type": "free",
+          "offset": 89311,
+          "size": 8
+        },
+        {
+          "type": "mdat",
+          "offset": 89319,
+          "size": 4737420
+        }
+      ]
+    },
+    "regularFrameTimestamps": {
+      "passed": true,
+      "actual": {
+        "count": 2400,
+        "maxError": 6.666666773000318e-7
+      }
+    },
+    "completeDecode": {
+      "passed": true,
+      "actual": "Whole combined audio/video decoded without FFmpeg errors"
+    },
+    "silentAudio": {
+      "passed": true,
+      "actual": {
+        "peak": 0,
+        "samples": 7680000
+      }
+    },
+    "noBlackBusinessFrames": {
+      "passed": true,
+      "actual": "Actual content region checked, not only matte"
+    },
+    "noBlankFrames": {
+      "passed": true,
+      "actual": {
+        "blank": 0,
+        "minStd": 21.40841784947498
+      }
+    },
+    "exactSourceFrame899": {
+      "passed": true,
+      "actual": {
+        "combinedFrame": 899,
+        "source": "S05",
+        "sourceFrame": 899,
+        "identical": true
+      }
+    },
+    "exactSourceFrame900": {
+      "passed": true,
+      "actual": {
+        "combinedFrame": 900,
+        "source": "S06",
+        "sourceFrame": 0,
+        "identical": true
+      }
+    },
+    "exactSourceFrame1649": {
+      "passed": true,
+      "actual": {
+        "combinedFrame": 1649,
+        "source": "S06",
+        "sourceFrame": 749,
+        "identical": true
+      }
+    },
+    "exactSourceFrame1650": {
+      "passed": true,
+      "actual": {
+        "combinedFrame": 1650,
+        "source": "S07",
+        "sourceFrame": 0,
+        "identical": true
+      }
+    },
+    "exactSourceFrame2399": {
+      "passed": true,
+      "actual": {
+        "combinedFrame": 2399,
+        "source": "S07",
+        "sourceFrame": 749,
+        "identical": true
+      }
+    },
+    "captionsCover80Seconds": {
+      "passed": true,
+      "actual": [
+        [
+          0,
+          8
+        ],
+        [
+          8,
+          18
+        ],
+        [
+          18,
+          25
+        ],
+        [
+          25,
+          30
+        ],
+        [
+          30,
+          35
+        ],
+        [
+          35,
+          44
+        ],
+        [
+          44,
+          50
+        ],
+        [
+          50,
+          55
+        ],
+        [
+          55,
+          62
+        ],
+        [
+          62,
+          69
+        ],
+        [
+          69,
+          75
+        ],
+        [
+          75,
+          80
+        ]
+      ]
+    },
+    "noModelCall": {
+      "passed": true,
+      "actual": [
+        {
+          "id": "S05",
+          "requests": []
+        },
+        {
+          "id": "S06",
+          "requests": []
+        },
+        {
+          "id": "S07",
+          "requests": []
+        }
+      ]
+    }
+  },
+  "sourceHashes": [
+    {
+      "id": "S05",
+      "sha256": "361c93d690a718fdc48076535a0dd9efa389624854ab9ab4788090659dccd4a6"
+    },
+    {
+      "id": "S06",
+      "sha256": "d973180db19d047b7e4b4483573604aa9fa7c107c8a08ba2850f47e4f6a2fac6"
+    },
+    {
+      "id": "S07",
+      "sha256": "26a3d67a7b552ede7a22a460fc3131e1c699bee5d7682da54ef8b659993a08a6"
+    }
+  ],
+  "manualVisualReview": "Separate visual inspection of individual/combined keyframes and contact sheets required; script exit alone is not a visual review."
+}

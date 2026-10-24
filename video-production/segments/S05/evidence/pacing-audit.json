@@ -1,0 +1,10 @@
+{
+  "logSha256": "144554a95fe6856249dc92ee7ad55823fd95eee01fab3dab222f35654a432907",
+  "rawTrimStartSec": 1.1000194200000006,
+  "usedRawEndSec": 31.100019420000002,
+  "rawDuplicateFrames": 0,
+  "rawDroppedFrames": 0,
+  "transitions": [],
+  "noPacingCorrectionInUsedInterval": true,
+  "note": "Audit covers the actual selected segment footage; fixed crop, no animated zoom, cursor/outline emphasis only."
+}

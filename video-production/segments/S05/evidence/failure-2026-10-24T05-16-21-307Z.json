@@ -1,0 +1,201 @@
+{
+  "id": "2026-10-24T05-16-21-307Z",
+  "status": "failed",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "captureHead": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "browserViewport": [
+    1920,
+    1080
+  ],
+  "freshContext": true,
+  "events": [
+    {
+      "timeSec": 3.818,
+      "kind": "real-mouse-click",
+      "name": "查看详情与预约",
+      "box": {
+        "x": 500.5,
+        "y": 635.765625,
+        "width": 904,
+        "height": 37.765625
+      },
+      "point": {
+        "x": 952.5,
+        "y": 654.6484375
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": 3.968,
+      "kind": "detail-state-verified",
+      "url": "http://127.0.0.1:38049/#/pages/tutors/detail?id=t001",
+      "id": "t001",
+      "actualText": "示例头像\n小林老师\n西安交通大学（场景） · 数学与应用数学\n数学思维\n耐心讲解\n教学信息\n擅长科目\n数学、物理\n授课地区\n长安区 · 大学城\n授课方式\n均可\n参考课时费\n¥80/小时\n可授课时间\n周六 14:00–17:00，周日 09:00–11:00\n教学经历与能力（自述，未核验）\n教学经历\n30 个月\n相关课程成绩自述\n90/100\n教学能力自评\n5/5\n匿名案例数量\n8 个\n虚构匿名案例：围绕数学基础知识进行梳理与错题复盘。\n自我介绍\n先用小题定位薄弱环节，再做错题复盘；讲解耐心，适合希望把基础打扎实的同学。\n虚构演示资料，未进行真实身份、资质或价格验证。\n发起演示预约\n举报演示资料",
+      "photoLabel": "示例头像",
+      "photoPresent": 1
+    },
+    {
+      "timeSec": 7.909,
+      "kind": "actual-region-highlight",
+      "label": "学校与专业（自述）",
+      "region": {
+        "x": 844.734375,
+        "y": 342.5,
+        "width": 215.515625,
+        "height": 16,
+        "text": "西安交通大学（场景） · 数学与应用数学"
+      }
+    },
+    {
+      "timeSec": 9.961,
+      "kind": "actual-region-highlight",
+      "label": "实际科目与方式",
+      "region": {
+        "x": 558.5,
+        "y": 469.5,
+        "width": 788,
+        "height": 36,
+        "text": "擅长科目\n数学、物理"
+      }
+    },
+    {
+      "timeSec": 11.011,
+      "kind": "actual-region-highlight",
+      "label": "实际报价",
+      "region": {
+        "x": 558.5,
+        "y": 577.5,
+        "width": 788,
+        "height": 36,
+        "text": "参考课时费\n¥80/小时"
+      }
+    },
+    {
+      "timeSec": 12.202,
+      "kind": "actual-region-highlight",
+      "label": "必要的一次向下滚动",
+      "region": null
+    },
+    {
+      "timeSec": 13.308,
+      "kind": "actual-region-highlight",
+      "label": "自我介绍",
+      "region": {
+        "x": 558.5,
+        "y": 755.890625,
+        "width": 487.21875,
+        "height": 19,
+        "text": "先用小题定位薄弱环节，再做错题复盘；讲解耐心，适合希望把基础打扎实的同学。"
+      }
+    },
+    {
+      "timeSec": 18.212,
+      "kind": "actual-region-highlight",
+      "label": "真实时间安排",
+      "region": {
+        "x": 558.5,
+        "y": 400.5,
+        "width": 788,
+        "height": 36,
+        "text": "可授课时间\n周六 14:00–17:00，周日 09:00–11:00"
+      }
+    },
+    {
+      "timeSec": 20.591,
+      "kind": "actual-region-highlight",
+      "label": "公共授课区域",
+      "region": {
+        "x": 558.5,
+        "y": 292.5,
+        "width": 788,
+        "height": 36,
+        "text": "授课地区\n长安区 · 大学城"
+      }
+    },
+    {
+      "timeSec": 24.002,
+      "kind": "actual-region-highlight",
+      "label": "进入预约入口的位置",
+      "region": null
+    },
+    {
+      "timeSec": 28.995,
+      "kind": "ending-state-verified",
+      "url": "http://127.0.0.1:38049/#/pages/tutors/detail?id=t001",
+      "bookingEntry": {
+        "x": 542.5,
+        "y": 865.828125,
+        "width": 820,
+        "height": 44,
+        "text": "发起演示预约"
+      },
+      "photoIsExample": true
+    }
+  ],
+  "errors": [],
+  "modelRequests": [],
+  "nativePreparation": [
+    {
+      "action": "dismiss native translation bubble",
+      "beforeMae": 11.938461538461539
+    }
+  ],
+  "rawVideo": "raw/2026-10-24T05-16-21-307Z/input.mkv",
+  "baseUrl": "http://127.0.0.1:38049/",
+  "startCommand": "npm run demo -- --port 38049 --strictPort",
+  "browserVersion": "156.0.8078.4",
+  "initialStorage": {
+    "cookies": [],
+    "origins": []
+  },
+  "match": {
+    "name": "小林老师",
+    "actualText": "1. 小林老师\n89 分\n长安区 · 大学城 · 周六 14:00–17:00，周日 09:00–11:00\n西安交通大学（场景） · 均可 · ¥80/小时\n学科吻合：数学 +35；方式兼容：均可（硬条件）\n空闲时间兼容：所选时段与老师时间有交集（需双方最终确认） +30\n教学经历：自述 30 个月 +17\n课时费 ¥80 ≤ 预算 ¥100，价格余量 +2\n其他因素：课程成绩 90/100、教学能力 5/5、案例 8/10（封顶）、偏好命中 1/1；四项比例平均 +5\n经验、成绩、能力和案例均为自述，缺失项记0；评分不代表资质认证。\n查看详情与预约",
+    "selectedByName": true
+  },
+  "initialCard": {
+    "x": 485.5,
+    "y": 391.109375,
+    "width": 934,
+    "height": 297.421875,
+    "text": "1. 小林老师\n89 分\n长安区 · 大学城 · 周六 14:00–17:00，周日 09:00–11:00\n西安交通大学（场景） · 均可 · ¥80/小时\n学科吻合：数学 +35；方式兼容：均可（硬条件）\n空闲时间兼容：所选时段与老师时间有交集（需双方最终确认） +30\n教学经历：自述 30 个月 +17\n课时费 ¥80 ≤ 预算 ¥100，价格余量 +2\n其他因素：课程成绩 90/100、教学能力 5/5、案例 8/10（封顶）、偏好命中 1/1；四项比例平均 +5\n经验、成绩、能力和案例均为自述，缺失项记0；评分不代表资质认证。\n查看详情与预约"
+  },
+  "viewportAlignment": {
+    "x": 0,
+    "y": 87,
+    "error": 0,
+    "topRightMaeAfter": 0,
+    "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+  },
+  "rawTrimStartSec": 1.1000200800000002,
+  "recorder": "FFmpeg native X11 screen grab at 30fps; not a sequence of website screenshots",
+  "detail": {
+    "url": "http://127.0.0.1:38049/#/pages/tutors/detail?id=t001",
+    "id": "t001",
+    "actualText": "示例头像\n小林老师\n西安交通大学（场景） · 数学与应用数学\n数学思维\n耐心讲解\n教学信息\n擅长科目\n数学、物理\n授课地区\n长安区 · 大学城\n授课方式\n均可\n参考课时费\n¥80/小时\n可授课时间\n周六 14:00–17:00，周日 09:00–11:00\n教学经历与能力（自述，未核验）\n教学经历\n30 个月\n相关课程成绩自述\n90/100\n教学能力自评\n5/5\n匿名案例数量\n8 个\n虚构匿名案例：围绕数学基础知识进行梳理与错题复盘。\n自我介绍\n先用小题定位薄弱环节，再做错题复盘；讲解耐心，适合希望把基础打扎实的同学。\n虚构演示资料，未进行真实身份、资质或价格验证。\n发起演示预约\n举报演示资料",
+    "photoLabel": "示例头像",
+    "photoPresent": 1
+  },
+  "bookingEntry": {
+    "x": 542.5,
+    "y": 865.828125,
+    "width": 820,
+    "height": 44,
+    "text": "发起演示预约"
+  },
+  "progress": {
+    "frame": "990",
+    "fps": "30.00",
+    "stream_0_0_q": "8.0",
+    "bitrate": "3989.7kbits/s",
+    "total_size": "16457343",
+    "out_time_us": "33000000",
+    "out_time_ms": "33000000",
+    "out_time": "00:00:33.000000",
+    "dup_frames": "1",
+    "drop_frames": "0",
+    "speed": "   1x",
+    "progress": "end"
+  },
+  "failure": "Error: Native capture pacing correction inside used interval; retain attempt and re-record\n    at file:///workspace/tutor/video-production/segments/S05/scripts/capture.mjs:126:207\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+}

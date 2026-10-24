@@ -1,0 +1,23 @@
+{
+  "captureId": "2026-10-24T05-25-11-393Z",
+  "rawVideo": "raw/2026-10-24T05-25-11-393Z/input.mkv",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "description": "Selected genuine native webpage frames before fixed matte/captions; no reconstruction.",
+  "frames": [
+    {
+      "file": "01_start.jpg",
+      "segmentTimeSec": 0.8,
+      "rawTimeSec": 1.9000449870000011
+    },
+    {
+      "file": "04_click_submit.jpg",
+      "segmentTimeSec": 16.651,
+      "rawTimeSec": 17.751044987
+    },
+    {
+      "file": "06_end.jpg",
+      "segmentTimeSec": 24,
+      "rawTimeSec": 25.100044987
+    }
+  ]
+}

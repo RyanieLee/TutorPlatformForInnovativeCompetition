@@ -1,0 +1,55 @@
+{
+  "id": "S05",
+  "durationSec": 30,
+  "frames": 900,
+  "rawTrimStartSec": 1.1000194200000006,
+  "camera": {
+    "fixed": true,
+    "pan": false,
+    "animatedZoom": false,
+    "source": [
+      1920,
+      1080
+    ],
+    "sourceCrop": [
+      0,
+      0,
+      1920,
+      1080
+    ],
+    "footageFrame": [
+      128,
+      72,
+      1664,
+      936
+    ],
+    "browserCssViewport": [
+      1280,
+      720
+    ],
+    "deviceScaleFactor": 1.5
+  },
+  "captions": [
+    {
+      "start": 0,
+      "end": 8,
+      "text": "选择小林，查看真实详情"
+    },
+    {
+      "start": 8,
+      "end": 18,
+      "text": "学校、科目、方式与报价集中展示"
+    },
+    {
+      "start": 18,
+      "end": 25,
+      "text": "核对时间与授课区域"
+    },
+    {
+      "start": 25,
+      "end": 30,
+      "text": "看清资料，再做选择"
+    }
+  ],
+  "userSteering": "Faster actual actions; necessary smooth page scroll only. No shakes, dynamic zoom or artificial progress UI."
+}

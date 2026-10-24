@@ -1,0 +1,214 @@
+{
+  "id": "2026-10-24T05-34-12-592Z",
+  "status": "passed",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "captureHead": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "browserViewport": [
+    1280,
+    720
+  ],
+  "deviceScaleFactor": 1.5,
+  "nativeCaptureResolution": [
+    1920,
+    1080
+  ],
+  "freshContext": true,
+  "events": [
+    {
+      "timeSec": 3.836,
+      "kind": "real-mouse-click",
+      "name": "查看详情与预约",
+      "box": {
+        "x": 180,
+        "y": 456.1145935058594,
+        "width": 904.666748046875,
+        "height": 37.104156494140625
+      },
+      "point": {
+        "x": 632.3333740234375,
+        "y": 474.6666717529297
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": 3.976,
+      "kind": "detail-state-verified",
+      "url": "http://127.0.0.1:40047/#/pages/tutors/detail?id=t001",
+      "id": "t001",
+      "actualText": "示例头像\n小林老师\n西安交通大学（场景） · 数学与应用数学\n数学思维\n耐心讲解\n教学信息\n擅长科目\n数学、物理\n授课地区\n长安区 · 大学城\n授课方式\n均可\n参考课时费\n¥80/小时\n可授课时间\n周六 14:00–17:00，周日 09:00–11:00\n教学经历与能力（自述，未核验）\n教学经历\n30 个月\n相关课程成绩自述\n90/100\n教学能力自评\n5/5\n匿名案例数量\n8 个\n虚构匿名案例：围绕数学基础知识进行梳理与错题复盘。\n自我介绍\n先用小题定位薄弱环节，再做错题复盘；讲解耐心，适合希望把基础打扎实的同学。\n虚构演示资料，未进行真实身份、资质或价格验证。\n发起演示预约\n举报演示资料",
+      "photoLabel": "示例头像",
+      "photoPresent": 1
+    },
+    {
+      "timeSec": 7.91,
+      "kind": "actual-region-highlight",
+      "label": "学校与专业（自述）",
+      "region": {
+        "x": 524.5729370117188,
+        "y": 335.8333435058594,
+        "width": 215.52084350585938,
+        "height": 16.666667938232422,
+        "text": "西安交通大学（场景） · 数学与应用数学"
+      }
+    },
+    {
+      "timeSec": 9.889,
+      "kind": "actual-region-highlight",
+      "label": "实际科目与方式",
+      "region": {
+        "x": 238,
+        "y": 463.16668701171875,
+        "width": 788.6666870117188,
+        "height": 34.66666793823242,
+        "text": "擅长科目\n数学、物理"
+      }
+    },
+    {
+      "timeSec": 11.009,
+      "kind": "actual-region-highlight",
+      "label": "实际报价",
+      "region": {
+        "x": 238,
+        "y": 567.1666870117188,
+        "width": 788.6666870117188,
+        "height": 34.66666793823242,
+        "text": "参考课时费\n¥80/小时"
+      }
+    },
+    {
+      "timeSec": 12.203,
+      "kind": "actual-region-highlight",
+      "label": "必要的一次向下滚动",
+      "region": null
+    },
+    {
+      "timeSec": 13.554,
+      "kind": "actual-region-highlight",
+      "label": "自我介绍",
+      "region": {
+        "x": 238,
+        "y": 619.8958740234375,
+        "width": 487.21875,
+        "height": 19.33333396911621,
+        "text": "先用小题定位薄弱环节，再做错题复盘；讲解耐心，适合希望把基础打扎实的同学。"
+      }
+    },
+    {
+      "timeSec": 18.21,
+      "kind": "actual-region-highlight",
+      "label": "真实时间安排",
+      "region": {
+        "x": 238,
+        "y": 271.8333435058594,
+        "width": 788.6666870117188,
+        "height": 34.66666793823242,
+        "text": "可授课时间\n周六 14:00–17:00，周日 09:00–11:00"
+      }
+    },
+    {
+      "timeSec": 20.482,
+      "kind": "actual-region-highlight",
+      "label": "公共授课区域",
+      "region": {
+        "x": 238,
+        "y": 167.83334350585938,
+        "width": 788.6666870117188,
+        "height": 34.66666793823242,
+        "text": "授课地区\n长安区 · 大学城"
+      }
+    },
+    {
+      "timeSec": 24.005,
+      "kind": "actual-region-highlight",
+      "label": "进入预约入口的位置",
+      "region": null
+    },
+    {
+      "timeSec": 28.974,
+      "kind": "ending-state-verified",
+      "url": "http://127.0.0.1:40047/#/pages/tutors/detail?id=t001",
+      "bookingEntry": {
+        "x": 222.33334350585938,
+        "y": 505.5,
+        "width": 820,
+        "height": 44,
+        "text": "发起演示预约"
+      },
+      "photoIsExample": true
+    }
+  ],
+  "errors": [],
+  "modelRequests": [],
+  "nativePreparation": [
+    {
+      "action": "dismiss native translation bubble",
+      "beforeMae": 10.17008547008547
+    }
+  ],
+  "rawVideo": "raw/2026-10-24T05-34-12-592Z/input.mkv",
+  "baseUrl": "http://127.0.0.1:40047/",
+  "startCommand": "npm run demo -- --port 40047 --strictPort",
+  "browserVersion": "156.0.8078.4",
+  "initialStorage": {
+    "cookies": [],
+    "origins": []
+  },
+  "match": {
+    "name": "小林老师",
+    "actualText": "1. 小林老师\n89 分\n长安区 · 大学城 · 周六 14:00–17:00，周日 09:00–11:00\n西安交通大学（场景） · 均可 · ¥80/小时\n学科吻合：数学 +35；方式兼容：均可（硬条件）\n空闲时间兼容：所选时段与老师时间有交集（需双方最终确认） +30\n教学经历：自述 30 个月 +17\n课时费 ¥80 ≤ 预算 ¥100，价格余量 +2\n其他因素：课程成绩 90/100、教学能力 5/5、案例 8/10（封顶）、偏好命中 1/1；四项比例平均 +5\n经验、成绩、能力和案例均为自述，缺失项记0；评分不代表资质认证。\n查看详情与预约",
+    "selectedByName": true
+  },
+  "initialCard": {
+    "x": 165.33334350585938,
+    "y": 211.46875,
+    "width": 934,
+    "height": 296.41668701171875,
+    "text": "1. 小林老师\n89 分\n长安区 · 大学城 · 周六 14:00–17:00，周日 09:00–11:00\n西安交通大学（场景） · 均可 · ¥80/小时\n学科吻合：数学 +35；方式兼容：均可（硬条件）\n空闲时间兼容：所选时段与老师时间有交集（需双方最终确认） +30\n教学经历：自述 30 个月 +17\n课时费 ¥80 ≤ 预算 ¥100，价格余量 +2\n其他因素：课程成绩 90/100、教学能力 5/5、案例 8/10（封顶）、偏好命中 1/1；四项比例平均 +5\n经验、成绩、能力和案例均为自述，缺失项记0；评分不代表资质认证。\n查看详情与预约"
+  },
+  "nativeWindowBefore": {
+    "left": 0,
+    "top": 0,
+    "width": 1288,
+    "height": 806,
+    "windowState": "normal"
+  },
+  "viewportAlignment": {
+    "x": 0,
+    "y": 131,
+    "error": 0.00021786492374727668,
+    "topRightMaeAfter": 0,
+    "businessMae": 0.0044674504768401485,
+    "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+  },
+  "rawTrimStartSec": 1.1000194200000006,
+  "recorder": "FFmpeg native X11 screen grab at 30fps; not a sequence of website screenshots",
+  "detail": {
+    "url": "http://127.0.0.1:40047/#/pages/tutors/detail?id=t001",
+    "id": "t001",
+    "actualText": "示例头像\n小林老师\n西安交通大学（场景） · 数学与应用数学\n数学思维\n耐心讲解\n教学信息\n擅长科目\n数学、物理\n授课地区\n长安区 · 大学城\n授课方式\n均可\n参考课时费\n¥80/小时\n可授课时间\n周六 14:00–17:00，周日 09:00–11:00\n教学经历与能力（自述，未核验）\n教学经历\n30 个月\n相关课程成绩自述\n90/100\n教学能力自评\n5/5\n匿名案例数量\n8 个\n虚构匿名案例：围绕数学基础知识进行梳理与错题复盘。\n自我介绍\n先用小题定位薄弱环节，再做错题复盘；讲解耐心，适合希望把基础打扎实的同学。\n虚构演示资料，未进行真实身份、资质或价格验证。\n发起演示预约\n举报演示资料",
+    "photoLabel": "示例头像",
+    "photoPresent": 1
+  },
+  "bookingEntry": {
+    "x": 222.33334350585938,
+    "y": 505.5,
+    "width": 820,
+    "height": 44,
+    "text": "发起演示预约"
+  },
+  "progress": {
+    "frame": "990",
+    "fps": "29.97",
+    "stream_0_0_q": "8.0",
+    "bitrate": "3607.4kbits/s",
+    "total_size": "14880663",
+    "out_time_us": "33000000",
+    "out_time_ms": "33000000",
+    "out_time": "00:00:33.000000",
+    "dup_frames": "0",
+    "drop_frames": "0",
+    "speed": "0.999x",
+    "progress": "end"
+  },
+  "realInteractions": 1
+}

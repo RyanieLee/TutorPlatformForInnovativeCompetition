@@ -1,0 +1,501 @@
+{
+  "status": "passed",
+  "id": "S06",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "videoSha256": "d973180db19d047b7e4b4483573604aa9fa7c107c8a08ba2850f47e4f6a2fac6",
+  "fileSizeBytes": 1618195,
+  "checks": {
+    "exactDuration": {
+      "passed": true,
+      "actual": "25.000000"
+    },
+    "exactFrameCount": {
+      "passed": true,
+      "actual": "750"
+    },
+    "resolution": {
+      "passed": true,
+      "actual": [
+        1920,
+        1080
+      ]
+    },
+    "frameRate": {
+      "passed": true,
+      "actual": [
+        "30/1",
+        "30/1"
+      ]
+    },
+    "H264yuv420p": {
+      "passed": true,
+      "actual": [
+        "h264",
+        "yuv420p"
+      ]
+    },
+    "AAC48kHz": {
+      "passed": true,
+      "actual": [
+        "aac",
+        "48000"
+      ]
+    },
+    "faststart": {
+      "passed": true,
+      "actual": [
+        {
+          "type": "ftyp",
+          "offset": 0,
+          "size": 32
+        },
+        {
+          "type": "moov",
+          "offset": 32,
+          "size": 28966
+        },
+        {
+          "type": "free",
+          "offset": 28998,
+          "size": 8
+        },
+        {
+          "type": "mdat",
+          "offset": 29006,
+          "size": 1589189
+        }
+      ]
+    },
+    "monotonic30fpsPTS": {
+      "passed": true,
+      "actual": {
+        "count": 750,
+        "maxDeltaError": 6.666666701946045e-7
+      }
+    },
+    "completeDecode": {
+      "passed": true,
+      "actual": "Entire MP4 decoded without FFmpeg errors"
+    },
+    "silentAAC": {
+      "passed": true,
+      "actual": {
+        "maxSample": 0,
+        "samples": 2400256
+      }
+    },
+    "noBlackIntervals": {
+      "passed": true,
+      "actual": "No black-screen interval in the actual footage area (10ms detector minimum)"
+    },
+    "noBlankFootageFrames": {
+      "passed": true,
+      "actual": {
+        "uniformFrames": 0,
+        "minStd": 21.40841784947498,
+        "frames": 750
+      }
+    },
+    "realVisibleClicks": {
+      "passed": true,
+      "actual": [
+        {
+          "timeSec": 2.117,
+          "kind": "real-mouse-click",
+          "name": "发起演示预约",
+          "box": {
+            "x": 222.33334350585938,
+            "y": 505.5,
+            "width": 820.0000305175781,
+            "height": 44
+          },
+          "point": {
+            "x": 632.3333587646484,
+            "y": 527.5
+          },
+          "hitTest": true
+        },
+        {
+          "timeSec": 5.475,
+          "kind": "real-mouse-click",
+          "name": "虚构称呼",
+          "box": {
+            "x": 246.6666717529297,
+            "y": 347.6458435058594,
+            "width": 771.3333282470703,
+            "height": 20.666656494140625
+          },
+          "point": {
+            "x": 632.3333358764648,
+            "y": 357.9791717529297
+          },
+          "hitTest": true
+        },
+        {
+          "timeSec": 6.95,
+          "kind": "real-mouse-click",
+          "name": "必填演示数字",
+          "box": {
+            "x": 246.6666717529297,
+            "y": 425.97918701171875,
+            "width": 771.3333282470703,
+            "height": 20.666656494140625
+          },
+          "point": {
+            "x": 632.3333358764648,
+            "y": 436.31251525878906
+          },
+          "hitTest": true
+        },
+        {
+          "timeSec": 8.169,
+          "kind": "real-mouse-click",
+          "name": "期望时间",
+          "box": {
+            "x": 246.6666717529297,
+            "y": 582.6458740234375,
+            "width": 771.3333282470703,
+            "height": 20.6666259765625
+          },
+          "point": {
+            "x": 632.3333358764648,
+            "y": 592.9791870117188
+          },
+          "hitTest": true
+        },
+        {
+          "timeSec": 10.406,
+          "kind": "real-mouse-click",
+          "name": "初中数学学习需求",
+          "box": {
+            "x": 246.6666717529297,
+            "y": 368.9583435058594,
+            "width": 771.3333282470703,
+            "height": 130.66665649414062
+          },
+          "point": {
+            "x": 632.3333358764648,
+            "y": 434.2916717529297
+          },
+          "hitTest": true
+        },
+        {
+          "timeSec": 16.716,
+          "kind": "real-mouse-click",
+          "name": "保存演示预约",
+          "box": {
+            "x": 222.33334350585938,
+            "y": 535.9583740234375,
+            "width": 820.0000305175781,
+            "height": 44
+          },
+          "point": {
+            "x": 632.3333587646484,
+            "y": 557.9583740234375
+          },
+          "hitTest": true
+        }
+      ]
+    },
+    "fixedCameraNoAnimatedZoom": {
+      "passed": true,
+      "actual": {
+        "fixed": true,
+        "pan": false,
+        "animatedZoom": false,
+        "source": [
+          1920,
+          1080
+        ],
+        "sourceCrop": [
+          0,
+          0,
+          1920,
+          1080
+        ],
+        "footageFrame": [
+          128,
+          72,
+          1664,
+          936
+        ],
+        "browserCssViewport": [
+          1280,
+          720
+        ],
+        "deviceScaleFactor": 1.5
+      }
+    },
+    "parentDemoRole": {
+      "passed": true,
+      "actual": "学生/家长 · 本机模拟登录"
+    },
+    "realPublicSelectionT001": {
+      "passed": true,
+      "actual": {
+        "method": "real public UI search/name selection",
+        "id": "t001",
+        "url": "http://127.0.0.1:40151/#/pages/tutors/detail?id=t001"
+      }
+    },
+    "realPendingOrder": {
+      "passed": true,
+      "actual": {
+        "card": {
+          "x": 222.33334350585938,
+          "y": 266.54168701171875,
+          "width": 820,
+          "height": 190,
+          "text": "小林老师\n待家教确认\n辅导科目：数学\n期望时间：周六下午\n预约称呼：小航\n创建时间：2026-10-24T05:25:38.407Z\n取消预约"
+        },
+        "actualText": "小林老师\n待家教确认\n辅导科目：数学\n期望时间：周六下午\n预约称呼：小航\n创建时间：2026-10-24T05:25:38.407Z\n取消预约",
+        "status": "待家教确认",
+        "url": "http://127.0.0.1:40151/#/pages/orders/index",
+        "notice": "本机模拟记录，不跨设备同步，不会真实通知老师，也不代表真实订单。"
+      }
+    },
+    "noFakeAcceptanceOrNotification": {
+      "passed": true,
+      "actual": "本机模拟记录，不跨设备同步，不会真实通知老师，也不代表真实订单。"
+    },
+    "pendingSurvivesActualReload": {
+      "passed": true,
+      "actual": {
+        "status": "待家教确认",
+        "actualText": "小林老师\n待家教确认\n辅导科目：数学\n期望时间：周六下午\n预约称呼：小航\n创建时间：2026-10-24T05:25:38.407Z\n取消预约",
+        "verifiedAfterRecording": true
+      }
+    },
+    "onlyNonPersonalDemoDigits": {
+      "passed": true,
+      "actual": [
+        "小航",
+        "10000000000",
+        "周六下午",
+        "初一数学，一元一次方程；预算100元/小时以内。"
+      ]
+    },
+    "formInputsThroughRealUI": {
+      "passed": true,
+      "actual": [
+        {
+          "timeSec": 5.653,
+          "kind": "actual-field-input",
+          "label": "虚构称呼",
+          "value": "小航"
+        },
+        {
+          "timeSec": 7.274,
+          "kind": "actual-field-input",
+          "label": "必填演示数字",
+          "value": "10000000000",
+          "nonPersonalDemoDigits": true
+        },
+        {
+          "timeSec": 8.477,
+          "kind": "actual-field-input",
+          "label": "期望时间",
+          "value": "周六下午"
+        },
+        {
+          "timeSec": 11.279,
+          "kind": "actual-field-input",
+          "label": "初中数学学习需求",
+          "value": "初一数学，一元一次方程；预算100元/小时以内。"
+        }
+      ]
+    },
+    "bookingAndSubmitWindows": {
+      "passed": true,
+      "actual": [
+        {
+          "timeSec": 2.117,
+          "kind": "real-mouse-click",
+          "name": "发起演示预约",
+          "box": {
+            "x": 222.33334350585938,
+            "y": 505.5,
+            "width": 820.0000305175781,
+            "height": 44
+          },
+          "point": {
+            "x": 632.3333587646484,
+            "y": 527.5
+          },
+          "hitTest": true
+        },
+        {
+          "timeSec": 5.475,
+          "kind": "real-mouse-click",
+          "name": "虚构称呼",
+          "box": {
+            "x": 246.6666717529297,
+            "y": 347.6458435058594,
+            "width": 771.3333282470703,
+            "height": 20.666656494140625
+          },
+          "point": {
+            "x": 632.3333358764648,
+            "y": 357.9791717529297
+          },
+          "hitTest": true
+        },
+        {
+          "timeSec": 6.95,
+          "kind": "real-mouse-click",
+          "name": "必填演示数字",
+          "box": {
+            "x": 246.6666717529297,
+            "y": 425.97918701171875,
+            "width": 771.3333282470703,
+            "height": 20.666656494140625
+          },
+          "point": {
+            "x": 632.3333358764648,
+            "y": 436.31251525878906
+          },
+          "hitTest": true
+        },
+        {
+          "timeSec": 8.169,
+          "kind": "real-mouse-click",
+          "name": "期望时间",
+          "box": {
+            "x": 246.6666717529297,
+            "y": 582.6458740234375,
+            "width": 771.3333282470703,
+            "height": 20.6666259765625
+          },
+          "point": {
+            "x": 632.3333358764648,
+            "y": 592.9791870117188
+          },
+          "hitTest": true
+        },
+        {
+          "timeSec": 10.406,
+          "kind": "real-mouse-click",
+          "name": "初中数学学习需求",
+          "box": {
+            "x": 246.6666717529297,
+            "y": 368.9583435058594,
+            "width": 771.3333282470703,
+            "height": 130.66665649414062
+          },
+          "point": {
+            "x": 632.3333358764648,
+            "y": 434.2916717529297
+          },
+          "hitTest": true
+        },
+        {
+          "timeSec": 16.716,
+          "kind": "real-mouse-click",
+          "name": "保存演示预约",
+          "box": {
+            "x": 222.33334350585938,
+            "y": 535.9583740234375,
+            "width": 820.0000305175781,
+            "height": 44
+          },
+          "point": {
+            "x": 632.3333587646484,
+            "y": 557.9583740234375
+          },
+          "hitTest": true
+        }
+      ]
+    },
+    "SRTExactDurationUTF8": {
+      "passed": true,
+      "actual": [
+        [
+          0,
+          5
+        ],
+        [
+          5,
+          14
+        ],
+        [
+          14,
+          20
+        ],
+        [
+          20,
+          25
+        ]
+      ]
+    },
+    "noModelCall": {
+      "passed": true,
+      "actual": []
+    },
+    "freshBrowserContext": {
+      "passed": true,
+      "actual": {
+        "cookies": [],
+        "origins": []
+      }
+    },
+    "nativeViewportAlignment": {
+      "passed": true,
+      "actual": {
+        "x": 0,
+        "y": 131,
+        "error": 0,
+        "topRightMaeAfter": 0,
+        "businessMae": 0,
+        "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+      }
+    },
+    "nativePacingAudited": {
+      "passed": true,
+      "actual": {
+        "logSha256": "149951a8b095e09801643e50fab0f2bc8b8f3f5db2e683b4685a2b239aa0d11f",
+        "rawTrimStartSec": 1.100044987000001,
+        "usedRawEndSec": 26.100044987,
+        "rawDuplicateFrames": 1,
+        "rawDroppedFrames": 0,
+        "transitions": [
+          {
+            "rawLowerSec": 24,
+            "rawUpperSec": 24.13,
+            "duplicateDelta": 1,
+            "dropDelta": 0,
+            "outsideUsedInterval": false
+          }
+        ],
+        "noPacingCorrectionInUsedInterval": false,
+        "note": "Audit covers the actual selected segment footage; fixed crop, no animated zoom, cursor/outline emphasis only."
+      }
+    }
+  },
+  "keyframes": [
+    {
+      "file": "keyframes/01_start.jpg",
+      "timeSec": 0.8
+    },
+    {
+      "file": "keyframes/02_click_book.jpg",
+      "timeSec": 2.052
+    },
+    {
+      "file": "keyframes/03_form.jpg",
+      "timeSec": 13.6
+    },
+    {
+      "file": "keyframes/04_click_submit.jpg",
+      "timeSec": 16.651
+    },
+    {
+      "file": "keyframes/05_result.jpg",
+      "timeSec": 21
+    },
+    {
+      "file": "keyframes/06_end.jpg",
+      "timeSec": 24
+    }
+  ],
+  "manualVisualReview": "Required separately: compare all keyframes/contact sheet with original webpage frames and DOM state evidence. Script success alone is not a visual review."
+}

@@ -1,0 +1,297 @@
+{
+  "status": "passed",
+  "id": "S05",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "videoSha256": "361c93d690a718fdc48076535a0dd9efa389624854ab9ab4788090659dccd4a6",
+  "fileSizeBytes": 1891378,
+  "checks": {
+    "exactDuration": {
+      "passed": true,
+      "actual": "30.000000"
+    },
+    "exactFrameCount": {
+      "passed": true,
+      "actual": "900"
+    },
+    "resolution": {
+      "passed": true,
+      "actual": [
+        1920,
+        1080
+      ]
+    },
+    "frameRate": {
+      "passed": true,
+      "actual": [
+        "30/1",
+        "30/1"
+      ]
+    },
+    "H264yuv420p": {
+      "passed": true,
+      "actual": [
+        "h264",
+        "yuv420p"
+      ]
+    },
+    "AAC48kHz": {
+      "passed": true,
+      "actual": [
+        "aac",
+        "48000"
+      ]
+    },
+    "faststart": {
+      "passed": true,
+      "actual": [
+        {
+          "type": "ftyp",
+          "offset": 0,
+          "size": 32
+        },
+        {
+          "type": "moov",
+          "offset": 32,
+          "size": 34515
+        },
+        {
+          "type": "free",
+          "offset": 34547,
+          "size": 8
+        },
+        {
+          "type": "mdat",
+          "offset": 34555,
+          "size": 1856823
+        }
+      ]
+    },
+    "monotonic30fpsPTS": {
+      "passed": true,
+      "actual": {
+        "count": 900,
+        "maxDeltaError": 6.666666701946045e-7
+      }
+    },
+    "completeDecode": {
+      "passed": true,
+      "actual": "Entire MP4 decoded without FFmpeg errors"
+    },
+    "silentAAC": {
+      "passed": true,
+      "actual": {
+        "maxSample": 0,
+        "samples": 2881536
+      }
+    },
+    "noBlackIntervals": {
+      "passed": true,
+      "actual": "No black-screen interval in the actual footage area (10ms detector minimum)"
+    },
+    "noBlankFootageFrames": {
+      "passed": true,
+      "actual": {
+        "uniformFrames": 0,
+        "minStd": 21.576548800948746,
+        "frames": 900
+      }
+    },
+    "realVisibleClicks": {
+      "passed": true,
+      "actual": [
+        {
+          "timeSec": 3.836,
+          "kind": "real-mouse-click",
+          "name": "查看详情与预约",
+          "box": {
+            "x": 180,
+            "y": 456.1145935058594,
+            "width": 904.666748046875,
+            "height": 37.104156494140625
+          },
+          "point": {
+            "x": 632.3333740234375,
+            "y": 474.6666717529297
+          },
+          "hitTest": true
+        }
+      ]
+    },
+    "fixedCameraNoAnimatedZoom": {
+      "passed": true,
+      "actual": {
+        "fixed": true,
+        "pan": false,
+        "animatedZoom": false,
+        "source": [
+          1920,
+          1080
+        ],
+        "sourceCrop": [
+          0,
+          0,
+          1920,
+          1080
+        ],
+        "footageFrame": [
+          128,
+          72,
+          1664,
+          936
+        ],
+        "browserCssViewport": [
+          1280,
+          720
+        ],
+        "deviceScaleFactor": 1.5
+      }
+    },
+    "realT001Detail": {
+      "passed": true,
+      "actual": {
+        "url": "http://127.0.0.1:40047/#/pages/tutors/detail?id=t001",
+        "id": "t001",
+        "actualText": "示例头像\n小林老师\n西安交通大学（场景） · 数学与应用数学\n数学思维\n耐心讲解\n教学信息\n擅长科目\n数学、物理\n授课地区\n长安区 · 大学城\n授课方式\n均可\n参考课时费\n¥80/小时\n可授课时间\n周六 14:00–17:00，周日 09:00–11:00\n教学经历与能力（自述，未核验）\n教学经历\n30 个月\n相关课程成绩自述\n90/100\n教学能力自评\n5/5\n匿名案例数量\n8 个\n虚构匿名案例：围绕数学基础知识进行梳理与错题复盘。\n自我介绍\n先用小题定位薄弱环节，再做错题复盘；讲解耐心，适合希望把基础打扎实的同学。\n虚构演示资料，未进行真实身份、资质或价格验证。\n发起演示预约\n举报演示资料",
+        "photoLabel": "示例头像",
+        "photoPresent": 1
+      }
+    },
+    "actualProfileFields": {
+      "passed": true,
+      "actual": "示例头像\n小林老师\n西安交通大学（场景） · 数学与应用数学\n数学思维\n耐心讲解\n教学信息\n擅长科目\n数学、物理\n授课地区\n长安区 · 大学城\n授课方式\n均可\n参考课时费\n¥80/小时\n可授课时间\n周六 14:00–17:00，周日 09:00–11:00\n教学经历与能力（自述，未核验）\n教学经历\n30 个月\n相关课程成绩自述\n90/100\n教学能力自评\n5/5\n匿名案例数量\n8 个\n虚构匿名案例：围绕数学基础知识进行梳理与错题复盘。\n自我介绍\n先用小题定位薄弱环节，再做错题复盘；讲解耐心，适合希望把基础打扎实的同学。\n虚构演示资料，未进行真实身份、资质或价格验证。\n发起演示预约\n举报演示资料"
+    },
+    "introductionVisibleInRequiredShot": {
+      "passed": true,
+      "actual": {
+        "timeSec": 13.554,
+        "kind": "actual-region-highlight",
+        "label": "自我介绍",
+        "region": {
+          "x": 238,
+          "y": 619.8958740234375,
+          "width": 487.21875,
+          "height": 19.33333396911621,
+          "text": "先用小题定位薄弱环节，再做错题复盘；讲解耐心，适合希望把基础打扎实的同学。"
+        }
+      }
+    },
+    "examplePortraitNotCertification": {
+      "passed": true,
+      "actual": "示例头像"
+    },
+    "endsAtRealBookingEntry": {
+      "passed": true,
+      "actual": {
+        "x": 222.33334350585938,
+        "y": 505.5,
+        "width": 820,
+        "height": 44,
+        "text": "发起演示预约"
+      }
+    },
+    "detailClickInWindow": {
+      "passed": true,
+      "actual": [
+        {
+          "timeSec": 3.836,
+          "kind": "real-mouse-click",
+          "name": "查看详情与预约",
+          "box": {
+            "x": 180,
+            "y": 456.1145935058594,
+            "width": 904.666748046875,
+            "height": 37.104156494140625
+          },
+          "point": {
+            "x": 632.3333740234375,
+            "y": 474.6666717529297
+          },
+          "hitTest": true
+        }
+      ]
+    },
+    "SRTExactDurationUTF8": {
+      "passed": true,
+      "actual": [
+        [
+          0,
+          8
+        ],
+        [
+          8,
+          18
+        ],
+        [
+          18,
+          25
+        ],
+        [
+          25,
+          30
+        ]
+      ]
+    },
+    "noModelCall": {
+      "passed": true,
+      "actual": []
+    },
+    "freshBrowserContext": {
+      "passed": true,
+      "actual": {
+        "cookies": [],
+        "origins": []
+      }
+    },
+    "nativeViewportAlignment": {
+      "passed": true,
+      "actual": {
+        "x": 0,
+        "y": 131,
+        "error": 0.00021786492374727668,
+        "topRightMaeAfter": 0,
+        "businessMae": 0.0044674504768401485,
+        "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+      }
+    },
+    "nativePacingAudited": {
+      "passed": true,
+      "actual": {
+        "logSha256": "144554a95fe6856249dc92ee7ad55823fd95eee01fab3dab222f35654a432907",
+        "rawTrimStartSec": 1.1000194200000006,
+        "usedRawEndSec": 31.100019420000002,
+        "rawDuplicateFrames": 0,
+        "rawDroppedFrames": 0,
+        "transitions": [],
+        "noPacingCorrectionInUsedInterval": true,
+        "note": "Audit covers the actual selected segment footage; fixed crop, no animated zoom, cursor/outline emphasis only."
+      }
+    }
+  },
+  "keyframes": [
+    {
+      "file": "keyframes/01_start.jpg",
+      "timeSec": 0.8
+    },
+    {
+      "file": "keyframes/02_click.jpg",
+      "timeSec": 3.771
+    },
+    {
+      "file": "keyframes/03_profile.jpg",
+      "timeSec": 9
+    },
+    {
+      "file": "keyframes/04_introduction.jpg",
+      "timeSec": 16
+    },
+    {
+      "file": "keyframes/05_schedule.jpg",
+      "timeSec": 20
+    },
+    {
+      "file": "keyframes/06_end.jpg",
+      "timeSec": 28
+    }
+  ],
+  "manualVisualReview": "Required separately: compare all keyframes/contact sheet with original webpage frames and DOM state evidence. Script success alone is not a visual review."
+}

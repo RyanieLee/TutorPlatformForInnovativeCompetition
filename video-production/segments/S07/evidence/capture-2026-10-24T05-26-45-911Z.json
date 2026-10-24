@@ -1,0 +1,228 @@
+{
+  "id": "2026-10-24T05-26-45-911Z",
+  "status": "passed",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "captureHead": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "browserViewport": [
+    1280,
+    720
+  ],
+  "deviceScaleFactor": 1.5,
+  "nativeCaptureResolution": [
+    1920,
+    1080
+  ],
+  "freshContext": true,
+  "events": [
+    {
+      "timeSec": null,
+      "kind": "real-ui-preparation-submitted",
+      "independentUiBooking": true,
+      "usesS06Storage": false,
+      "contact": "10000000000",
+      "status": "待家教确认"
+    },
+    {
+      "timeSec": 2.313,
+      "kind": "real-mouse-click",
+      "name": "我的预约",
+      "box": {
+        "x": 72.26042175292969,
+        "y": 406.10418701171875,
+        "width": 809.7812652587891,
+        "height": 38.666656494140625
+      },
+      "point": {
+        "x": 477.1510543823242,
+        "y": 425.43751525878906
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": 2.335,
+      "kind": "my-orders-state-verified",
+      "card": {
+        "x": 222.33334350585938,
+        "y": 266.54168701171875,
+        "width": 820,
+        "height": 190,
+        "text": "小林老师\n待家教确认\n辅导科目：数学\n期望时间：周六下午\n预约称呼：小航\n创建时间：2026-10-24T05:26:52.629Z\n取消预约"
+      },
+      "actualText": "小林老师\n待家教确认\n辅导科目：数学\n期望时间：周六下午\n预约称呼：小航\n创建时间：2026-10-24T05:26:52.629Z\n取消预约",
+      "status": "待家教确认",
+      "url": "http://127.0.0.1:35365/#/pages/orders/index",
+      "notice": "本机模拟记录，不跨设备同步，不会真实通知老师，也不代表真实订单。"
+    },
+    {
+      "timeSec": 7.109,
+      "kind": "actual-region-highlight",
+      "label": "数学与小林老师",
+      "region": {
+        "x": 237,
+        "y": 317.54168701171875,
+        "width": 790.6666870117188,
+        "height": 17.33333396911621,
+        "text": "辅导科目：数学"
+      }
+    },
+    {
+      "timeSec": 10.011,
+      "kind": "actual-region-highlight",
+      "label": "周六下午约课意向",
+      "region": {
+        "x": 237,
+        "y": 342.375,
+        "width": 790.6666870117188,
+        "height": 17.33333396911621,
+        "text": "期望时间：周六下午"
+      }
+    },
+    {
+      "timeSec": 12.012,
+      "kind": "actual-region-highlight",
+      "label": "本场景虚构称呼",
+      "region": {
+        "x": 237,
+        "y": 367.2083435058594,
+        "width": 790.6666870117188,
+        "height": 17.33333396911621,
+        "text": "预约称呼：小航"
+      }
+    },
+    {
+      "timeSec": 14.213,
+      "kind": "actual-region-highlight",
+      "label": "待家教确认，不虚构接单",
+      "region": {
+        "x": 969.3229370117188,
+        "y": 281.2083435058594,
+        "width": 58.34375,
+        "height": 20.666667938232422,
+        "text": "待家教确认"
+      }
+    },
+    {
+      "timeSec": 18.01,
+      "kind": "actual-region-highlight",
+      "label": "Mock不跨设备同步或真实通知",
+      "region": {
+        "x": 222.33334350585938,
+        "y": 204.6666717529297,
+        "width": 820,
+        "height": 50.875,
+        "text": "本机模拟记录，不跨设备同步，不会真实通知老师，也不代表真实订单。"
+      }
+    },
+    {
+      "timeSec": 20.204,
+      "kind": "actual-region-highlight",
+      "label": "等待老师接力",
+      "region": null
+    },
+    {
+      "timeSec": 24.187,
+      "kind": "ending-state-verified",
+      "status": "待家教确认",
+      "accepted": false,
+      "notification": false
+    },
+    {
+      "timeSec": 27.244,
+      "kind": "off-camera-reload-verified",
+      "status": "待家教确认",
+      "actualText": "小林老师\n待家教确认\n辅导科目：数学\n期望时间：周六下午\n预约称呼：小航\n创建时间：2026-10-24T05:26:52.629Z\n取消预约",
+      "verifiedAfterRecording": true
+    }
+  ],
+  "errors": [],
+  "modelRequests": [],
+  "nativePreparation": [
+    {
+      "action": "dismiss native translation bubble",
+      "beforeMae": 34.266068376068375
+    }
+  ],
+  "rawVideo": "raw/2026-10-24T05-26-45-911Z/input.mkv",
+  "baseUrl": "http://127.0.0.1:35365/",
+  "startCommand": "npm run demo -- --port 35365 --strictPort",
+  "browserVersion": "156.0.8078.4",
+  "initialStorage": {
+    "cookies": [],
+    "origins": []
+  },
+  "parentRoleProof": "学生/家长 · 本机模拟登录",
+  "publicSelection": {
+    "method": "real public UI search/name selection",
+    "id": "t001",
+    "url": "http://127.0.0.1:35365/#/pages/tutors/detail?id=t001"
+  },
+  "preparedOrder": {
+    "card": {
+      "x": 222.33334350585938,
+      "y": 266.54168701171875,
+      "width": 820,
+      "height": 190,
+      "text": "小林老师\n待家教确认\n辅导科目：数学\n期望时间：周六下午\n预约称呼：小航\n创建时间：2026-10-24T05:26:52.629Z\n取消预约"
+    },
+    "actualText": "小林老师\n待家教确认\n辅导科目：数学\n期望时间：周六下午\n预约称呼：小航\n创建时间：2026-10-24T05:26:52.629Z\n取消预约",
+    "status": "待家教确认",
+    "url": "http://127.0.0.1:35365/#/pages/orders/index",
+    "notice": "本机模拟记录，不跨设备同步，不会真实通知老师，也不代表真实订单。"
+  },
+  "preparation": {
+    "independentUiBooking": true,
+    "usesS06Storage": false,
+    "contact": "10000000000",
+    "status": "待家教确认"
+  },
+  "nativeWindowBefore": {
+    "left": 0,
+    "top": 0,
+    "width": 1288,
+    "height": 806,
+    "windowState": "normal"
+  },
+  "viewportAlignment": {
+    "x": 0,
+    "y": 131,
+    "error": 0,
+    "topRightMaeAfter": 0,
+    "businessMae": 0.0013108088225459117,
+    "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+  },
+  "rawTrimStartSec": 1.1000206510000008,
+  "recorder": "FFmpeg native X11 screen grab at 30fps; not a sequence of website screenshots",
+  "order": {
+    "card": {
+      "x": 222.33334350585938,
+      "y": 266.54168701171875,
+      "width": 820,
+      "height": 190,
+      "text": "小林老师\n待家教确认\n辅导科目：数学\n期望时间：周六下午\n预约称呼：小航\n创建时间：2026-10-24T05:26:52.629Z\n取消预约"
+    },
+    "actualText": "小林老师\n待家教确认\n辅导科目：数学\n期望时间：周六下午\n预约称呼：小航\n创建时间：2026-10-24T05:26:52.629Z\n取消预约",
+    "status": "待家教确认",
+    "url": "http://127.0.0.1:35365/#/pages/orders/index",
+    "notice": "本机模拟记录，不跨设备同步，不会真实通知老师，也不代表真实订单。"
+  },
+  "reloadProof": {
+    "status": "待家教确认",
+    "actualText": "小林老师\n待家教确认\n辅导科目：数学\n期望时间：周六下午\n预约称呼：小航\n创建时间：2026-10-24T05:26:52.629Z\n取消预约",
+    "verifiedAfterRecording": true
+  },
+  "progress": {
+    "frame": "840",
+    "fps": "29.97",
+    "stream_0_0_q": "8.0",
+    "bitrate": "3975.5kbits/s",
+    "total_size": "13914201",
+    "out_time_us": "28000000",
+    "out_time_ms": "28000000",
+    "out_time": "00:00:28.000000",
+    "dup_frames": "0",
+    "drop_frames": "0",
+    "speed": "0.999x",
+    "progress": "end"
+  },
+  "realInteractions": 1
+}

@@ -1,0 +1,60 @@
+{
+  "id": "S05-S07",
+  "title": "家长完整流程：老师详情 → 提交预约 → 查看状态",
+  "durationSec": 80,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "role": "核心·家长",
+  "sourceMode": "Exact concatenation of three genuine independent Mock H5 browser recordings; no model, fake records, camera shake or animated zoom.",
+  "timelineInFullFilm": {
+    "start": "02:20",
+    "end": "03:40"
+  },
+  "prerequisites": [
+    "Run npm ci with Node>=20",
+    "Playwright Chromium, FFmpeg/ffprobe, Python3, Xvfb/libX11/libXtst and Noto CJK",
+    "capture.mjs starts S05/S06/S07 sequentially, each with an empty independent browser; S07 creates its own record via actual UI"
+  ],
+  "segments": [
+    {
+      "id": "S05",
+      "startSec": 0,
+      "durationSec": 30
+    },
+    {
+      "id": "S06",
+      "startSec": 30,
+      "durationSec": 25
+    },
+    {
+      "id": "S07",
+      "startSec": 55,
+      "durationSec": 25
+    }
+  ],
+  "camera": {
+    "fixed": true,
+    "animatedZoom": false,
+    "nativeCaptureResolution": [
+      1920,
+      1080
+    ],
+    "browserCssViewport": [
+      1280,
+      720
+    ],
+    "deviceScaleFactor": 1.5,
+    "footageFrame": [
+      128,
+      72,
+      1664,
+      936
+    ]
+  },
+  "userSteering": "Faster purposeful UI actions, smooth necessary webpage scrolling only; no camera shake or meaningless zoom.",
+  "boundary": "Fictional Mock case; existing portrait is marked example, not verified qualification. Required contact uses non-personal demo digits 10000000000. Orders remain pending, no real teacher notification. S07 does not reuse S06 storage."
+}

@@ -1,0 +1,55 @@
+{
+  "id": "S07",
+  "durationSec": 25,
+  "frames": 750,
+  "rawTrimStartSec": 1.1000206510000008,
+  "camera": {
+    "fixed": true,
+    "pan": false,
+    "animatedZoom": false,
+    "source": [
+      1920,
+      1080
+    ],
+    "sourceCrop": [
+      0,
+      0,
+      1920,
+      1080
+    ],
+    "footageFrame": [
+      128,
+      72,
+      1664,
+      936
+    ],
+    "browserCssViewport": [
+      1280,
+      720
+    ],
+    "deviceScaleFactor": 1.5
+  },
+  "captions": [
+    {
+      "start": 0,
+      "end": 7,
+      "text": "返回“我的预约”，找到小航的记录"
+    },
+    {
+      "start": 7,
+      "end": 14,
+      "text": "科目、老师、约课意向集中可查"
+    },
+    {
+      "start": 14,
+      "end": 20,
+      "text": "当前状态：待家教确认"
+    },
+    {
+      "start": 20,
+      "end": 25,
+      "text": "家长发出邀请，接下来交给老师"
+    }
+  ],
+  "userSteering": "Faster actual actions; necessary smooth page scroll only. No shakes, dynamic zoom or artificial progress UI."
+}

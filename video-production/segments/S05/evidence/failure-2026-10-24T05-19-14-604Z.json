@@ -1,0 +1,46 @@
+{
+  "id": "2026-10-24T05-19-14-604Z",
+  "status": "failed",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "captureHead": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "browserViewport": [
+    1280,
+    720
+  ],
+  "deviceScaleFactor": 1.5,
+  "nativeCaptureResolution": [
+    1920,
+    1080
+  ],
+  "freshContext": true,
+  "events": [],
+  "errors": [],
+  "modelRequests": [],
+  "nativePreparation": [
+    {
+      "action": "dismiss native translation bubble",
+      "beforeMae": 9.64068376068376
+    }
+  ],
+  "rawVideo": "raw/2026-10-24T05-19-14-604Z/input.mkv",
+  "baseUrl": "http://127.0.0.1:35017/",
+  "startCommand": "npm run demo -- --port 35017 --strictPort",
+  "browserVersion": "156.0.8078.4",
+  "initialStorage": {
+    "cookies": [],
+    "origins": []
+  },
+  "match": {
+    "name": "小林老师",
+    "actualText": "1. 小林老师\n89 分\n长安区 · 大学城 · 周六 14:00–17:00，周日 09:00–11:00\n西安交通大学（场景） · 均可 · ¥80/小时\n学科吻合：数学 +35；方式兼容：均可（硬条件）\n空闲时间兼容：所选时段与老师时间有交集（需双方最终确认） +30\n教学经历：自述 30 个月 +17\n课时费 ¥80 ≤ 预算 ¥100，价格余量 +2\n其他因素：课程成绩 90/100、教学能力 5/5、案例 8/10（封顶）、偏好命中 1/1；四项比例平均 +5\n经验、成绩、能力和案例均为自述，缺失项记0；评分不代表资质认证。\n查看详情与预约",
+    "selectedByName": true
+  },
+  "initialCard": {
+    "x": 165.33334350585938,
+    "y": 211.46875,
+    "width": 934,
+    "height": 296.41668701171875,
+    "text": "1. 小林老师\n89 分\n长安区 · 大学城 · 周六 14:00–17:00，周日 09:00–11:00\n西安交通大学（场景） · 均可 · ¥80/小时\n学科吻合：数学 +35；方式兼容：均可（硬条件）\n空闲时间兼容：所选时段与老师时间有交集（需双方最终确认） +30\n教学经历：自述 30 个月 +17\n课时费 ¥80 ≤ 预算 ¥100，价格余量 +2\n其他因素：课程成绩 90/100、教学能力 5/5、案例 8/10（封顶）、偏好命中 1/1；四项比例平均 +5\n经验、成绩、能力和案例均为自述，缺失项记0；评分不代表资质认证。\n查看详情与预约"
+  },
+  "failure": "Error: Browser chrome still obscures the actual page: 14.385299145299145\n    at alignViewport (file:///workspace/tutor/video-production/segments/S05/scripts/capture.mjs:39:19)\n    at async file:///workspace/tutor/video-production/segments/S05/scripts/capture.mjs:101:16"
+}
