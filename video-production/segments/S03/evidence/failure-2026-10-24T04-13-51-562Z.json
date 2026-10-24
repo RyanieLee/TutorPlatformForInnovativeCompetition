@@ -1,0 +1,31 @@
+{
+  "id": "2026-10-24T04-13-51-562Z",
+  "status": "failed",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "captureHead": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "browserViewport": [
+    1920,
+    1080
+  ],
+  "freshContext": true,
+  "events": [],
+  "errors": [],
+  "modelRequests": [],
+  "nativePreparation": [],
+  "rawVideo": "raw/2026-10-24T04-13-51-562Z/input.mkv",
+  "baseUrl": "http://127.0.0.1:39719/",
+  "startCommand": "npm run demo -- --port 39719 --strictPort",
+  "browserVersion": "156.0.8078.4",
+  "initialStorage": {
+    "cookies": [],
+    "origins": []
+  },
+  "preparation": [
+    {
+      "action": "real mock role login",
+      "url": "http://127.0.0.1:39719/#/pages/profile/index",
+      "role": "parent"
+    }
+  ],
+  "failure": "locator.fill: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByPlaceholder('例如：测试同学', { exact: true })\u001b[22m\n\n    at /workspace/tutor/video-production/segments/S03/scripts/capture.mjs:100:54"
+}

@@ -1,0 +1,10 @@
+{
+  "logSha256": "cbac241315efff0008103fbd16aa6ea1af4b97f49eeda78c1ed628ca4cffbfdc",
+  "rawTrimStartSec": 1.1000413319999989,
+  "usedRawEndSec": 36.100041331999996,
+  "rawDuplicateFrames": 0,
+  "rawDroppedFrames": 0,
+  "transitions": [],
+  "noPacingCorrectionInUsedInterval": true,
+  "note": "Audit covers the full actual 0-35-second footage. Editorial blur, chain graphics and titles do not replace or reconstruct business UI."
+}

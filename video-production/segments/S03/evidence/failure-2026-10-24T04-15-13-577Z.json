@@ -1,0 +1,109 @@
+{
+  "id": "2026-10-24T04-15-13-577Z",
+  "status": "failed",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "captureHead": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "browserViewport": [
+    1920,
+    1080
+  ],
+  "freshContext": true,
+  "events": [
+    {
+      "timeSec": 1.303,
+      "kind": "actual-course-start-state",
+      "url": "http://127.0.0.1:32883/#/pages/teaching/loop?bookingId=booking-1792815319417-wwc5ix",
+      "existingBooking": true,
+      "unit": "一元一次方程",
+      "preset": true
+    },
+    {
+      "timeSec": 15.85,
+      "kind": "real-mouse-click",
+      "name": "返回首页",
+      "box": {
+        "x": 905.046875,
+        "y": 165,
+        "width": 82.734375,
+        "height": 44
+      },
+      "point": {
+        "x": 946.4140625,
+        "y": 187
+      },
+      "hitTest": true
+    }
+  ],
+  "errors": [],
+  "modelRequests": [],
+  "nativePreparation": [
+    {
+      "action": "dismiss native translation bubble",
+      "beforeMae": 11.938461538461539
+    }
+  ],
+  "rawVideo": "raw/2026-10-24T04-15-13-577Z/input.mkv",
+  "baseUrl": "http://127.0.0.1:32883/",
+  "startCommand": "npm run demo -- --port 32883 --strictPort",
+  "browserVersion": "156.0.8078.4",
+  "initialStorage": {
+    "cookies": [],
+    "origins": []
+  },
+  "preparation": [
+    {
+      "action": "real mock role login",
+      "url": "http://127.0.0.1:32883/#/pages/profile/index",
+      "role": "parent"
+    },
+    {
+      "action": "parent created genuine UI booking",
+      "url": "http://127.0.0.1:32883/#/pages/orders/index",
+      "student": "小航",
+      "tutorId": "t001",
+      "subject": "数学",
+      "expectedTime": "周六下午",
+      "budgetMax": 100,
+      "teachingMode": "均可 (existing tutor option)"
+    },
+    {
+      "action": "real mock role login",
+      "url": "http://127.0.0.1:32883/#/pages/profile/index",
+      "role": "tutor"
+    },
+    {
+      "action": "tutor actually accepted booking",
+      "url": "http://127.0.0.1:32883/#/pages/tutor/booking-detail?id=booking-1792815319417-wwc5ix",
+      "bookingUrl": "http://127.0.0.1:32883/#/pages/tutor/booking-detail?id=booking-1792815319417-wwc5ix",
+      "actualStatus": "家教已接受"
+    },
+    {
+      "action": "loaded actual preset course draft",
+      "url": "http://127.0.0.1:32883/#/pages/teaching/loop?bookingId=booking-1792815319417-wwc5ix",
+      "published": false,
+      "modelCalled": false,
+      "lessonCount": 4,
+      "unit": "一元一次方程"
+    }
+  ],
+  "course": {
+    "url": "http://127.0.0.1:32883/#/pages/teaching/loop?bookingId=booking-1792815319417-wwc5ix",
+    "bookingUrl": "http://127.0.0.1:32883/#/pages/tutor/booking-detail?id=booking-1792815319417-wwc5ix",
+    "existingBooking": true,
+    "source": "预置演示样例（非实时生成）",
+    "published": false,
+    "unit": "一元一次方程",
+    "actualText": "初中七年级（初一） · 一元一次方程\nDEMO-STUDENT-01 · 4节 × 45分钟。适配示例，教材版本与进度请教师核对。\n课程总体目标\n理解等式性质，规范求解和检验一元一次方程，将简单生活问题转化为方程，并分步骤解释思路。\n先备条件：已学有理数及基本代数表达式；教材版本和实际进度由教师核对。\n先备预诊断（5题）\n计算 -3 + 8\n参考答案：5；先比较绝对值，结果为正。\n计算 -2 × 4\n参考答案：-8；异号相乘得负。\n化简 3x + 2x\n参考答案：5x；同类项系数相加。\nx = 2 是否为 3x + 1 = 7 的解？\n参考答案：是；代入得 3×2+1=7。\nx + 4 = 9，求 x\n参考答案：x = 5；等式两边同时减4。\n第1课\n第2课\n第3课\n第4课\n第1课 · 认识一元一次方程与等式基本性质\n教学资源：本页例题、练习与标准答案；草稿纸或白板：标注每一步等价变形；教师逐题观察记录表\n可检验学习目标\n· 分辨等式与方程，识别一元一次方程\n· 用等式性质解简单方程并代入检验\n知识点与重点难点\n未知数和方程的解；等式两边执行相同操作；除数不能为0\n45分钟教学安排（当前合计45分钟）\n环节1\n5\n分钟\n教师活动\n用一个数加7等于15引入未知数。\n学生活动\n尝试用字母表示未知数。\n环节2\n7\n分钟\n教师活动\n讲解只含一个未知数且未知数次数为1的方程及解的含义。\n学生活动\n比较等式、方程与一元一次方程。\n环节3\n10\n分钟\n教师活动\n演示 x+7=15，两边同时减7，x=8并检验。\n学生活动\n逐步说明两边的相同操作。\n环节4\n8\n分钟\n教师活动\n演示3x=21，两边同除3得x=7；除数不得为0。\n学生活动\n代入检验并解释为什么不能除0。\n环节5\n10\n分钟\n教师活动\n观察学生独立练习过程并记录错误。\n学生活动\n独立完成3题并验算。\n环节6\n5\n分钟\n教师活动\n回顾等式性质，针对记录订正。\n学生活动\n复述操作原则。\n例题与分步讲解\nL1-E1\nx + 7 = 15\n标准答案：x = 8；两边减7，x=8；8+7=15。\nL1-E2\n3x = 21\n标准答案：x = 7；两边同除3；3×7=21。\n独立练习与标准答案\nL1-Q1\nx + 9 = 17\n标准答案：x = 8；两边减9。\nL1-Q2\n5x = 30\n标准答案：x = 6；两边同除5。\nL1-Q3\nx − 6 = 11\n标准答案：x = 17；两边加6。\n课后作业\n各写2道加减类、乘除类方程，完成求解与代入检验。\n观察指标\n两边是否执行同样操作；能否代入验算",
+    "anonymousTemplateId": "DEMO-STUDENT-01 (existing preset identifier, not a second child)"
+  },
+  "viewportAlignment": {
+    "x": 0,
+    "y": 87,
+    "error": 0,
+    "topRightMaeAfter": 0,
+    "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+  },
+  "rawTrimStartSec": 1.100017987000001,
+  "recorder": "FFmpeg native X11 screen grab at 30fps; not a sequence of website screenshots",
+  "failure": "Error: expect(page).toHaveURL(expected) failed\n\nExpected pattern: /pages\\/index\\/index/\nReceived string:  \"http://127.0.0.1:32883/#/\"\nTimeout: 5000ms\n\nCall log:\n  - Expect \"toHaveURL\" with timeout 5000ms\n    14 × locator resolved to <html lang=\"zh-CN\">…</html>\n       - unexpected value \"http://127.0.0.1:32883/#/\"\n\n    at captureRawStack (/workspace/tutor/node_modules/playwright-core/lib/coreBundle.js:9282:17)\n    at callMatcherAsStep (/workspace/tutor/node_modules/playwright/lib/matchers/expect.js:13316:57)\n    at Object.toHaveURL (/workspace/tutor/node_modules/playwright/lib/matchers/expect.js:13308:23)\n    at /workspace/tutor/video-production/segments/S03/scripts/capture.mjs:114:63"
+}

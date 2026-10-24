@@ -1,0 +1,214 @@
+{
+  "id": "2026-10-24T04-16-19-050Z",
+  "status": "passed",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "captureHead": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "browserViewport": [
+    1920,
+    1080
+  ],
+  "freshContext": true,
+  "events": [
+    {
+      "timeSec": 1.309,
+      "kind": "actual-course-start-state",
+      "url": "http://127.0.0.1:37673/#/pages/teaching/loop?bookingId=booking-1792815384722-02z59d",
+      "existingBooking": true,
+      "unit": "一元一次方程",
+      "preset": true
+    },
+    {
+      "timeSec": 15.853,
+      "kind": "real-mouse-click",
+      "name": "返回首页",
+      "box": {
+        "x": 905.046875,
+        "y": 165,
+        "width": 82.734375,
+        "height": 44
+      },
+      "point": {
+        "x": 946.4140625,
+        "y": 187
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": 16.689,
+      "kind": "home-state-verified",
+      "url": "http://127.0.0.1:37673/#/"
+    },
+    {
+      "timeSec": 20.7,
+      "kind": "route-entry-hover",
+      "box": {
+        "x": 185.28125,
+        "y": 413.171875,
+        "width": 102.640625,
+        "height": 19
+      }
+    },
+    {
+      "timeSec": 21.52,
+      "kind": "real-mouse-click",
+      "name": "5分钟演示路线",
+      "box": {
+        "x": 185.28125,
+        "y": 413.171875,
+        "width": 102.640625,
+        "height": 19
+      },
+      "point": {
+        "x": 236.6015625,
+        "y": 422.671875
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": 21.582,
+      "kind": "demo-navigation-state-verified",
+      "url": "http://127.0.0.1:37673/#/pages/demo/index",
+      "hero": "AI辅助 · 教师把关 · 家长知情\n把功能串成一条学习服务链\n说需求 → 解释推荐 → 预约地图 → 学习练习 → 教师反馈与修订。\n当前为本机演示，记录只在当前浏览器保存。 以下入口不会清空已有记录。",
+      "steps": [
+        "一句话说出学习需求",
+        "看懂推荐为什么适合",
+        "在西安地图看订单",
+        "知识点、练习与老师接力",
+        "课堂事实 → 教师确认 → 课程修订"
+      ],
+      "modelStatus": "文字模型\n未配置，可体验本机指南\n作业图片模型\n未配置，可粘贴文字题目\n“已配置”不代表已完成真实调用验证。未配置时，需求规则、固定笔记和教学样例仍可体验，来源都会标明。"
+    },
+    {
+      "timeSec": 26.61,
+      "kind": "teaching-navigation-card-visible",
+      "box": {
+        "x": 138.890625,
+        "y": 397,
+        "width": 804.609375,
+        "height": 285.25
+      },
+      "text": "05\n3:40–5:00\n课堂事实 → 教师确认 → 课程修订\n家教打开已接受预约的“教学计划与课后反馈”，展示四课预置课程、第二课3/5记录、证据反馈和第三课v2修订。\n看点：建议先成草稿，教师确认后家长才可见；60%仅指虚构案例的5道题，不是提分效果。\n前往家教工作台 →"
+    },
+    {
+      "timeSec": 34.142,
+      "kind": "ending-state-verified",
+      "url": "http://127.0.0.1:37673/#/pages/demo/index",
+      "brand": "领航云学堂",
+      "roleConcept": [
+        "家长",
+        "大学生家教"
+      ]
+    }
+  ],
+  "errors": [],
+  "modelRequests": [],
+  "nativePreparation": [
+    {
+      "action": "dismiss native translation bubble",
+      "beforeMae": 11.938461538461539
+    }
+  ],
+  "rawVideo": "raw/2026-10-24T04-16-19-050Z/input.mkv",
+  "baseUrl": "http://127.0.0.1:37673/",
+  "startCommand": "npm run demo -- --port 37673 --strictPort",
+  "browserVersion": "156.0.8078.4",
+  "initialStorage": {
+    "cookies": [],
+    "origins": []
+  },
+  "preparation": [
+    {
+      "action": "real mock role login",
+      "url": "http://127.0.0.1:37673/#/pages/profile/index",
+      "role": "parent"
+    },
+    {
+      "action": "parent created genuine UI booking",
+      "url": "http://127.0.0.1:37673/#/pages/orders/index",
+      "student": "小航",
+      "tutorId": "t001",
+      "subject": "数学",
+      "expectedTime": "周六下午",
+      "budgetMax": 100,
+      "teachingMode": "均可 (existing tutor option)"
+    },
+    {
+      "action": "real mock role login",
+      "url": "http://127.0.0.1:37673/#/pages/profile/index",
+      "role": "tutor"
+    },
+    {
+      "action": "tutor actually accepted booking",
+      "url": "http://127.0.0.1:37673/#/pages/tutor/booking-detail?id=booking-1792815384722-02z59d",
+      "bookingUrl": "http://127.0.0.1:37673/#/pages/tutor/booking-detail?id=booking-1792815384722-02z59d",
+      "actualStatus": "家教已接受"
+    },
+    {
+      "action": "loaded actual preset course draft",
+      "url": "http://127.0.0.1:37673/#/pages/teaching/loop?bookingId=booking-1792815384722-02z59d",
+      "published": false,
+      "modelCalled": false,
+      "lessonCount": 4,
+      "unit": "一元一次方程"
+    }
+  ],
+  "course": {
+    "url": "http://127.0.0.1:37673/#/pages/teaching/loop?bookingId=booking-1792815384722-02z59d",
+    "bookingUrl": "http://127.0.0.1:37673/#/pages/tutor/booking-detail?id=booking-1792815384722-02z59d",
+    "existingBooking": true,
+    "source": "预置演示样例（非实时生成）",
+    "published": false,
+    "unit": "一元一次方程",
+    "actualText": "初中七年级（初一） · 一元一次方程\nDEMO-STUDENT-01 · 4节 × 45分钟。适配示例，教材版本与进度请教师核对。\n课程总体目标\n理解等式性质，规范求解和检验一元一次方程，将简单生活问题转化为方程，并分步骤解释思路。\n先备条件：已学有理数及基本代数表达式；教材版本和实际进度由教师核对。\n先备预诊断（5题）\n计算 -3 + 8\n参考答案：5；先比较绝对值，结果为正。\n计算 -2 × 4\n参考答案：-8；异号相乘得负。\n化简 3x + 2x\n参考答案：5x；同类项系数相加。\nx = 2 是否为 3x + 1 = 7 的解？\n参考答案：是；代入得 3×2+1=7。\nx + 4 = 9，求 x\n参考答案：x = 5；等式两边同时减4。\n第1课\n第2课\n第3课\n第4课\n第1课 · 认识一元一次方程与等式基本性质\n教学资源：本页例题、练习与标准答案；草稿纸或白板：标注每一步等价变形；教师逐题观察记录表\n可检验学习目标\n· 分辨等式与方程，识别一元一次方程\n· 用等式性质解简单方程并代入检验\n知识点与重点难点\n未知数和方程的解；等式两边执行相同操作；除数不能为0\n45分钟教学安排（当前合计45分钟）\n环节1\n5\n分钟\n教师活动\n用一个数加7等于15引入未知数。\n学生活动\n尝试用字母表示未知数。\n环节2\n7\n分钟\n教师活动\n讲解只含一个未知数且未知数次数为1的方程及解的含义。\n学生活动\n比较等式、方程与一元一次方程。\n环节3\n10\n分钟\n教师活动\n演示 x+7=15，两边同时减7，x=8并检验。\n学生活动\n逐步说明两边的相同操作。\n环节4\n8\n分钟\n教师活动\n演示3x=21，两边同除3得x=7；除数不得为0。\n学生活动\n代入检验并解释为什么不能除0。\n环节5\n10\n分钟\n教师活动\n观察学生独立练习过程并记录错误。\n学生活动\n独立完成3题并验算。\n环节6\n5\n分钟\n教师活动\n回顾等式性质，针对记录订正。\n学生活动\n复述操作原则。\n例题与分步讲解\nL1-E1\nx + 7 = 15\n标准答案：x = 8；两边减7，x=8；8+7=15。\nL1-E2\n3x = 21\n标准答案：x = 7；两边同除3；3×7=21。\n独立练习与标准答案\nL1-Q1\nx + 9 = 17\n标准答案：x = 8；两边减9。\nL1-Q2\n5x = 30\n标准答案：x = 6；两边同除5。\nL1-Q3\nx − 6 = 11\n标准答案：x = 17；两边加6。\n课后作业\n各写2道加减类、乘除类方程，完成求解与代入检验。\n观察指标\n两边是否执行同样操作；能否代入验算",
+    "anonymousTemplateId": "DEMO-STUDENT-01 (existing preset identifier, not a second child)"
+  },
+  "viewportAlignment": {
+    "x": 0,
+    "y": 87,
+    "error": 0,
+    "topRightMaeAfter": 0,
+    "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+  },
+  "rawTrimStartSec": 1.1000413319999989,
+  "recorder": "FFmpeg native X11 screen grab at 30fps; not a sequence of website screenshots",
+  "entryBox": {
+    "x": 185.28125,
+    "y": 413.171875,
+    "width": 102.640625,
+    "height": 19
+  },
+  "navigation": {
+    "url": "http://127.0.0.1:37673/#/pages/demo/index",
+    "hero": "AI辅助 · 教师把关 · 家长知情\n把功能串成一条学习服务链\n说需求 → 解释推荐 → 预约地图 → 学习练习 → 教师反馈与修订。\n当前为本机演示，记录只在当前浏览器保存。 以下入口不会清空已有记录。",
+    "steps": [
+      "一句话说出学习需求",
+      "看懂推荐为什么适合",
+      "在西安地图看订单",
+      "知识点、练习与老师接力",
+      "课堂事实 → 教师确认 → 课程修订"
+    ],
+    "modelStatus": "文字模型\n未配置，可体验本机指南\n作业图片模型\n未配置，可粘贴文字题目\n“已配置”不代表已完成真实调用验证。未配置时，需求规则、固定笔记和教学样例仍可体验，来源都会标明。",
+    "teachingText": "05\n3:40–5:00\n课堂事实 → 教师确认 → 课程修订\n家教打开已接受预约的“教学计划与课后反馈”，展示四课预置课程、第二课3/5记录、证据反馈和第三课v2修订。\n看点：建议先成草稿，教师确认后家长才可见；60%仅指虚构案例的5道题，不是提分效果。\n前往家教工作台 →",
+    "teachingBox": {
+      "x": 138.890625,
+      "y": 397,
+      "width": 804.609375,
+      "height": 285.25
+    }
+  },
+  "progress": {
+    "frame": "1140",
+    "fps": "29.98",
+    "stream_0_0_q": "8.0",
+    "bitrate": "4853.7kbits/s",
+    "total_size": "23055196",
+    "out_time_us": "38000000",
+    "out_time_ms": "38000000",
+    "out_time": "00:00:38.000000",
+    "dup_frames": "0",
+    "drop_frames": "0",
+    "speed": "0.999x",
+    "progress": "end"
+  },
+  "realInteractions": 2
+}

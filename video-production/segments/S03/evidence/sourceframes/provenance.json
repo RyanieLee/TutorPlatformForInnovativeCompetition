@@ -1,0 +1,43 @@
+{
+  "captureId": "2026-10-24T04-16-19-050Z",
+  "rawVideo": "raw/2026-10-24T04-16-19-050Z/input.mkv",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "description": "Full viewport frames extracted from the selected actual native screen recording before post-production; no graphics or reconstruction. The end-state footage remains the actual demo navigation; brand/role graphics are editorial overlays.",
+  "frames": [
+    {
+      "file": "01_start.png",
+      "segmentTimeSec": 2,
+      "rawTimeSec": 3.100041331999999
+    },
+    {
+      "file": "02_chain.png",
+      "segmentTimeSec": 17.4,
+      "rawTimeSec": 18.500041332
+    },
+    {
+      "file": "03_home.png",
+      "segmentTimeSec": 19.3,
+      "rawTimeSec": 20.400041332
+    },
+    {
+      "file": "04_click_route.png",
+      "segmentTimeSec": 21.455,
+      "rawTimeSec": 22.555041332
+    },
+    {
+      "file": "05_navigation.png",
+      "segmentTimeSec": 23.4,
+      "rawTimeSec": 24.500041332
+    },
+    {
+      "file": "06_teaching_chain.png",
+      "segmentTimeSec": 26.6,
+      "rawTimeSec": 27.700041332
+    },
+    {
+      "file": "07_end.png",
+      "segmentTimeSec": 33,
+      "rawTimeSec": 34.100041331999996
+    }
+  ]
+}
