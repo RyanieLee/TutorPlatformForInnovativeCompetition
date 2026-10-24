@@ -1,0 +1,17 @@
+{
+  "id": "2026-10-24T02-14-41-603Z",
+  "status": "failed",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "captureHead": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "browserViewport": [
+    1920,
+    1080
+  ],
+  "freshContext": true,
+  "events": [],
+  "errors": [],
+  "modelRequests": [],
+  "nativePreparation": [],
+  "rawVideo": "raw/2026-10-24T02-14-41-603Z/input.mkv",
+  "failure": "Error: ENOENT: no such file or directory, open '/workspace/tutor/video-production/segments/S01/raw/2026-10-24T02-14-41-603Z/demo-server.log'\n    at readFileSync (node:fs:484:20)\n    at file:///workspace/tutor/video-production/segments/S01/scripts/capture.mjs:74:39\n    at until (file:///workspace/tutor/video-production/segments/S01/scripts/capture.mjs:19:130)\n    at file:///workspace/tutor/video-production/segments/S01/scripts/capture.mjs:74:18\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+}

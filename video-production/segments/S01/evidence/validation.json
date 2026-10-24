@@ -1,0 +1,276 @@
+{
+  "status": "passed",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "videoSha256": "b21aba8648e9ab5e1458b2f969dfc7b8f3e6c9519b899b117452b6667cb080ef",
+  "fileSizeBytes": 10499621,
+  "checks": {
+    "exact40Seconds": {
+      "passed": true,
+      "actual": "40.000000"
+    },
+    "1200Frames": {
+      "passed": true,
+      "actual": "1200"
+    },
+    "resolution": {
+      "passed": true,
+      "actual": [
+        1920,
+        1080
+      ]
+    },
+    "frameRate": {
+      "passed": true,
+      "actual": [
+        "30/1",
+        "30/1"
+      ]
+    },
+    "H264yuv420p": {
+      "passed": true,
+      "actual": [
+        "h264",
+        "yuv420p"
+      ]
+    },
+    "AAC48kHz": {
+      "passed": true,
+      "actual": [
+        "aac",
+        "48000"
+      ]
+    },
+    "faststart": {
+      "passed": true,
+      "actual": [
+        {
+          "type": "ftyp",
+          "offset": 0,
+          "size": 32
+        },
+        {
+          "type": "moov",
+          "offset": 32,
+          "size": 45322
+        },
+        {
+          "type": "free",
+          "offset": 45354,
+          "size": 8
+        },
+        {
+          "type": "mdat",
+          "offset": 45362,
+          "size": 10454259
+        }
+      ]
+    },
+    "monotonic30fpsPTS": {
+      "passed": true,
+      "actual": {
+        "count": 1200,
+        "maxDeltaError": 6.666666701946045e-7
+      }
+    },
+    "completeDecode": {
+      "passed": true,
+      "actual": "Entire MP4 decoded without FFmpeg errors"
+    },
+    "silentAAC": {
+      "passed": true,
+      "actual": {
+        "maxSample": 0,
+        "samples": 3840000
+      }
+    },
+    "noBlackIntervals": {
+      "passed": true,
+      "actual": "No black-screen interval in the actual footage area (10ms detector minimum)"
+    },
+    "noBlankFootageFrames": {
+      "passed": true,
+      "actual": {
+        "uniformFrames": 0,
+        "minStd": 17.487255756375276,
+        "frames": 1200
+      }
+    },
+    "twoReasonsInsideFinalCamera": {
+      "passed": true,
+      "actual": {
+        "crop": {
+          "x": 426.66666666666663,
+          "y": 239.8203125,
+          "width": 1066.6666666666667,
+          "height": 600
+        },
+        "reasons": [
+          {
+            "x": 500.5,
+            "y": 471.203125,
+            "width": 904,
+            "height": 21.59375,
+            "text": "学科吻合：数学 +35；方式兼容：均可（硬条件）"
+          },
+          {
+            "x": 500.5,
+            "y": 497.796875,
+            "width": 904,
+            "height": 21.59375,
+            "text": "空闲时间兼容：所选时段与老师时间有交集（需双方最终确认） +30"
+          }
+        ]
+      }
+    },
+    "SRT40SecondsUTF8": {
+      "passed": true,
+      "actual": [
+        [
+          0,
+          5
+        ],
+        [
+          5,
+          12
+        ],
+        [
+          12,
+          20
+        ],
+        [
+          20,
+          26
+        ],
+        [
+          26,
+          31
+        ],
+        [
+          31,
+          40
+        ]
+      ]
+    },
+    "twoActualClicks": {
+      "passed": true,
+      "actual": [
+        {
+          "timeSec": 8.217,
+          "kind": "real-mouse-click",
+          "name": "带入匹配示例",
+          "box": {
+            "x": 986.5,
+            "y": 749.75,
+            "width": 754.609375,
+            "height": 44
+          },
+          "point": {
+            "x": 1363.8046875,
+            "y": 771.75
+          },
+          "hitTest": true
+        },
+        {
+          "timeSec": 22.642,
+          "kind": "real-mouse-click",
+          "name": "生成推荐",
+          "box": {
+            "x": 500.5,
+            "y": 921.3125,
+            "width": 904,
+            "height": 44
+          },
+          "point": {
+            "x": 952.5,
+            "y": 943.3125
+          },
+          "hitTest": true
+        }
+      ]
+    },
+    "clicksInShotWindows": {
+      "passed": true,
+      "actual": [
+        8.217,
+        22.642
+      ]
+    },
+    "actualTutorAndReasons": {
+      "passed": true,
+      "actual": {
+        "name": "小林老师",
+        "reasons": [
+          {
+            "x": 500.5,
+            "y": 471.203125,
+            "width": 904,
+            "height": 21.59375,
+            "text": "学科吻合：数学 +35；方式兼容：均可（硬条件）"
+          },
+          {
+            "x": 500.5,
+            "y": 497.796875,
+            "width": 904,
+            "height": 21.59375,
+            "text": "空闲时间兼容：所选时段与老师时间有交集（需双方最终确认） +30"
+          }
+        ]
+      }
+    },
+    "noModelCall": {
+      "passed": true,
+      "actual": []
+    },
+    "freshBrowserContext": {
+      "passed": true,
+      "actual": {
+        "cookies": [],
+        "origins": []
+      }
+    },
+    "nativeViewportAlignment": {
+      "passed": true,
+      "actual": {
+        "x": 0,
+        "y": 87,
+        "error": 0,
+        "topRightMaeAfter": 0,
+        "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+      }
+    },
+    "captureNoDropOrDup": {
+      "passed": true,
+      "actual": {
+        "drop": "0",
+        "dup": "0"
+      }
+    }
+  },
+  "keyframes": [
+    {
+      "file": "keyframes/01_start.png",
+      "timeSec": 0.8
+    },
+    {
+      "file": "keyframes/02_click_entry.png",
+      "timeSec": 8.152000000000001
+    },
+    {
+      "file": "keyframes/03_fields.png",
+      "timeSec": 16
+    },
+    {
+      "file": "keyframes/04_click_generate.png",
+      "timeSec": 22.576999999999998
+    },
+    {
+      "file": "keyframes/05_result.png",
+      "timeSec": 31.5
+    },
+    {
+      "file": "keyframes/06_end.png",
+      "timeSec": 39
+    }
+  ],
+  "manualVisualReview": "Required separately: compare keyframes and contact sheet with actual browser screenshots and DOM evidence. This script does not claim an OCR or human visual review."
+}

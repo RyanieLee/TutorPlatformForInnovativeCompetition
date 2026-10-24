@@ -1,0 +1,52 @@
+{
+  "duration": 40,
+  "frames": 1200,
+  "footageFrame": {
+    "x": 128,
+    "y": 72,
+    "width": 1664,
+    "height": 936
+  },
+  "rawTrimStartSec": 1.100018658,
+  "zoomExpression": "if(lt(on,150),1+0.025*on/150,if(lt(on,360),1.025,if(lt(on,420),1.025+0.625*(((on-360)/60)*((on-360)/60)*(3-2*((on-360)/60))),if(lt(on,552),1.65,if(lt(on,600),1.65-0.65*(((on-552)/48)*((on-552)/48)*(3-2*((on-552)/48))),if(lt(on,810),1,if(lt(on,930),1+0.35*(((on-810)/120)*((on-810)/120)*(3-2*((on-810)/120))),1.35+0.45*((min((on-930)/255,1))*(min((on-930)/255,1))*(3-2*(min((on-930)/255,1)))))))))))",
+  "focusYExpression": "if(lt(on,360),540,if(lt(on,420),540-140*(((on-360)/60)*((on-360)/60)*(3-2*((on-360)/60))),if(lt(on,552),400,if(lt(on,600),400+140*(((on-552)/48)*((on-552)/48)*(3-2*((on-552)/48))),if(lt(on,810),540,if(lt(on,930),540+(539.8203125-540)*(((on-810)/120)*((on-810)/120)*(3-2*((on-810)/120))),539.8203125))))))",
+  "captions": [
+    {
+      "file": "caption-1.txt",
+      "start": 0,
+      "end": 5,
+      "text": "说出需求，匹配不盲目"
+    },
+    {
+      "file": "caption-2.txt",
+      "start": 5,
+      "end": 12,
+      "text": "从演示导航，带入匹配示例"
+    },
+    {
+      "file": "caption-3.txt",
+      "start": 12,
+      "end": 20,
+      "text": "初一小航｜数学 · 100元内 · 周六下午"
+    },
+    {
+      "file": "caption-4.txt",
+      "start": 20,
+      "end": 26,
+      "text": "点击生成推荐，按现有公开规则筛选"
+    },
+    {
+      "file": "caption-5.txt",
+      "start": 26,
+      "end": 31,
+      "text": "定位小林老师，核对时间与费用"
+    },
+    {
+      "file": "caption-6.txt",
+      "start": 31,
+      "end": 40,
+      "text": "让推荐有依据"
+    }
+  ],
+  "visualEdits": "Real continuous capture, eased camera pushes, warm-white matte, dark-green titles/subtitles and cursor/ripple only; no reconstructed business UI or replacement results."
+}

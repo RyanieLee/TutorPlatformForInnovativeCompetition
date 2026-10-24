@@ -1,0 +1,194 @@
+{
+  "id": "2026-10-24T02-15-05-145Z",
+  "status": "passed",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "captureHead": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "browserViewport": [
+    1920,
+    1080
+  ],
+  "freshContext": true,
+  "events": [
+    {
+      "timeSec": 1.204,
+      "kind": "start-state",
+      "url": "http://127.0.0.1:41733/#/pages/demo/index"
+    },
+    {
+      "timeSec": 7.099,
+      "kind": "entry-hover",
+      "box": {
+        "x": 986.5,
+        "y": 749.75,
+        "width": 754.609375,
+        "height": 44
+      }
+    },
+    {
+      "timeSec": 8.217,
+      "kind": "real-mouse-click",
+      "name": "带入匹配示例",
+      "box": {
+        "x": 986.5,
+        "y": 749.75,
+        "width": 754.609375,
+        "height": 44
+      },
+      "point": {
+        "x": 1363.8046875,
+        "y": 771.75
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": 8.379,
+      "kind": "entry-state-verified",
+      "url": "http://127.0.0.1:41733/#/pages/match/index?demoScenario=math"
+    },
+    {
+      "timeSec": 10.822,
+      "kind": "preset-fields-verified",
+      "values": [
+        "100",
+        "周六下午",
+        "耐心"
+      ],
+      "selected": [
+        "数学",
+        "初中（演示）",
+        "均可"
+      ]
+    },
+    {
+      "timeSec": 22.642,
+      "kind": "real-mouse-click",
+      "name": "生成推荐",
+      "box": {
+        "x": 500.5,
+        "y": 921.3125,
+        "width": 904,
+        "height": 44
+      },
+      "point": {
+        "x": 952.5,
+        "y": 943.3125
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": 22.674,
+      "kind": "results-state-verified",
+      "card": "1. 小林老师\n89 分\n长安区 · 大学城 · 周六 14:00–17:00，周日 09:00–11:00\n西安交通大学（场景） · 均可 · ¥80/小时\n学科吻合：数学 +35；方式兼容：均可（硬条件）\n空闲时间兼容：所选时段与老师时间有交集（需双方最终确认） +30\n教学经历：自述 30 个月 +17\n课时费 ¥80 ≤ 预算 ¥100，价格余量 +2\n其他因素：课程成绩 90/100、教学能力 5/5、案例 8/10（封顶）、偏好命中 1/1；四项比例平均 +5\n经验、成绩、能力和案例均为自述，缺失项记0；评分不代表资质认证。\n查看详情与预约",
+      "reasons": [
+        "学科吻合：数学 +35；方式兼容：均可（硬条件）",
+        "空闲时间兼容：所选时段与老师时间有交集（需双方最终确认） +30",
+        "教学经历：自述 30 个月 +17",
+        "课时费 ¥80 ≤ 预算 ¥100，价格余量 +2",
+        "其他因素：课程成绩 90/100、教学能力 5/5、案例 8/10（封顶）、偏好命中 1/1；四项比例平均 +5",
+        "经验、成绩、能力和案例均为自述，缺失项记0；评分不代表资质认证。"
+      ]
+    },
+    {
+      "timeSec": 39.343,
+      "kind": "ending-state-verified",
+      "name": "1. 小林老师",
+      "visibleReasons": 2
+    }
+  ],
+  "errors": [],
+  "modelRequests": [],
+  "nativePreparation": [
+    {
+      "action": "dismiss native translation bubble",
+      "beforeMae": 26.045384615384616
+    }
+  ],
+  "rawVideo": "raw/2026-10-24T02-15-05-145Z/input.mkv",
+  "baseUrl": "http://127.0.0.1:41733/",
+  "startCommand": "npm run demo -- --port 41733 --strictPort",
+  "browserVersion": "156.0.8078.4",
+  "offCameraTutorVerification": {
+    "name": "小林老师",
+    "url": "http://127.0.0.1:41733/#/pages/tutors/detail?id=t001",
+    "id": "t001"
+  },
+  "initialStorage": {
+    "cookies": [],
+    "origins": []
+  },
+  "viewportAlignment": {
+    "x": 0,
+    "y": 87,
+    "error": 0,
+    "topRightMaeAfter": 0,
+    "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+  },
+  "rawTrimStartSec": 1.100018658,
+  "recorder": "FFmpeg native X11 screen grab at 30fps; not a sequence of website screenshots",
+  "fields": {
+    "values": [
+      "100",
+      "周六下午",
+      "耐心"
+    ],
+    "selected": [
+      "数学",
+      "初中（演示）",
+      "均可"
+    ]
+  },
+  "result": {
+    "id": "t001",
+    "name": "小林老师",
+    "card": {
+      "x": 485.5,
+      "y": 391.109375,
+      "width": 934,
+      "height": 297.421875
+    },
+    "reasons": [
+      "学科吻合：数学 +35；方式兼容：均可（硬条件）",
+      "空闲时间兼容：所选时段与老师时间有交集（需双方最终确认） +30",
+      "教学经历：自述 30 个月 +17",
+      "课时费 ¥80 ≤ 预算 ¥100，价格余量 +2",
+      "其他因素：课程成绩 90/100、教学能力 5/5、案例 8/10（封顶）、偏好命中 1/1；四项比例平均 +5",
+      "经验、成绩、能力和案例均为自述，缺失项记0；评分不代表资质认证。"
+    ],
+    "visibleReasons": [
+      {
+        "x": 500.5,
+        "y": 471.203125,
+        "width": 904,
+        "height": 21.59375,
+        "text": "学科吻合：数学 +35；方式兼容：均可（硬条件）"
+      },
+      {
+        "x": 500.5,
+        "y": 497.796875,
+        "width": 904,
+        "height": 21.59375,
+        "text": "空闲时间兼容：所选时段与老师时间有交集（需双方最终确认） +30"
+      }
+    ],
+    "actualText": "1. 小林老师\n89 分\n长安区 · 大学城 · 周六 14:00–17:00，周日 09:00–11:00\n西安交通大学（场景） · 均可 · ¥80/小时\n学科吻合：数学 +35；方式兼容：均可（硬条件）\n空闲时间兼容：所选时段与老师时间有交集（需双方最终确认） +30\n教学经历：自述 30 个月 +17\n课时费 ¥80 ≤ 预算 ¥100，价格余量 +2\n其他因素：课程成绩 90/100、教学能力 5/5、案例 8/10（封顶）、偏好命中 1/1；四项比例平均 +5\n经验、成绩、能力和案例均为自述，缺失项记0；评分不代表资质认证。\n查看详情与预约"
+  },
+  "resultFocus": {
+    "x": 952.5,
+    "y": 539.8203125
+  },
+  "progress": {
+    "frame": "1290",
+    "fps": "29.98",
+    "stream_0_0_q": "8.0",
+    "bitrate": "4096.7kbits/s",
+    "total_size": "22019594",
+    "out_time_us": "43000000",
+    "out_time_ms": "43000000",
+    "out_time": "00:00:43.000000",
+    "dup_frames": "0",
+    "drop_frames": "0",
+    "speed": "0.999x",
+    "progress": "end"
+  },
+  "realInteractions": 2
+}

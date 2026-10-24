@@ -1,0 +1,51 @@
+{
+  "id": "S01",
+  "title": "家长需求与智能匹配",
+  "durationSec": 40,
+  "fps": 30,
+  "resolution": [1920, 1080],
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "role": "核心·家长",
+  "suggestedExecutor": "B",
+  "sourceMode": "Mock / deterministic rule matching / no model call",
+  "assemblyTimeRange": "01:10–01:50",
+  "videoCodec": "H.264",
+  "pixelFormat": "yuv420p",
+  "audioCodec": "AAC",
+  "audioSampleRate": 48000,
+  "audioContent": "silent placeholder; no narration or music",
+  "prerequisites": [
+    "Node.js >=20 and npm ci at repository root",
+    "FFmpeg/ffprobe with x11grab, libx264, AAC, drawtext and zoompan",
+    "Chromium installed by npx playwright install chromium",
+    "Xvfb (or XVFB_BIN pointing to an executable) and Noto CJK fonts",
+    "Fresh isolated browser context; empty cookies and origin storage",
+    "Actual npm run demo Mock server, discovered from startup log",
+    "Existing math demo scenario and public synthetic tutor t001 小林老师"
+  ],
+  "case": {
+    "student": "小航（虚构）",
+    "schoolYear": "初一；页面选择初中（演示）",
+    "subject": "数学",
+    "budgetPerHourMax": 100,
+    "desiredTime": "周六下午",
+    "teachingMode": "均可（真实页面预置选项）",
+    "tutorId": "t001",
+    "topic": "一元一次方程",
+    "laterSegmentContext": "第二课Q1–Q3正确，Q4/Q5移项符号问题，3/5=60%仅为本次题目正确率；第三课建议增加10分钟符号专项，教师确认后发布v2。本片段不展示或伪造这些后续状态。"
+  },
+  "shots": [
+    {"start":0,"end":5,"content":"真实演示导航，轻推近；说出需求，匹配不盲目"},
+    {"start":5,"end":12,"content":"虚拟光标移动、悬停并真实点击带入匹配示例"},
+    {"start":12,"end":20,"content":"聚焦真实预置科目、学段、100元、周六下午字段"},
+    {"start":20,"end":31,"content":"真实点击生成推荐；等待结果并定位小林"},
+    {"start":31,"end":40,"content":"小林真实卡片与至少两条现存理由；让推荐有依据"}
+  ],
+  "outputs": {
+    "video": "exports/clip_S01.mp4",
+    "captions": "captions_S01.srt",
+    "captureScript": "scripts/capture.mjs",
+    "renderScript": "scripts/render.mjs",
+    "validationScript": "scripts/validate.mjs"
+  }
+}
