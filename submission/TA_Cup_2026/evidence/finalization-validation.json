@@ -11,12 +11,23 @@
   "fourOriginalSignatureJpegsUnchanged": true,
   "leaderSignatureReplaced": true,
   "leaderDisplayRotationClockwiseDeg": 270,
-  "visualReview": "已逐页查看最终7页PDF：简介1页、承诺书1页、作品介绍5页；文字、签名、表格、页脚和图片均无可见截断或遮挡。",
+  "visualReview": "本轮逐页查看作品介绍全部6页，核对正文、表格、图片、重点、页码与可点击链接；其余两份文件与此前核验版本逐字节一致。",
   "privateArtifactsCommitted": false,
   "privatePdfPages": {
     "01a": 1,
     "01b": 1,
-    "02": 5
+    "02": 6
   },
-  "officialTemplatesVerified": false
+  "officialTemplatesVerified": false,
+  "brochureExpandedFromPages": 5,
+  "otherTwoDocumentsByteIdentical": true,
+  "requiredSections": [
+    "作品名称",
+    "5个关键词",
+    "作品概要",
+    "教育痛点",
+    "技术创新",
+    "落地场景",
+    "应用成效"
+  ]
 }

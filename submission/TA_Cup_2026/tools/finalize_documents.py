@@ -142,6 +142,8 @@ def brochure(info,out):
   line=lines[i].strip();i+=1
   if not line:continue
   if line=='<!-- PAGE -->':d.add_page_break();continue
+  if line.startswith('<!-- KEY:'):
+   key=line[len('<!-- KEY:'):].split('-->')[0].strip().replace('|','：',1);p=paragraph(d,key,size=11,bold=True);p.paragraph_format.keep_with_next=True;continue
   if line.startswith('<!-- FLOW:'):
    labels=line[len('<!-- FLOW:'):].split('-->')[0].strip().split('|');t=d.add_table(rows=1,cols=len(labels))
    for cell,lab in zip(t.rows[0].cells,labels):
@@ -180,8 +182,10 @@ def brochure(info,out):
  shutil.copy2(BASE/'02_作品介绍文档.md',out/'02_作品介绍文档.md')
 
 def main():
- a=argparse.ArgumentParser();a.add_argument('--output',type=Path,required=True);a.add_argument('--identity',type=Path);a.add_argument('--signature-dir',type=Path);args=a.parse_args();args.output.mkdir(parents=True,exist_ok=True)
+ a=argparse.ArgumentParser();a.add_argument('--output',type=Path,required=True);a.add_argument('--identity',type=Path);a.add_argument('--signature-dir',type=Path);a.add_argument('--only-brochure',action='store_true');args=a.parse_args();args.output.mkdir(parents=True,exist_ok=True)
  info=json.loads(args.identity.read_text()) if args.identity else {}
+ if args.only_brochure:
+  brochure(info,args.output);print(args.output,'brochure only; other two documents unchanged');return
  details=intro(info,args.output);pledge(info,args.output,args.signature_dir);brochure(info,args.output)
  (args.output/'build-status.json').write_text(json.dumps({'summary':details,'identityComplete':not details['missingIdentityFields'],'officialTemplatesVerified':False,'teacherRequirementApplicableToChosenTrack':False,'documents':['参赛作品简介','参赛承诺书','作品介绍文档'],'teammateSource':'3903f325b07c3bc27a3974deddee1c7178a3dbf1','teammatePR':'https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/pull/40','signaturesEmbedded':bool(args.signature_dir),'status':'内容与排版已修订、报名字段已填；官网附件原模板尚未逐字核对'},ensure_ascii=False,indent=2)+'\n')
  print(args.output,'summary chars',len(SUMMARY))
