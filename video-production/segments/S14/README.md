@@ -16,6 +16,8 @@ Node>=20、Python3/Pillow、Playwright Chromium、FFmpeg/ffprobe、Xvfb/libX11/l
 ```bash
 npm ci --no-audit --no-fund
 npx playwright install chromium
+# 本环境Xvfb路径；其他机器安装系统Xvfb时无需设置
+export XVFB_BIN=/tmp/s01-x11/usr/bin/Xvfb
 node video-production/segments/S14/scripts/capture.mjs
 node video-production/segments/S14/scripts/render.mjs
 node video-production/segments/S14/scripts/validate.mjs

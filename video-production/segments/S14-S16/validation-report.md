@@ -23,3 +23,7 @@ S15使用真实主分支成功运行 https://github.com/RyanieLee/TutorPlatformF
 已核查现有S01–S07和本次S14–S16的真实产物与哈希；S08–S13共210秒缺失。video-production/final/scripts/compose.py 实际执行返回2并列出这六个缺口，没有生成540秒MP4或假称总片验收。固定540秒时间轴、贡献者清单、SHA与配音cue表已输出；70/360/110秒章节限制是预期，不冒充未生成总片的ffprobe实测。
 
 业务源码未改，main未合并。单段失败记录保留，最终仅选择各自capture.json对应成功素材。交付/上传状态见delivery.json。
+
+## 上传与交付
+
+脚本、字幕、证据与报告已提交 [PR #48](https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/pull/48)。GitHub Release视频附件实际上传返回HTTP 401 Bad credentials，未发布远程视频；没有尝试绕过凭据。实际成片与完整包在/workspace/shared/downloads/S14-S16/，详细状态见delivery.json。
