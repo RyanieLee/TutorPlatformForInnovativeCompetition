@@ -1,0 +1,233 @@
+{
+  "id": "2026-10-24T03-40-22-802Z",
+  "status": "passed",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "captureHead": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "browserViewport": [
+    1920,
+    1080
+  ],
+  "freshContext": true,
+  "events": [
+    {
+      "timeSec": 1.435,
+      "kind": "start-state",
+      "url": "http://127.0.0.1:34303/#/pages/index/index",
+      "hero": "让优秀的大学生，\n成为孩子的成长伙伴"
+    },
+    {
+      "timeSec": 17.799,
+      "kind": "entry-hover",
+      "box": {
+        "x": 318.921875,
+        "y": 588.171875,
+        "width": 95.265625,
+        "height": 19
+      }
+    },
+    {
+      "timeSec": 18.418,
+      "kind": "real-mouse-click",
+      "name": "浏览家教老师",
+      "box": {
+        "x": 318.921875,
+        "y": 588.171875,
+        "width": 95.265625,
+        "height": 19
+      },
+      "point": {
+        "x": 366.5546875,
+        "y": 597.671875
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": 20.303,
+      "kind": "list-state-verified",
+      "cards": [
+        {
+          "text": "示例头像\n小林老师\n西安交通大学（场景） · 数学与应用数学\n¥80/小时\n擅长：数学 / 物理\n先用小题定位薄弱环节，再做错题复盘；讲解耐心，适合希望把基础打扎实的同学。\n数学思维\n耐心讲解\n长安区 · 大学城 · 均可",
+          "box": {
+            "x": 138.890625,
+            "y": 65.984375,
+            "width": 530.40625,
+            "height": 262.78125
+          }
+        },
+        {
+          "text": "示例头像\n小陈老师\n陕西师范大学（场景） · 英语教育\n¥75/小时\n擅长：英语\n每次围绕一篇阅读训练定位信息，课后整理词汇卡；可安排晚间口语练习。\n英语阅读\n口语练习\n雁塔区 · 小寨 · 线上",
+          "box": {
+            "x": 687.296875,
+            "y": 65.984375,
+            "width": 530.40625,
+            "height": 262.78125
+          }
+        },
+        {
+          "text": "示例头像\n小周老师\n西安电子科技大学（场景） · 应用物理\n¥90/小时\n擅长：物理 / 数学\n从受力图和生活现象入手建立物理模型；每节课留出独立解题和口头复述时间。\n物理建模\n例题精讲\n高新区 · 科技路 · 线下",
+          "box": {
+            "x": 1235.703125,
+            "y": 65.984375,
+            "width": 530.40625,
+            "height": 262.78125
+          }
+        }
+      ],
+      "url": "http://127.0.0.1:34303/#/pages/index/index",
+      "count": 20
+    },
+    {
+      "timeSec": 24.789,
+      "kind": "real-mouse-click",
+      "name": "小林老师真实列表卡片",
+      "box": {
+        "x": 138.890625,
+        "y": 245.984375,
+        "width": 530.40625,
+        "height": 262.78125
+      },
+      "point": {
+        "x": 404.09375,
+        "y": 377.375
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": 25.838,
+      "kind": "detail-state-verified",
+      "id": "t001",
+      "name": "小林老师",
+      "url": "http://127.0.0.1:34303/#/pages/tutors/detail?id=t001",
+      "actualText": "示例头像\n小林老师\n西安交通大学（场景） · 数学与应用数学\n数学思维\n耐心讲解\n教学信息\n擅长科目\n数学、物理\n授课地区\n长安区 · 大学城\n授课方式\n均可\n参考课时费\n¥80/小时\n可授课时间\n周六 14:00–17:00，周日 09:00–11:00\n教学经历与能力（自述，未核验）\n教学经历\n30 个月\n相关课程成绩自述\n90/100\n教学能力自评\n5/5\n匿名案例数量\n8 个\n虚构匿名案例：围绕数学基础知识进行梳理与错题复盘。\n自我介绍\n先用小题定位薄弱环节，再做错题复盘；讲解耐心，适合希望把基础打扎实的同学。\n虚构演示资料，未进行真实身份、资质或价格验证。\n发起演示预约\n举报演示资料",
+      "timeText": "可授课时间\n周六 14:00–17:00，周日 09:00–11:00",
+      "timeBox": {
+        "x": 558.5,
+        "y": 609.5,
+        "width": 788,
+        "height": 36
+      },
+      "teachingBox": {
+        "x": 542.5,
+        "y": 418.5,
+        "width": 820,
+        "height": 243
+      }
+    },
+    {
+      "timeSec": 28.299,
+      "kind": "freeze-source-state",
+      "url": "http://127.0.0.1:34303/#/pages/tutors/detail?id=t001",
+      "timeVisible": true
+    },
+    {
+      "timeSec": 35.058,
+      "kind": "ending-state-verified",
+      "url": "http://127.0.0.1:34303/#/pages/tutors/detail?id=t001",
+      "freezeBeginsInEdit": 28
+    }
+  ],
+  "errors": [],
+  "modelRequests": [],
+  "nativePreparation": [
+    {
+      "action": "dismiss native translation bubble",
+      "beforeMae": 32.34752136752137
+    }
+  ],
+  "rawVideo": "raw/2026-10-24T03-40-22-802Z/input.mkv",
+  "baseUrl": "http://127.0.0.1:34303/",
+  "startCommand": "npm run demo -- --port 34303 --strictPort",
+  "browserVersion": "156.0.8078.4",
+  "initialStorage": {
+    "cookies": [],
+    "origins": []
+  },
+  "viewportAlignment": {
+    "x": 0,
+    "y": 87,
+    "error": 0,
+    "topRightMaeAfter": 0,
+    "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+  },
+  "rawTrimStartSec": 1.133354651999999,
+  "recorder": "FFmpeg native X11 screen grab at 30fps; not a sequence of website screenshots",
+  "entryBox": {
+    "x": 318.921875,
+    "y": 588.171875,
+    "width": 95.265625,
+    "height": 19
+  },
+  "list": {
+    "cards": [
+      {
+        "text": "示例头像\n小林老师\n西安交通大学（场景） · 数学与应用数学\n¥80/小时\n擅长：数学 / 物理\n先用小题定位薄弱环节，再做错题复盘；讲解耐心，适合希望把基础打扎实的同学。\n数学思维\n耐心讲解\n长安区 · 大学城 · 均可",
+        "box": {
+          "x": 138.890625,
+          "y": 65.984375,
+          "width": 530.40625,
+          "height": 262.78125
+        }
+      },
+      {
+        "text": "示例头像\n小陈老师\n陕西师范大学（场景） · 英语教育\n¥75/小时\n擅长：英语\n每次围绕一篇阅读训练定位信息，课后整理词汇卡；可安排晚间口语练习。\n英语阅读\n口语练习\n雁塔区 · 小寨 · 线上",
+        "box": {
+          "x": 687.296875,
+          "y": 65.984375,
+          "width": 530.40625,
+          "height": 262.78125
+        }
+      },
+      {
+        "text": "示例头像\n小周老师\n西安电子科技大学（场景） · 应用物理\n¥90/小时\n擅长：物理 / 数学\n从受力图和生活现象入手建立物理模型；每节课留出独立解题和口头复述时间。\n物理建模\n例题精讲\n高新区 · 科技路 · 线下",
+        "box": {
+          "x": 1235.703125,
+          "y": 65.984375,
+          "width": 530.40625,
+          "height": 262.78125
+        }
+      }
+    ],
+    "url": "http://127.0.0.1:34303/#/pages/index/index",
+    "count": 20,
+    "linBox": {
+      "x": 138.890625,
+      "y": 245.984375,
+      "width": 530.40625,
+      "height": 262.78125
+    }
+  },
+  "result": {
+    "id": "t001",
+    "name": "小林老师",
+    "url": "http://127.0.0.1:34303/#/pages/tutors/detail?id=t001",
+    "actualText": "示例头像\n小林老师\n西安交通大学（场景） · 数学与应用数学\n数学思维\n耐心讲解\n教学信息\n擅长科目\n数学、物理\n授课地区\n长安区 · 大学城\n授课方式\n均可\n参考课时费\n¥80/小时\n可授课时间\n周六 14:00–17:00，周日 09:00–11:00\n教学经历与能力（自述，未核验）\n教学经历\n30 个月\n相关课程成绩自述\n90/100\n教学能力自评\n5/5\n匿名案例数量\n8 个\n虚构匿名案例：围绕数学基础知识进行梳理与错题复盘。\n自我介绍\n先用小题定位薄弱环节，再做错题复盘；讲解耐心，适合希望把基础打扎实的同学。\n虚构演示资料，未进行真实身份、资质或价格验证。\n发起演示预约\n举报演示资料",
+    "timeText": "可授课时间\n周六 14:00–17:00，周日 09:00–11:00",
+    "timeBox": {
+      "x": 558.5,
+      "y": 609.5,
+      "width": 788,
+      "height": 36
+    },
+    "teachingBox": {
+      "x": 542.5,
+      "y": 418.5,
+      "width": 820,
+      "height": 243
+    }
+  },
+  "progress": {
+    "frame": "1140",
+    "fps": "29.99",
+    "stream_0_0_q": "8.0",
+    "bitrate": "5874.5kbits/s",
+    "total_size": "27903671",
+    "out_time_us": "38000000",
+    "out_time_ms": "38000000",
+    "out_time": "00:00:38.000000",
+    "dup_frames": "0",
+    "drop_frames": "0",
+    "speed": "   1x",
+    "progress": "end"
+  },
+  "realInteractions": 2
+}

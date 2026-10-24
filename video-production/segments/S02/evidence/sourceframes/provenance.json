@@ -1,0 +1,43 @@
+{
+  "captureId": "2026-10-24T03-41-58-432Z",
+  "rawVideo": "raw/2026-10-24T03-41-58-432Z/input.mkv",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "description": "Full viewport frames extracted from the selected actual native screen recording before post-production; no graphics or reconstruction. The end-state frame is equivalent to the frozen source; the exact freeze is the last frame before segment second 28.",
+  "frames": [
+    {
+      "file": "01_start.png",
+      "segmentTimeSec": 2,
+      "rawTimeSec": 3.1000179869999993
+    },
+    {
+      "file": "02_pain_points.png",
+      "segmentTimeSec": 16.5,
+      "rawTimeSec": 17.600017987
+    },
+    {
+      "file": "03_click_list.png",
+      "segmentTimeSec": 18.343999999999998,
+      "rawTimeSec": 19.444017986999995
+    },
+    {
+      "file": "04_list.png",
+      "segmentTimeSec": 21.7,
+      "rawTimeSec": 22.800017986999997
+    },
+    {
+      "file": "05_click_detail.png",
+      "segmentTimeSec": 25.653,
+      "rawTimeSec": 26.753017987
+    },
+    {
+      "file": "06_result.png",
+      "segmentTimeSec": 27,
+      "rawTimeSec": 28.100017987
+    },
+    {
+      "file": "07_end.png",
+      "segmentTimeSec": 32,
+      "rawTimeSec": 33.100017987
+    }
+  ]
+}

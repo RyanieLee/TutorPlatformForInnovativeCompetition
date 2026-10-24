@@ -1,0 +1,18 @@
+{
+  "logSha256": "1e791325fbe23e7a24144db19424c44c88f1ca885643ab6c3ffda672c6ce7e7d",
+  "rawTrimStartSec": 1.1000179869999993,
+  "usedRawEndSec": 29.100017987,
+  "rawDuplicateFrames": 1,
+  "rawDroppedFrames": 0,
+  "transitions": [
+    {
+      "rawLowerSec": 0.9,
+      "rawUpperSec": 1,
+      "duplicateDelta": 1,
+      "dropDelta": 0,
+      "outsideUsedInterval": true
+    }
+  ],
+  "noPacingCorrectionInUsedInterval": true,
+  "note": "Final seconds 28-35 intentionally freeze the last real frame. This audit covers the actual moving footage 0-28 seconds; no correction is concealed inside that interval."
+}

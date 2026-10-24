@@ -1,0 +1,151 @@
+{
+  "id": "2026-10-24T03-37-57-059Z",
+  "status": "failed",
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "captureHead": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "browserViewport": [
+    1920,
+    1080
+  ],
+  "freshContext": true,
+  "events": [
+    {
+      "timeSec": 1.451,
+      "kind": "start-state",
+      "url": "http://127.0.0.1:42527/#/pages/index/index",
+      "hero": "让优秀的大学生，\n成为孩子的成长伙伴"
+    },
+    {
+      "timeSec": 17.799,
+      "kind": "entry-hover",
+      "box": {
+        "x": 318.921875,
+        "y": 588.171875,
+        "width": 95.265625,
+        "height": 19
+      }
+    },
+    {
+      "timeSec": 18.413,
+      "kind": "real-mouse-click",
+      "name": "浏览家教老师",
+      "box": {
+        "x": 318.921875,
+        "y": 588.171875,
+        "width": 95.265625,
+        "height": 19
+      },
+      "point": {
+        "x": 366.5546875,
+        "y": 597.671875
+      },
+      "hitTest": true
+    },
+    {
+      "timeSec": 19.089,
+      "kind": "list-state-verified",
+      "cards": [
+        {
+          "text": "示例头像\n小林老师\n西安交通大学（场景） · 数学与应用数学\n¥80/小时\n擅长：数学 / 物理\n先用小题定位薄弱环节，再做错题复盘；讲解耐心，适合希望把基础打扎实的同学。\n数学思维\n耐心讲解\n长安区 · 大学城 · 均可",
+          "box": {
+            "x": 138.890625,
+            "y": 623.984375,
+            "width": 530.40625,
+            "height": 262.78125
+          }
+        },
+        {
+          "text": "示例头像\n小陈老师\n陕西师范大学（场景） · 英语教育\n¥75/小时\n擅长：英语\n每次围绕一篇阅读训练定位信息，课后整理词汇卡；可安排晚间口语练习。\n英语阅读\n口语练习\n雁塔区 · 小寨 · 线上",
+          "box": {
+            "x": 687.296875,
+            "y": 623.984375,
+            "width": 530.40625,
+            "height": 262.78125
+          }
+        },
+        {
+          "text": "示例头像\n小周老师\n西安电子科技大学（场景） · 应用物理\n¥90/小时\n擅长：物理 / 数学\n从受力图和生活现象入手建立物理模型；每节课留出独立解题和口头复述时间。\n物理建模\n例题精讲\n高新区 · 科技路 · 线下",
+          "box": {
+            "x": 1235.703125,
+            "y": 623.984375,
+            "width": 530.40625,
+            "height": 262.78125
+          }
+        }
+      ],
+      "url": "http://127.0.0.1:42527/#/pages/index/index",
+      "count": 20
+    }
+  ],
+  "errors": [],
+  "modelRequests": [],
+  "nativePreparation": [
+    {
+      "action": "dismiss native translation bubble",
+      "beforeMae": 32.34752136752137
+    }
+  ],
+  "rawVideo": "raw/2026-10-24T03-37-57-059Z/input.mkv",
+  "baseUrl": "http://127.0.0.1:42527/",
+  "startCommand": "npm run demo -- --port 42527 --strictPort",
+  "browserVersion": "156.0.8078.4",
+  "initialStorage": {
+    "cookies": [],
+    "origins": []
+  },
+  "viewportAlignment": {
+    "x": 0,
+    "y": 87,
+    "error": 0,
+    "topRightMaeAfter": 0,
+    "method": "PNG pixel comparison between actual viewport screenshot and X11 grab; no business UI modification"
+  },
+  "rawTrimStartSec": 1.1000185580000015,
+  "recorder": "FFmpeg native X11 screen grab at 30fps; not a sequence of website screenshots",
+  "entryBox": {
+    "x": 318.921875,
+    "y": 588.171875,
+    "width": 95.265625,
+    "height": 19
+  },
+  "list": {
+    "cards": [
+      {
+        "text": "示例头像\n小林老师\n西安交通大学（场景） · 数学与应用数学\n¥80/小时\n擅长：数学 / 物理\n先用小题定位薄弱环节，再做错题复盘；讲解耐心，适合希望把基础打扎实的同学。\n数学思维\n耐心讲解\n长安区 · 大学城 · 均可",
+        "box": {
+          "x": 138.890625,
+          "y": 623.984375,
+          "width": 530.40625,
+          "height": 262.78125
+        }
+      },
+      {
+        "text": "示例头像\n小陈老师\n陕西师范大学（场景） · 英语教育\n¥75/小时\n擅长：英语\n每次围绕一篇阅读训练定位信息，课后整理词汇卡；可安排晚间口语练习。\n英语阅读\n口语练习\n雁塔区 · 小寨 · 线上",
+        "box": {
+          "x": 687.296875,
+          "y": 623.984375,
+          "width": 530.40625,
+          "height": 262.78125
+        }
+      },
+      {
+        "text": "示例头像\n小周老师\n西安电子科技大学（场景） · 应用物理\n¥90/小时\n擅长：物理 / 数学\n从受力图和生活现象入手建立物理模型；每节课留出独立解题和口头复述时间。\n物理建模\n例题精讲\n高新区 · 科技路 · 线下",
+        "box": {
+          "x": 1235.703125,
+          "y": 623.984375,
+          "width": 530.40625,
+          "height": 262.78125
+        }
+      }
+    ],
+    "url": "http://127.0.0.1:42527/#/pages/index/index",
+    "count": 20,
+    "linBox": {
+      "x": 138.890625,
+      "y": -84.015625,
+      "width": 530.40625,
+      "height": 262.78125
+    }
+  },
+  "failure": "Error: Actual button not fully visible: 小林老师真实列表卡片\n    at click (file:///workspace/tutor/video-production/segments/S02/scripts/capture.mjs:51:86)\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processImmediate (node:internal/timers:502:9)\n    at async file:///workspace/tutor/video-production/segments/S02/scripts/capture.mjs:106:15"
+}
