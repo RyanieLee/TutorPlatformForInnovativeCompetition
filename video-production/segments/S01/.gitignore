@@ -1,0 +1,6 @@
+raw/
+exports/*
+!exports/.gitkeep
+evidence/browser_*.png
+evidence/contact-sheet.png
+*.log
