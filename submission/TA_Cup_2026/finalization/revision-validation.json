@@ -8,5 +8,6 @@
   "businessCodeChanged": false,
   "realModelValidationPerformedThisRound": false,
   "imageSource": "Repository archived API acceptance captures, original bitmaps preserved; OOXML display crop only.",
-  "visualReview": "已实际查看全部7页作品介绍和1页简介；签名承诺书保持上版字节不变。"
+  "visualReview": "已实际查看全部7页作品介绍和1页简介；签名承诺书保持上版字节不变。",
+  "historicalReport": "This audit refers to the prior 7-page revision; current illustrated version is documented in illustrated-validation.json."
 }

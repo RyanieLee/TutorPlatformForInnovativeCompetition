@@ -47,7 +47,7 @@ def set_repeat_header(row):
  pr=row._tr.get_or_add_trPr();e=OxmlElement('w:tblHeader');pr.append(e)
 def table_text(d,headers,rows):
  t=d.add_table(rows=1,cols=len(headers));t.style='Table Grid';t.autofit=False
- widths=([3.5,13.3] if headers[0]=='项目' else [5.0,11.8]) if len(headers)==2 else ([3.0,2.0,11.8] if headers[0]=='匹配维度' else [6.0,4.5,6.3] if headers[0]=='第三课环节' else [3.2,8.6,5.0] if headers[0]=='验证任务' else [2.0,5.4,9.4] if headers[0]=='课次' else [16.8/len(headers)]*len(headers))
+ widths=([3.5,13.3] if headers[0]=='项目' else [5.0,11.8]) if len(headers)==2 else ([3.0,2.0,11.8] if headers[0] in ('匹配维度','维度') else [6.0,4.5,6.3] if headers[0]=='第三课环节' else [3.2,8.6,5.0] if headers[0]=='验证任务' else [2.0,5.4,9.4] if headers[0]=='课次' else [16.8/len(headers)]*len(headers))
  for col,w in zip(t.columns,widths):col.width=Cm(w)
  for cell,text in zip(t.rows[0].cells,headers):cell.text=text
  set_repeat_header(t.rows[0])

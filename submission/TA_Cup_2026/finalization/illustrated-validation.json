@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-24",
+  "newlyCapturedScreenshots": 24,
+  "summaryAndSignedPledgeUnchanged": true,
+  "modelCalled": false,
+  "captureMode": "Real Mock H5 in fresh isolated context; data prepared via UI",
+  "sourceBaseline": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "visualReview": "All 20 pages viewed; toast-covered order capture replaced and final affected pages rechecked.",
+  "figurePages": {
+    "1": 1,
+    "2": 2,
+    "3": 3,
+    "4": 3,
+    "5": 4,
+    "6": 5,
+    "7": 6,
+    "8": 7,
+    "9": 7,
+    "10": 7,
+    "11": 8,
+    "12": 9,
+    "13": 9,
+    "14": 10,
+    "15": 11,
+    "16": 12,
+    "17": 12,
+    "18": 13,
+    "19": 14,
+    "20": 15,
+    "21": 16,
+    "22": 17,
+    "23": 18
+  },
+  "officialTemplatesVerified": false,
+  "publicDocument": {
+    "variant": "public",
+    "pages": 20,
+    "figureOccurrences": 23,
+    "uniqueScreenshotFilesInDocument": 22,
+    "pdfBytes": 5871080,
+    "pdfSha256": "3a2580e9df1726fd27ff6ec7025de96f3fd4125c6fb70a38c64d8c21ab8345fd",
+    "bookmarks": 27,
+    "allTwentySectionsStartOnOwnPage": true,
+    "allWordDisplayExtentsWithinPageSize": true,
+    "textColors": [
+      "#000000"
+    ],
+    "originalScreenshotBitmapsEmbeddedUnchanged": true
+  }
+}
