@@ -1,0 +1,65 @@
+{
+  "id": "S04",
+  "title": "推荐解释与多因子排序",
+  "durationSec": 30,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "role": "核心·家长",
+  "sourceMode": "Actual Mock H5 rule-matching results; actual UI Generate click in raw pre-roll; measured element highlights/cursor and editorial captions; no model call.",
+  "timelineInFullFilm": {
+    "start": "01:50",
+    "end": "02:20"
+  },
+  "prerequisites": [
+    "Node >=20; npm ci",
+    "npm run demo launched independently on free port, actual log URL",
+    "Playwright Chromium, FFmpeg/ffprobe, Python3, Xvfb/libX11/libXtst, Noto CJK",
+    "Empty independent browser context; actual math preset and genuine Generate recommendation click before film starts"
+  ],
+  "case": {
+    "synthetic": true,
+    "student": "小航",
+    "grade": "初一",
+    "subject": "初中数学",
+    "budgetMaxPerHour": 100,
+    "preferredTime": "周六下午",
+    "tutorId": "t001",
+    "tutorName": "小林老师",
+    "teachingMode": "均可 (existing real page option)",
+    "preference": "耐心 (existing preset)",
+    "laterFilmOnly": "教学主题一元一次方程；第二课Q1-Q3正确/Q4-Q5错误，移项符号问题，3/5=60%是本次正确率；第三课增加10分钟符号专项，教师确认v2。S04不制造教学状态或效果。"
+  },
+  "shots": [
+    {
+      "start": 0,
+      "end": 6,
+      "content": "Real already-generated result, pointer to public rules and score"
+    },
+    {
+      "start": 6,
+      "end": 15,
+      "content": "Sequential highlights on actual subject and time reasons"
+    },
+    {
+      "start": 15,
+      "end": 23,
+      "content": "Actual experience, fee, preference and public weights; no hard-coded overlay numbers"
+    },
+    {
+      "start": 23,
+      "end": 30,
+      "content": "Actual unchanged result close-up; 推荐有理由，家长可判断"
+    }
+  ],
+  "scoreBoundary": "Score reflects current needs and self-declared data; not teaching quality, verified qualification or probability of improvement.",
+  "artifacts": {
+    "video": "exports/clip_S04.mp4",
+    "captions": "captions_S04.srt",
+    "voiceover": "voiceover.md",
+    "validation": "validation-report.md"
+  }
+}

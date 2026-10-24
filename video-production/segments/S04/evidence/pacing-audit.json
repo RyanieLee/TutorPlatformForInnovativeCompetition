@@ -1,0 +1,10 @@
+{
+  "logSha256": "c2e95b6b94d3c840d189ba880b1d7283809e6a43eec45fb776c073ca21f11f56",
+  "rawTrimStartSec": 9.100018208000002,
+  "usedRawEndSec": 39.100018208,
+  "rawDuplicateFrames": 0,
+  "rawDroppedFrames": 0,
+  "transitions": [],
+  "noPacingCorrectionInUsedInterval": true,
+  "note": "Audit covers the full actual 0-30-second rule-matching footage. Measured highlight rectangles, cursor and editorial captions only. The actual Generate click remains in the recorded raw pre-roll."
+}

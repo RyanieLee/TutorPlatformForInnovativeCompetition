@@ -1,0 +1,32 @@
+{
+  "id": "S04",
+  "durationSec": 30,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "gitSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "sourceBranch": "video/segment-S04",
+  "sourceCommit": "b6ad0ec",
+  "pullRequest": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/pull/46",
+  "mergedMain": false,
+  "localVideo": "/workspace/tutor/video-production/segments/S04/exports/clip_S04.mp4",
+  "localBundle": "/workspace/tutor/video-production/segments/S04/exports/S04_delivery.zip",
+  "downloadVideo": "/workspace/shared/downloads/S04/clip_S04.mp4",
+  "downloadBundle": "/workspace/shared/downloads/S04/S04_delivery.zip",
+  "videoSha256": "4d3ee0cfe6a7ff882cb90e35157ecde61375ddd9a325f7c472ce4b1296ac613e",
+  "validationChecksPassed": 28,
+  "remoteVideoUrl": null,
+  "releasePublished": false,
+  "remoteUpload": {
+    "attempted": true,
+    "destination": "GitHub release asset at uploads.github.com",
+    "status": "failed",
+    "httpStatus": 401,
+    "reason": "Binary asset upload returned Bad credentials; git push and PR API succeeded. CLI rolled back release; releases API confirmed empty list."
+  },
+  "downloadMethod": "Open actual workspace file links. MP4 and ZIP are real files, excluded from ordinary Git.",
+  "sourceMode": "Actual independently generated Mock rule-matching page; actual Generate click in recorded pre-roll; no model call.",
+  "clickFrameBoundary": "keyframes/00_preparation_click.png is an actual pre-roll raw frame outside the 30-second film, as required for pre-generated results."
+}
