@@ -1,0 +1,282 @@
+{
+  "figures": [
+    {
+      "figure": 1,
+      "name": "01-home",
+      "caption": "平台首页：家长从需求表达进入匹配与学习服务",
+      "crop": [
+        0,
+        0,
+        2004,
+        1000
+      ],
+      "displayWidthCm": 15.0
+    },
+    {
+      "figure": 2,
+      "name": "03-assistant",
+      "caption": "小书灵真实问答：使用说明、来源标识与功能入口",
+      "crop": [
+        0,
+        0,
+        1584,
+        1468
+      ],
+      "displayWidthCm": 15.5
+    },
+    {
+      "figure": 3,
+      "name": "04-demand",
+      "caption": "输入需求与解析建议：先看清条件，再进入匹配",
+      "crop": [
+        0,
+        0,
+        1868,
+        998
+      ],
+      "displayWidthCm": 16.2
+    },
+    {
+      "figure": 4,
+      "name": "06-weights",
+      "caption": "五维权重设置：学科、时间、经历、费用及其他因素",
+      "crop": [
+        0,
+        0,
+        1808,
+        540
+      ],
+      "displayWidthCm": 16.2
+    },
+    {
+      "figure": 5,
+      "name": "05-ranking",
+      "caption": "小林推荐卡：分项得分、时间、费用及资料来源",
+      "crop": [
+        0,
+        0,
+        1868,
+        598
+      ],
+      "displayWidthCm": 16.2
+    },
+    {
+      "figure": 6,
+      "name": "07-profile",
+      "caption": "小林详情页：照片、教学安排和自述经历",
+      "crop": [
+        0,
+        0,
+        2200,
+        1800
+      ],
+      "displayWidthCm": 16.2
+    },
+    {
+      "figure": 7,
+      "name": "08-booking",
+      "caption": "真实预约表单：称呼、科目、期望时间与辅导需求",
+      "crop": [
+        0,
+        0,
+        1640,
+        1704
+      ],
+      "displayWidthCm": 15.3
+    },
+    {
+      "figure": 8,
+      "name": "09-pending",
+      "caption": "家长“我的预约”：小航记录处于待家教确认",
+      "crop": [
+        0,
+        0,
+        1640,
+        382
+      ],
+      "displayWidthCm": 16.2
+    },
+    {
+      "figure": 9,
+      "name": "10-workbench",
+      "caption": "教师工作台：同一需求进入待处理预约",
+      "crop": [
+        0,
+        0,
+        1406,
+        346
+      ],
+      "displayWidthCm": 16.2
+    },
+    {
+      "figure": 10,
+      "name": "11-accepted",
+      "caption": "教师接受后：状态更新并出现教学服务入口",
+      "crop": [
+        110,
+        800,
+        1640,
+        1510
+      ],
+      "displayWidthCm": 15.3
+    },
+    {
+      "figure": 11,
+      "name": "12-course",
+      "caption": "四课导航与第二课目标：合并同类项与移项",
+      "crop": [
+        0,
+        0,
+        2200,
+        1800
+      ],
+      "displayWidthCm": 16.2
+    },
+    {
+      "figure": 12,
+      "name": "13-class-record",
+      "caption": "逐题正误与3/5统计（表单局部）",
+      "crop": [
+        0,
+        1160,
+        1980,
+        2850
+      ],
+      "displayWidthCm": 15.8
+    },
+    {
+      "figure": 13,
+      "name": "13-class-record",
+      "caption": "错因与教师观察（同一表单局部）",
+      "crop": [
+        0,
+        2850,
+        1980,
+        3370
+      ],
+      "displayWidthCm": 15.8
+    },
+    {
+      "figure": 14,
+      "name": "14-feedback-draft",
+      "caption": "反馈草稿：3/5、Q4/Q5引用及确认发布按钮",
+      "crop": [
+        0,
+        0,
+        1980,
+        1536
+      ],
+      "displayWidthCm": 16.2
+    },
+    {
+      "figure": 15,
+      "name": "15-revision",
+      "caption": "第三课修订对照：依据、原安排与建议安排",
+      "crop": [
+        0,
+        0,
+        1980,
+        1280
+      ],
+      "displayWidthCm": 16.2
+    },
+    {
+      "figure": 16,
+      "name": "16-history",
+      "caption": "教师端发布历史：v1与v2同时保留",
+      "crop": [
+        0,
+        0,
+        1980,
+        862
+      ],
+      "displayWidthCm": 16.2
+    },
+    {
+      "figure": 17,
+      "name": "17-parent-version",
+      "caption": "家长端：教师已确认的课程v2及历史入口",
+      "crop": [
+        0,
+        0,
+        2004,
+        478
+      ],
+      "displayWidthCm": 16.2
+    },
+    {
+      "figure": 18,
+      "name": "18-parent-feedback",
+      "caption": "家长实际可见的反馈：已确认发布、证据与简报",
+      "crop": [
+        0,
+        0,
+        2004,
+        1278
+      ],
+      "displayWidthCm": 16.2
+    },
+    {
+      "figure": 19,
+      "name": "19-notes",
+      "caption": "一元一次方程笔记：要点、例子、易错提醒与出题入口",
+      "crop": [
+        0,
+        0,
+        1564,
+        1392
+      ],
+      "displayWidthCm": 15.5
+    },
+    {
+      "figure": 20,
+      "name": "20-exercises",
+      "caption": "原创示例卷局部：题目、选项与第一题解析",
+      "crop": [
+        0,
+        0,
+        1060,
+        1130
+      ],
+      "displayWidthCm": 14.5
+    },
+    {
+      "figure": 21,
+      "name": "21-map",
+      "caption": "西安订单地图：片区点位与展开后的对应订单",
+      "crop": [
+        0,
+        0,
+        2200,
+        1800
+      ],
+      "displayWidthCm": 16.2
+    },
+    {
+      "figure": 22,
+      "name": "23-tutor-application",
+      "caption": "家教资料编辑：照片入口与基础教学信息",
+      "crop": [
+        0,
+        0,
+        970,
+        1722
+      ],
+      "displayWidthCm": 10.5
+    },
+    {
+      "figure": 23,
+      "name": "24-admin-review",
+      "caption": "管理员申请详情：待审核资料与处理入口",
+      "crop": [
+        0,
+        0,
+        2200,
+        1800
+      ],
+      "displayWidthCm": 16.2
+    }
+  ],
+  "plannedPages": 20,
+  "captureMode": "Real Mock H5 UI; screenshot rectangles only; no generated UI"
+}

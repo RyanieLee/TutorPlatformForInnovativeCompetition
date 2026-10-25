@@ -1,0 +1,85 @@
+{
+  "base": "prior 7-page revision (ba63c8a)",
+  "originalFigureCount": 3,
+  "newFigureCount": 4,
+  "totalFigures": 7,
+  "figures": [
+    {
+      "caption": "图1 真实推荐卡局部：分项得分、资料来源与详情入口",
+      "path": "assets/02-match-evidence.png",
+      "crop": [
+        175,
+        2298,
+        1105,
+        2610
+      ],
+      "widthCm": 15.8
+    },
+    {
+      "caption": "图2 说出需求→核对条件→确认填入",
+      "path": "assets/illustrated/04-demand.png",
+      "crop": [
+        0,
+        0,
+        1868,
+        998
+      ],
+      "widthCm": 16.0
+    },
+    {
+      "caption": "图3 真实反馈候选：3/5统计、证据引用与教师发布入口",
+      "path": "assets/02-feedback-evidence.png",
+      "crop": [
+        0,
+        0,
+        1100,
+        770
+      ],
+      "widthCm": 14.0
+    },
+    {
+      "caption": "图4 真实修订候选局部：原版、建议版与Q4/Q5依据",
+      "path": "assets/02-revision-evidence.png",
+      "crop": [
+        15,
+        115,
+        1085,
+        602
+      ],
+      "widthCm": 15.8
+    },
+    {
+      "caption": "图5 修订后v1与v2同时保留，教师可查看历史",
+      "path": "assets/illustrated/16-history.png",
+      "crop": [
+        0,
+        0,
+        1980,
+        862
+      ],
+      "widthCm": 15.8
+    },
+    {
+      "caption": "图6 家长提交后：小航预约处于待家教确认",
+      "path": "assets/illustrated/09-pending.png",
+      "crop": [
+        0,
+        0,
+        1640,
+        382
+      ],
+      "widthCm": 15.8
+    },
+    {
+      "caption": "图7 教师接受后：状态更新并进入教学服务",
+      "path": "assets/illustrated/11-accepted.png",
+      "crop": [
+        110,
+        800,
+        1640,
+        1360
+      ],
+      "widthCm": 15.8
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "summary": {
+    "summaryCharactersIncludingPunctuation": 241,
+    "missingIdentityFields": [
+      "leader",
+      "contact",
+      "phone",
+      "email",
+      "signatureNames"
+    ]
+  },
+  "identityComplete": false,
+  "officialTemplatesVerified": false,
+  "teacherRequirementApplicableToChosenTrack": false,
+  "documents": [
+    "参赛作品简介",
+    "参赛承诺书",
+    "作品介绍文档"
+  ],
+  "teammateSource": "3903f325b07c3bc27a3974deddee1c7178a3dbf1",
+  "teammatePR": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/pull/40",
+  "signaturesEmbedded": false,
+  "status": "九页要求对齐版，作品介绍与简介均附在线演示网址；承诺书未改",
+  "brochurePages": 9,
+  "brochureFigures": 8,
+  "newFigureCount": 5,
+  "currentValidation": "requirements-validation.json",
+  "contentRequirementsMapped": true,
+  "onlineDemoUrl": "https://yunbanxue-demo.top/"
+}

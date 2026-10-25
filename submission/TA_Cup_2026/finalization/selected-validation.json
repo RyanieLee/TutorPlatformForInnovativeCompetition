@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-24",
+  "baseVersion": "prior seven-page revision ba63c8a",
+  "previousFiguresRetained": 3,
+  "newFiguresAdded": 4,
+  "totalFigures": 7,
+  "pages": 7,
+  "visualReview": "All seven exported pages viewed; no empty pages or isolated overflow paragraphs.",
+  "otherTwoDocumentsByteIdentical": true,
+  "businessCodeChanged": false,
+  "modelCalled": false,
+  "documents": [
+    {
+      "variant": "public",
+      "pages": 7,
+      "figures": 7,
+      "pdfBytes": 1865599,
+      "sha256": "499d67c1cfca9df5a1a82984463866687a92da3d9ac38bd2c2dc8cb576cc32f6",
+      "textColor": "#000000",
+      "originalScreenshotBitmapsPreserved": true
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "pagesTarget": 9,
+  "screenshotCount": 8,
+  "figures": [
+    {
+      "number": 1,
+      "file": "assets/focused/01-home-navigation.png",
+      "caption": "真实首页首屏局部：主要功能入口集中呈现",
+      "crop": [
+        0,
+        0,
+        2000,
+        1360
+      ],
+      "displayWidthCm": 15.2
+    },
+    {
+      "number": 2,
+      "file": "assets/focused/02-demand.png",
+      "caption": "解析后的建议区：科目、预算、方式和偏好待家长确认",
+      "crop": [
+        0,
+        0,
+        1300,
+        788
+      ],
+      "displayWidthCm": 16.0
+    },
+    {
+      "number": 3,
+      "file": "assets/focused/03-ranking.png",
+      "caption": "小林真实推荐卡：时间、经历与价格依据逐项可读",
+      "crop": [
+        0,
+        0,
+        1416,
+        1466
+      ],
+      "displayWidthCm": 14.6
+    },
+    {
+      "number": 4,
+      "file": "assets/focused/04-pending.png",
+      "caption": "家长端：预约已保存，当前仍待家教确认",
+      "crop": [
+        0,
+        0,
+        1408,
+        500
+      ],
+      "displayWidthCm": 15.8
+    },
+    {
+      "number": 5,
+      "file": "assets/focused/05-accepted.png",
+      "caption": "教师端：家教已接受，教学计划与课后反馈入口可用",
+      "crop": [
+        0,
+        0,
+        1408,
+        830
+      ],
+      "displayWidthCm": 15.8
+    },
+    {
+      "number": 6,
+      "file": "assets/focused/06-feedback.png",
+      "caption": "反馈候选：3/5统计、错题引用与教师发布入口",
+      "crop": [
+        0,
+        0,
+        1408,
+        1536
+      ],
+      "displayWidthCm": 14.8
+    },
+    {
+      "number": 7,
+      "file": "assets/focused/07-revision.png",
+      "caption": "第三课修订对照局部：保留依据，重新分配45分钟",
+      "crop": [
+        0,
+        0,
+        1408,
+        1370
+      ],
+      "displayWidthCm": 15.5
+    },
+    {
+      "number": 8,
+      "file": "assets/focused/08-history.png",
+      "caption": "教师发布历史：v1与v2同时保留，可分别查看",
+      "crop": [
+        0,
+        0,
+        1408,
+        862
+      ],
+      "displayWidthCm": 15.8
+    }
+  ],
+  "purpose": "Align with supplied seven content requirements; show product overview on page 1 and readable core evidence."
+}
