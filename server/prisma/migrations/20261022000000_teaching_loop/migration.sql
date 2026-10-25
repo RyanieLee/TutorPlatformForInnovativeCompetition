@@ -1,8 +1,0 @@
-CREATE TABLE "TeachingLoop" (
- "bookingId" TEXT NOT NULL PRIMARY KEY,
- "revision" INTEGER NOT NULL DEFAULT 0,
- "stateJson" TEXT NOT NULL,
- "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
- "updatedAt" DATETIME NOT NULL,
- CONSTRAINT "TeachingLoop_bookingId_fkey" FOREIGN KEY ("bookingId") REFERENCES "Booking" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
-);
