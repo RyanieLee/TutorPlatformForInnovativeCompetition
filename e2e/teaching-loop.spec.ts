@@ -1,6 +1,6 @@
 import {test,expect,type Page} from '@playwright/test'
 import {mkdirSync} from 'node:fs'
-const go=(p:Page,path:string)=>p.goto('/#/pages/'+path)
+const go=async(p:Page,path:string)=>{await p.goto('/#/pages/'+(path==='index/index'?'tutors/index':path));if(path==='index/index')await p.locator('uni-button').filter({hasText:'自主选老师'}).click()}
 const button=(p:Page,text:string)=>p.locator('uni-button').filter({hasText:text})
 const confirm=(p:Page)=>p.locator('.uni-modal__btn_primary').click()
 const field=(p:Page,text:string)=>p.locator('uni-input,uni-textarea').filter({has:p.getByText(text,{exact:true})}).locator('input,textarea')

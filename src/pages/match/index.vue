@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DisclosurePanel from '../../components/DisclosurePanel.vue'
 import { computed, ref } from 'vue'
 import {scheduleChoices} from '../../services/availability'
 import AiCompanion from '../../components/AiCompanion.vue'
@@ -124,7 +125,7 @@ function openLogin() { uni.navigateTo({ url: '/pages/auth/login' }) }
       </view>
       <text v-if="apiMode && assistantState !== 'enabled'" class="hint">{{ assistantState === 'checking' ? '正在检查模型配置…' : assistantState === 'disabled' ? '服务端模型未配置，当前提供本机关键词解析与规则推荐。' : '模型状态暂不可读取，当前使用本机关键词解析。' }}</text>
     </view>
-    <view class="surface-card"><XianLocationPicker :model-value="parentLocation" @update:model-value="chooseLocation"/><text v-if="locationError" class="error">{{locationError}}</text></view>
+    <DisclosurePanel title="线下位置与地图（可选）"><view class="surface-card"><XianLocationPicker :model-value="parentLocation" @update:model-value="chooseLocation"/><text v-if="locationError" class="error">{{locationError}}</text></view></DisclosurePanel>
     <view class="surface-card form">
       <text class="label">科目 *</text><view class="chips"><button v-for="s in matchSubjects" :key="s" :disabled="loading" :class="{selected:input.subject===s}" @click="input.subject=s;edit()">{{ s }}</button></view>
       <text class="label">演示年级 *</text><view class="chips"><button v-for="g in demoGrades" :key="g" :disabled="loading" :class="{selected:input.grade===g}" @click="input.grade=g;edit()">{{ g }}</button></view>
@@ -135,11 +136,11 @@ function openLogin() { uni.navigateTo({ url: '/pages/auth/login' }) }
       <text class="label">期望上课时间（选填）</text><input v-model="input.desiredTime" :disabled="loading" maxlength="100" placeholder="例如：周六下午；精确钟点需双方确认" @input="edit"/><picker :range="scheduleChoices" @change="input.desiredTime=scheduleChoices[Number($event.detail.value)];edit()"><view class="hint">选择每周常用时段 ⌄</view></picker>
       <text class="label">教学偏好（选填）</text><input v-model="input.preference" :disabled="loading" maxlength="40" placeholder="如 耐心 讲解，以空格分隔" @input="edit"/>
       <text class="hint">只填写教学偏好，不要输入姓名、联系方式、学校班级等个人信息。</text>
-      <view class="weight-panel"><view class="weight-heading"><text class="label">调整量化评分权重</text><button class="secondary-button" @click="resetWeights">恢复默认</button></view><text class="hint">默认学科35、时间30、经验20、费用10、其他5。价格仍是预算硬条件；拖动滑块可调整各因子，相对权重会归一为 100 分。自述资料未经真实核验，不能代表教学效果。</text><view v-for="factor in matchFactors" :key="factor.key" class="weight-row"><text>{{ factor.label }} {{ weights[factor.key] }}</text><slider :value="weights[factor.key]" :min="0" :max="50" :step="1" activeColor="#2868e4" @change="setWeight(factor.key,$event)"/></view><text class="hint">当前权重合计 {{ weightTotal }}；至少保留一项非零。</text></view>
+      <DisclosurePanel title="高级设置：调整匹配权重"><view class="weight-panel"><view class="weight-heading"><text class="label">调整量化评分权重</text><button class="secondary-button" @click="resetWeights">恢复默认</button></view><text class="hint">默认学科35、时间30、经验20、费用10、其他5。价格仍是预算硬条件；拖动滑块可调整各因子，相对权重会归一为 100 分。自述资料未经真实核验，不能代表教学效果。</text><view v-for="factor in matchFactors" :key="factor.key" class="weight-row"><text>{{ factor.label }} {{ weights[factor.key] }}</text><slider :value="weights[factor.key]" :min="0" :max="50" :step="1" activeColor="#2868e4" @change="setWeight(factor.key,$event)"/></view><text class="hint">当前权重合计 {{ weightTotal }}；至少保留一项非零。</text></view></DisclosurePanel>
       <button class="primary-button submit" :loading="loading" :disabled="loading" @click="recommend">{{ loading ? '正在匹配…' : '生成推荐' }}</button>
       <view v-if="error" class="error" role="alert">{{ error }}</view>
     </view>
-    <view class="surface-card rules"><text class="label">推荐规则公开可查</text><text>先按科目、预算、方式和所选距离硬过滤。默认学科35、时间30、经验20、费用10、其他5，共100分。经验按自述月数/36封顶；费用按预算余量比例；其他因素是课程成绩/100、能力/5、案例数/10和偏好命中率四项的平均值，缺失资料记0。时间只比较同一条声明内的星期与时段，不确定钟点或复杂限制不加分。调整权重后按最大余数法分配100分，再乘各项比例并取整。同分按距离、价格、ID稳定排序。推荐辅助选择，仍需双方确认教学时间与资质。</text></view>
+    <DisclosurePanel title="了解推荐规则与评分说明"><view class="surface-card rules"><text class="label">推荐规则公开可查</text><text>先按科目、预算、方式和所选距离硬过滤。默认学科35、时间30、经验20、费用10、其他5，共100分。经验按自述月数/36封顶；费用按预算余量比例；其他因素是课程成绩/100、能力/5、案例数/10和偏好命中率四项的平均值，缺失资料记0。时间只比较同一条声明内的星期与时段，不确定钟点或复杂限制不加分。调整权重后按最大余数法分配100分，再乘各项比例并取整。同分按距离、价格、ID稳定排序。推荐辅助选择，仍需双方确认教学时间与资质。</text></view></DisclosurePanel>
     <view v-if="result" class="results">
       <text class="label">{{ summary }}</text><text class="hint">{{ result.total }} 位候选，{{ result.eligible }} 位符合条件。排除：科目 {{ result.excluded.subject }}、预算 {{ result.excluded.budget }}、方式 {{ result.excluded.mode }}、距离或位置缺失 {{ result.excluded.distance }}（按首个不满足条件统计）。</text>
       <view v-if="!result.results.length" class="surface-card empty">没有符合条件的家教。可尝试提高预算、调整方式或科目；不会自动放宽你的条件。</view>
@@ -159,3 +160,4 @@ function openLogin() { uni.navigateTo({ url: '/pages/auth/login' }) }
 .ai-steps{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}.ai-steps text{flex:1;min-width:90px;background:#e5f1ed;border-radius:10px;padding:13px 8px;color:#167568;text-align:center;font-size:13px;font-weight:700}.example-briefs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.example-briefs button{margin:0;font-size:12px;line-height:2.7;background:#eaf0fc;color:#315aaf;padding:0 12px}.assistant textarea{box-sizing:border-box}.assistant{overflow:hidden}
 .weight-panel{margin-top:24rpx;padding:22rpx;border:1rpx solid #e1e8f2;border-radius:16rpx}.weight-heading{display:flex;justify-content:space-between;align-items:center;gap:12rpx}.weight-heading button{margin:0;font-size:22rpx;padding:0 16rpx}.weight-row{display:grid;grid-template-columns:155rpx minmax(0,1fr);align-items:center;gap:8rpx;font-size:24rpx;color:#40536d;margin-top:14rpx}.weight-row slider{margin:0}.study-context{display:flex;flex-direction:column;gap:12px;background:#f0f5e9;border:1px solid #b9cbb3;border-radius:16px;padding:20px;margin-top:20px;color:#405c44;font-size:14px;line-height:1.8}.study-tag{font-size:12px;color:#4c754e}.study-title{font-size:20px;font-weight:700}.study-context button{margin:0;align-self:flex-start;font-size:13px;background:#e1ecdd;color:#30563a;line-height:2.8;padding:0 14px}
 </style>
+

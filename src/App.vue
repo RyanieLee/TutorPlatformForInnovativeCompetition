@@ -7,6 +7,6 @@ onLaunch(() => { void restoreSession() })
 <style>
 /* #ifdef H5 */
 @import './styles/confirmed-web.css';
+@import './styles/ui-first-pass.css';
 /* #endif */
 </style>
-

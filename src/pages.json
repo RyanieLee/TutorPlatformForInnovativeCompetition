@@ -3,7 +3,13 @@
     {
       "path": "pages/index/index",
       "style": {
-        "navigationBarTitleText": "找家教"
+        "navigationBarTitleText": "领航云学堂"
+      }
+    },
+    {
+      "path": "pages/tutors/index",
+      "style": {
+        "navigationBarTitleText": "领航云学堂"
       }
     },
     {
@@ -159,3 +165,4 @@
     "backgroundColor": "#edf2ee"
   }
 }
+

@@ -39,11 +39,12 @@ const teaching = (id: string) => uni.navigateTo({url:'/pages/teaching/index?book
 const teachingLoop = (id: string) => uni.navigateTo({url:'/pages/teaching/loop?bookingId='+encodeURIComponent(id)})
 const goLogin = () => uni.navigateTo({ url: '/pages/auth/login' })
 const goProfile = () => uni.switchTab({ url: '/pages/profile/index' })
-const goHome = () => uni.switchTab({ url: '/pages/index/index' })
+const goHome = () => uni.navigateTo({ url: '/pages/tutors/index' })
+const orderMap=()=>uni.navigateTo({url:'/pages/order-map/index'})
 </script>
 <template>
-  <ParentLayout title="我的预约" active="orders">
-  <view class="page linghang-orders"><view class="title">我的预约</view><view class="notice">{{ apiMode ? '开发版预约保存在本地数据库，不会通知老师，也不代表真实订单。' : '本机模拟记录，不跨设备同步，不会真实通知老师，也不代表真实订单。' }}</view>
+  <ParentLayout title="我的学习 · 预约、课次与反馈" active="orders">
+  <view class="page linghang-orders"><view class="title">我的学习</view><view class="learning-hub"><text>选择一份预约，查看对应的教学计划、课次作业与学习反馈。</text><button class="secondary-action" @click="orderMap">查看订单地图 →</button></view><view class="notice">{{ apiMode ? '开发版预约保存在本地数据库，不会通知老师，也不代表真实订单。' : '本机模拟记录，不跨设备同步，不会真实通知老师，也不代表真实订单。' }}</view>
     <view v-if="!ready || loading" class="surface-card empty-state">正在读取预约…</view>
     <view v-else-if="!currentSession" class="surface-card empty-state">登录后查看演示预约<button class="primary-button guide" @click="goLogin">进入演示登录</button></view>
     <view v-else-if="!canAccess(['parent'])" class="surface-card empty-state">当前身份不能查看家长预约<view class="muted-note">可在“我的”切换身份。</view><button class="secondary-button guide" @click="goProfile">前往我的</button></view>

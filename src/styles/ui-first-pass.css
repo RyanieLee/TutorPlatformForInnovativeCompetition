@@ -1,0 +1,104 @@
+/* First usability pass: clear task hierarchy over the retained campus palette. */
+/* Important declarations in this layer consistently supersede older component
+   overrides while keeping ordinary reading and answer alignment unchanged. */
+@layer usability {
+  @media screen {
+    uni-button,button{font-size:16px!important;min-height:48px!important;line-height:1.6!important;text-align:center!important}
+    .home-actions button,.finder-intro .main-action{font-size:18px!important;min-height:56px!important}
+    .options button{text-align:left!important}
+  }
+  @media screen and (max-width:767px){.parent-nav uni-button{font-size:14px!important}}
+}
+@media screen {
+  uni-page-body::after{display:none!important}
+  uni-page-body::before{filter:saturate(.55)!important;opacity:.66!important}
+  uni-page-body{font-size:16px!important;line-height:1.7!important}
+  uni-button,button{min-height:48px;font-size:16px;line-height:1.5;padding:12px 20px;white-space:normal}
+  .parent-shell.parent-shell .parent-nav uni-button{min-height:50px!important;font-size:16px!important;padding:12px 20px!important;line-height:1.5!important}
+  .parent-shell.parent-shell .parent-nav{justify-content:center!important;gap:10px!important}
+  .parent-shell.parent-shell .parent-header.parent-header{justify-content:center!important;flex-wrap:wrap!important;gap:20px!important}
+  .parent-shell.parent-shell .parent-nav .demo-nav{background:linear-gradient(120deg,#d8f2ec,#d7edfa)!important;color:#116d74!important;font-weight:750!important}
+  .demo-label-short{display:none}
+  .parent-shell .parent-caption{max-width:none!important;justify-content:center!important;text-align:center!important;gap:20px!important;font-size:14px!important;flex-wrap:wrap!important}
+  .parent-shell .parent-footer{font-size:13px!important}
+  .parent-shell.parent-shell .learning-page.learning-page,.parent-shell.parent-shell .linghang-orders.linghang-orders,.parent-shell.parent-shell .linghang-profile.linghang-profile{width:100%!important;max-width:1180px!important;margin:0 auto!important}
+  .parent-shell.parent-shell .learning-page button,.parent-shell.parent-shell .linghang-orders button,.parent-shell.parent-shell .linghang-profile button,.linghang-match.linghang-match button,.shell.shell .b-button,.shell.shell .b-chip,.demo-page.demo-page button{font-size:16px!important;min-height:48px!important;line-height:1.6!important;padding:12px 20px!important;text-align:center!important}
+  .parent-shell.parent-shell .learning-page .options button{text-align:left!important}
+  .chips,.filters,.top-tabs,.paper-actions,.b-actions,.b-chips,.filter-actions{justify-content:center!important;gap:12px!important}
+  .learning-page .topic-select{justify-content:center!important}
+  .learning-page .learning-hero{justify-content:center!important;text-align:center!important}
+  .learning-page .hero-mark{display:none!important}
+  .learning-page .top-tabs button{flex:1;min-width:160px}
+  .learning-page .exam-layout{grid-template-columns:320px minmax(0,1fr)!important}
+  .parent-shell.parent-shell .learning-page .primary,.parent-shell.parent-shell .learning-page .secondary{display:block;min-height:52px!important;margin:20px auto!important;width:100%}
+  .learning-page .content-grid{grid-template-columns:minmax(0,1.4fr) minmax(280px,1fr)!important}
+  .linghang-match .hero{text-align:center!important}
+  .linghang-match .ai-steps{justify-content:center!important}
+  .linghang-match .submit{display:block!important;max-width:520px;width:100%;margin:24px auto!important}
+  .linghang-match .label{text-align:center;display:block}
+  .linghang-match .assistant-fields{gap:16px}
+  .home-page,.finder-page{max-width:1440px;margin:0 auto;color:#173d53}
+  .home-hero{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(290px,.8fr);align-items:center;gap:40px;max-width:1280px;margin:16px auto 24px;padding:0 18px}
+  .home-copy{text-align:center}
+  .section-kicker{display:block;font-size:14px;font-weight:700;letter-spacing:.08em;color:#328b89}
+  .home-title{display:block;font-size:clamp(34px,3.3vw,52px);line-height:1.45;font-weight:850;letter-spacing:-.025em;color:#12334f;margin:24px 0}
+  .home-description,.section-description{display:block;color:#557182;font-size:17px;line-height:1.9}
+  .home-actions{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin:30px auto 20px}
+  .home-actions uni-button,.home-actions button{min-width:240px;min-height:58px;font-size:18px;font-weight:700;padding:17px 28px;line-height:1.5;margin:0}
+  .main-action{background:linear-gradient(110deg,#42b5a4,#087c87)!important;color:white!important;border:1px solid #ffffffdd!important;border-radius:999px!important;box-shadow:0 10px 28px #248d9720;font-weight:700;text-align:center}
+  .secondary-action{background:#f7fdfff0!important;color:#237783!important;border:1px solid white!important;border-radius:999px!important;text-align:center}
+  .home-note{display:block;color:#688594;font-size:14px}
+  .home-lesson{width:100%;max-width:330px;justify-self:center}
+  .lesson-section-label{display:block;text-align:center;font-size:14px;letter-spacing:.05em;font-weight:700;color:#3f8790;margin-bottom:16px}
+  .home-lesson .lesson-stage{position:static!important;width:100%!important;transform:none!important}
+  .home-lesson .lesson-face{min-height:410px!important;padding:22px!important;gap:12px!important;background:#f9fefff2!important}
+  .home-lesson .lesson-title{font-size:19px!important}
+  .home-lesson .lesson-problem{font-size:14px!important;line-height:1.8!important}
+  .home-lesson .lesson-chart{height:180px!important}
+  .home-lesson .step-title{font-size:14px!important}
+  .home-lesson .step-copy,.home-lesson .lesson-answer{font-size:13px!important}
+  .home-lesson .lesson-flip{font-size:16px!important;min-height:52px!important;text-align:center!important}
+  .journey-heading,.section-hero{text-align:center;margin:24px auto 28px}
+  .section-heading{display:block;font-size:30px;line-height:1.5;font-weight:800;margin:12px 0;color:#183e55}
+  .journey-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:0 auto;max-width:1280px}
+  .journey-card{display:flex;flex-direction:column;align-items:center;gap:14px;padding:28px;text-align:center;background:#f8fdffe8;border:1px solid white;border-radius:26px;color:#5b7787;font-size:16px;line-height:1.8;box-shadow:0 12px 30px #438b9910}
+  .journey-number{display:flex;align-items:center;justify-content:center;background:#dff3f0;color:#258b8a;border-radius:16px;width:48px;height:48px;font-size:20px;font-weight:800}
+  .journey-title{font-size:21px;font-weight:750;color:#20475b}
+  .journey-location{font-size:14px;color:#398c8e;margin-top:auto;padding-top:8px}
+  .mode-tabs{display:flex;gap:16px;justify-content:center;max-width:620px;margin:24px auto}
+  .mode-tabs button{flex:1;margin:0;background:#f9feff;border:1px solid white;border-radius:999px;color:#3b7281;font-size:17px;padding:14px 24px}
+  .mode-tabs .selected{background:linear-gradient(110deg,#42b5a4,#087c87);color:white;font-weight:700}
+  .finder-intro{max-width:920px;margin:30px auto;padding:44px 28px;background:#f8fdfff0;border:1px solid white;border-radius:28px;text-align:center}
+  .finder-intro .main-action{max-width:380px;min-height:56px;margin:28px auto 0;font-size:18px;padding:15px 24px}
+  .mini-flow{display:flex;justify-content:center;flex-wrap:wrap;gap:16px;margin:28px auto;color:#2f8288;font-size:16px}
+  .mini-flow text{background:#e9f7f6;padding:12px 18px;border-radius:14px}
+  .parent-shell.parent-shell .tutor-directory{display:block!important;padding:0!important}
+  .tutor-directory .search{width:100%;max-width:960px;margin:24px auto!important;display:block}
+  .tutor-directory .heading{text-align:center!important;font-size:22px!important}
+  .tutor-directory .chip{min-height:48px;font-size:16px!important;display:flex;align-items:center;justify-content:center;padding:12px 22px!important;cursor:pointer}
+  .tutor-directory .filter-actions button{font-size:16px!important;min-height:48px!important;padding:12px 20px!important;line-height:1.5!important}
+  .tutor-directory .load-more{min-height:48px;font-size:16px!important;cursor:pointer}
+  .learning-hub{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;text-align:center;margin:20px 0;color:#527587;font-size:16px}
+  .linghang-orders .title{text-align:center!important;font-size:30px!important}
+  .linghang-orders .guide{max-width:520px;margin-left:auto!important;margin-right:auto!important}
+  .linghang-orders .card .cancel{font-size:16px;padding:12px;min-height:48px;text-align:center}
+  .parent-shell .parent-nav button:focus-visible,.main-action:focus-visible,.secondary-action:focus-visible{outline:3px solid #228e94!important;outline-offset:4px!important}
+}
+@media screen and (max-width:1050px){
+  .parent-shell.parent-shell .parent-header.parent-header{flex-direction:column!important;align-items:center!important}
+  .parent-shell.parent-shell .parent-nav{flex:initial!important;width:100%;display:flex!important;flex-wrap:wrap!important}
+  .home-hero{gap:24px;grid-template-columns:minmax(0,1.3fr) minmax(260px,1fr);padding:10px 0}
+  .home-actions{flex-direction:column;align-items:center}
+  .journey-grid{gap:16px}.journey-card{padding:20px}
+}
+@media screen and (max-width:767px){
+  .demo-label-full{display:none}.demo-label-short{display:inline}
+  .companion-root:not(.companion-fullpage){bottom:16px!important;right:12px!important}
+  .parent-shell.parent-shell .parent-nav{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}
+  .parent-shell.parent-shell .parent-nav uni-button{font-size:14px!important;min-height:50px!important;padding:10px 6px!important}
+  .home-hero{grid-template-columns:1fr;margin-top:16px;gap:30px}.home-title{font-size:32px}.home-description{font-size:16px}
+  .home-actions{width:100%}.home-actions button{width:100%;max-width:360px;min-width:0}.home-lesson{max-width:360px}
+  .journey-grid{grid-template-columns:1fr}.journey-card{padding:24px}.section-heading{font-size:26px}
+  .learning-page .content-grid,.learning-page .exam-layout{grid-template-columns:minmax(0,1fr)!important}.learning-page .top-tabs button{min-width:0;flex-basis:40%}
+  .finder-intro{padding:28px 20px}.mode-tabs button{padding:12px;font-size:16px}.mini-flow{gap:10px}
+}

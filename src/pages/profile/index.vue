@@ -12,7 +12,7 @@ onShow(async () => { await restoreSession(); ready.value = true })
 const goLogin = () => uni.navigateTo({ url: '/pages/auth/login' })
 const goRegister = () => uni.navigateTo({ url: '/pages/auth/register' })
 const goOrders = () => uni.switchTab({ url: '/pages/orders/index' })
-const goHome = () => uni.switchTab({ url: '/pages/index/index' })
+const goHome = () => uni.navigateTo({ url: '/pages/tutors/index' })
 const goWorkbench = () => uni.navigateTo({ url: '/pages/tutor/workbench' })
 const goAdmin = () => uni.navigateTo({ url: '/pages/admin/index' })
 
@@ -42,3 +42,4 @@ async function signOut() {
 <style scoped>
 .page{padding:0;max-width:820px;margin:0 auto}.hero{background:linear-gradient(130deg,#2864d1,#5499ef);color:#fff;padding:35rpx;border-radius:23rpx;display:flex;align-items:center;gap:20rpx}.avatar{background:#ffffff33;border-radius:22rpx;width:100rpx;height:100rpx;display:flex;align-items:center;justify-content:center;font-size:42rpx}.name{display:block;font-size:33rpx;font-weight:700}.sub{display:block;font-size:22rpx;margin-top:10rpx}.panel{margin-top:24rpx}.section-title{font-weight:700;font-size:29rpx;margin-bottom:18rpx}.second{margin-top:18rpx}.row,.item{display:flex;justify-content:space-between;padding:18rpx 0;border-bottom:1rpx solid #eef2f7}.row{color:#53627b}.item:last-child{border-bottom:0}.item text{color:#2868e4}.tip{margin-top:25rpx;text-align:center}
 </style>
+

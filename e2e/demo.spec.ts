@@ -3,7 +3,7 @@ import { mkdirSync, readFileSync } from 'node:fs'
 const button=(page:Page,text:string)=>page.locator('uni-button').filter({hasText:['数学','英语','语文','物理','化学'].includes(text)?new RegExp('^'+text+'$'):text})
 const field=(page:Page,text:string,options?:{exact?:boolean})=>page.locator('uni-input,uni-textarea').filter({has:page.getByText(text,{exact:options?.exact})}).locator('input,textarea')
 const confirm=async(page:Page)=>{await page.locator('.uni-modal__btn_primary').click()}
-const goto=(page:Page,path:string)=>page.goto('/#/pages/'+path)
+const goto=async(page:Page,path:string)=>{await page.goto('/#/pages/'+(path==='index/index'?'tutors/index':path));if(path==='index/index')await button(page,'自主选老师').click()}
 async function login(page:Page, role:'parent'|'tutor'|'admin', api:boolean) {
   await goto(page,'profile/index')
   const logout=button(page,api?'退出登录':'退出演示身份')
@@ -31,7 +31,7 @@ test('搜索→推荐理由→原详情预约→家教接单→家长查询→�
   await page.locator('.teaching-modes').getByText('线下',{exact:true}).click()
   await expect(page.locator('.card').filter({hasText:'小周老师'})).toBeVisible()
   await page.locator('.teaching-modes').getByText('全部',{exact:true}).click()
-  await button(page,'AI 家教匹配').click()
+  await button(page,'智能匹配').click();await button(page,'填写需求，开始匹配').click()
   await button(page,'生成推荐').click()
   await expect(page.getByText('请选择科目',{exact:true})).toBeVisible()
   await button(page,'数学').click()
@@ -39,7 +39,7 @@ test('搜索→推荐理由→原详情预约→家教接单→家长查询→�
   await field(page,'如 100').fill('1')
   await button(page,'生成推荐').click()
   await expect(page.getByText('没有符合条件的家教。',{exact:false})).toBeVisible()
-  await page.locator('.place-buttons uni-button').filter({hasText:'长安区 · 大学城'}).click()
+  await button(page,'线下位置与地图（可选）').click();await page.locator('.place-buttons uni-button').filter({hasText:'长安区 · 大学城'}).click()
   await field(page,'如 100').fill('100')
   await field(page,'如 耐心').fill('耐心 讲解')
   await field(page,'例如：周六下午；').fill('周六下午')
@@ -51,7 +51,7 @@ test('搜索→推荐理由→原详情预约→家教接单→家长查询→�
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
   mkdirSync('docs/screenshots',{recursive:true})
   await page.screenshot({path:`docs/screenshots/d-${info.project.name}-match.png`,fullPage:true})
-  if(info.project.name==='api-mobile')await page.locator('.weight-panel').screenshot({path:'docs/screenshots/ranking-api-mobile.png'})
+  if(info.project.name==='api-mobile'){await button(page,'高级设置：调整匹配权重').click();await page.locator('.weight-panel').screenshot({path:'docs/screenshots/ranking-api-mobile.png'})}
   await page.locator('.match-card').filter({hasText:'小林'}).locator('uni-button').click()
   await button(page,api?'发起开发预约':'发起演示预约').click()
   if(api)await expect(page.getByText('预约提交后保存在开发服务器的数据库中。',{exact:true})).toBeVisible()
@@ -193,9 +193,9 @@ test('家长端价格区间、错误提示、清空筛选和响应式卡片布�
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
  mkdirSync('docs/screenshots',{recursive:true})
  await page.screenshot({path:`docs/screenshots/parent-${info.project.name}-home.png`,fullPage:true})
- await page.locator('.parent-nav').getByText('我的 / 切换角色',{exact:true}).click()
+ await page.locator('.parent-nav').getByText('我的',{exact:true}).click()
  await expect(page.getByText('体验访客',{exact:true})).toBeVisible()
- await page.locator('.parent-nav').getByText('找家教',{exact:true}).click()
+ await page.locator('.parent-nav').getByText('找家教',{exact:true}).click();await button(page,'自主选老师').click()
  await expect(page.locator('.tutor-grid .card').first()).toBeVisible()
 })
 
@@ -238,7 +238,7 @@ test('西安地图选点、离线需求确认、附近推荐及本机位置恢�
  // Geography and interaction must still work when the third-party tile service is offline.
  await page.route('https://server.arcgisonline.com/**',route=>route.abort())
  await goto(page,'match/index')
- await expect(page.locator('.leaflet-container')).toBeVisible()
+ await button(page,'线下位置与地图（可选）').click();await expect(page.locator('.leaflet-container')).toBeVisible()
  await button(page,'高新 · 物理专题').click()
  await expect(page.locator('.selected-location')).toContainText('高新区 · 科技路')
  await button(page,'解析需求').click()
@@ -253,7 +253,7 @@ test('西安地图选点、离线需求确认、附近推荐及本机位置恢�
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
  mkdirSync('docs/screenshots',{recursive:true})
  await page.screenshot({path:`docs/screenshots/xian-${test.info().project.name}-nearby.png`,fullPage:true})
- await page.reload()
+ await page.reload();await button(page,'线下位置与地图（可选）').click()
  await expect(page.locator('.selected-location')).toContainText('高新区 · 科技路')
  await expect(page.locator('.leaflet-container')).toBeVisible()
  // Select a free map point, not just one of the preset labels.
