@@ -20,8 +20,10 @@
   "teammateSource": "3903f325b07c3bc27a3974deddee1c7178a3dbf1",
   "teammatePR": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/pull/40",
   "signaturesEmbedded": false,
-  "status": "七页基础精选图文版：原3图＋新增4图；其他两份未改",
-  "brochurePages": 7,
-  "brochureFigures": 7,
-  "newFigureCount": 4
+  "status": "九页要求对齐版：8幅精选真实截图；简介及承诺书未改",
+  "brochurePages": 9,
+  "brochureFigures": 8,
+  "newFigureCount": 5,
+  "currentValidation": "requirements-validation.json",
+  "contentRequirementsMapped": true
 }

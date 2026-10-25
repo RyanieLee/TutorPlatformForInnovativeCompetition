@@ -1,0 +1,260 @@
+{
+  "edition": "要求对齐版",
+  "checkedAt": "2026-10-25",
+  "status": "passed",
+  "officialWorkIntroductionText": "作品介绍文档（PDF）。包含作品名称、3-5个关键词、作品概要、解决教育（产业）痛点、技术创新点、落地场景、应用成效。",
+  "contentMapping": {
+    "作品名称、关键词、作品概要": [
+      1
+    ],
+    "教育（产业）痛点": [
+      2
+    ],
+    "落地场景": [
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "技术创新点": [
+      8
+    ],
+    "应用成效": [
+      9
+    ]
+  },
+  "applicationBaseline": "5d04c4f789780d551b785c542e9946cf9453dd18",
+  "captureCheckout": "c6b578bda79fd8396c5ece83b7d6d33263f6cf8b",
+  "captureCheckoutRuntimePathsMatchBaseline": true,
+  "sourceMode": "Real running Mock H5, fictional demonstration, no real model invocation",
+  "visualReview": "All nine private PDF pages reviewed at readable raster scale; public first page reviewed separately. Headings, captions, crops, score, order states, 3/5, revision and version history checked.",
+  "publicEdition": {
+    "pages": 9,
+    "figures": 8,
+    "keywords": 5,
+    "textBlack": true,
+    "noShortOrBlankPages": true,
+    "noBodyFooterOverlap": true,
+    "originalPngBytesPreservedInWord": true,
+    "pageDetails": [
+      {
+        "page": 1,
+        "extractedCharacters": 321,
+        "images": 1,
+        "bodyBottomPt": 684.0
+      },
+      {
+        "page": 2,
+        "extractedCharacters": 687,
+        "images": 0,
+        "bodyBottomPt": 622.02
+      },
+      {
+        "page": 3,
+        "extractedCharacters": 424,
+        "images": 1,
+        "bodyBottomPt": 659.35
+      },
+      {
+        "page": 4,
+        "extractedCharacters": 358,
+        "images": 1,
+        "bodyBottomPt": 758.75
+      },
+      {
+        "page": 5,
+        "extractedCharacters": 324,
+        "images": 2,
+        "bodyBottomPt": 763.8
+      },
+      {
+        "page": 6,
+        "extractedCharacters": 282,
+        "images": 1,
+        "bodyBottomPt": 737.0
+      },
+      {
+        "page": 7,
+        "extractedCharacters": 320,
+        "images": 1,
+        "bodyBottomPt": 778.95
+      },
+      {
+        "page": 8,
+        "extractedCharacters": 552,
+        "images": 1,
+        "bodyBottomPt": 777.05
+      },
+      {
+        "page": 9,
+        "extractedCharacters": 810,
+        "images": 0,
+        "bodyBottomPt": 744.6
+      }
+    ],
+    "files": [
+      {
+        "file": "02_作品介绍文档.docx",
+        "sha256": "63f38c57fc03fd9c3629ed3cc9977bbaf6a4ba82ced9c12853ca64276be89bc3",
+        "bytes": 5685845
+      },
+      {
+        "file": "02_作品介绍文档.pdf",
+        "sha256": "b9948e91ea1bf04ad4de4a1131fd7483b0172dfbb45b32490552123da1259972",
+        "bytes": 2190897
+      }
+    ]
+  },
+  "figures": [
+    {
+      "number": 1,
+      "file": "assets/focused/01-home-navigation.png",
+      "caption": "真实首页首屏局部：主要功能入口集中呈现",
+      "crop": [
+        0,
+        0,
+        2000,
+        1360
+      ],
+      "displayWidthCm": 15.2,
+      "originalPixels": [
+        2000,
+        1360
+      ],
+      "sha256": "93a7cac8c92ae11337c2a5e4c889790d71ef0205664b90515715a5848b0acef7"
+    },
+    {
+      "number": 2,
+      "file": "assets/focused/02-demand.png",
+      "caption": "解析后的建议区：科目、预算、方式和偏好待家长确认",
+      "crop": [
+        0,
+        0,
+        1300,
+        788
+      ],
+      "displayWidthCm": 16.0,
+      "originalPixels": [
+        1300,
+        788
+      ],
+      "sha256": "894cfe444fe0d22b7e0318bf2c93cece96431ac8bdd0dcf591f131fe52da0821"
+    },
+    {
+      "number": 3,
+      "file": "assets/focused/03-ranking.png",
+      "caption": "小林真实推荐卡：时间、经历与价格依据逐项可读",
+      "crop": [
+        0,
+        0,
+        1416,
+        1466
+      ],
+      "displayWidthCm": 14.6,
+      "originalPixels": [
+        1416,
+        1466
+      ],
+      "sha256": "df57801c7adab226d3f14f45222af20ab57cd706a6a2a3114f31a9a50d1a2011"
+    },
+    {
+      "number": 4,
+      "file": "assets/focused/04-pending.png",
+      "caption": "家长端：预约已保存，当前仍待家教确认",
+      "crop": [
+        0,
+        0,
+        1408,
+        500
+      ],
+      "displayWidthCm": 15.8,
+      "originalPixels": [
+        1408,
+        770
+      ],
+      "sha256": "f235aba2247f3c6cc883f01f34eb4803609b59031c6ff6764ce8d1db3847f4ea"
+    },
+    {
+      "number": 5,
+      "file": "assets/focused/05-accepted.png",
+      "caption": "教师端：家教已接受，教学计划与课后反馈入口可用",
+      "crop": [
+        0,
+        0,
+        1408,
+        830
+      ],
+      "displayWidthCm": 15.8,
+      "originalPixels": [
+        1408,
+        1432
+      ],
+      "sha256": "b43344c9899c20ee6a0d8b871064dcefe130dc78b0a90341f9aa37c0f6536a9c"
+    },
+    {
+      "number": 6,
+      "file": "assets/focused/06-feedback.png",
+      "caption": "反馈候选：3/5统计、错题引用与教师发布入口",
+      "crop": [
+        0,
+        0,
+        1408,
+        1536
+      ],
+      "displayWidthCm": 14.8,
+      "originalPixels": [
+        1408,
+        1536
+      ],
+      "sha256": "574fc403277ba84e754d2f126fc9b818e62e09e9fe99964cd0ee79c0d211aeee"
+    },
+    {
+      "number": 7,
+      "file": "assets/focused/07-revision.png",
+      "caption": "第三课修订对照局部：保留依据，重新分配45分钟",
+      "crop": [
+        0,
+        0,
+        1408,
+        1370
+      ],
+      "displayWidthCm": 15.5,
+      "originalPixels": [
+        1408,
+        2714
+      ],
+      "sha256": "34486e9147065c20041c0d6705f2c731730423ccd16cba93818b4a959248e4fa"
+    },
+    {
+      "number": 8,
+      "file": "assets/focused/08-history.png",
+      "caption": "教师发布历史：v1与v2同时保留，可分别查看",
+      "crop": [
+        0,
+        0,
+        1408,
+        862
+      ],
+      "displayWidthCm": 15.8,
+      "originalPixels": [
+        1408,
+        862
+      ],
+      "sha256": "92a787ea7c395797172e1145c0fc897e2c760e192b942712a0abc593a422a550"
+    }
+  ],
+  "ci": {
+    "url": "https://github.com/RyanieLee/TutorPlatformForInnovativeCompetition/actions/runs/39946226822",
+    "headBranch": "main",
+    "headSha": "5d04c4f789780d551b785c542e9946cf9453dd18",
+    "jobs": {
+      "build": "success",
+      "server": "success",
+      "e2e": "success"
+    },
+    "recheckedThisRevision": true
+  },
+  "unchangedOtherDocuments": true,
+  "officialSynopsisAndPledgeTemplateFilesVerified": false
+}

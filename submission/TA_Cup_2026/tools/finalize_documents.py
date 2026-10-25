@@ -42,6 +42,14 @@ def paragraph(d,text,style=None,size=None,bold=None,align=None):
  if align is not None:p.alignment=align
  return p
 
+def inline_paragraph(d,text,size=10.5):
+ p=d.add_paragraph()
+ for part in re.split(r'(\*\*.*?\*\*)',text):
+  if not part:continue
+  emphasized=part.startswith('**') and part.endswith('**')
+  font(p.add_run(part[2:-2] if emphasized else part),size,emphasized)
+ return p
+
 def value(info,key):return info.get(key) or '【待补】'
 def set_repeat_header(row):
  pr=row._tr.get_or_add_trPr();e=OxmlElement('w:tblHeader');pr.append(e)
@@ -158,7 +166,7 @@ def brochure(info,out):
    fill=shape._inline.graphic.graphicData.pic.blipFill;rect=OxmlElement('a:srcRect')
    for key,n in [('l',l/w),('t',t/h),('r',(w-r)/w),('b',(h-b)/h)]:rect.set(key,str(round(n*100000)))
    fill.insert(1,rect)
-   paragraph(d,caption,size=8,align=WD_ALIGN_PARAGRAPH.CENTER)
+   paragraph(d,caption,size=9,align=WD_ALIGN_PARAGRAPH.CENTER)
    continue
   if line=='<!-- ARCH -->':
    paragraph(d,'H5／小程序共享页面 → 统一业务服务',size=10,bold=True,align=WD_ALIGN_PARAGRAPH.CENTER)
@@ -187,7 +195,7 @@ def brochure(info,out):
   if link:
    p=d.add_paragraph();rid=d.part.relate_to(link[2],RT.HYPERLINK,is_external=True);h=OxmlElement('w:hyperlink');h.set(qn('r:id'),rid)
    r=OxmlElement('w:r');props=OxmlElement('w:rPr');col=OxmlElement('w:color');col.set(qn('w:val'),'000000');props.append(col);under=OxmlElement('w:u');under.set(qn('w:val'),'single');props.append(under);r.append(props);txt=OxmlElement('w:t');txt.text='GitHub 项目仓库' if link[1]=='代码仓库' else 'GitHub Actions 验证记录（main 5d04c4f）';r.append(txt);h.append(r);p._p.append(h);continue
-  is_keywords=line.startswith('**关键词**');line=re.sub(r'\*\*(.*?)\*\*',r'\1',line);paragraph(d,line,size=10.5)
+  is_keywords=line.startswith('**关键词**');inline_paragraph(d,line,size=10.5)
   if is_keywords and info.get('school') and info.get('leader'):
    paragraph(d,'学校：'+info['school']+'　负责人：'+info['leader']+'　团队：'+info.get('team','【待补】'),size=10)
    paragraph(d,'所属赛道：'+info.get('track','【待补】')+'　选题方向：'+info.get('direction','【待补】'),size=10)
