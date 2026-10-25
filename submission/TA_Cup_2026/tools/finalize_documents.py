@@ -16,6 +16,7 @@ from PIL import Image
 BASE=Path(__file__).resolve().parents[1]
 SHORT='领航云学堂'
 TITLE='领航云学堂——AI赋能的校园家教智能匹配与个性化学习服务平台'
+DEMO_URL='https://yunbanxue-demo.top/'
 SUMMARY='领航云学堂面向学生家长与大学生家教，解决选师信息分散、教学记录与课后反馈脱节的问题。平台以“小书灵”为交互入口，将需求整理、可解释推荐、预约、逐题记录与课程修订连接起来。家长可核对学科、时间、经历与费用等推荐依据；教师依据课堂事实确认反馈、修订下一课，保留历史版本。作品已形成三角色流程及四节数学示范课程，兼具学习资源和西安片区辅助选择。系统采用规则约束、可选模型与人工确认协作，模型接口已实现，真实供应商效果尚未验证。四人团队通过AI辅助开发形成可运行、可复现的教育服务创业原型。'
 
 assert len(SUMMARY)<=300
@@ -48,6 +49,15 @@ def inline_paragraph(d,text,size=10.5):
   if not part:continue
   emphasized=part.startswith('**') and part.endswith('**')
   font(p.add_run(part[2:-2] if emphasized else part),size,emphasized)
+ return p
+
+def hyperlink_paragraph(d,text,url,prefix='',size=10.5):
+ p=d.add_paragraph()
+ if prefix:font(p.add_run(prefix),size)
+ rid=d.part.relate_to(url,RT.HYPERLINK,is_external=True)
+ h=OxmlElement('w:hyperlink');h.set(qn('r:id'),rid)
+ run=font(p.add_run(text),size);run.underline=True
+ h.append(run._r);p._p.append(h)
  return p
 
 def value(info,key):return info.get(key) or '【待补】'
@@ -84,6 +94,7 @@ def intro(info,out):
  table_text(d,['成员','所在高校／学院'],[(n,info.get('affiliations',[value(info,'school')]*4)[i]) for i,n in enumerate(names)])
  paragraph(d,'联系人：'+value(info,'contact')+'　　电话：'+value(info,'phone'),size=10)
  paragraph(d,'电子邮箱：'+value(info,'email'),size=10)
+ hyperlink_paragraph(d,DEMO_URL,DEMO_URL,prefix='在线演示：',size=10)
  paragraph(d,'案例介绍（300字以内）','Heading 2');paragraph(d,SUMMARY,size=11)
  d.save(out/'01a_参赛作品简介.docx')
  (out/'01a_案例介绍正文.txt').write_text(SUMMARY+'\n',encoding='utf-8')
@@ -191,10 +202,10 @@ def brochure(info,out):
    if pending_break:p.paragraph_format.page_break_before=True;pending_break=False
    continue
 
-  link=re.match(r'^(代码仓库|主线验证)：(https://\S+)$',line)
+  link=re.match(r'^(在线演示|代码仓库|主线验证)：(https://\S+)$',line)
   if link:
-   p=d.add_paragraph();rid=d.part.relate_to(link[2],RT.HYPERLINK,is_external=True);h=OxmlElement('w:hyperlink');h.set(qn('r:id'),rid)
-   r=OxmlElement('w:r');props=OxmlElement('w:rPr');col=OxmlElement('w:color');col.set(qn('w:val'),'000000');props.append(col);under=OxmlElement('w:u');under.set(qn('w:val'),'single');props.append(under);r.append(props);txt=OxmlElement('w:t');txt.text='GitHub 项目仓库' if link[1]=='代码仓库' else 'GitHub Actions 验证记录（main 5d04c4f）';r.append(txt);h.append(r);p._p.append(h);continue
+   text=link[2] if link[1]=='在线演示' else 'GitHub 项目仓库' if link[1]=='代码仓库' else 'GitHub Actions 验证记录（main 5d04c4f）'
+   hyperlink_paragraph(d,text,link[2],prefix='在线演示：' if link[1]=='在线演示' else '');continue
   is_keywords=line.startswith('**关键词**');inline_paragraph(d,line,size=10.5)
   if is_keywords and info.get('school') and info.get('leader'):
    paragraph(d,'学校：'+info['school']+'　负责人：'+info['leader']+'　团队：'+info.get('team','【待补】'),size=10)

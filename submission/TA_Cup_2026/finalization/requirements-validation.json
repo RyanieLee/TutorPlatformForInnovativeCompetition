@@ -1,5 +1,5 @@
 {
-  "edition": "要求对齐版",
+  "edition": "要求对齐版（附在线演示网址）",
   "checkedAt": "2026-10-25",
   "status": "passed",
   "officialWorkIntroductionText": "作品介绍文档（PDF）。包含作品名称、3-5个关键词、作品概要、解决教育（产业）痛点、技术创新点、落地场景、应用成效。",
@@ -40,9 +40,9 @@
     "pageDetails": [
       {
         "page": 1,
-        "extractedCharacters": 321,
+        "extractedCharacters": 354,
         "images": 1,
-        "bodyBottomPt": 684.0
+        "bodyBottomPt": 711.95
       },
       {
         "page": 2,
@@ -96,13 +96,13 @@
     "files": [
       {
         "file": "02_作品介绍文档.docx",
-        "sha256": "63f38c57fc03fd9c3629ed3cc9977bbaf6a4ba82ced9c12853ca64276be89bc3",
-        "bytes": 5685845
+        "sha256": "b53e186fe8593e9caa330bff86a3b4f6b6db2cdc76dd01351c6d46f57eb4604a",
+        "bytes": 5685951
       },
       {
         "file": "02_作品介绍文档.pdf",
-        "sha256": "b9948e91ea1bf04ad4de4a1131fd7483b0172dfbb45b32490552123da1259972",
-        "bytes": 2190897
+        "sha256": "692e7cd5f271e93b378acca6a524aeb7bc6ba848ab3c111cb7679350d01a2f1a",
+        "bytes": 2192894
       }
     ]
   },
@@ -255,6 +255,37 @@
     },
     "recheckedThisRevision": true
   },
-  "unchangedOtherDocuments": true,
-  "officialSynopsisAndPledgeTemplateFilesVerified": false
+  "unchangedOtherDocuments": false,
+  "officialSynopsisAndPledgeTemplateFilesVerified": false,
+  "signedPledgeUnchanged": true,
+  "summaryBodyUnchanged": true,
+  "onlineDemo": {
+    "url": "https://yunbanxue-demo.top/",
+    "label": "在线演示",
+    "placement": {
+      "brochure": "第1页副标题下方",
+      "synopsis": "联系方式下方、300字正文之外"
+    },
+    "httpStatus": 200,
+    "httpsResponseCheckedAt": "2026-10-25",
+    "pdfLinksVerified": true,
+    "wordLinksVerified": true
+  },
+  "publicSynopsis": {
+    "pages": 1,
+    "onlineDemoLinkOnFirstPage": true,
+    "files": [
+      {
+        "file": "01a_参赛作品简介.docx",
+        "sha256": "98fcd8f3cf656fb8792ecc198ca6414b39fdc159955bad9e33897966328a500c",
+        "bytes": 38493
+      },
+      {
+        "file": "01a_参赛作品简介.pdf",
+        "sha256": "18586f968954a4fc15ab96a611231949bb2ec11b2648e031178e84423de92b6f",
+        "bytes": 127094
+      }
+    ]
+  },
+  "urlRevisionVisualReview": "Both private first pages reviewed after export; black underlined URL, no pagination change."
 }
